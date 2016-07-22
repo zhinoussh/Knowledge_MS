@@ -1,0 +1,87 @@
+﻿@using Knowledge_Management.Models
+@model Knowledge_Management.ViewModels.JobViewModel
+
+@{
+
+    ViewBag.Title = "مشاغل سازمان";
+    Layout = "~/Views/Shared/_ManagementLayout.cshtml";
+}
+
+<!-- Modal -->
+<div class="modal fade" id="DeleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" id="confirm-container">
+
+        </div>
+    </div>
+</div>
+<!-- /end Modal -->
+
+<h5>تعریف مشاغل سازمان</h5>
+<span class="border_admin" style="margin-bottom:0;"></span>
+
+
+@using (Ajax.BeginForm("Add_Edit_Job", "Job"
+                    , new AjaxOptions
+                    {
+                        InsertionMode = InsertionMode.ReplaceWith,
+                        HttpMethod = "Post",
+                        OnSuccess = "SuccessMessage"
+                    }, new { @id = "frmJob" }))
+{
+
+    @Html.AntiForgeryToken()
+
+
+    <div style="float:right; width:100%; margin:5% 0 2% 0">
+        <div class="editor-field" style="width: 12%;">
+            نام واحد سازمانی:
+        </div>
+        <div class="editor-field" style="width:30%;">
+            @Html.DropDownListFor(model => model.selected_dep, new SelectList(Model.lst_dep, "Value", "Text")
+            , new { @class = "textbox", id = "dropdown_department" })
+        </div>
+    </div>
+
+        <div style="float:right; width:100%;">
+            <div class="editor-field" style="width: 12%;">
+                @Html.LabelFor(model => model.job_name)
+            </div>
+
+
+            <div class="editor-field" style="width: 60%;">
+                @Html.TextBoxFor(model => model.job_name, new { @class = "textbox", id = "txt_job_name" })
+                @Html.ValidationMessageFor(model => model.job_name, "", new { @class = "error" })
+            </div>
+
+            <div class="btn_add">
+                <input type="submit" class="btn btn-primary" value="ثبت" />
+            </div>
+
+            <div class="btn_add">
+                <input type="button" class="btn btn-primary" value="بازسازی" id="reset_btn" />
+            </div>
+        </div>
+        @Html.HiddenFor(model => model.job_id, new { id = "hd_id_job" })
+      
+        <label class="alert-danger" id="alert_success"></label>
+        }
+
+
+        <table id="JobDT" class="display">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th class="dt-head-right">ردیف</th>
+                    <th class="dt-head-right">نام شغل</th>
+                    <th>ویرایش</th>
+                    <th>حذف</th>
+
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+
+        @section scripts{
+            <script src="~/Scripts/Datatables/JobDT.js"></script>
+        }

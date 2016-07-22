@@ -1,0 +1,79 @@
+﻿@model Knowledge_Management.ViewModels.DepartmentObjectiveViewModel
+
+@{
+
+    ViewBag.Title = "اهداف واحد سازمانی";
+    Layout = "~/Views/Shared/_ManagementLayout.cshtml";
+}
+
+<!-- Modal -->
+<div class="modal fade" id="DeleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" id="confirm-container">
+
+        </div>
+    </div>
+</div>
+<!-- /end Modal -->
+
+<h5>تعریف اهداف</h5>
+<span class="border_admin" style="margin-bottom:0;"></span>
+<h6 style="color:#8076a2">واحد سازمانی - @Html.DisplayTextFor(model => model.dep_name)</h6>
+
+@using (Ajax.BeginForm("Add_Edit_Objective", "ObjectiveDepartment"
+                    , new AjaxOptions
+                    {
+                        InsertionMode = InsertionMode.ReplaceWith,
+                        HttpMethod = "Post",
+                        OnSuccess = "SuccessMessage"
+                    }, new { @id = "frmObjective" }))
+{
+
+
+    @Html.AntiForgeryToken()
+
+
+
+    <div style="float:right; width:100%; margin-top:5%">
+        <div class="editor-field" style="width: 12%;">
+            @Html.LabelFor(model => model.obj_name, new { @class = "div_lable" })
+        </div>
+
+
+        <div class="editor-field" style="width: 60%;">
+            @Html.TextBoxFor(model => model.obj_name, new { @class = "textbox", id = "txt_obj_name" })
+            @Html.ValidationMessageFor(model => model.obj_name, "", new { @class = "error" })
+        </div>
+
+        <div class="btn_add">
+            <input type="submit" class="btn btn-primary" value="ثبت" />
+        </div>
+
+        <div class="btn_add">
+            <input type="button" class="btn btn-primary" value="بازسازی" id="reset_btn" />
+        </div>
+    </div>
+    @Html.HiddenFor(model => model.obj_id, new { id = "hd_id_obj" })
+    @Html.HiddenFor(model => model.dep_id, new { id = "hd_id_dep" })
+    <label class="alert-danger" id="alert_success"></label>
+
+}
+
+
+<table id="ObjectiveDT" class="display">
+    <thead>
+        <tr>
+            <th>ID</th>
+     <th class="dt-head-right">ردیف</th>
+    <th class="dt-head-right">شرح هدف</th>
+    <th>ویرایش</th>
+     <th>حذف</th>
+
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+
+@section scripts{
+    <script src="~/Scripts/Datatables/ObjectiveDT.js"></script>
+}

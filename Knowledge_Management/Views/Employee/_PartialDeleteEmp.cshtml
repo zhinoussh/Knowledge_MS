@@ -1,0 +1,45 @@
+﻿@model Knowledge_Management.ViewModels.EmployeeViewModel
+
+@{
+
+    Layout = null;
+}
+
+@using (Ajax.BeginForm("Delete_Employee", "Employee"
+                    , new AjaxOptions
+                    {
+                        InsertionMode = InsertionMode.ReplaceWith,
+                        HttpMethod = "Post",
+                        OnSuccess = "SuccessAction"
+                    }))
+{
+
+    @Html.AntiForgeryToken()
+
+
+    <div class="modal-header modal-header-danger">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" aria-hidden="true">&times;</button>
+        <h6><i class="glyphicon glyphicon-alert"></i>تایید حذف</h6>
+    </div>
+    <div class="modal-body">
+        آیا مایل به حذف ردیف مورد نظر می باشید؟
+    </div>
+
+    <div class="modal-footer">
+        <button type="button" class="btn btn-confirm pull-left" data-dismiss="modal">انصراف</button>
+        <input type="submit" class="btn btn-confirm pull-left" value="تایید" />
+        @Html.HiddenFor(d => d.emp_id)
+    </div>
+}
+
+<script type="text/javascript">
+    var SuccessAction = function (result) {
+        if (result.msg) {
+            $('#DeleteModal').modal('hide');
+            $("#alert_success").html(result.msg);
+            var $STTable = $("#EmployeeDT").dataTable({ bRetrieve: true });
+            $STTable.fnDraw();
+        }
+    }
+</script>
+

@@ -1,0 +1,107 @@
+﻿@using Knowledge_Management.Models
+@model Knowledge_Management.ViewModels.JobDescriptionViewModel
+
+@{
+
+    ViewBag.Title = "شرح مشاغل سازمان";
+    Layout = "~/Views/Shared/_ManagementLayout.cshtml";
+}
+
+<!-- Modal -->
+<div class="modal fade" id="DeleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" id="confirm-container">
+
+        </div>
+    </div>
+</div>
+<!-- /end Modal -->
+
+<h5>تعریف شرح مشاغل سازمان</h5>
+<span class="border_admin" style="margin-bottom:0;"></span>
+
+
+@using (Ajax.BeginForm("Add_Edit_JobDesc", "JobDescription"
+                    , new AjaxOptions
+                    {
+                        InsertionMode = InsertionMode.ReplaceWith,
+                        HttpMethod = "Post",
+                        OnSuccess = "SuccessMessage"
+                    }, new { @id = "frmJobDesc" }))
+{
+
+    @Html.AntiForgeryToken()
+
+
+
+    <div style="float:right; width:100%; margin:2% 0 2% 0">
+        <div class="editor-label" style="width:10%;">
+            واحد سازمانی:
+        </div>
+        <div class="editor-field" style="width:20%;">
+            @Html.DropDownListFor(model => model.dep_id, new SelectList(Model.lst_dep, "Value", "Text")
+            , new { @class = "textbox", id = "dropdown_department" })
+        </div>
+
+        <div class="editor-label" style="width:5%;">
+            شغل:
+        </div>
+        <div class="editor-field" style="width:20%;">
+            @Html.DropDownListFor(model => model.job_id, new SelectList(Model.lst_job, "Value", "Text")
+            , new { @class = "textbox", id = "dropdown_job" })
+        </div>
+
+        <div class="btn_add" style="width:150px">
+            <input type="button" class="btn btn-primary" value="مشاهده شرح مشاغل" id="btn_view_jobDesc" />
+        </div>
+
+    </div>
+
+    <div style="float:right; width:100%;margin-top:2%">
+        <div class="editor-label" style="width:10%;">
+            @Html.LabelFor(model => model.jobDesc)
+        </div>
+
+        <div class="editor-field" style="width:85%;">
+            @Html.TextBoxFor(model => model.jobDesc, new { @class = "textbox", id = "txt_job_desc" })
+            @Html.ValidationMessageFor(model => model.jobDesc, "", new { @class = "error" })
+        </div>
+
+       
+    </div>
+
+    <div style="float:right; width:100%;margin-top:2%">
+        
+        <input type="button" class="btn btn-primary pull-left" style="width:100px" value="بازسازی" id="reset_btn" />
+        <input type="submit" class="btn btn-primary pull-left" style="width:100px; margin-left:20px" value="ثبت" />
+
+    </div>
+        @Html.HiddenFor(model => model.jobDesc_id, new { id = "hd_id_jobDsc" })
+
+        <label class="alert-danger" id="alert_success"></label>
+        }
+
+
+        <table id="JobDescDT" class="display">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th class="dt-head-right">ردیف</th>
+                    <th class="dt-head-right">شرح شغل</th>
+                    <th>ویرایش</th>
+                    <th>حذف</th>
+
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+
+        @section scripts{
+            <script src="~/Scripts/Datatables/JobDescDT.js"></script>
+        }
+
+
+
+
+
+

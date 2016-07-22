@@ -1,0 +1,155 @@
+﻿@using Knowledge_Management.ViewModels
+@model EmployeeViewModel
+
+@{
+
+    ViewBag.Title = "پرسنل سازمان";
+    Layout = "~/Views/Shared/_ManagementLayout.cshtml";
+}
+
+<!-- Modal -->
+<div class="modal fade" id="DeleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" id="confirm-container">
+
+        </div>
+    </div>
+</div>
+<!-- /end Modal -->
+
+<h5>تعریف پرسنل سازمان</h5>
+<span class="border_admin" style="margin-bottom:0;"></span>
+
+
+@using (Ajax.BeginForm("Add_Edit_Employee", "Employee"
+                    , new AjaxOptions
+                    {
+                        InsertionMode = InsertionMode.ReplaceWith,
+                        HttpMethod = "Post",
+                        OnSuccess = "SuccessMessage"
+                    }, new { @id = "frmEmployee" }))
+{
+
+
+
+    @Html.AntiForgeryToken()
+
+
+    <div style="float:right; width:100%;margin-top:5%">
+        <div class="editor-label" style="width:7%;">
+            @Html.LabelFor(model => model.first_name)
+        </div>
+
+        <div class="editor-field" style="width:20%;">
+            @Html.TextBoxFor(model => model.first_name, new { @class = "textbox", id = "txt_first_name" })
+            @Html.ValidationMessageFor(model => model.first_name, "", new { @class = "error" })
+        </div>
+
+        <div class="editor-label" style="width:10%;">
+            @Html.LabelFor(model => model.last_name)
+        </div>
+
+        <div class="editor-field" style="width:20%;">
+            @Html.TextBoxFor(model => model.last_name, new { @class = "textbox", id = "txt_last_name" })
+            @Html.ValidationMessageFor(model => model.last_name, "", new { @class = "error" })
+        </div>
+
+        <div class="editor-label" style="width:6%;">
+            @Html.LabelFor(model => model.personel_code)
+        </div>
+
+        <div class="editor-field" style="width:20%;">
+            @Html.TextBoxFor(model => model.personel_code, new { @class = "textbox", id = "txt_personel_code",style="text-align:center" })
+            @Html.ValidationMessageFor(model => model.personel_code, "", new { @class = "error" })
+        </div>
+    </div>
+    <div style="float:right; width:100%; margin:2% 0 2% 0">
+        
+            <div class="editor-label" style="width:7%;">
+                @Html.LabelFor(model => model.pass)
+            </div>
+
+            <div class="editor-field" style="width:20%;">
+                @Html.PasswordFor(u => u.pass, new { @class = "textbox", style = "text-align:center" })
+            </div>
+            <div class="editor-label" style="width:10%;">
+                واحد سازمانی:
+            </div>
+            <div class="editor-field" style="width:20%;">
+                @Html.DropDownListFor(model => model.dep_id, new SelectList(Model.lst_dep, "Value", "Text")
+            , new { @class = "textbox", id = "dropdown_department" })
+            </div>
+
+            <div class="editor-label" style="width:6%;">
+                شغل:
+            </div>
+            <div class="editor-field" style="width:20%;">
+                @Html.DropDownListFor(model => model.job_id, new SelectList(Model.lst_job, "Value", "Text")
+            , new { @class = "textbox", id = "dropdown_job" })
+            </div>
+
+          
+        </div>
+    <div style="float:right; width:100%;">
+
+        
+        <div class="editor-label" style="width:3%;">
+            @Html.CheckBoxFor(model => model.data_entry, new { id = "chk_dt_entry" })
+        </div>
+        <div class="editor-field" style="width:12%;">
+            @Html.LabelFor(model => model.data_entry)
+        </div>
+
+       
+        <div class="editor-label" style="width:3%;">
+            @Html.CheckBoxFor(model => model.data_view, new { id="chk_dt_view"})
+        </div>
+
+        <div class="editor-field" style="width:12%;">
+            @Html.LabelFor(model => model.data_view)
+        </div>  
+            <div class="btn_add" style="margin-right:30%">
+                <input type="submit" class="btn btn-primary" value="ثبت" />
+            </div>
+
+            <div class="btn_add">
+                <input type="button" class="btn btn-primary" value="بازسازی" id="reset_btn" />
+            </div>
+        </div>
+            @Html.HiddenFor(model => model.emp_id, new { id = "hd_id_emp" })
+
+        <label class="alert-danger" id="alert_success"></label>
+        }
+
+
+        <table id="EmployeeDT" class="display">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Dep_Id</th>
+                    <th>Job_Id</th>
+                    <th class="dt-head-right">ردیف</th>
+                    <th class="dt-head-right">نام</th>
+                    <th class="dt-head-right">نام خانوادگی</th>
+                    <th class="dt-head-right">کد ملی</th>
+                    <th class="dt-head-right">واحد سازمانی</th>
+                    <th class="dt-head-right">شغل</th>
+                    <th>ورود اطلاعات</th>
+                    <th>مشاهده اطلاعات</th>
+                    <th>ویرایش</th>
+                    <th>حذف</th>
+
+
+
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+
+        @section scripts{
+            <script src="~/Scripts/Datatables/EmployeeDT.js"></script>
+        }
+
+
+
+

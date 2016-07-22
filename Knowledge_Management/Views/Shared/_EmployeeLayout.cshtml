@@ -1,0 +1,83 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" , initial-scale="1.0" />
+    <title>سیستم مدیریت دانش - @ViewBag.Title</title>
+
+    @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/management")
+
+    @RenderSection("HeadSection", false)
+
+
+</head>
+<body>
+
+    <div id="wrapper" class="toggled">
+        @*<div class="overlay"></div>*@
+
+        <!-- Sidebar -->
+        <nav class="navbar navbar-inverse navbar-fixed-top" id="sidebar-wrapper" role="navigation">
+            <ul class="nav sidebar-nav">
+                <li class="sidebar-brand">
+                    <a href="#">
+                        بخش های سیستم
+                    </a>
+                </li>
+                
+                <li style="visibility:hidden">
+                    <a href="/InsertInfo/Index"><i class="fa fa-fw fa-folder"></i>ورود اطلاعات و دانش</a>
+                </li>
+                <li class="dropdown" >
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-fw fa-search"></i>جستجوی راهکار<span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li class="dropdown-header"></li>
+                        <li><a href="/SearchInfo/SearchAll">جستجو بر اساس کلیدواژه</a></li>
+                        <li><a href="/SearchInfo/SearchKey">تمام کلیدواژه های موجود</a></li>
+                    </ul>
+                </li>
+               <li>
+                    <a href="/InsertInfo/EditProfile"><i class="fa fa-fw fa-user"></i>ویرایش اطلاعات پرسنلی</a>
+                </li>
+                <li>
+                    <a href="/Home/Logout"><i class="fa fa-fw fa-sign-out"></i>خروج</a>
+                </li>
+
+            </ul>
+        </nav>
+        <!-- /#sidebar-wrapper -->
+        <!-- Page Content -->
+        <div id="page-content-wrapper">
+
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-11 col-sm-offset-1">
+                        <div class="editor-field" ><img src="~/img/header2.png" alt="" class="header_mng" /></div>
+                        <div class="editor-field" style="margin-right:50%">
+                            کابر گرامی،
+                            <span style="color:#0094ff"> @Html.Action("GetUserInfo", "InsertInfo")</span>
+                             خوش آمدید
+                        </div>
+                        </div>
+                        <div class="col-sm-10 col-sm-offset-2">
+
+                            @RenderBody()
+                        </div>
+                       
+                    </div>
+            </div>
+          
+
+        </div>
+        <!-- /#page-content-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/management")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

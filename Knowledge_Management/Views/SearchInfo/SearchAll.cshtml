@@ -1,0 +1,24 @@
+﻿@{
+    ViewBag.Title = "جستجوی تمامی مسائل";
+    Layout = "~/Views/Shared/_EmployeeLayout.cshtml";
+
+}
+
+<div style="float:right; width:100%;margin:5% 0 2% 0">
+    <table id="SearchQuestionDT" class="display">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Keywords</th>
+                <th class="dt-head-right">ردیف</th>
+                <th class="dt-head-right">شرح مسئله</th>
+                <th>راهکارها</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+    </div>
+    @section scripts{
+        <script src="~/Scripts/Datatables/SearchQuestionDT.js"></script>
+
+    }

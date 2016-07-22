@@ -1,0 +1,18 @@
+﻿{
+	"sProcessing": "در حال پردازش...",
+	"sLengthMenu": "نمایش _MENU_ ردیف",
+	"sZeroRecords": "موردی با این مشخصات یافت نشد",
+	"sInfo": "نمایش _START_ تا _END_ از _TOTAL_ ردیف",
+	"sInfoEmpty": "نمایش 0 تا 0 از 0 ردیف",
+	"sInfoFiltered": "",
+	"sInfoPostFix": "",
+	"sSearch": "جستجو: ",
+	"sEmptyTable": "هیچ موردی یافت نشد",
+	"sUrl": "",
+	"oPaginate": {
+		"sFirst":    "اولین",
+		"sPrevious": "قبلی",
+		"sNext":     "بعدی",
+		"sLast":     "آخرین"
+	}
+}

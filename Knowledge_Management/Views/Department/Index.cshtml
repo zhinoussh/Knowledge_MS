@@ -1,0 +1,81 @@
+﻿@model Knowledge_Management.ViewModels.DepartmentViewModel
+
+@{
+    ViewBag.Title = "واحدهای سازمان";
+    Layout = "~/Views/Shared/_ManagementLayout.cshtml";
+}
+
+
+<!-- Modal -->
+<div class="modal fade" id="DeleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" id="confirm-container">
+
+        </div>
+    </div>
+</div>
+<!-- /end Modal -->
+
+<h5>تعریف واحد های سازمان</h5>
+<span class="border_admin"></span>
+
+
+
+@using (Ajax.BeginForm("Add_Edit_Department", "Department"
+                    , new AjaxOptions
+                    {
+                        InsertionMode = InsertionMode.ReplaceWith,
+                        HttpMethod = "Post",
+                        OnSuccess = "SuccessMessage"
+                    }, new { @id = "frmDepartment" }))
+{
+
+
+    @Html.AntiForgeryToken()
+
+    <div style="float:right; width:100%; margin-bottom:5%">
+        <div class="editor-field" style="width: 12%;">
+            @Html.LabelFor(model => model.dep_name, new { @class = "div_lable" })
+        </div>
+
+
+        <div class="editor-field" style="width: 60%;">
+            @Html.TextBoxFor(model =>model.dep_name, new { @class = "textbox", id = "txt_dep_name" })
+            @Html.ValidationMessageFor(model => model.dep_name, "", new { @class = "error" })
+        </div>
+
+        <div class="btn_add">
+            <input type="submit" class="btn btn-primary" value="ثبت" />
+        </div>
+
+        <div class="btn_add">
+            <input type="button" class="btn btn-primary" value="بازسازی" id="reset_btn" />
+        </div>
+    </div>
+    @Html.HiddenFor(model => model.dep_id, new { id = "hd_id_department" })
+    <label class="alert-danger" id="alert_success"></label>
+
+}
+
+
+<table id="departmentDT" class="display">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th class="dt-head-right">ردیف</th>
+            <th class="dt-head-right">نام واحد سازمانی</th>
+            <th>اهداف واحد</th>
+            <th>ویرایش</th>
+            <th>حذف</th>
+
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+
+
+@section scripts{
+<script src="~/Scripts/Datatables/DepartmentDT.js"></script>
+}
+
+

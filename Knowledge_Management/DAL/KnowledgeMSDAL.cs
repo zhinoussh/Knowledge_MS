@@ -1,0 +1,558 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Data.Entity;
+using Knowledge_Management.Models;
+using Knowledge_Management.ViewModels;
+using System.Web.Security;
+
+namespace Knowledge_Management.DAL
+{
+    public class KnowledgeMSDAL
+    {
+        KnowledgeMsDB db;
+
+
+        public KnowledgeMSDAL()
+        {
+            db = new KnowledgeMsDB();
+        }
+        public string login(string username, string password)
+        {
+            try
+            {
+                string pass = (new Encryption()).Encrypt(password);
+                string role = (from l in db.tbl_login
+                               where l.username.Equals(username) & l.pass.Equals(pass)
+                               select l.role).First();
+
+                return role;
+            }
+            catch (Exception e1)
+            {
+                return e1.ToString();
+            }
+        }
+
+
+        #region STRATEGY
+        public List<tbl_strategy> get_all_strategies()
+        {
+
+            List<tbl_strategy> lst_strategies = (from s in db.tbl_strategy
+                                                 select s).OrderBy(x => x.pkey).ToList();
+
+            return lst_strategies;
+        }
+
+        public void InsertStrategy(int st_id, string st_name)
+        {
+            tbl_strategy s;
+            if (st_id == 0 )
+            {
+                s = new tbl_strategy();
+                s.strategy_name = st_name;
+                db.tbl_strategy.Add(s);
+            }
+            else
+            {
+                s = db.tbl_strategy.Find(st_id);
+                s.strategy_name = st_name;
+            }
+            db.SaveChanges();
+
+
+        }
+
+        public void DeleteStrategy(int id)
+        {
+            tbl_strategy s = db.tbl_strategy.Find(id);
+            db.tbl_strategy.Remove(s);
+            db.SaveChanges();
+        }
+
+        #endregion STRATEGY
+
+        #region Department
+
+        public List<tbl_department> get_all_Departments()
+        {
+
+            List<tbl_department> lst_departments = (from s in db.tbl_department
+                                          select s).OrderBy(x => x.pkey).ToList();
+
+            return lst_departments;
+        }
+
+        public string get_department_name(int dep_id)
+        {
+           string dep_name = db.tbl_department.Find(dep_id).department_name;
+            return dep_name;
+        }
+
+        public void InsertDepartment(int dep_id, string dep_name)
+        {
+            tbl_department s;
+            if (dep_id == 0)
+            {
+                s = new tbl_department();
+                s.department_name = dep_name;
+                db.tbl_department.Add(s);
+            }
+            else
+            {
+                s = db.tbl_department.Find(dep_id);
+                s.department_name = dep_name;
+            }
+            db.SaveChanges();
+
+
+        }
+
+        public void DeleteDepartment(int id)
+        {
+            tbl_department s = db.tbl_department.Find(id);
+            db.tbl_department.Remove(s);
+            db.SaveChanges();
+        }
+
+        #endregion Department
+
+        #region Objective
+
+        public List<tbl_department_objectives> get_Department_Objectives(int dep_id)
+        {
+
+            List<tbl_department_objectives> lst_objectives = (from o in db.tbl_department_objectives
+                                                              where o.fk_department == dep_id
+                                                              select o).OrderBy(x => x.pkey).ToList();
+
+            
+            return lst_objectives;
+        }
+
+        public void InsertObjective(int obj_id, string obj_name,int dep_id)
+        {
+            tbl_department_objectives s;
+            if (obj_id == 0)
+            {
+                s = new tbl_department_objectives();
+                s.objective = obj_name;
+                s.fk_department = dep_id;
+                db.tbl_department_objectives.Add(s);
+            }
+            else
+            {
+                s = db.tbl_department_objectives.Find(obj_id);
+                s.objective = obj_name;
+            }
+            db.SaveChanges();
+
+
+        }
+
+        public void DeleteObjective(int id)
+        {
+            tbl_department_objectives s = db.tbl_department_objectives.Find(id);
+            db.tbl_department_objectives.Remove(s);
+            db.SaveChanges();
+        }
+
+        #endregion Objective
+
+        #region JOB
+
+        public List<tbl_job> get_Jobs(int dep_id)
+        {
+
+            List<tbl_job> lst_jobs = (from o in db.tbl_job
+                                      where o.fk_department == dep_id
+                                     select o).OrderBy(x => x.pkey).ToList();
+            return lst_jobs;
+        }
+
+        public void InsertJob(int job_id, string job_name, int dep_id)
+        {
+            tbl_job s;
+            if (job_id == 0)
+            {
+                s = new tbl_job();
+                s.job_name = job_name;
+                s.fk_department = dep_id;
+                db.tbl_job.Add(s);
+            }
+            else
+            {
+                s = db.tbl_job.Find(job_id);
+                s.job_name = job_name;
+            }
+            db.SaveChanges();
+
+
+        }
+
+        public void DeleteJob(int id)
+        {
+            tbl_job s = db.tbl_job.Find(id);
+            db.tbl_job.Remove(s);
+            db.SaveChanges();
+        }
+
+        #endregion JOB
+
+        #region EMPLOYEE
+
+        public List<Employee> get_Employees()
+        {
+
+            //List<Employee> lst_employee = 
+            //    (db.tbl_employee.AsEnumerable().Join(db.tbl_department.AsEnumerable()
+            //    , emp => emp.fk_department, dep => dep.pkey, (e, d) => new Employee
+            //    {
+            //        Emp_Id=e.pkey,Emp_fname=e.fname,Emp_lname=e.lname,Emp_pcode=e.personel_code
+            //        ,Dep_Id=d.pkey,Dep_Name=d.department_name
+            //    })
+            //   ).Join(db.tbl_job.AsEnumerable(), emp => emp.Emp_Id,j=>j.pkey,(e,j)=>)
+
+            List<Employee> lst_employee = (from e in db.tbl_employee
+                                          join j in db.tbl_job on e.fk_job equals j.pkey
+                                          join d in db.tbl_department on e.fk_department equals d.pkey
+                                          select new Employee
+                                              {
+                                                  Emp_Id = e.pkey,
+                                                  Emp_fname = e.fname,
+                                                  Emp_lname = e.lname,
+                                                  Emp_pcode = e.personel_code,
+                                                  Dep_Id = d.pkey,
+                                                  Dep_Name = d.department_name,
+                                                  Job_Id=j.pkey,
+                                                  Job_Name=j.job_name,
+                                                  data_entry = e.data_entry,
+                                                  data_view = e.data_view
+                                              }).OrderBy(x => x.Emp_pcode).ToList();
+           
+            return lst_employee ;
+        }
+
+        public List<string> get_Employee_prop(string pcode)
+        {
+            List<string> lst_employee = new List<string>();
+            lst_employee = (from e in db.tbl_employee
+                               where e.personel_code == pcode
+                                select new List<string>
+                                {
+                                    e.fk_department+"",
+                                     e.fk_job+"",
+                                    e.data_entry+"",
+                                    e.data_view+"",
+                                    e.fname+" "+e.lname
+                                }).First().ToList();
+
+            return lst_employee;
+        }
+
+        public int InsertEmployee(int emp_id, string first_name, string last_name,string personel_code
+            , int dep_id, int job_id, string password, bool data_entry, bool data_view)
+        {
+            
+            tbl_employee s;
+            if (emp_id == 0)
+            {
+                int pre_emp= db.tbl_employee.Where(x => x.personel_code == personel_code)
+                                            .Select(x=>x.pkey).FirstOrDefault();
+
+                if (pre_emp==0)
+                {
+                    s = new tbl_employee();
+                    s.fname = first_name;
+                    s.lname = last_name;
+                    s.fk_department = dep_id;
+                    s.personel_code = personel_code;
+                    s.fk_job = job_id;
+                    s.data_entry = data_entry;
+                    s.data_view = data_view;
+                    db.tbl_employee.Add(s);
+                    db.SaveChanges();
+
+                    //insert login data for employee 
+                    int newPK = s.pkey;
+                    string pass = (new Encryption()).Encrypt(password);
+
+                    tbl_login login_obj = new tbl_login { username = personel_code, role = "2", pass = pass, fk_emp = newPK };
+                    db.tbl_login.Add(login_obj);
+                    db.SaveChanges();
+
+                    return 1;
+                }
+                else
+                    return -1;
+            }
+            else
+            {
+                s = db.tbl_employee.Find(emp_id);
+                s.fname = first_name;
+                s.lname = last_name;
+                s.fk_department = dep_id;
+                s.personel_code = personel_code;
+                s.fk_job = job_id;
+                s.data_entry = data_entry;
+                s.data_view = data_view;
+                db.SaveChanges();
+
+                return 1;
+
+            }
+          
+
+        }
+
+        public void DeleteEmployee(int id)
+        {
+            tbl_employee s = db.tbl_employee.Find(id);
+            if (s != null)
+            {
+                db.tbl_employee.Remove(s);
+                db.SaveChanges();
+            }
+            tbl_login login_obj = db.tbl_login.Where(x => x.fk_emp == id).Select(x => x).FirstOrDefault();
+            if (login_obj != null)
+            {
+                db.tbl_login.Remove(login_obj);
+                db.SaveChanges();
+            }
+        }
+
+
+        #endregion EMPLOYEE
+
+        #region JobDescription
+
+        public List<tbl_job_description> get_JobDescriptions(int job_id)
+        {
+
+            List<tbl_job_description> lst_jobdesc = (from s in db.tbl_job_description
+                                                     where s.fk_job==job_id
+                                                    select s).OrderBy(x => x.pkey).ToList();
+
+            return lst_jobdesc;
+        }
+
+        public void InsertJobDescription(int job_desc_id, string job_desc,int job_id)
+        {
+            tbl_job_description s;
+            if (job_desc_id == 0)
+            {
+                s = new tbl_job_description();
+                s.job_desc = job_desc;
+                s.fk_job = job_id;
+                db.tbl_job_description.Add(s);
+            }
+            else
+            {
+                s = db.tbl_job_description.Find(job_desc_id);
+                s.job_desc = job_desc;
+            }
+            db.SaveChanges();
+
+
+        }
+
+        public void DeleteJobDescription(int id)
+        {
+            tbl_job_description s = db.tbl_job_description.Find(id);
+            db.tbl_job_description.Remove(s);
+            db.SaveChanges();
+        }
+
+        #endregion JobDescription
+
+        #region Question
+
+        public List<QuestionViewModel> get_all_Questions()
+        {
+           
+            List<QuestionViewModel> lst_questions = (from q in db.tbl_questions
+                                                     select new QuestionViewModel
+                                                     {
+                                                         question_id = q.pkey,
+                                                         question = q.subject                                                         
+                                                     }).OrderByDescending(x => x.question_id).ToList();
+
+            string str_keyword = "";
+
+            foreach (QuestionViewModel q in lst_questions)
+            {
+                str_keyword = "";
+                List<string> lst_keywords = (from k in db.tbl_question_keywords
+                                             where k.fk_question == q.question_id
+                                             select k.keyword).ToList<string>();
+                foreach (string k in lst_keywords)
+                    str_keyword += (k + ",");
+                //remove last , if it is not null
+                if (str_keyword != "")
+                    str_keyword = str_keyword.Remove(str_keyword.Length - 1, 1);
+
+                q.lst_keywords = str_keyword;
+            }
+            return lst_questions;
+        }
+
+        public List<QuestionViewModel> get_all_Questions_by_employee(string pcode )
+        {
+             int fk_emp = db.tbl_employee.Where(x => x.personel_code == pcode).Select(x => x.pkey).First();
+
+             List<QuestionViewModel> lst_questions = (from q in db.tbl_questions
+                                                    join s in db.tbl_question_solutions.Where(x=>x.fk_employee==fk_emp)
+                                                     on q.pkey equals s.fk_question into tbl_soution
+                                                      from qq in tbl_soution.DefaultIfEmpty()
+                                                      where q.fk_employee == fk_emp
+                                                  select new QuestionViewModel { 
+                                                        question_id=q.pkey,
+                                                        question = q.subject,
+                                                        job_desc_id = q.fk_jobDesc,
+                                                        dep_obj_id = q.fk_depObj,
+                                                        strategy_id = q.fk_strategy,
+                                                       solution = qq.solution
+                                                  }).OrderByDescending(x => x.question_id).ToList();
+
+             string str_keyword = "";
+
+            foreach (QuestionViewModel q in lst_questions)
+            {
+                str_keyword = "";
+                List<string> lst_keywords = (from k in db.tbl_question_keywords
+                                             where k.fk_question == q.question_id
+                                             select k.keyword).ToList<string>();
+                foreach (string k in lst_keywords)
+                    str_keyword += (k + ",");
+                //remove last , if it is not null
+                if (str_keyword != "")
+                    str_keyword = str_keyword.Remove(str_keyword.Length - 1, 1);
+
+                q.lst_keywords = str_keyword;
+            }
+            return lst_questions;
+        }
+
+        public List<string> get_Solutions(int question_id)
+        {
+            List<string> lst_solutions = (from s in db.tbl_question_solutions
+                                                              where s.fk_question == question_id
+                                                              select s).OrderBy(x => x.pkey)
+                                                             //  .Select((x, index) => new { Solution = x.solution, Index = index +1 });
+                                                              .Select(x=>x.solution).ToList();
+
+            return lst_solutions;
+        }
+
+        public void InsertQuestion(long q_id, string q_subject,int? depObjId,long? jobDescId,int? strategyId,string q_solution
+            ,List<string> keywords,string pcode )
+        {
+            int fk_emp = db.tbl_employee.Where(x => x.personel_code == pcode).Select(x => x.pkey).First();
+
+            tbl_questions q;
+            if (q_id == 0)
+            {
+                q = new tbl_questions();
+                q.subject = q_subject;
+                q.fk_employee = fk_emp;
+                q.fk_jobDesc = jobDescId;
+                q.fk_depObj = depObjId;
+                q.fk_strategy = strategyId;
+                db.tbl_questions.Add(q);
+                db.SaveChanges();
+
+                long new_pk = q.pkey;
+
+                if(!String.IsNullOrEmpty(q_solution))
+                {
+                    tbl_question_solutions s = new tbl_question_solutions { fk_employee = fk_emp, fk_question = new_pk, solution = q_solution };
+                    db.tbl_question_solutions.Add(s);
+                    db.SaveChanges();
+                }
+
+                tbl_question_keywords key;
+                foreach (string k in keywords)
+                {
+                    key = new tbl_question_keywords();
+                    key.fk_question = new_pk;
+                    key.keyword = k;
+                    db.tbl_question_keywords.Add(key);
+                    db.SaveChanges();
+                }
+            }
+            else
+            {
+                q = db.tbl_questions.Find(q_id);
+                q.subject = q_subject;
+                q.fk_jobDesc = jobDescId;
+                q.fk_depObj= depObjId;
+                q.fk_strategy = strategyId;
+
+                db.SaveChanges();
+
+                tbl_question_solutions s = db.tbl_question_solutions.Where(x => x.fk_question == q_id && x.fk_employee == fk_emp).Select(x => x).FirstOrDefault();
+                if (s != null)
+                {
+                   s.solution=q_solution;
+                    db.SaveChanges();
+                }
+
+                db.tbl_question_keywords.RemoveRange(db.tbl_question_keywords.Where(x => x.fk_question == q_id));
+                tbl_question_keywords key;
+                foreach (string k in keywords)
+                {
+                    key = new tbl_question_keywords();
+                    key.fk_question = q_id;
+                    key.keyword = k;
+                    db.tbl_question_keywords.Add(key);
+                    db.SaveChanges();
+                }
+
+                
+            }
+
+
+        }
+
+
+
+        public void InsertNewSolution(long q_id, string new_solution, string pcode)
+        {
+            int fk_emp = db.tbl_employee.Where(x => x.personel_code == pcode).Select(x => x.pkey).First();
+
+            if (!String.IsNullOrEmpty(new_solution))
+            {
+                tbl_question_solutions s = new tbl_question_solutions { fk_employee = fk_emp, fk_question = q_id, solution = new_solution };
+                db.tbl_question_solutions.Add(s);
+                db.SaveChanges();
+            }
+
+        }
+        
+        public void DeleteQuestion(long q_id)
+        {
+            tbl_questions s = db.tbl_questions.Find(q_id);
+            db.tbl_questions.Remove(s);
+            db.SaveChanges();
+        }
+
+        public string get_question_name(int q_id)
+        {
+            string question_name = db.tbl_questions.Find(q_id).subject;
+            return question_name;
+        }
+
+        #endregion Question
+
+        public void alterdb()
+        {
+            
+             
+
+
+        }
+
+    }
+}
