@@ -25,20 +25,20 @@
                         بخش های سیستم
                     </a>
                 </li>
-                
-                <li style="visibility:hidden">
+                @if (ViewBag.dataentry)
+                {<li>
                     <a href="/InsertInfo/Index"><i class="fa fa-fw fa-folder"></i>ورود اطلاعات و دانش</a>
-                </li>
-                <li class="dropdown" >
+                </li>}
+               @if(ViewBag.dataview){ <li class="dropdown" >
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-fw fa-search"></i>جستجوی راهکار<span class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu">
                         <li class="dropdown-header"></li>
                         <li><a href="/SearchInfo/SearchAll">جستجو بر اساس کلیدواژه</a></li>
                         <li><a href="/SearchInfo/SearchKey">تمام کلیدواژه های موجود</a></li>
                     </ul>
-                </li>
+                </li>}
                <li>
-                    <a href="/InsertInfo/EditProfile"><i class="fa fa-fw fa-user"></i>ویرایش اطلاعات پرسنلی</a>
+                   <a href="/EmployeeProfile/Index"><i class="fa fa-fw fa-user"></i>ویرایش اطلاعات پرسنلی</a>
                 </li>
                 <li>
                     <a href="/Home/Logout"><i class="fa fa-fw fa-sign-out"></i>خروج</a>

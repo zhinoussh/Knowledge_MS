@@ -20,6 +20,17 @@ namespace Knowledge_Management.Controllers
             o.solutions = DAL.get_Solutions(id);
             o.question = DAL.get_question_name(id);
             o.new_solution = "";
+
+            string cookieName = FormsAuthentication.FormsCookieName; //Find cookie name
+            HttpCookie authCookie = HttpContext.Request.Cookies[cookieName]; //Get the cookie by it's name
+            FormsAuthenticationTicket ticket = FormsAuthentication.Decrypt(authCookie.Value); //Decrypt it
+            string UserName = ticket.Name; //You have the UserName!
+
+            List<string> emp_prop = DAL.get_Employee_prop(UserName);
+
+            ViewBag.dataentry = Boolean.Parse(emp_prop[2]);
+            ViewBag.dataview = Boolean.Parse(emp_prop[3]);
+
             return View(o);
         }
 

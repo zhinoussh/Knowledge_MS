@@ -121,6 +121,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\DepartmentController.cs" />
     <Compile Include="Controllers\EmployeeController.cs" />
+    <Compile Include="Controllers\EmployeeProfileController.cs" />
     <Compile Include="Controllers\InsertInfoController.cs" />
     <Compile Include="Controllers\JobController.cs" />
     <Compile Include="Controllers\JobDescriptionController.cs" />
@@ -276,6 +277,7 @@
     <Content Include="Views\InsertInfo\_PartialDeleteQuestion.cshtml" />
     <Content Include="Views\SearchInfo\SearchAll.cshtml" />
     <Content Include="Views\Solution\Solutions.cshtml" />
+    <Content Include="Views\EmployeeProfile\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

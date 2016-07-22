@@ -30,14 +30,22 @@ namespace Knowledge_Management.Controllers
                 {
                     ViewBag.Fail = "false";
                     FormsAuthentication.SetAuthCookie(user.username, false);
-                   // return RedirectToAction("Strategy", "Management");
-                    if(role=="1")
-                     //   return RedirectToAction("Index", "Strategy");
+                    if (role == "1")
                         return Json(new { url = "/Strategy/Index" });
                     else
-                       // return RedirectToAction("Index", "InsertInfo");
-                       return Json(new { url = "/InsertInfo/Index" });
+                    {
+                        List<string> emp_prop = DAL.get_Employee_prop(user.username);
 
+                        bool dtentry = Boolean.Parse(emp_prop[2]);
+                        bool dtview = Boolean.Parse(emp_prop[3]);
+
+                        if(dtentry)
+                            return Json(new { url = "/InsertInfo/Index" });
+                        else if (dtview)
+                            return Json(new { url = "/SearchInfo/SearchAll" });
+                        else
+                            return Json(new { url = "/EmployeeProfile/Index" });
+                    }
                 }
 
                 ViewBag.Fail = "true";
