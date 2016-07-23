@@ -127,6 +127,7 @@
     <Compile Include="Controllers\JobDescriptionController.cs" />
     <Compile Include="Controllers\ObjectiveDepartmentController.cs" />
     <Compile Include="Controllers\SearchInfoController.cs" />
+    <Compile Include="Controllers\SearchKeyController.cs" />
     <Compile Include="Controllers\SolutionController.cs" />
     <Compile Include="Migrations\201607161415237_alterQuestion.cs" />
     <Compile Include="Migrations\201607161415237_alterQuestion.Designer.cs">
@@ -165,6 +166,7 @@
     <Compile Include="ViewModels\JobDescriptionViewModel.cs" />
     <Compile Include="ViewModels\JobViewModel.cs" />
     <Compile Include="ViewModels\QuestionViewModel.cs" />
+    <Compile Include="ViewModels\SearchKeywordViewModel.cs" />
     <Compile Include="ViewModels\SolutionViewModel.cs" />
     <Compile Include="ViewModels\StrategyViewModel.cs" />
   </ItemGroup>
@@ -220,6 +222,7 @@
     <Content Include="Scripts\Datatables\EmployeeDT.js" />
     <Content Include="Scripts\Datatables\JobDescDT.js" />
     <Content Include="Scripts\Datatables\JobDT.js" />
+    <Content Include="Scripts\Datatables\KeywordDT.js" />
     <Content Include="Scripts\Datatables\ObjectiveDT.js" />
     <Content Include="Scripts\Datatables\QuestionDT.js" />
     <Content Include="Scripts\Datatables\SearchQuestionDT.js" />
@@ -278,6 +281,7 @@
     <Content Include="Views\SearchInfo\SearchAll.cshtml" />
     <Content Include="Views\Solution\Solutions.cshtml" />
     <Content Include="Views\EmployeeProfile\Index.cshtml" />
+    <Content Include="Views\SearchKey\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

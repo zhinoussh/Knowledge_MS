@@ -21,7 +21,11 @@ namespace Knowledge_Management.ViewModels
 
         [Display(Name = "راهکار: ")]        
         public string solution { get; set; }
+        
         public int? dep_obj_id { get; set; }
+
+        [Display(Name = "هدف واحد سازمانی")]
+        public string dep_objective { get; set; }
 
         [Display(Name = "هدف واحد سازمانی")]
         public SelectList lst_dep_objective { get; set; }
@@ -29,9 +33,15 @@ namespace Knowledge_Management.ViewModels
         public long? job_desc_id { get; set; }
 
         [Display(Name = "شرح شغل")]
+        public string job_desc { get; set; }
+
+        [Display(Name = "شرح شغل")]
         public SelectList lst_job_desc { get; set; }
 
         public int? strategy_id { get; set; }
+
+        [Display(Name = "شرح استراتژی")]
+        public string strategy_name { get; set; }
         
         [Display(Name = "استراتژی")]
         public SelectList lst_strategy { get; set; }

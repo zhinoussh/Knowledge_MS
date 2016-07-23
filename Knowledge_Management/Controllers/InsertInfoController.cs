@@ -28,7 +28,7 @@ namespace Knowledge_Management.Controllers
             List<string> emp_prop = DAL.get_Employee_prop(UserName);
             int dep_id = Int32.Parse(emp_prop[0]);
             int job_id = Int32.Parse(emp_prop[1]);
-           
+
             ViewBag.dataentry = Boolean.Parse(emp_prop[2]);
             ViewBag.dataview = Boolean.Parse(emp_prop[3]);
 
