@@ -13,7 +13,7 @@ namespace Knowledge_Management.Controllers
     public class SearchInfoController : Controller
     {
         // GET: SearchInfo
-        public ActionResult SearchAll()
+        public ActionResult SearchAll(int?id)
         {
             KnowledgeMSDAL DAL = new KnowledgeMSDAL();
 
@@ -27,15 +27,25 @@ namespace Knowledge_Management.Controllers
             ViewBag.dataentry = Boolean.Parse(emp_prop[2]);
             ViewBag.dataview = Boolean.Parse(emp_prop[3]);
 
+
+            ViewBag.key_id = id == null ? 0 : id;
+            
             return View();
         }
+
+       
         
         public ActionResult SearchQuestionAjaxHandler(jQueryDataTableParamModel request)
         {
             KnowledgeMSDAL DAL = new KnowledgeMSDAL();
-
+            List<QuestionViewModel> all_items = new List<QuestionViewModel>();
             
-            List<QuestionViewModel> all_items = DAL.get_all_Questions();
+            long key_id = Request["key_id"].ToString() == "" ? 0 : Convert.ToInt32(Request["key_id"].ToString());
+            
+            if(key_id==0)
+                all_items = DAL.get_all_Questions();
+            else
+                all_items = DAL.get_all_Questionsby_key(key_id);
 
             //filtering 
             List<QuestionViewModel> filtered = new List<QuestionViewModel>();
@@ -61,14 +71,17 @@ namespace Knowledge_Management.Controllers
 
             var indexed_list = filtered.Select((s, index) => new
             {
-                QID = s.question_id + "",
+                QID = s.question_id + "",                               
+                KeyWords = s.lst_keywords,
+                Dep_Obj = s.dep_objective,
+                Strategy = s.strategy_name,
+                Job_Desc = s.job_desc,
                 QIndex = (index + 1) + "",
-                QSubject = s.question,               
-                KeyWords = s.lst_keywords
+                QSubject = s.question
             });
 
             var result = from s in indexed_list
-                         select new[] { s.QID, s.KeyWords, s.QIndex, s.QSubject };
+                         select new[] { s.QID, s.KeyWords, s.Job_Desc, s.Dep_Obj,s.Strategy, s.QIndex, s.QSubject };
 
 
 

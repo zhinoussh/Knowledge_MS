@@ -4,14 +4,39 @@
 
 }
 
-<div style="float:right; width:100%;margin:5% 0 2% 0">
+<h5>لیست مسئله ها</h5>
+<span class="border_admin" style="margin-bottom:0;"></span>
+
+<div style="float:right; width:100%; margin-top:2%; ">
+
+    <div class="field_title" style="width:100%">
+        <label id="keywords"></label>
+    </div>
+    <div class="field_title" style="width:100%">
+        <label id="strategy_name"></label>
+    </div>
+    <div class="field_title" style="width:100%">
+        <label id="dep_objective"></label>
+    </div>
+    <div class="field_title" style="width:100%">
+        <label id="job_desc"></label>
+    </div>
+    <input type="hidden" id="hd_id_keyword" value="@ViewBag.key_id"/>
+   
+</div>
+
+<div style="float:right; width:100%;margin:2% 0 2% 0">
     <table id="SearchQuestionDT" class="display">
         <thead>
             <tr>
                 <th>ID</th>
                 <th>Keywords</th>
+                <th>job_Desc</th>
+                <th>dep_Obj</th>
+                <th>Strategy</th>
                 <th class="dt-head-right">ردیف</th>
                 <th class="dt-head-right">شرح مسئله</th>
+                <th>جزئیات</th>
                 <th>راهکارها</th>
             </tr>
         </thead>
