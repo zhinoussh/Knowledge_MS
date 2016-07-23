@@ -627,7 +627,7 @@ namespace Knowledge_Management.DAL
             if (st_id != 0)
                 query = query.Where(x => x.strategy_id == st_id);
 
-            return query.OrderBy(x => x.keyword).ToList();
+            return query.GroupBy(x => x.keyword).Select(g => g.FirstOrDefault()).OrderBy(x => x.keyword).ToList();
         }
 
          #endregion Keyword
