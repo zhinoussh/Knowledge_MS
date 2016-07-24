@@ -163,6 +163,7 @@
     <Compile Include="Models\tbl_strategy.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\EmployeeViewModel.cs" />
+    <Compile Include="ViewModels\FullSolutionViewModel.cs" />
     <Compile Include="ViewModels\JobDescriptionViewModel.cs" />
     <Compile Include="ViewModels\JobViewModel.cs" />
     <Compile Include="ViewModels\QuestionViewModel.cs" />
@@ -279,9 +280,10 @@
     <Content Include="Views\InsertInfo\Index.cshtml" />
     <Content Include="Views\InsertInfo\_PartialDeleteQuestion.cshtml" />
     <Content Include="Views\SearchInfo\SearchAll.cshtml" />
-    <Content Include="Views\Solution\Solutions.cshtml" />
+    <Content Include="Views\Solution\Index.cshtml" />
     <Content Include="Views\EmployeeProfile\Index.cshtml" />
     <Content Include="Views\SearchKey\Index.cshtml" />
+    <Content Include="Views\Solution\FullSolution.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

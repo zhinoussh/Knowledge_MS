@@ -69,7 +69,7 @@
                            "sDefaultContent": " "
                             , "sClass": "dt-body-center",
                            "mRender": function (data, type, row) {
-                               return "<a class='glyphicon glyphicon-list-alt a_clickable' href='/Solution/Solutions/" + row[0] + "'></a>"
+                               return "<a class='glyphicon glyphicon-list-alt a_clickable' href='/Solution/Index/" + row[0] + "'></a>"
                            }
                        }
 

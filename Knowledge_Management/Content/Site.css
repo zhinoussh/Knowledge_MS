@@ -359,8 +359,8 @@ width:80px;
 .field_title {
     float:right;
   direction:rtl;
-  font-size:13pt;
-  color:#4800ff;
+  font-size:10pt;
+  color:#d80731;
 }
 
 .fa-sign-out {
@@ -375,5 +375,12 @@ color:#36cc8b
 }
 .fa-cog {
     color:#288df5
+}
+
+.link_solution {
+    text-decoration:underline;
+    color:#4800ff;
+  font-size:11pt;
+
 }
 

@@ -492,15 +492,43 @@ namespace Knowledge_Management.DAL
             return lst_questions;
         }
 
-        public List<string> get_Solutions(int question_id)
+        public string[][] get_Solutions(int question_id)
         {
-            List<string> lst_solutions = (from s in db.tbl_question_solutions
-                                                              where s.fk_question == question_id
-                                                              select s).OrderBy(x => x.pkey)
-                                                             //  .Select((x, index) => new { Solution = x.solution, Index = index +1 });
-                                                              .Select(x=>x.solution).ToList();
+           string [][] lst_solutions=null;
+           var query = (from s in db.tbl_question_solutions
+                            where s.fk_question == question_id
+                            select s).OrderBy(x => x.pkey)
+                            .Select(x => new { x.pkey ,x.solution });
 
+
+            lst_solutions=new string[query.Count()][];
+
+            if (lst_solutions != null)
+            {
+                int i = 0;
+                foreach (var item in query)
+                {
+                    lst_solutions[i] = new string[2];
+                    lst_solutions[i][0] = item.pkey + "";
+                    lst_solutions[i][1] = item.solution + "";
+                    i++;
+                }
+            }
             return lst_solutions;
+        }
+
+
+        public FullSolutionViewModel get_Solution_by_id(int solution_id)
+        {
+            FullSolutionViewModel temp = (from s in db.tbl_question_solutions
+                                      join q in db.tbl_questions on s.fk_question equals q.pkey
+                                      where s.pkey==solution_id
+                                      select new FullSolutionViewModel{
+                                          full_solution=s.solution,
+                                          question=q.subject                                     
+                                      }).First();
+
+            return temp;
         }
 
         public void InsertQuestion(long q_id, string q_subject,int? depObjId,long? jobDescId,int? strategyId,string q_solution
