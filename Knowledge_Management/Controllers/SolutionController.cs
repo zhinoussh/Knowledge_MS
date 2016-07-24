@@ -12,7 +12,7 @@ namespace Knowledge_Management.Controllers
     public class SolutionController : Controller
     {
 
-        public ActionResult Solutions(int id)
+        public ActionResult Index(int id)
         {
             SolutionViewModel o = new SolutionViewModel();
             KnowledgeMSDAL DAL = new KnowledgeMSDAL();
@@ -58,10 +58,30 @@ namespace Knowledge_Management.Controllers
 
 
                 DAL.InsertNewSolution(q.question_id, q.new_solution, UserName);
-                return Json(new { msg = "راهکار با موفقیت ذخیره شد", url = "/Solution/Solutions/" + q.question_id });
+                return Json(new { msg = "راهکار با موفقیت ذخیره شد", url = "/Solution/Index/" + q.question_id });
             }
 
             return View(q);
+        }
+
+        public ActionResult FullSolution(int id)
+        {
+            KnowledgeMSDAL DAL = new KnowledgeMSDAL();
+
+            string cookieName = FormsAuthentication.FormsCookieName; //Find cookie name
+            HttpCookie authCookie = HttpContext.Request.Cookies[cookieName]; //Get the cookie by it's name
+            FormsAuthenticationTicket ticket = FormsAuthentication.Decrypt(authCookie.Value); //Decrypt it
+            string UserName = ticket.Name; //You have the UserName!
+
+            List<string> emp_prop = DAL.get_Employee_prop(UserName);
+
+            ViewBag.dataentry = Boolean.Parse(emp_prop[2]);
+            ViewBag.dataview = Boolean.Parse(emp_prop[3]);
+
+            FullSolutionViewModel s = new FullSolutionViewModel();
+            s= DAL.get_Solution_by_id(id);            
+
+            return View(s);
         }
 
     }
