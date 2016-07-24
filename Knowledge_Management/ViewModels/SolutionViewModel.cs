@@ -15,7 +15,7 @@ namespace Knowledge_Management.ViewModels
 
         [Display(Name = "راهکار جدید: ")]
         public string new_solution { get; set; }
-        public List<string> solutions { get; set; }
+        public string[][] solutions { get; set; }
 
 
     }
