@@ -137,10 +137,15 @@
     <Compile Include="Migrations\201607170505038_alterWrongRelations.Designer.cs">
       <DependentUpon>201607170505038_alterWrongRelations.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201607270652478_add_tbl_solution_uploads.cs" />
+    <Compile Include="Migrations\201607270652478_add_tbl_solution_uploads.Designer.cs">
+      <DependentUpon>201607270652478_add_tbl_solution_uploads.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Employee.cs" />
     <Compile Include="Models\tbl_questions.cs" />
     <Compile Include="Models\tbl_question_solutions.cs" />
+    <Compile Include="Models\tbl_solution_uploads.cs" />
     <Compile Include="ViewModels\DepartmentObjectiveViewModel.cs" />
     <Compile Include="ViewModels\DepartmentViewModel.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -170,6 +175,7 @@
     <Compile Include="ViewModels\SearchKeywordViewModel.cs" />
     <Compile Include="ViewModels\SolutionViewModel.cs" />
     <Compile Include="ViewModels\StrategyViewModel.cs" />
+    <Compile Include="ViewModels\UploadViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\ExploreCalifornia.mdf" />
@@ -195,11 +201,14 @@
     <Content Include="Content\img\ui-icons_454545_256x240.png" />
     <Content Include="Content\img\ui-icons_888888_256x240.png" />
     <Content Include="Content\img\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Content\img\uploadify-cancel.png" />
+    <Content Include="Content\img\uploadify.swf" />
     <Content Include="Content\jquery-ui-1.7.2.custom.css" />
     <Content Include="Content\jquery-ui.css" />
     <Content Include="Content\lang.txt" />
     <Content Include="Content\sidebar_css.css" />
     <Content Include="Content\style_login.css" />
+    <Content Include="Content\uploadify.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -227,6 +236,7 @@
     <Content Include="Scripts\Datatables\ObjectiveDT.js" />
     <Content Include="Scripts\Datatables\QuestionDT.js" />
     <Content Include="Scripts\Datatables\SearchQuestionDT.js" />
+    <Content Include="Scripts\Datatables\UploadDT.js" />
     <Content Include="Scripts\DynamicField.js" />
     <Content Include="Scripts\jquery-2.2.3.js" />
     <Content Include="Scripts\jquery-2.2.3.min.js" />
@@ -237,6 +247,8 @@
     <Content Include="Scripts\jquery.dataTables.min.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
+    <Content Include="Scripts\jquery.uploadify.js" />
+    <Content Include="Scripts\jquery.uploadify.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -284,6 +296,8 @@
     <Content Include="Views\EmployeeProfile\Index.cshtml" />
     <Content Include="Views\SearchKey\Index.cshtml" />
     <Content Include="Views\Solution\FullSolution.cshtml" />
+    <Content Include="Views\Solution\NewSolution.cshtml" />
+    <Content Include="Views\Solution\_PartialDeleteUpload.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -299,8 +313,13 @@
     <EmbeddedResource Include="Migrations\201607170505038_alterWrongRelations.resx">
       <DependentUpon>201607170505038_alterWrongRelations.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201607270652478_add_tbl_solution_uploads.resx">
+      <DependentUpon>201607270652478_add_tbl_solution_uploads.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Upload\" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
