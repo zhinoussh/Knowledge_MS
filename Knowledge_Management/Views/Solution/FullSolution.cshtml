@@ -10,7 +10,7 @@
 
 
 
-    <div style="float:right; width:100%; ">
+    <div class="question_box">
 
         <div class="field_title" style="width:8%;">
             @Html.LabelFor(model => model.question)
@@ -20,11 +20,8 @@
         </div>
     </div>
 
-    <div style="float:right; width:100%; ">
+    <div style="float:right; width:98%; margin-top:3%">
 
-        <div class="editor-field" style="width:8%;">
-            @Html.LabelFor(model => model.full_solution)
-        </div>
         <div class="editor-field" style="width:100%;margin-top:8px">
             @Html.DisplayFor(model => model.full_solution)
         </div>
