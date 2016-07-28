@@ -8,6 +8,11 @@
 
     public partial class tbl_question_solutions
     {
+        public tbl_question_solutions()
+        {
+            tbl_solution_uploads = new HashSet<tbl_solution_uploads>();
+        }
+        
         [Key]
         public long pkey { get; set; }
 
@@ -23,6 +28,9 @@
 
         [ForeignKey("fk_employee")]
         public virtual tbl_employee tbl_employee { get; set; }
+
+        public virtual ICollection<tbl_solution_uploads> tbl_solution_uploads { get; set; }
+
     }
 }
 
