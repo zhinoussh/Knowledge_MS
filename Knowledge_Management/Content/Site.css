@@ -82,6 +82,11 @@ textarea {
     color:#815eae;    
 }
 
+.glyphicon-list {
+   font-size:22px;
+    color:#4304e3; 
+
+}
 .glyphicon-edit  {
      font-size:20px;
     color:#eff561;  
@@ -92,18 +97,22 @@ textarea {
     color:#36cc8b;  
 }
 
-.glyphicon-list {
+.glyphicon-file {
      font-size:20px;
-    color:#4800ff; 
+    color:#288df5; 
+}
+.glyphicon-file:hover {
+     font-size:22px;
+    color:#095bae; 
 }
  .glyphicon-list:hover {
-     font-size:22px;
-    color:#4800ff;  
+     font-size:23px;
+    color:#2d0396;  
     text-decoration:none; 
     }
   .glyphicon-list-alt:hover {
      font-size:22px;
-    color:#329c6e;  
+    color:#0e814f;  
     text-decoration:none; 
     }
 
@@ -236,21 +245,22 @@ float:right;
 .btn_add {
     float: right;
     margin-right:2%;
-    width:100px;
+    width:120px;
 }
 
 
 .btn-primary { 
     width:100%;
     height: 35px;
-    background-image: -webkit-linear-gradient(top, #54589f 0%, #8d90bf 100%);
-  background-image:      -o-linear-gradient(top, #54589f 0%, #8d90bf 100%);
-  background-image: -webkit-gradient(linear, left top, left bottom, from(#54589f), to(#8d90bf));
-  background-image:         linear-gradient(to bottom, #54589f 0%, #8d90bf 100%);
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff54589f', endColorstr='#ff8d90bf', GradientType=0);
+    background-image: -webkit-linear-gradient(top, #54589f 0%, #8588c1 100%);
+  background-image:      -o-linear-gradient(top, #54589f 0%, #8588c1 100%);
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#54589f), to(#8588c1));
+  background-image:         linear-gradient(to bottom, #54589f 0%, #8588c1 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff54589f', endColorstr='#ff8588c1', GradientType=0);
   filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
   background-repeat: repeat-x;
   border-color: #54589f;
+  box-shadow:#B4B5B5 5px 5px 5px 0;
 }
 
     .btn-primary:active:focus {
@@ -290,8 +300,19 @@ cursor:pointer;
 }
 
 /* Modal CSS For Delete*/
-
-
+.modal-header-info {
+     height:50px;
+	color:#fff;
+    padding:8px;
+    border-bottom:1px solid #eee;
+    background-color: #288df5;
+    -webkit-border-top-left-radius: 5px;
+    -webkit-border-top-right-radius: 5px;
+    -moz-border-radius-topleft: 5px;
+    -moz-border-radius-topright: 5px;
+     border-top-left-radius: 5px;
+     border-top-right-radius: 5px;
+}
 .modal-header-danger {
       
     height:50px;
@@ -313,10 +334,25 @@ cursor:pointer;
          color:#fff;
     }
     .modal-body{
-
-         font-size:11pt;
+         overflow-y: auto;
+         font-size:10pt;
     }
+.border-modal {
+    height: 400px;
+    float: right;
+    width: 100%;
+    height: 98%;
+    border: 1px solid #a9a6a6;
+    box-shadow:#e2e2e2 0px 0px 5px 5px;
+    padding-right: 8px;
+}
 
+.glyphicon-info-sign {
+     color:#fff; 
+     font-size:20pt;
+     padding:0;
+     float:left;
+}
 .glyphicon-alert {
 margin-right:10px;
      color:#fff; 
@@ -360,7 +396,7 @@ width:80px;
     float:right;
   direction:rtl;
   font-size:10pt;
-  color:#d80731;
+  color:#fff;
 }
 
 .fa-sign-out {
@@ -369,18 +405,49 @@ width:80px;
 .fa-bank,.fa-user {
 color:#36cc8b
 }
-
-.fa-folder,.fa-search {
+.fa-pencil-square-o {
     color:#f9f67a
+
+}
+.fa-search {
+color:#288df5;
 }
 .fa-cog {
     color:#288df5
 }
 
 .link_solution {
-    text-decoration:underline;
-    color:#4800ff;
   font-size:11pt;
+    color:#623799;
 
 }
+.link_solution:hover {
+    text-decoration:underline;
+    color:#7222d9;
+  font-size:12pt;
+}
 
+.table-striped > tbody > tr:nth-of-type(odd) {
+  background-color: #d5d8f4;
+}
+
+.table-striped > tbody > tr:nth-of-type(even) {
+  background-color: #f9f9f9;
+}
+
+.question_box {
+    float: right;
+    width: 98%;
+    margin-top: 3%;
+    border-radius: 5px;
+ background: -webkit-linear-gradient(to left, #5C258D , #4389A2); /* Chrome 10-25, Safari 5.1-6 */
+background: linear-gradient(to left, #5C258D , #4389A2); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    padding: 8px;
+    min-height: 100px;
+    overflow-y: auto;
+}
+
+thead th {
+  background-color: #006DCC;
+  color: white;
+}
