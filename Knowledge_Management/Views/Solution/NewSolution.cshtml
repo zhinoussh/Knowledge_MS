@@ -1,0 +1,136 @@
+﻿@using Knowledge_Management.ViewModels
+@model SolutionViewModel
+@{
+
+    ViewBag.Title = "راهکار جدید";
+    Layout = "~/Views/Shared/_EmployeeLayout.cshtml";
+}
+
+@section HeadSection{
+    <link href="~/Content/uploadify.css" rel="stylesheet" />
+}
+
+<!-- Modal -->
+<div class="modal fade" id="DeleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" id="confirm-container">
+
+        </div>
+    </div>
+</div>
+<!-- /end Modal -->
+
+
+<h5>راهکار جدید</h5>
+<span class="border_admin" style="margin-bottom:0;"></span>
+
+
+<div class="question_box">
+
+    <div class="field_title" style="width:8%">
+        @Html.LabelFor(model => model.question)
+    </div>
+
+    <div class="field_title" style="width:85%;margin-top:5px">
+        @Html.DisplayFor(model => model.question)
+    </div>
+</div>
+
+@using (Ajax.BeginForm("Add_New_Solution", "Solution"
+                    , new AjaxOptions
+                    {
+                        InsertionMode = InsertionMode.ReplaceWith,
+                        HttpMethod = "Post",
+                        OnSuccess = "SuccessMessage"
+                    }))
+{
+    @Html.AntiForgeryToken()
+
+
+    @Html.HiddenFor(model => model.question_id, new { id = "hd_id_question" })
+    @Html.HiddenFor(model => model.new_solution_id, new { id = "hd_id_new_solution" })
+
+
+        <div class="editor-field" style="width:98%;margin-top:3%">
+            @Html.TextAreaFor(model => model.new_solution, new { @class = "multiline_textbox", id = "txt_new_solution", @placeholder = "شرح راهکار...",style="height:300px" })
+        </div>
+    <div class="editor-field" style="width:98%;">
+            @Html.ValidationMessageFor(model => model.new_solution, "", new { @class = "error" })
+    </div>
+    <div class="editor-field" style="width:98%;margin-top:1%">
+        <a href="#" class="close" data-dismiss="alert">&times;</a>
+        <label class="alert alert_success" id="alert_success" role="alert"></label>
+    </div>
+
+        <div class="btn_add" style="margin:0 40% 0 0; width:200px">
+            <input type="submit" class="btn btn-primary" value="ثبت راهکار" />
+        </div>
+
+
+        <div class="btn_add" style="margin:2% 48% 0 0;">
+            <input type="file" name="file_upload" id="file_upload" />
+        </div>
+        }
+
+        <table id="UploadDT" class="display">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>FilePath</th>
+                    <th class="dt-head-right">ردیف</th>
+                    <th class="dt-head-right">شرح بارگذاری</th>
+                    <th>دانلود</th>
+                    <th>حذف</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+
+        @section scripts{
+            <script src="~/Scripts/Datatables/UploadDT.js"></script>
+            <script src="~/Scripts/jquery.uploadify.js"></script>
+            <script type="text/javascript">
+                var SuccessMessage = function (result) {
+                    if (result.msg) {
+                        $("#alert_success").html(result.msg);
+                    }
+
+                }
+
+                $(function () {
+                   
+                    $('#file_upload').uploadify({
+                        'swf': "@Url.Content("~/Content/img/uploadify.swf")",
+                        'uploader': "@Url.Action("Upload", "Solution")",
+                        // 'formData': { solution_id: $("#hd_id_new_solution").val(), question_id: $("#hd_id_question").val() },
+                        'onUploadStart' : function(file) {
+                            $('#file_upload').uploadify('settings','formData',{
+                                'solution_id': $('#hd_id_new_solution').val(),
+                                'question_id': $('#hd_id_question').val()
+                            });
+                        }
+                        ,'onUploadSuccess': function (file, data, response) {
+                            $("#alert_success").html('فایل با موفقیت بارگذاری شد');
+                            $("#hd_id_new_solution").val(data);
+                            alert($("#hd_id_new_solution").val());
+                            var $STTable = $("#UploadDT").dataTable({ bRetrieve: true });
+                            $STTable.fnDraw();
+                            //data is whatever you return from the server
+                            //we're sending the URL from the server so we append this as an image to the #uploaded div
+                            //  $("#uploaded").append("<img src='" + data + "' alt='Uploaded Image' />");
+                        },
+                        'onError': function (a, b, c, d) {
+                            if (d.status == 404)
+                                alert('Could not find upload script.');
+                            else if (d.type === "HTTP")
+                                alert('error ' + d.type + ": " + d.status);
+                            else if (d.type === "File Size")
+                                alert(c.name + ' ' + d.type + ' Limit: ' + Math.round(d.sizeLimit / 1024) + 'KB');
+                            else
+                                alert('error ' + d.type + ": " + d.text);
+                        }
+                    })
+                });
+
+            </script>
+        }

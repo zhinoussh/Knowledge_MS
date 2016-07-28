@@ -11,7 +11,7 @@
 <span class="border_admin" style="margin-bottom:0;"></span>
 
 
-<div style="float:right; width:100%; margin-top:2%; ">
+<div class="question_box">
 
     <div class="field_title" style="width:8%">
         @Html.LabelFor(model => model.question)
@@ -21,69 +21,19 @@
         @Html.DisplayFor(model => model.question)
     </div>
 </div>
-@using (Ajax.BeginForm("Add_New_Solution", "Solution"
-                    , new AjaxOptions
-                    {
-                        InsertionMode = InsertionMode.ReplaceWith,
-                        HttpMethod = "Post",
-                        OnSuccess = "SuccessMessage"
-                    }))
-{
-    @Html.AntiForgeryToken()
 
+        <div style="float:right; width:98%;margin-top:5%">
 
-@Html.HiddenFor(model => model.question_id, new { id = "hd_id_question" })
-
-<div style="float:right; width:100%; ">
-
-    <div class="editor-field" style="width:8%;">
-        @Html.LabelFor(model => model.new_solution)
-    </div>
-
-    <div class="editor-field" style="width:89%;">
-        @Html.TextAreaFor(model => model.new_solution, new { @class = "multiline_textbox", id = "txt_new_solution" })
-    </div>
-</div>
-
-<div style="float:right; width:100%; margin-bottom:3%">
-
-    <div class="btn_add" style="margin-right:85%">
-        <input type="submit" class="btn btn-primary" value="ثبت" />
-    </div>
-</div>
-
-    <label class="alert-danger" id="alert_success"></label>
-}
-   
-<div style="float:right; width:100%;">
-    
-       
-            <ol style="direction:rtl">
+            <table class="table table-striped table-bordered">
                 @foreach (var item in Model.solutions)
                 {
-                    <li>
-                        @Html.ActionLink(item[1], "FullSolution", new { id = item[0] }, new { target = "_blank" ,@class="link_solution"})
-                    </li>
+                    <tr>
+                        <td>
+                            @Html.ActionLink(item[1], "FullSolution", new { id = item[0] }, new { target = "_blank", @class = "link_solution" })
+                        </td>
+                    </tr>
                 }
-            </ol>
-            
-        
-    </div>
+            </table>
 
-@section scripts{
+        </div>
 
-        <script type="text/javascript">
-            var SuccessMessage = function (result) {
-            if (result.msg) {
-                $("#alert_success").html(result.msg);
-                $("#txt_new_solution").val("");
-            }
-             if (result.url) {
-                        // if the server returned a JSON object containing an url
-                        // property we redirect the browser to that url
-                        window.location.href = result.url;
-                    }
-            }
-
-            </script>
-}

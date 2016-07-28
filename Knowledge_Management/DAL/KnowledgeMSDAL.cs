@@ -25,13 +25,13 @@ namespace Knowledge_Management.DAL
                 string pass = (new Encryption()).Encrypt(password);
                 string role = (from l in db.tbl_login
                                where l.username.Equals(username) & l.pass.Equals(pass)
-                               select l.role).First();
+                               select l.role).FirstOrDefault();
 
                 return role;
             }
             catch (Exception e1)
             {
-                return e1.ToString();
+                return "";
             }
         }
 
@@ -247,7 +247,7 @@ namespace Knowledge_Management.DAL
                                     e.data_entry+"",
                                     e.data_view+"",
                                     e.fname+" "+e.lname
-                                }).First().ToList();
+                                }).FirstOrDefault().ToList();
 
             return lst_employee;
         }
@@ -492,45 +492,7 @@ namespace Knowledge_Management.DAL
             return lst_questions;
         }
 
-        public string[][] get_Solutions(int question_id)
-        {
-           string [][] lst_solutions=null;
-           var query = (from s in db.tbl_question_solutions
-                            where s.fk_question == question_id
-                            select s).OrderBy(x => x.pkey)
-                            .Select(x => new { x.pkey ,x.solution });
-
-
-            lst_solutions=new string[query.Count()][];
-
-            if (lst_solutions != null)
-            {
-                int i = 0;
-                foreach (var item in query)
-                {
-                    lst_solutions[i] = new string[2];
-                    lst_solutions[i][0] = item.pkey + "";
-                    lst_solutions[i][1] = item.solution + "";
-                    i++;
-                }
-            }
-            return lst_solutions;
-        }
-
-
-        public FullSolutionViewModel get_Solution_by_id(int solution_id)
-        {
-            FullSolutionViewModel temp = (from s in db.tbl_question_solutions
-                                      join q in db.tbl_questions on s.fk_question equals q.pkey
-                                      where s.pkey==solution_id
-                                      select new FullSolutionViewModel{
-                                          full_solution=s.solution,
-                                          question=q.subject                                     
-                                      }).First();
-
-            return temp;
-        }
-
+      
         public void InsertQuestion(long q_id, string q_subject,int? depObjId,long? jobDescId,int? strategyId,string q_solution
             ,List<string> keywords,string pcode )
         {
@@ -602,20 +564,6 @@ namespace Knowledge_Management.DAL
         }
 
 
-
-        public void InsertNewSolution(long q_id, string new_solution, string pcode)
-        {
-            int fk_emp = db.tbl_employee.Where(x => x.personel_code == pcode).Select(x => x.pkey).First();
-
-            if (!String.IsNullOrEmpty(new_solution))
-            {
-                tbl_question_solutions s = new tbl_question_solutions { fk_employee = fk_emp, fk_question = q_id, solution = new_solution };
-                db.tbl_question_solutions.Add(s);
-                db.SaveChanges();
-            }
-
-        }
-        
         public void DeleteQuestion(long q_id)
         {
             tbl_questions s = db.tbl_questions.Find(q_id);
@@ -630,6 +578,87 @@ namespace Knowledge_Management.DAL
         }
 
         #endregion Question
+
+        #region Solution
+        public string[][] get_Solutions(int question_id)
+        {
+            string[][] lst_solutions = null;
+            var query = (from s in db.tbl_question_solutions
+                         where s.fk_question == question_id
+                         select s).OrderBy(x => x.pkey)
+                             .Select(x => new { x.pkey, x.solution });
+
+
+            lst_solutions = new string[query.Count()][];
+
+            if (lst_solutions != null)
+            {
+                int i = 0;
+                foreach (var item in query)
+                {
+                    lst_solutions[i] = new string[2];
+                    lst_solutions[i][0] = item.pkey + "";
+                    lst_solutions[i][1] = item.solution.Length <= 30 ? item.solution : item.solution.Substring(0, 30);
+                    i++;
+                }
+            }
+            return lst_solutions;
+        }
+
+
+        public FullSolutionViewModel get_Solution_by_id(int solution_id)
+        {
+            FullSolutionViewModel temp = (from s in db.tbl_question_solutions
+                                          join q in db.tbl_questions on s.fk_question equals q.pkey
+                                          where s.pkey == solution_id
+                                          select new FullSolutionViewModel
+                                          {
+                                              full_solution = s.solution,
+                                              question = q.subject
+                                          }).First();
+
+            return temp;
+        }
+
+        public long InsertNewSolution(long q_id, string new_solution, string pcode)
+        {
+            int fk_emp = db.tbl_employee.Where(x => x.personel_code == pcode).Select(x => x.pkey).First();
+
+            if (!String.IsNullOrEmpty(new_solution))
+            {
+                tbl_question_solutions s = new tbl_question_solutions { fk_employee = fk_emp, fk_question = q_id, solution = new_solution };
+                db.tbl_question_solutions.Add(s);
+                db.SaveChanges();
+                long newPK = s.pkey;
+                return newPK;
+            }
+            return 0;
+        }
+
+        public int get_count_solution_uploads(long new_sol_id)
+        {
+            int count_uploads = db.tbl_solution_uploads.Count(u => u.fk_solution == new_sol_id);
+            return count_uploads;
+        }
+
+        public List<tbl_solution_uploads> get_uploads_by_solution(long solution_id)
+        {
+            List<tbl_solution_uploads> lst_uploads = (from u in db.tbl_solution_uploads
+                                                      where u.fk_solution == solution_id
+                                                      select u).ToList();
+
+            return lst_uploads;
+          
+        }
+
+        public void InsertNewUpload(long solution_id, string filepath)
+        {
+            tbl_solution_uploads u = new tbl_solution_uploads { fk_solution = solution_id, file_path = filepath };
+            db.tbl_solution_uploads.Add(u);
+            db.SaveChanges();
+        }
+
+        #endregion Solution
 
         #region Keyword
 
@@ -668,5 +697,7 @@ namespace Knowledge_Management.DAL
 
         }
 
+
+       
     }
 }

@@ -22,6 +22,7 @@ namespace Knowledge_Management.Models
         public virtual DbSet<tbl_login> tbl_login { get; set; }
         public virtual DbSet<tbl_question_keywords> tbl_question_keywords { get; set; }
         public virtual DbSet<tbl_question_solutions> tbl_question_solutions { get; set; }
+        public virtual DbSet<tbl_solution_uploads> tbl_solution_uploads { get; set; }
         public virtual DbSet<tbl_questions> tbl_questions { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -100,6 +101,12 @@ namespace Knowledge_Management.Models
                 .WithOptional(e => e.tbl_questions)
                 .HasForeignKey(e => e.fk_question)
                 .WillCascadeOnDelete();
+
+            modelBuilder.Entity<tbl_question_solutions>()
+               .HasMany(e => e.tbl_solution_uploads)
+               .WithOptional(e => e.tbl_question_solutions)
+               .HasForeignKey(e => e.fk_solution)
+               .WillCascadeOnDelete();
         }
     }
 }
