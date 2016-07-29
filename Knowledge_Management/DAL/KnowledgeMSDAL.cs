@@ -67,7 +67,8 @@ namespace Knowledge_Management.DAL
 
         public void DeleteStrategy(int id)
         {
-            tbl_strategy s = db.tbl_strategy.Find(id);
+            //tbl_strategy s = db.tbl_strategy.Find(id);
+            tbl_strategy s = db.tbl_strategy.Where(x=>x.pkey==id).Include(x => x.tbl_questions).First();
             db.tbl_strategy.Remove(s);
             db.SaveChanges();
         }
@@ -154,7 +155,9 @@ namespace Knowledge_Management.DAL
 
         public void DeleteObjective(int id)
         {
-            tbl_department_objectives s = db.tbl_department_objectives.Find(id);
+           // tbl_department_objectives s = db.tbl_department_objectives.Find(id);
+            tbl_department_objectives s = db.tbl_department_objectives.Where(x => x.pkey == id).Include(x => x.tbl_questions).First();
+            
             db.tbl_department_objectives.Remove(s);
             db.SaveChanges();
         }
@@ -360,7 +363,8 @@ namespace Knowledge_Management.DAL
 
         public void DeleteJobDescription(int id)
         {
-            tbl_job_description s = db.tbl_job_description.Find(id);
+           // tbl_job_description s = db.tbl_job_description.Find(id);
+            tbl_job_description s = db.tbl_job_description.Where(x => x.pkey == id).Include(x => x.tbl_questions).First();
             db.tbl_job_description.Remove(s);
             db.SaveChanges();
         }
