@@ -106,6 +106,8 @@ textarea {
 .glyphicon-file:hover {
      font-size:22px;
     color:#095bae; 
+    text-decoration:none; 
+
 }
  .glyphicon-list:hover {
      font-size:23px;
