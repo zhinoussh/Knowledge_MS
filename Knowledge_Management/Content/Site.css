@@ -29,6 +29,7 @@ textarea {
 
 /* NAVBAR  Customization*/
 .navbar-default {
+    background-image: none;
   background-color: #565f73;
   border-color: #000000;
 }
@@ -43,13 +44,16 @@ textarea {
   background-color: #dee6f2;
 }
 
-
-
 .navbar-default .navbar-brand {
   color: #ffffff;
   font-family:'Myriad Arabic';
   font-size:18pt;
   font-weight:600;
+
+}
+.navbar-default .navbar-brand:hover {
+  color: #ffffff;
+
 }
 
 .dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus {
