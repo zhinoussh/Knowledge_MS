@@ -52,6 +52,7 @@ namespace Knowledge_Management.Controllers
 
             ViewBag.dataentry = Boolean.Parse(emp_prop[2]);
             ViewBag.dataview = Boolean.Parse(emp_prop[3]);
+            
 
             return View(o);
         }
@@ -72,6 +73,7 @@ namespace Knowledge_Management.Controllers
 
                 long new_id=DAL.InsertNewSolution(q.question_id, q.new_solution, UserName);
                 q.new_solution_id = new_id;
+                
                 return Json(new { msg = "راهکار با موفقیت ذخیره شد" });
             }
 
@@ -128,6 +130,7 @@ namespace Knowledge_Management.Controllers
 
             //save upload in DB
             DAL.InsertNewUpload(new_id, file_name);
+           
 
             return Content(new_id+"");
         }

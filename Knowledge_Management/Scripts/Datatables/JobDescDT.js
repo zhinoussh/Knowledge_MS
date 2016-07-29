@@ -53,6 +53,7 @@
     $("#reset_btn").click(function () {
         $("#frmJobDesc").find('input:text,textarea,field-validation-error').val("");
         $("#alert_success").empty();
+        $("#div_alert").css("visibility", "hidden");
         $("#hd_id_jobDsc").val("0");
 
         $('#dropdown_department option:selected').removeAttr('selected');
@@ -111,6 +112,7 @@ var edit_JobDesc = function (jd_id,job_desc) {
 var SuccessMessage = function (result) {
     if (result.msg) {
         $("#alert_success").html(result.msg);
+        $("#div_alert").css("visibility", "visible");
         $("#frmJobDesc").find('input:text,textarea').val("");
         $("#hd_id_jobDsc").val("0");
 

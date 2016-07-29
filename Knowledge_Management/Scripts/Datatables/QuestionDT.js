@@ -85,6 +85,7 @@
     $("#reset_btn").click(function () {
         $("#frmQuestion").find('input:text,field-validation-error').val("");
         $("#alert_success").empty();
+        $("#div_alert").css("visibility", "hidden");
         $("#hd_id_question").val("0");
         $("#txt_solution").val("");
 
@@ -145,6 +146,7 @@ var edit_question = function (s) {
 var SuccessMessage = function (result) {
     if (result.msg) {
         $("#alert_success").html(result.msg);
+        $("#div_alert").css("visibility", "visible");
 
         $("#frmQuestion").find('input:text').val("");
         $("#hd_id_question").val("0");
