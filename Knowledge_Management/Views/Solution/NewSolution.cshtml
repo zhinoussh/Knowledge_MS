@@ -50,17 +50,20 @@
     @Html.HiddenFor(model => model.question_id, new { id = "hd_id_question" })
     @Html.HiddenFor(model => model.new_solution_id, new { id = "hd_id_new_solution" })
 
-
-        <div class="editor-field" style="width:98%;margin-top:3%">
+    <div class="editor-field" style="width:98%;margin-top:3%">
+        @Html.ValidationMessageFor(model => model.new_solution, "", new { @class = "error" })
+    </div>
+        <div class="editor-field" style="width:98%">
             @Html.TextAreaFor(model => model.new_solution, new { @class = "multiline_textbox", id = "txt_new_solution", @placeholder = "شرح راهکار...",style="height:300px" })
         </div>
-    <div class="editor-field" style="width:98%;">
-            @Html.ValidationMessageFor(model => model.new_solution, "", new { @class = "error" })
-    </div>
-    <div class="editor-field" style="width:98%;margin-top:1%">
-        <a href="#" class="close" data-dismiss="alert">&times;</a>
-        <label class="alert alert_success" id="alert_success" role="alert"></label>
-    </div>
+   
+    
+    
+        <div class="alert alert-success fade in" role="alert" style="float:right; width:98%; visibility:hidden" id="div_alert">
+            <a href="#" class="close" data-dismiss="alert">&times;</a>
+            <label id="alert_success" style="margin-right:5px"></label>
+        </div>
+    
 
         <div class="btn_add" style="margin:0 40% 0 0; width:200px">
             <input type="submit" class="btn btn-primary" value="ثبت راهکار" />
@@ -70,7 +73,7 @@
         <div class="btn_add" style="margin:2% 48% 0 0;">
             <input type="file" name="file_upload" id="file_upload" />
         </div>
-        }
+}
 
         <table id="UploadDT" class="display">
             <thead>
@@ -89,10 +92,12 @@
         @section scripts{
             <script src="~/Scripts/Datatables/UploadDT.js"></script>
             <script src="~/Scripts/jquery.uploadify.js"></script>
+
             <script type="text/javascript">
                 var SuccessMessage = function (result) {
                     if (result.msg) {
                         $("#alert_success").html(result.msg);
+                        $("#div_alert").css("visibility", "visible");
                     }
 
                 }
@@ -111,8 +116,8 @@
                         }
                         ,'onUploadSuccess': function (file, data, response) {
                             $("#alert_success").html('فایل با موفقیت بارگذاری شد');
+                            $("#div_alert").css("visibility", "visible");
                             $("#hd_id_new_solution").val(data);
-                            alert($("#hd_id_new_solution").val());
                             var $STTable = $("#UploadDT").dataTable({ bRetrieve: true });
                             $STTable.fnDraw();
                             //data is whatever you return from the server

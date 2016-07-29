@@ -27,6 +27,7 @@ namespace Knowledge_Management.Models
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+            
             modelBuilder.Entity<tbl_department>()
                 .HasMany(e => e.tbl_department_objectives)
                 .WithOptional(e => e.tbl_department)

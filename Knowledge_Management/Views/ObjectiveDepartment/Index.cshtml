@@ -55,7 +55,10 @@
     </div>
     @Html.HiddenFor(model => model.obj_id, new { id = "hd_id_obj" })
     @Html.HiddenFor(model => model.dep_id, new { id = "hd_id_dep" })
-    <label class="alert-danger" id="alert_success"></label>
+    <div class="alert alert-success fade in" role="alert" style="float:right; width:98%; visibility:hidden" id="div_alert">
+        <a href="#" class="close" data-dismiss="alert">&times;</a>
+        <label id="alert_success" style="margin-right:5px"></label>
+    </div>
 
 }
 

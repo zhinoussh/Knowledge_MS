@@ -48,6 +48,7 @@
     $("#reset_btn").click(function () {
         $("#frmStrategy").find('input:text,textarea,field-validation-error').val("");
         $("#alert_success").empty();
+        $("#div_alert").css("visibility", "hidden");
         $("#hd_id_strategy").val("0");
 
     });
@@ -74,6 +75,7 @@ var edit_strategy = function (st_id,st_name) {
 var SuccessMessage = function (result) {
     if (result.msg) {
         $("#alert_success").html(result.msg);
+        $("#div_alert").css("visibility", "visible");
         $("#frmStrategy").find('input:text,textarea').val("");
         $("#hd_id_strategy").val("0");
 

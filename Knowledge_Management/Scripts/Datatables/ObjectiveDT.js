@@ -51,6 +51,7 @@
     $("#reset_btn").click(function () {
         $("#frmObjective").find('input:text,textarea,field-validation-error').val("");
         $("#alert_success").empty();
+        $("#div_alert").css("visibility", "hidden");
         $("#hd_id_obj").val("0");
 
     });
@@ -79,6 +80,7 @@ var edit_objective = function (obj_id, obj_name) {
 var SuccessMessage = function (result) {
     if (result.msg) {
         $("#alert_success").html(result.msg);
+        $("#div_alert").css("visibility", "visible");
         $("#frmObjective").find('input:text,textarea').val("");
         $("#hd_id_obj").val("0");
 

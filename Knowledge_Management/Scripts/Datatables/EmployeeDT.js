@@ -102,6 +102,8 @@
     $("#reset_btn").click(function () {
         $("#frmEmployee").find('input:text,textarea,field-validation-error').val("");
         $("#alert_success").empty();
+        $("#div_alert").css("visibility", "hidden");
+
         $("#hd_id_emp").val("0");
         $('input[type="checkbox"]').prop('checked', false);
        
@@ -176,6 +178,7 @@ var edit_employee = function (s) {
 var SuccessMessage = function (result) {
     if (result.msg) {
         $("#alert_success").html(result.msg);
+        $("#div_alert").css("visibility", "visible");
 
         //if success
         if (result.result == 1) {

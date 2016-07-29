@@ -60,7 +60,7 @@
         $("#frmDepartment").find('input:text,textarea,field-validation-error').val("");
         $("#alert_success").empty();
         $("#hd_id_department").val("0");
-
+        $("#div_alert").css("visibility", "hidden");
     });
 
 
@@ -87,6 +87,8 @@ var edit_department = function (dep_id, dep_name) {
 var SuccessMessage = function (result) {
     if (result.msg) {
         $("#alert_success").html(result.msg);
+        $("#div_alert").css("visibility", "visible");
+
         $("#frmDepartment").find('input:text,textarea').val("");
         $("#hd_id_department").val("0");
 

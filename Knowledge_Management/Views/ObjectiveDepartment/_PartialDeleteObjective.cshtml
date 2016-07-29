@@ -37,6 +37,7 @@
         if (result.msg) {
             $('#DeleteModal').modal('hide');
             $("#alert_success").html(result.msg);
+            $("#div_alert").css("visibility", "visible");
             var $STTable = $("#ObjectiveDT").dataTable({ bRetrieve: true });
             $STTable.fnDraw();
         }
