@@ -409,15 +409,15 @@ width:80px;
 .fa-bank,.fa-user {
 color:#36cc8b
 }
-.fa-pencil-square-o {
-    color:#f9f67a
+.fa-pencil-square-o,.fa-folder {
+    color:#f9f67a;
 
 }
 .fa-search {
 color:#288df5;
 }
 .fa-cog {
-    color:#288df5
+    color:#288df5;
 }
 
 .link_solution {
