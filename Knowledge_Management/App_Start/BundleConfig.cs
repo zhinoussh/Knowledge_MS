@@ -38,6 +38,7 @@ namespace Knowledge_Management
 
             bundles.Add(new StyleBundle("~/Content/management").Include(
                       "~/Content/sidebar_css.css"
+                      , "~/Content/font-awesome.min.css"
                       , "~/Content/dataTables.jqueryui.css"
                       , "~/Content/jquery-ui.css"
                       ));
