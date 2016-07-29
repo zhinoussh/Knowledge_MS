@@ -51,12 +51,10 @@ textarea {
   font-size:18pt;
   font-weight:600;
 }
-.navbar-default .navbar-brand:hover,
-.navbar-default .navbar-brand:focus {
-  color: #ffffff;
-  background-color: transparent;
-}
 
+.dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus {
+    background-image:none !important;
+ }
 /* Header*/
 
 .header_img {
@@ -251,7 +249,7 @@ float:right;
 
 .btn-primary { 
     width:100%;
-    height: 35px;
+    height:35px;
     background-image: -webkit-linear-gradient(top, #54589f 0%, #8588c1 100%);
   background-image:      -o-linear-gradient(top, #54589f 0%, #8588c1 100%);
   background-image: -webkit-gradient(linear, left top, left bottom, from(#54589f), to(#8588c1));
@@ -263,18 +261,20 @@ float:right;
   box-shadow:#B4B5B5 5px 5px 5px 0;
 }
 
-    .btn-primary:active:focus {
-       background-image: -webkit-linear-gradient(top, #8d90bf 0%, #8d90bf 100%);
-  background-image:      -o-linear-gradient(top, #8d90bf 0%, #8d90bf 100%);
-  background-image: -webkit-gradient(linear, left top, left bottom, from(#8d90bf), to(#8d90bf));
-  background-image:         linear-gradient(to bottom, #8d90bf 0%, #8d90bf 100%);
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff8d90bf', endColorstr='#ff8d90bf', GradientType=0);
-  filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
-  background-repeat: repeat-x;
-  border-color: #8d90bf;
-    
+    .btn-primary:hover, .btn-primary:focus {
+        background-position: 0px !important;
+        background-image: -webkit-linear-gradient(top, #6b6fb0 0%, #9fa2cf 100%);
+        background-image: -o-linear-gradient(top, #6b6fb0 0%, #9fa2cf 100%);
+        background-image: -webkit-gradient(linear, left top, left bottom, from(#6b6fb0), to(#9fa2cf));
+        background-image: linear-gradient(to bottom, #6b6fb0 0%, #9fa2cf 100%);
+        filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff54589f', endColorstr='#ff9fa2cf', GradientType=0);
+        filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
+        background-repeat: repeat-x;
+        border-color: #54589f;
+        box-shadow: #B4B5B5 5px 5px 5px 0;
     }
-
+ 
+   
 .error {
     font-size:9pt;
     color:red;
@@ -450,4 +450,9 @@ background: linear-gradient(to left, #5C258D , #4389A2); /* W3C, IE 10+/ Edge, F
 thead th {
   background-color: #006DCC;
   color: white;
+}
+
+.alert-success {
+    height:40px;
+    padding:5px;
 }
