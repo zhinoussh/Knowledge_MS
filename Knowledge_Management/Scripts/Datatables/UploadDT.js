@@ -38,8 +38,8 @@
                             "bSortable": false,
                             "sDefaultContent": " "
                              , "sClass": "dt-body-center",
-                            "mRender": function (data, type, row) {
-                                return "<a class='glyphicon glyphicon-download a_clickable' onclick='details();'></a>"
+                             "mRender": function (data, type, row) {
+                                 return "<a class='glyphicon glyphicon-download a_clickable' onclick='download_file(" + row[0] + ")'></a>"
 
                             }
                         }
@@ -62,8 +62,21 @@
 
 });
 
-var details = function () {
-    
+var download_file = function (upload_id) {
+   
+    $.ajax(
+           {
+               url: '/Solution/DownloadFile',
+               contentType: 'application/json; charset=utf-8',
+               datatype: 'json',
+               data: {
+                   uploadID: upload_id
+               },
+               type: "GET",
+               success: function () {
+                   window.location = '/Solution/DownloadFile?uploadID=' + upload_id;
+               }
+           });
 }
 
 var delete_dialog = function (upload_id) {

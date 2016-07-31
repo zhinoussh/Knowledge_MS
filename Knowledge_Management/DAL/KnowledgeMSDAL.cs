@@ -584,6 +584,7 @@ namespace Knowledge_Management.DAL
         #endregion Question
 
         #region Solution
+       
         public string[][] get_Solutions(int question_id)
         {
             string[][] lst_solutions = null;
@@ -662,6 +663,12 @@ namespace Knowledge_Management.DAL
             db.SaveChanges();
         }
 
+        public string get_file_path(long upload_id)
+        {
+            string file_path = db.tbl_solution_uploads.Find(upload_id).file_path;
+            return file_path;
+        }
+
         #endregion Solution
 
         #region Keyword
@@ -693,13 +700,7 @@ namespace Knowledge_Management.DAL
 
          #endregion Keyword
 
-        public void alterdb()
-        {
-            
-             
-
-
-        }
+      
 
 
        
