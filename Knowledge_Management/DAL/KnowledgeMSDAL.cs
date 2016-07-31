@@ -31,7 +31,7 @@ namespace Knowledge_Management.DAL
             }
             catch (Exception e1)
             {
-                return "";
+                return e1.ToString();
             }
         }
 

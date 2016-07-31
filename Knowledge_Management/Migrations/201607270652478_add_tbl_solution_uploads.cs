@@ -18,6 +18,7 @@ namespace Knowledge_Management.Migrations
                 .PrimaryKey(t => t.pkey)
                 .ForeignKey("dbo.tbl_question_solutions", t => t.fk_solution, cascadeDelete: true)
                 .Index(t => t.fk_solution);
+
             
         }
         
