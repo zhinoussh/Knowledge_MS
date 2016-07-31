@@ -102,6 +102,7 @@ namespace Knowledge_Management.Controllers
 
 
         #region UPLOAD FILES
+       
         public ActionResult Upload()
         {
             KnowledgeMSDAL DAL = new KnowledgeMSDAL();
@@ -122,10 +123,11 @@ namespace Knowledge_Management.Controllers
             }
 
             //upload file
-            string file_name = new_id + "_" + (DAL.get_count_solution_uploads(new_id) + 1);
             var file = Request.Files["Filedata"];
             var fileNameExt = file.FileName.Substring(file.FileName.LastIndexOf('.'));
-            string savePath = Server.MapPath(@"~\Upload\" + file_name + fileNameExt);
+
+            string file_name = new_id + "_" + (DAL.get_count_solution_uploads(new_id) + 1) + fileNameExt;
+            string savePath = Server.MapPath(@"~\Upload\" + file_name);
             file.SaveAs(savePath);
 
             //save upload in DB
@@ -205,6 +207,18 @@ namespace Knowledge_Management.Controllers
                 aaData = result
             },
             JsonRequestBehavior.AllowGet);
+        }
+
+
+        public ActionResult DownloadFile(int uploadID)
+        {
+            KnowledgeMSDAL DAL = new KnowledgeMSDAL();
+
+            string file_name=DAL.get_file_path(uploadID);
+            string file_path = Server.MapPath(@"~\Upload\" + file_name);
+            byte[] fileBytes = System.IO.File.ReadAllBytes(file_path);
+
+            return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, file_name);
         }
 
         #endregion UPLOAD FILES
