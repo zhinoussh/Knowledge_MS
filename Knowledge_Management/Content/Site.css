@@ -99,11 +99,11 @@ textarea {
     color:#36cc8b;  
 }
 
-.glyphicon-file {
+.glyphicon-file ,.glyphicon-download{
      font-size:20px;
     color:#288df5; 
 }
-.glyphicon-file:hover {
+.glyphicon-file:hover ,.glyphicon-download:hover{
      font-size:22px;
     color:#095bae; 
     text-decoration:none; 
