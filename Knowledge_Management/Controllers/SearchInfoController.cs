@@ -82,7 +82,7 @@ namespace Knowledge_Management.Controllers
 
             
             var result = from s in indexed_list
-                         select new[] { s.QID, s.KeyWords, s.Job_Desc, s.Dep_Obj, s.Strategy, s.QSubject, s.QIndex, s.QSubject.Length <= 30 ? s.QSubject : s.QSubject.Substring(0, 30) };
+                         select new[] { s.QID, s.KeyWords, s.Job_Desc, s.Dep_Obj, s.Strategy, s.QSubject, s.QIndex, s.QSubject.Length <= 200 ? s.QSubject : (s.QSubject.Substring(0, 200)+"...") };
 
 
 

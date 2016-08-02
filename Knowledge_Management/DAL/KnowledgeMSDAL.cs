@@ -603,7 +603,7 @@ namespace Knowledge_Management.DAL
                 {
                     lst_solutions[i] = new string[2];
                     lst_solutions[i][0] = item.pkey + "";
-                    lst_solutions[i][1] = item.solution.Length <= 30 ? item.solution : item.solution.Substring(0, 30);
+                    lst_solutions[i][1] = item.solution.Length <= 200 ? item.solution : (item.solution.Substring(0, 200)+"...");
                     i++;
                 }
             }
@@ -639,7 +639,10 @@ namespace Knowledge_Management.DAL
             }
             return 0;
         }
+       
+        #endregion Solution
 
+        #region Upload
         public int get_count_solution_uploads(long new_sol_id)
         {
             int count_uploads = db.tbl_solution_uploads.Count(u => u.fk_solution == new_sol_id);
@@ -669,7 +672,7 @@ namespace Knowledge_Management.DAL
             return file_path;
         }
 
-        #endregion Solution
+        #endregion Upload
 
         #region Keyword
 
