@@ -13,12 +13,6 @@ namespace Knowledge_Management.ViewModels
         [Display(Name = "شرح مسئله: ")]
          public string question { get; set; }
 
-        [Display(Name = "راهکار جدید: ")]
-        [Required(ErrorMessage="شرح راهکار را وارد نمایید")]
-        public string new_solution { get; set; }
-
-        public long new_solution_id { get; set; }
-
         public string[][] solutions { get; set; }
 
 
