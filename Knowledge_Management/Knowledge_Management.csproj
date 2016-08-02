@@ -175,6 +175,7 @@
     <Compile Include="ViewModels\FullSolutionViewModel.cs" />
     <Compile Include="ViewModels\JobDescriptionViewModel.cs" />
     <Compile Include="ViewModels\JobViewModel.cs" />
+    <Compile Include="ViewModels\NewSolutionViewModel.cs" />
     <Compile Include="ViewModels\QuestionViewModel.cs" />
     <Compile Include="ViewModels\SearchKeywordViewModel.cs" />
     <Compile Include="ViewModels\SolutionViewModel.cs" />

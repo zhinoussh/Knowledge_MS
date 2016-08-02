@@ -36,7 +36,7 @@ namespace Knowledge_Management.Controllers
 
         public ActionResult NewSolution(int id)
         {
-            SolutionViewModel o = new SolutionViewModel();
+            NewSolutionViewModel o = new NewSolutionViewModel();
             KnowledgeMSDAL DAL = new KnowledgeMSDAL();
             o.question_id = id;
              o.question = DAL.get_question_name(id);
@@ -60,7 +60,7 @@ namespace Knowledge_Management.Controllers
         //create a Question
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Add_New_Solution(SolutionViewModel q)
+        public ActionResult Add_New_Solution(NewSolutionViewModel q)
         {
             if (ModelState.IsValid)
             {
