@@ -57,10 +57,27 @@
 
         ]
     });
+    
 
+    $(".close").click(function () {
+        $("#div_alert").css("visibility", "hidden");
+        return false;
+    });
 
+    
 
 });
+
+
+var SuccessMessage = function (result) {
+    if (result.msg) {
+        $("#alert_success").html(result.msg);
+        $("#div_alert").css("visibility", "visible");
+
+    }
+
+}
+
 
 var download_file = function (upload_id) {
    

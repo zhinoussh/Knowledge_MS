@@ -8,7 +8,7 @@ namespace Knowledge_Management.ViewModels
 {
     public class NewSolutionViewModel
     {
-        public int question_id { get; set; }
+        public long question_id { get; set; }
 
         [Display(Name = "شرح مسئله: ")]
         public string question { get; set; }

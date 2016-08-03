@@ -60,7 +60,7 @@
     
     
         <div class="alert alert-success fade in" role="alert" style="float:right; width:98%; visibility:hidden" id="div_alert">
-            <a href="#" class="close" data-dismiss="alert">&times;</a>
+            <a href="#" class="close" >&times;</a>
             <label id="alert_success" style="margin-right:5px"></label>
         </div>
     
@@ -94,27 +94,18 @@
             <script src="~/Scripts/jquery.uploadify.js"></script>
 
             <script type="text/javascript">
-                var SuccessMessage = function (result) {
-                    if (result.msg) {
-                        $("#alert_success").html(result.msg);
-                        $("#div_alert").css("visibility", "visible");
-                    }
-
-                }
-
                 $(function () {
-                   
                     $('#file_upload').uploadify({
                         'swf': "@Url.Content("~/Content/img/uploadify.swf")",
                         'uploader': "@Url.Action("Upload", "Solution")",
                         // 'formData': { solution_id: $("#hd_id_new_solution").val(), question_id: $("#hd_id_question").val() },
-                        'onUploadStart' : function(file) {
-                            $('#file_upload').uploadify('settings','formData',{
+                        'onUploadStart': function (file) {
+                            $('#file_upload').uploadify('settings', 'formData', {
                                 'solution_id': $('#hd_id_new_solution').val(),
                                 'question_id': $('#hd_id_question').val()
                             });
                         }
-                        ,'onUploadSuccess': function (file, data, response) {
+                        , 'onUploadSuccess': function (file, data, response) {
                             $("#alert_success").html('فایل با موفقیت بارگذاری شد');
                             $("#div_alert").css("visibility", "visible");
                             $("#hd_id_new_solution").val(data);
@@ -134,7 +125,7 @@
                             else
                                 alert('error ' + d.type + ": " + d.text);
                         }
-                    })
+                    });
                 });
 
             </script>

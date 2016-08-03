@@ -1,0 +1,47 @@
+﻿
+@{
+    ViewBag.Title = "راهکارهای شما";
+    Layout = "~/Views/Shared/_EmployeeLayout.cshtml";
+}
+
+<!-- Modal -->
+<div class="modal fade" id="DeleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" id="confirm-container">
+
+        </div>
+    </div>
+</div>
+<!-- /end Modal -->
+<h5>راهکارهای معرفی شده توسط شما</h5>
+<span class="border_admin" style="margin-bottom:0;"></span>
+
+
+<div class="alert alert-success fade in" role="alert" style="float:right; width:100%;margin-top:2%; visibility:hidden" id="div_alert">
+    <a href="#" class="close" >&times;</a>
+    <label id="alert_success" style="margin-right:5px"></label>
+</div>
+<div style="float:right; width:100%;margin:2% 0 2% 0">
+    <table id="SolutionDT" class="display">
+        <thead>
+            <tr>
+                <th>Sol_id</th>
+                <th>Q_id</th>
+                <th>fullQuestion</th>
+                <th>fullSolution</th>
+                <th class="dt-head-right">ردیف</th>
+                <th class="dt-head-right">شرح مسئله</th>
+                <th class="dt-head-right">شرح راهکار</th>
+                <th class="dt-head-right">تعداد اسناد</th>
+                <th>مشاهده و ویرایش</th>
+                <th>حذف</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+</div>
+@section scripts{
+    <script src="~/Scripts/Datatables/SolutionDT.js"></script>
+
+}
+
