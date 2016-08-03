@@ -9,6 +9,7 @@ using Knowledge_Management.DAL;
 
 namespace Knowledge_Management.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class JobController : Controller
     {
         // GET: Show Jobs

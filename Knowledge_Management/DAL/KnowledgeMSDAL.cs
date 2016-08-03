@@ -18,23 +18,34 @@ namespace Knowledge_Management.DAL
         {
             db = new KnowledgeMsDB();
         }
-        public string login(string username, string password)
+       
+        public bool login(string username, string password)
         {
             try
             {
                 string pass = (new Encryption()).Encrypt(password);
-                string role = (from l in db.tbl_login
+                tbl_login login_user = (from l in db.tbl_login
                                where l.username.Equals(username) & l.pass.Equals(pass)
-                               select l.role).FirstOrDefault();
+                               select l).FirstOrDefault();
 
-                return role;
+                return (login_user == null ? false : true);
             }
             catch (Exception e1)
             {
-                return e1.ToString();
+                return false;
             }
         }
 
+        public string[] get_user_roles(string pcode)
+        {
+            string role = db.tbl_login.Where(x => x.username == pcode).Select(x => x.role).FirstOrDefault();
+           if (role == "1")
+               return new string[] { "Admin" };
+           else if (role == "2")
+               return new string[] { "Employee" };
+           else
+               return null;
+        }
 
         #region STRATEGY
         public List<tbl_strategy> get_all_strategies()
