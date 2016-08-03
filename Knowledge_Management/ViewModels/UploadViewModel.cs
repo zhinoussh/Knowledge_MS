@@ -7,6 +7,7 @@ namespace Knowledge_Management.ViewModels
 {
     public class UploadViewModel
     {
-        public long upload_id;
+        public int upload_id { get; set; }  
+
     }
 }

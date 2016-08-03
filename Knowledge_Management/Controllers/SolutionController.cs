@@ -34,14 +34,27 @@ namespace Knowledge_Management.Controllers
             return View(o);
         }
 
-        public ActionResult NewSolution(int id)
+        public ActionResult NewSolution(int id,long? solution_id)
         {
             NewSolutionViewModel o = new NewSolutionViewModel();
             KnowledgeMSDAL DAL = new KnowledgeMSDAL();
             o.question_id = id;
-             o.question = DAL.get_question_name(id);
-             o.new_solution = "";
-             o.new_solution_id =0;
+
+            long pk_solution = long.Parse(solution_id == null ? "0" : solution_id+"");
+            if (solution_id != null)
+            {
+                FullSolutionViewModel full_solution = DAL.get_Solution_by_id(pk_solution);
+                o.question = full_solution.question;
+                o.new_solution = full_solution.full_solution;
+            }
+            else
+            {
+                o.question = DAL.get_question_name(id);
+                o.new_solution = "";
+            }
+
+
+            o.new_solution_id = pk_solution;
 
             string cookieName = FormsAuthentication.FormsCookieName; //Find cookie name
             HttpCookie authCookie = HttpContext.Request.Cookies[cookieName]; //Get the cookie by it's name
@@ -71,7 +84,7 @@ namespace Knowledge_Management.Controllers
                 FormsAuthenticationTicket ticket = FormsAuthentication.Decrypt(authCookie.Value); //Decrypt it
                 string UserName = ticket.Name; //You have the UserName!
 
-                long new_id=DAL.InsertNewSolution(q.question_id, q.new_solution, UserName);
+                long new_id=DAL.InsertNewSolution(q.new_solution_id,q.question_id, q.new_solution, UserName);
                 q.new_solution_id = new_id;
                 
                 return Json(new { msg = "راهکار با موفقیت ذخیره شد" });
@@ -100,41 +113,75 @@ namespace Knowledge_Management.Controllers
             return View(s);
         }
 
+        [HttpGet]
+        public ActionResult Delete_Solution(long id)
+        {
+            SolutionEmployeeViewModel v = new SolutionEmployeeViewModel();
+            v.solution_id = id;
+            return PartialView("_PartialDeleteSolution",v);
+
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Delete_Solution(SolutionEmployeeViewModel s)
+        {
+            KnowledgeMSDAL DAL = new KnowledgeMSDAL();
+            long id_solution = s.solution_id;
+           
+             List<tbl_solution_uploads> lst_uploads=DAL.get_uploads_by_solution(id_solution);
+            //delete uploaded files
+             foreach (var item in lst_uploads)
+            { 
+                System.IO.File.Delete(Server.MapPath(@"~/Upload/"+item.file_path));
+            }
+
+            //delete solution and upload from db
+            DAL.Delete_Solution(id_solution);
+            
+            return Json(new { msg="راهکار مورد نظر با موفقیت حذف شد"});
+
+        }
 
         #region UPLOAD FILES
        
         public ActionResult Upload()
         {
-            KnowledgeMSDAL DAL = new KnowledgeMSDAL();
-            // string solution_id = Request.QueryString["id"].ToString();
-            //check soution exist if not insert one
             long new_id = Request.Form["solution_id"] == null ? 0 : long.Parse(Request.Form["solution_id"].ToString());
-            
-            if (new_id == 0)
-            {
-                string cookieName = FormsAuthentication.FormsCookieName; //Find cookie name
-                HttpCookie authCookie = HttpContext.Request.Cookies[cookieName]; //Get the cookie by it's name
-                FormsAuthenticationTicket ticket = FormsAuthentication.Decrypt(authCookie.Value); //Decrypt it
-                string UserName = ticket.Name; //You have the UserName!
 
-                new_id = DAL.InsertNewSolution(long.Parse(Request.Form["question_id"] == null ? "0" : Request.Form["question_id"])
-                    , "بدون شرح راهکار", UserName);
+            if (Request.Form["question_id"] != null)
+            {
+                KnowledgeMSDAL DAL = new KnowledgeMSDAL();
+                // string solution_id = Request.QueryString["id"].ToString();
+                //check soution exist if not insert one
+
+                if (new_id == 0)
+                {
+                    string cookieName = FormsAuthentication.FormsCookieName; //Find cookie name
+                    HttpCookie authCookie = HttpContext.Request.Cookies[cookieName]; //Get the cookie by it's name
+                    FormsAuthenticationTicket ticket = FormsAuthentication.Decrypt(authCookie.Value); //Decrypt it
+                    string UserName = ticket.Name; //You have the UserName!
+
+
+                    new_id = DAL.InsertNewSolution(new_id, long.Parse(Request.Form["question_id"]), "بدون شرح راهکار", UserName);
+
+                }
+
+                //upload file
+                var file = Request.Files["Filedata"];
+                var fileNameExt = file.FileName.Substring(file.FileName.LastIndexOf('.'));
+
+                string file_name = new_id + "_" + (DAL.get_count_solution_uploads(new_id) + 1) + fileNameExt;
+                string savePath = Server.MapPath(@"~\Upload\" + file_name);
+                file.SaveAs(savePath);
+
+                //save upload in DB
+                DAL.InsertNewUpload(new_id, file_name);
+
 
             }
+            return Content(new_id + "");
 
-            //upload file
-            var file = Request.Files["Filedata"];
-            var fileNameExt = file.FileName.Substring(file.FileName.LastIndexOf('.'));
-
-            string file_name = new_id + "_" + (DAL.get_count_solution_uploads(new_id) + 1) + fileNameExt;
-            string savePath = Server.MapPath(@"~\Upload\" + file_name);
-            file.SaveAs(savePath);
-
-            //save upload in DB
-            DAL.InsertNewUpload(new_id, file_name);
-           
-
-            return Content(new_id+"");
         }
 
         [HttpGet] // this action result returns the partial containing the modal
@@ -153,7 +200,9 @@ namespace Knowledge_Management.Controllers
             {
                 KnowledgeMSDAL DAL = new KnowledgeMSDAL();
 
-                DAL.DeleteQuestion(q.upload_id);
+                System.IO.File.Delete(Server.MapPath(@"~\Upload\" + DAL.get_file_path(q.upload_id)));
+
+                DAL.DeleteUpload(q.upload_id);
                 return Json(new { msg = "فایل بارگذاری شده با موفقیت حذف شد" });
             }
             else
@@ -222,5 +271,88 @@ namespace Knowledge_Management.Controllers
         }
 
         #endregion UPLOAD FILES
+
+        #region Your Solution
+
+        public ActionResult YourSolution()
+        {
+            KnowledgeMSDAL DAL = new KnowledgeMSDAL();
+
+            string cookieName = FormsAuthentication.FormsCookieName; //Find cookie name
+            HttpCookie authCookie = HttpContext.Request.Cookies[cookieName]; //Get the cookie by it's name
+            FormsAuthenticationTicket ticket = FormsAuthentication.Decrypt(authCookie.Value); //Decrypt it
+            string UserName = ticket.Name; //You have the UserName!
+
+            List<string> emp_prop = DAL.get_Employee_prop(UserName);
+
+            ViewBag.dataentry = Boolean.Parse(emp_prop[2]);
+            ViewBag.dataview = Boolean.Parse(emp_prop[3]);
+
+            return View();
+        }
+        public ActionResult YourSolutionAjaxHandler(jQueryDataTableParamModel request)
+        {
+            KnowledgeMSDAL DAL = new KnowledgeMSDAL();
+
+            string cookieName = FormsAuthentication.FormsCookieName; //Find cookie name
+            HttpCookie authCookie = HttpContext.Request.Cookies[cookieName]; //Get the cookie by it's name
+            FormsAuthenticationTicket ticket = FormsAuthentication.Decrypt(authCookie.Value); //Decrypt it
+            string UserName = ticket.Name; //You have the UserName!
+
+            List<SolutionEmployeeViewModel> all_items = DAL.get_Solutions_by_employee(UserName);
+
+            //filtering 
+            List<SolutionEmployeeViewModel> filtered = new List<SolutionEmployeeViewModel>(); ;
+
+            if (!string.IsNullOrEmpty(request.sSearch))
+            {
+                filtered = all_items.Where(i => i.question.Contains(request.sSearch)
+                                             || i.solution.Contains(request.sSearch)).ToList();
+
+            }
+            else
+                filtered = all_items;
+
+
+            var sortDirection = Request["sSortDir_0"]; // asc or desc
+            if (sortDirection == "asc")
+                filtered = filtered.OrderBy(s => s.question).ToList();
+            else
+                filtered = filtered.OrderByDescending(s => s.question).ToList();
+
+            //pagination
+            filtered = filtered.Skip(request.iDisplayStart).Take(request.iDisplayLength).ToList();
+
+            var indexed_list = filtered.Select((s, index) => new
+            {
+                QID = s.question_id + "",
+                Sol_Id = s.solution_id + "",
+                Soution = s.solution,
+                QIndex = (index + 1) + "",
+                QSubject = s.question,
+                uploadCount=s.count_upload+""
+            });
+
+
+            var result = from s in indexed_list
+                         select new[] {s.Sol_Id, s.QID , s.QSubject, s.Soution, s.QIndex
+                             ,s.QSubject.Length <= 50 ? s.QSubject: (s.QSubject.Substring(0, 50) + "..."), 
+                                 s.Soution.Length <= 50 ? s.Soution : (s.Soution.Substring(0, 50) + "..."),
+                                 s.uploadCount
+                         };
+
+
+            return Json(new
+            {
+                sEcho = request.sEcho,
+                iTotalRecords = all_items.Count(),
+                iTotalDisplayRecords = all_items.Count(),
+                aaData = result
+            },
+            JsonRequestBehavior.AllowGet);
+
+        }
+
+        #endregion Your Solution
     }
 }

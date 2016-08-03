@@ -178,6 +178,7 @@
     <Compile Include="ViewModels\NewSolutionViewModel.cs" />
     <Compile Include="ViewModels\QuestionViewModel.cs" />
     <Compile Include="ViewModels\SearchKeywordViewModel.cs" />
+    <Compile Include="ViewModels\SolutionEmployeeViewModel.cs" />
     <Compile Include="ViewModels\SolutionViewModel.cs" />
     <Compile Include="ViewModels\StrategyViewModel.cs" />
     <Compile Include="ViewModels\UploadViewModel.cs" />
@@ -248,6 +249,7 @@
     <Content Include="Scripts\Datatables\ObjectiveDT.js" />
     <Content Include="Scripts\Datatables\QuestionDT.js" />
     <Content Include="Scripts\Datatables\SearchQuestionDT.js" />
+    <Content Include="Scripts\Datatables\SolutionDT.js" />
     <Content Include="Scripts\Datatables\UploadDT.js" />
     <Content Include="Scripts\DynamicField.js" />
     <Content Include="Scripts\jquery-2.2.3.js" />
@@ -310,6 +312,8 @@
     <Content Include="Views\Solution\FullSolution.cshtml" />
     <Content Include="Views\Solution\NewSolution.cshtml" />
     <Content Include="Views\Solution\_PartialDeleteUpload.cshtml" />
+    <Content Include="Views\Solution\YourSolution.cshtml" />
+    <Content Include="Views\Solution\_PartialDeleteSolution.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

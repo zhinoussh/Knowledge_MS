@@ -465,8 +465,8 @@ namespace Knowledge_Management.DAL
 
              List<QuestionViewModel> lst_questions = (from q in db.tbl_questions
                                                     join s in db.tbl_question_solutions.Where(x=>x.fk_employee==fk_emp)
-                                                     on q.pkey equals s.fk_question into tbl_soution
-                                                      from qq in tbl_soution.DefaultIfEmpty()
+                                                     on q.pkey equals s.fk_question into tbl_solution
+                                                      from qq in tbl_solution.DefaultIfEmpty()
                                                       where q.fk_employee == fk_emp
                                                   select new QuestionViewModel { 
                                                         question_id=q.pkey,
@@ -584,8 +584,8 @@ namespace Knowledge_Management.DAL
         #endregion Question
 
         #region Solution
-       
-        public string[][] get_Solutions(int question_id)
+
+        public string[][] get_Solutions(long question_id)
         {
             string[][] lst_solutions = null;
             var query = (from s in db.tbl_question_solutions
@@ -610,12 +610,37 @@ namespace Knowledge_Management.DAL
             return lst_solutions;
         }
 
-
-        public FullSolutionViewModel get_Solution_by_id(int solution_id)
+        public List<SolutionEmployeeViewModel> get_Solutions_by_employee(string username)
         {
-            FullSolutionViewModel temp = (from s in db.tbl_question_solutions
+            int emp_id = db.tbl_employee.Where(p => p.personel_code == username).First().pkey;
+
+            List<SolutionEmployeeViewModel> lst_solutions = (from s in db.tbl_question_solutions.Where(s => s.fk_employee == emp_id)
+                                                             join q in db.tbl_questions on s.fk_question equals q.pkey
+                                                             orderby s.fk_question descending, s.pkey
+                                                             select new SolutionEmployeeViewModel
+                                                             {
+                                                                 question_id = q.pkey,
+                                                                 question = q.subject,
+                                                                 solution = s.solution,
+                                                                 solution_id = s.pkey,
+                                                                 count_upload = db.tbl_solution_uploads.Count(x => x.fk_solution == s.pkey)
+                                                             }).ToList();
+
+             
+            return lst_solutions;
+        }
+
+        public void Delete_Solution(long id_sol)
+        {
+           tbl_question_solutions s =db.tbl_question_solutions.Find(id_sol);
+            db.tbl_question_solutions.Remove(s);
+            db.SaveChanges();
+        }
+
+        public FullSolutionViewModel get_Solution_by_id(long solution_id)
+        {
+            FullSolutionViewModel temp = (from s in db.tbl_question_solutions.Where(s=>s.pkey==solution_id)
                                           join q in db.tbl_questions on s.fk_question equals q.pkey
-                                          where s.pkey == solution_id
                                           select new FullSolutionViewModel
                                           {
                                               full_solution = s.solution,
@@ -625,19 +650,26 @@ namespace Knowledge_Management.DAL
             return temp;
         }
 
-        public long InsertNewSolution(long q_id, string new_solution, string pcode)
+        public long InsertNewSolution(long soution_id,long q_id, string new_solution, string pcode)
         {
             int fk_emp = db.tbl_employee.Where(x => x.personel_code == pcode).Select(x => x.pkey).First();
 
-            if (!String.IsNullOrEmpty(new_solution))
+            tbl_question_solutions s;
+            if (soution_id == 0)
             {
-                tbl_question_solutions s = new tbl_question_solutions { fk_employee = fk_emp, fk_question = q_id, solution = new_solution };
+                s = new tbl_question_solutions { fk_employee = fk_emp, fk_question = q_id, solution = new_solution };
                 db.tbl_question_solutions.Add(s);
                 db.SaveChanges();
                 long newPK = s.pkey;
                 return newPK;
             }
-            return 0;
+            else
+            {
+                s = db.tbl_question_solutions.Find(soution_id);
+                s.solution = new_solution;
+                db.SaveChanges();
+                return soution_id;
+            }
         }
        
         #endregion Solution
@@ -670,6 +702,13 @@ namespace Knowledge_Management.DAL
         {
             string file_path = db.tbl_solution_uploads.Find(upload_id).file_path;
             return file_path;
+        }
+
+        public void DeleteUpload(long upload_id)
+        {
+            tbl_solution_uploads s = db.tbl_solution_uploads.Find(upload_id);
+            db.tbl_solution_uploads.Remove(s);
+            db.SaveChanges();
         }
 
         #endregion Upload

@@ -145,6 +145,10 @@
 
     });
 
+    $(".close").click(function () {
+        $("#div_alert").css("visibility", "hidden");
+        return false;
+    });
 
 
 });

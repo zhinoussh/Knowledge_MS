@@ -1,11 +1,11 @@
-﻿@model Knowledge_Management.ViewModels.UploadViewModel
+﻿@model Knowledge_Management.ViewModels.SolutionEmployeeViewModel
 
 @{
 
     Layout = null;
 }
 
-@using (Ajax.BeginForm("Delete_Upload", "Solution"
+@using (Ajax.BeginForm("Delete_Solution", "Solution"
                     , new AjaxOptions
                     {
                         InsertionMode = InsertionMode.ReplaceWith,
@@ -26,9 +26,9 @@
     </div>
 
     <div class="modal-footer">
-        <button type="button" class="btn btn-confirm pull-left" data-dismiss="`modal">انصراف</button>
+        <button type="button" class="btn btn-confirm pull-left" data-dismiss="modal">انصراف</button>
         <input type="submit" class="btn btn-confirm pull-left" value="تایید" />
-        @Html.HiddenFor(d => d.upload_id)
+        @Html.HiddenFor(d => d.solution_id)
     </div>
 }
 
@@ -38,7 +38,7 @@
             $('#DeleteModal').modal('hide');
             $("#alert_success").html(result.msg);
             $("#div_alert").css("visibility", "visible");
-            var $STTable = $("#UploadDT").dataTable({ bRetrieve: true });
+            var $STTable = $("#SolutionDT").dataTable({ bRetrieve: true });
             $STTable.fnDraw();
         }
     }
