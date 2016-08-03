@@ -25,12 +25,13 @@ namespace Knowledge_Management.Controllers
             {
                 KnowledgeMSDAL DAL = new KnowledgeMSDAL();
 
-                string role = DAL.login(user.username, user.pass);
-                if (role != null && role != "" )
+                if(DAL.login(user.username, user.pass))
+                //if (role != null && role != "" )
                 {
                     ViewBag.Fail = "false";
                     FormsAuthentication.SetAuthCookie(user.username, false);
-                    if (role == "1")
+                    string[] roles = Roles.GetRolesForUser(user.username);
+                    if (roles.Contains("Admin"))
                         return Json(new { url = "/Strategy/Index" });
                     else
                     {
@@ -60,13 +61,13 @@ namespace Knowledge_Management.Controllers
 
         }
 
-
         public ActionResult Logout()
         {
             FormsAuthentication.SignOut();
             return RedirectToAction("Index","Home");
            
         }
+        
         public ActionResult About()
         {
             return View();

@@ -10,6 +10,7 @@ using Knowledge_Management.Models;
 
 namespace Knowledge_Management.Controllers
 {
+    [Authorize(Roles = "Employee")]
     public class SolutionController : Controller
     {
 
