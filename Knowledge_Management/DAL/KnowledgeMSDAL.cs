@@ -282,7 +282,15 @@ namespace Knowledge_Management.DAL
                     int newPK = s.pkey;
                     string pass = (new Encryption()).Encrypt(password);
 
-                    tbl_login login_obj = new tbl_login { username = personel_code, role = "2", pass = pass, fk_emp = newPK };
+                    string emp_role = "";
+                    if(data_entry && data_view)
+                        emp_role = "2";
+                    else if(data_entry && !data_view)
+                        emp_role = "3";
+                    else if (!data_entry && data_view)
+                        emp_role = "4";
+
+                    tbl_login login_obj = new tbl_login { username = personel_code, role = emp_role, pass = pass, fk_emp = newPK };
                     db.tbl_login.Add(login_obj);
                     db.SaveChanges();
 
