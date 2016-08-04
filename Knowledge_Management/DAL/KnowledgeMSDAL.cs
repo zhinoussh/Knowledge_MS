@@ -35,7 +35,22 @@ namespace Knowledge_Management.DAL
             }
         }
 
+        public string[] get_user_roles(string pcode)
+        {
+            string role=db.tbl_login.Where(x => x.username == pcode).Select(x => x.role).First();
 
+            if (role == "1")
+                return new string[] { "Admin" };
+            else if (role == "2")
+                return new string[] { "DataEntry", "DataView" };
+            else if (role == "3")
+                return new string[] { "DataEntry" };
+            else if (role == "4")
+                return new string[] { "DataView" };
+            else
+                return null;
+
+        }
         #region STRATEGY
         public List<tbl_strategy> get_all_strategies()
         {
