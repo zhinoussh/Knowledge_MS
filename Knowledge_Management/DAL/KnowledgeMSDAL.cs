@@ -51,6 +51,23 @@ namespace Knowledge_Management.DAL
                 return null;
 
         }
+
+        public bool checke_userinRole(string pcode, string role)
+        { 
+            
+            string role_code="";
+            if(role=="Admin")
+                role_code="1";
+            else if(role=="DataEntry")
+                role_code="3";
+            else if(role=="DataView")
+                role_code="4";
+
+            tbl_login l= db.tbl_login.Where(x => x.username == pcode && x.role == role_code).FirstOrDefault();
+
+            return (l == null ? false : true);
+        }
+
         #region STRATEGY
         public List<tbl_strategy> get_all_strategies()
         {

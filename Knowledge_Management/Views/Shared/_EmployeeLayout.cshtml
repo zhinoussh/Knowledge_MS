@@ -25,11 +25,12 @@
                         بخش های سیستم
                     </a>
                 </li>
-                @if (ViewBag.dataentry)
+                @if (User.IsInRole("DataEntry"))
                 {<li>
                     <a href="/InsertInfo/Index"><i class="fa fa-fw fa-pencil-square-o fa-lg"></i> ورود اطلاعات و دانش</a>
                 </li>}
-               @if(ViewBag.dataview){ <li class="dropdown" >
+               @if (User.IsInRole("DataView"))
+               { <li class="dropdown" >
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-fw fa-search fa-lg"></i>جستجوی راهکار<span class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu">
                         <li class="dropdown-header"></li>
