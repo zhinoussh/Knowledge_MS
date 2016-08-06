@@ -7,6 +7,7 @@ using System.Web.Optimization;
 using System.Web.Routing;
 using System.Web.Security;
 using System.Security.Principal;
+using System.Security.Claims;
 
 namespace Knowledge_Management
 {
@@ -32,9 +33,11 @@ namespace Knowledge_Management
                     
                     var ticket = FormsAuthentication.Decrypt(encTicket);
                     
-                    var id = new Knowledge_Management.App_Code.UserIdentity(ticket);
+                    var id = new UserIdentity(ticket);
+                    id.Fullname = ticket.UserData;
                     var userRoles = Roles.GetRolesForUser(id.Name);
                     var prin = new GenericPrincipal(id, userRoles);
+                    
                     HttpContext.Current.User = prin;
                 }
             }

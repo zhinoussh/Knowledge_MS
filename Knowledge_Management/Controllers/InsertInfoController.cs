@@ -7,7 +7,7 @@ using Knowledge_Management.Models;
 using Knowledge_Management.ViewModels;
 using Knowledge_Management.DAL;
 using System.Web.Security;
-using Knowledge_Management.App_Code;
+
 
 namespace Knowledge_Management.Controllers
 {
@@ -49,14 +49,6 @@ namespace Knowledge_Management.Controllers
             return View(o);
         }
 
-        public ActionResult GetUserInfo()
-        {
-            KnowledgeMSDAL DAL = new KnowledgeMSDAL();
-
-            List<string> emp_prop = DAL.get_Employee_prop(User.Identity.Name);
-
-            return Content(emp_prop[4]);
-        }
 
         //create a Question
         [HttpPost]

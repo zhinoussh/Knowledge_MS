@@ -30,12 +30,17 @@ namespace Knowledge_Management.Controllers
                     ViewBag.Fail = "false";
                     //FormsAuthentication.SetAuthCookie(user.username, false);
 
+                    List<string> emp_prop = DAL.get_Employee_prop(user.username);
+                    string fullname = "";
+                    if(emp_prop!=null)
+                        fullname = emp_prop[4];
+
                     var authTicket = new FormsAuthenticationTicket(1, //version
                                user.username, // user name
                                DateTime.Now,             //creation
                                DateTime.Now.AddMinutes(30), //Expiration
                                false, //Persistent
-                               "");
+                               fullname);
 
                     var encTicket = FormsAuthentication.Encrypt(authTicket);
                     Response.Cookies.Add(new HttpCookie(FormsAuthentication.FormsCookieName, encTicket));

@@ -283,7 +283,7 @@ namespace Knowledge_Management.DAL
                                     e.data_entry+"",
                                     e.data_view+"",
                                     e.fname+" "+e.lname
-                                }).FirstOrDefault().ToList();
+                                }).FirstOrDefault();
 
             return lst_employee;
         }

@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿
+<!DOCTYPE html>
 
 <html>
 <head>
@@ -55,20 +56,24 @@
         <!-- /#sidebar-wrapper -->
         <!-- Page Content -->
         <div id="page-content-wrapper">
-
+            
             <div class="container">
                 <div class="row">
                     <div class="col-sm-11 col-sm-offset-1">
                         <div class="editor-field" ><img src="~/img/header2.png" alt="" class="header_mng" /></div>
                         <div class="editor-field" style="margin-right:50%">
                             کابر گرامی،
-                            <span style="color:#0094ff"> @Html.Action("GetUserInfo", "InsertInfo")</span>
+                            <span style="color:#0094ff">
+                            @((User.Identity as UserIdentity).Fullname)
+                            
+                            </span>
                              خوش آمدید
                         </div>
                         </div>
                         <div class="col-sm-10 col-sm-offset-2">
-
+                            
                             @RenderBody()
+                            
                         </div>
                        
                     </div>

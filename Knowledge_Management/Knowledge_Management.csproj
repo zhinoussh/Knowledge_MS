@@ -116,9 +116,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Code\CustomRoleProvider.cs" />
-    <Compile Include="App_Code\CustomAuthorizeAttribute.cs" />
-    <Compile Include="App_Code\UserIdentity.cs" />
+    <Compile Include="Security_Code\CustomRoleProvider.cs" />
+    <Compile Include="Security_Code\CustomAuthorizeAttribute.cs" />
+    <Compile Include="Security_Code\UserIdentity.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
@@ -157,7 +157,7 @@
     <Compile Include="ViewModels\DepartmentViewModel.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\StrategyController.cs" />
-    <Compile Include="App_Code\Encryption.cs" />
+    <Compile Include="Security_Code\Encryption.cs" />
     <Compile Include="DAL\KnowledgeMSDAL.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
