@@ -5,10 +5,11 @@ using System.Web;
 using System.Web.Mvc;
 using Knowledge_Management.DAL;
 using System.Web.Security;
+using Knowledge_Management.App_Code;
 
 namespace Knowledge_Management.Controllers
 {
-    [Authorize(Roles="Public")]
+    [CustomAuthorize(Roles = "Public")]
     public class EmployeeProfileController : Controller
     {
         // GET: EmployeeProfile

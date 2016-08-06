@@ -7,10 +7,11 @@ using Knowledge_Management.Models;
 using Knowledge_Management.ViewModels;
 using Knowledge_Management.DAL;
 using System.Web.Security;
+using Knowledge_Management.App_Code;
 
 namespace Knowledge_Management.Controllers
 {
-    [Authorize(Roles = "DataEntry")]
+    [CustomAuthorize(Roles = "DataEntry")]
     public class InsertInfoController : Controller
     {
         // GET: InsertInfo
@@ -51,13 +52,8 @@ namespace Knowledge_Management.Controllers
         public ActionResult GetUserInfo()
         {
             KnowledgeMSDAL DAL = new KnowledgeMSDAL();
-            
-            string cookieName = FormsAuthentication.FormsCookieName; //Find cookie name
-            HttpCookie authCookie = HttpContext.Request.Cookies[cookieName]; //Get the cookie by it's name
-            FormsAuthenticationTicket ticket = FormsAuthentication.Decrypt(authCookie.Value); //Decrypt it
-            string UserName = ticket.Name; //You have the UserName!
-            
-            List<string> emp_prop = DAL.get_Employee_prop(UserName);
+
+            List<string> emp_prop = DAL.get_Employee_prop(User.Identity.Name);
 
             return Content(emp_prop[4]);
         }

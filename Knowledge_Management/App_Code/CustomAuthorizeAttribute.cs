@@ -6,7 +6,7 @@ using System.Web.Mvc;
 
 namespace Knowledge_Management.App_Code
 {
-    public class CustomAuthorizateAttribute : AuthorizeAttribute{
+    public class CustomAuthorizeAttribute : AuthorizeAttribute{
 
         public override void OnAuthorization(AuthorizationContext filterContext)
         {
