@@ -5,6 +5,8 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using System.Web.Security;
+using System.Security.Principal;
 
 namespace Knowledge_Management
 {
@@ -17,6 +19,25 @@ namespace Knowledge_Management
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
+        }
+
+        void Application_PostAuthenticateRequest(object sender, EventArgs e)
+        {
+            var authCookie = HttpContext.Current.Request.Cookies[FormsAuthentication.FormsCookieName];
+            if (authCookie != null)
+            {
+                string encTicket = authCookie.Value;
+                if (!String.IsNullOrEmpty(encTicket))
+                {
+                    
+                    var ticket = FormsAuthentication.Decrypt(encTicket);
+                    
+                    var id = new Knowledge_Management.App_Code.UserIdentity(ticket);
+                    var userRoles = Roles.GetRolesForUser(id.Name);
+                    var prin = new GenericPrincipal(id, userRoles);
+                    HttpContext.Current.User = prin;
+                }
+            }
         }
 
         protected void Application_EndRequest()

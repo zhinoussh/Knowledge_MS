@@ -6,10 +6,12 @@ using System.Web.Mvc;
 using Knowledge_Management.Models;
 using Knowledge_Management.ViewModels;
 using Knowledge_Management.DAL;
+using Knowledge_Management.App_Code;
+using Knowledge_Management.App_Code;
 
 namespace Knowledge_Management.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    [CustomAuthorize(Roles = "Admin")]
     public class JobController : Controller
     {
         // GET: Show Jobs

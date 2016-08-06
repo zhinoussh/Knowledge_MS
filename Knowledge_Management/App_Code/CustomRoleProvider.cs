@@ -60,7 +60,9 @@ namespace Knowledge_Management.App_Code
 
         public override bool IsUserInRole(string username, string roleName)
         {
-            throw new NotImplementedException();
+            KnowledgeMSDAL DAL = new KnowledgeMSDAL();
+            return DAL.check_userinRole(username, roleName);
+           // throw new NotImplementedException();
         }
 
         public override void RemoveUsersFromRoles(string[] usernames, string[] roleNames)

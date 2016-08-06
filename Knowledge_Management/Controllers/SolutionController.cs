@@ -7,10 +7,11 @@ using Knowledge_Management.ViewModels;
 using Knowledge_Management.DAL;
 using System.Web.Security;
 using Knowledge_Management.Models;
+using Knowledge_Management.App_Code;
 
 namespace Knowledge_Management.Controllers
 {
-    [Authorize(Roles = "Employee")]
+    [CustomAuthorize(Roles = "DataView")]
     public class SolutionController : Controller
     {
 
@@ -22,15 +23,6 @@ namespace Knowledge_Management.Controllers
             o.solutions = DAL.get_Solutions(id);
             o.question = DAL.get_question_name(id);
            
-            string cookieName = FormsAuthentication.FormsCookieName; //Find cookie name
-            HttpCookie authCookie = HttpContext.Request.Cookies[cookieName]; //Get the cookie by it's name
-            FormsAuthenticationTicket ticket = FormsAuthentication.Decrypt(authCookie.Value); //Decrypt it
-            string UserName = ticket.Name; //You have the UserName!
-
-            List<string> emp_prop = DAL.get_Employee_prop(UserName);
-
-            ViewBag.dataentry = Boolean.Parse(emp_prop[2]);
-            ViewBag.dataview = Boolean.Parse(emp_prop[3]);
 
             return View(o);
         }
@@ -57,17 +49,7 @@ namespace Knowledge_Management.Controllers
 
             o.new_solution_id = pk_solution;
 
-            string cookieName = FormsAuthentication.FormsCookieName; //Find cookie name
-            HttpCookie authCookie = HttpContext.Request.Cookies[cookieName]; //Get the cookie by it's name
-            FormsAuthenticationTicket ticket = FormsAuthentication.Decrypt(authCookie.Value); //Decrypt it
-            string UserName = ticket.Name; //You have the UserName!
-
-            List<string> emp_prop = DAL.get_Employee_prop(UserName);
-
-            ViewBag.dataentry = Boolean.Parse(emp_prop[2]);
-            ViewBag.dataview = Boolean.Parse(emp_prop[3]);
-            
-
+           
             return View(o);
         }
 
@@ -97,16 +79,6 @@ namespace Knowledge_Management.Controllers
         public ActionResult FullSolution(int id)
         {
             KnowledgeMSDAL DAL = new KnowledgeMSDAL();
-
-            string cookieName = FormsAuthentication.FormsCookieName; //Find cookie name
-            HttpCookie authCookie = HttpContext.Request.Cookies[cookieName]; //Get the cookie by it's name
-            FormsAuthenticationTicket ticket = FormsAuthentication.Decrypt(authCookie.Value); //Decrypt it
-            string UserName = ticket.Name; //You have the UserName!
-
-            List<string> emp_prop = DAL.get_Employee_prop(UserName);
-
-            ViewBag.dataentry = Boolean.Parse(emp_prop[2]);
-            ViewBag.dataview = Boolean.Parse(emp_prop[3]);
 
             FullSolutionViewModel s = new FullSolutionViewModel();
             s= DAL.get_Solution_by_id(id);            
@@ -277,18 +249,6 @@ namespace Knowledge_Management.Controllers
 
         public ActionResult YourSolution()
         {
-            KnowledgeMSDAL DAL = new KnowledgeMSDAL();
-
-            string cookieName = FormsAuthentication.FormsCookieName; //Find cookie name
-            HttpCookie authCookie = HttpContext.Request.Cookies[cookieName]; //Get the cookie by it's name
-            FormsAuthenticationTicket ticket = FormsAuthentication.Decrypt(authCookie.Value); //Decrypt it
-            string UserName = ticket.Name; //You have the UserName!
-
-            List<string> emp_prop = DAL.get_Employee_prop(UserName);
-
-            ViewBag.dataentry = Boolean.Parse(emp_prop[2]);
-            ViewBag.dataview = Boolean.Parse(emp_prop[3]);
-
             return View();
         }
         public ActionResult YourSolutionAjaxHandler(jQueryDataTableParamModel request)

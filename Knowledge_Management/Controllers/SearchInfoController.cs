@@ -7,33 +7,20 @@ using Knowledge_Management.Models;
 using Knowledge_Management.ViewModels;
 using Knowledge_Management.DAL;
 using System.Web.Security;
+using Knowledge_Management.App_Code;
 
 namespace Knowledge_Management.Controllers
 {
+    [CustomAuthorize(Roles = "DataView")]
     public class SearchInfoController : Controller
     {
         // GET: SearchInfo
         public ActionResult SearchAll(int?id)
         {
-            KnowledgeMSDAL DAL = new KnowledgeMSDAL();
-
-            string cookieName = FormsAuthentication.FormsCookieName; //Find cookie name
-            HttpCookie authCookie = HttpContext.Request.Cookies[cookieName]; //Get the cookie by it's name
-            FormsAuthenticationTicket ticket = FormsAuthentication.Decrypt(authCookie.Value); //Decrypt it
-            string UserName = ticket.Name; //You have the UserName!
-
-            List<string> emp_prop = DAL.get_Employee_prop(UserName);
-
-            ViewBag.dataentry = Boolean.Parse(emp_prop[2]);
-            ViewBag.dataview = Boolean.Parse(emp_prop[3]);
-
-
             ViewBag.key_id = id == null ? 0 : id;
             
             return View();
         }
-
-       
         
         public ActionResult SearchQuestionAjaxHandler(jQueryDataTableParamModel request)
         {
@@ -95,8 +82,6 @@ namespace Knowledge_Management.Controllers
             },
             JsonRequestBehavior.AllowGet);
         }
-
-
       
     }
 }

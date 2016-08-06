@@ -7,13 +7,13 @@ using Knowledge_Management.Models;
 using Knowledge_Management.ViewModels;
 using Knowledge_Management.DAL;
 using System.Web.Security;
+using Knowledge_Management.App_Code;
 
 namespace Knowledge_Management.Controllers
 {
+    [CustomAuthorize(Roles = "DataEntry")]
     public class InsertInfoController : Controller
     {
-
-        
         // GET: InsertInfo
         public ActionResult Index()
         {
@@ -29,9 +29,7 @@ namespace Knowledge_Management.Controllers
             int dep_id = Int32.Parse(emp_prop[0]);
             int job_id = Int32.Parse(emp_prop[1]);
 
-            ViewBag.dataentry = Boolean.Parse(emp_prop[2]);
-            ViewBag.dataview = Boolean.Parse(emp_prop[3]);
-
+           
             List<tbl_department_objectives> dep_objs = DAL.get_Department_Objectives(dep_id);
             o.lst_dep_objective = new SelectList(dep_objs, "pkey", "objective");
             o.dep_obj_id = 0;
@@ -54,13 +52,8 @@ namespace Knowledge_Management.Controllers
         public ActionResult GetUserInfo()
         {
             KnowledgeMSDAL DAL = new KnowledgeMSDAL();
-            
-            string cookieName = FormsAuthentication.FormsCookieName; //Find cookie name
-            HttpCookie authCookie = HttpContext.Request.Cookies[cookieName]; //Get the cookie by it's name
-            FormsAuthenticationTicket ticket = FormsAuthentication.Decrypt(authCookie.Value); //Decrypt it
-            string UserName = ticket.Name; //You have the UserName!
-            
-            List<string> emp_prop = DAL.get_Employee_prop(UserName);
+
+            List<string> emp_prop = DAL.get_Employee_prop(User.Identity.Name);
 
             return Content(emp_prop[4]);
         }
