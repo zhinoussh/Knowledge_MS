@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace Knowledge_Management.App_Code
+namespace Knowledge_Management
 {
     public class CustomAuthorizeAttribute : AuthorizeAttribute{
 

@@ -8,7 +8,7 @@ using System.IO;
 using System.Text;
 using System.Data;
 
-namespace Knowledge_Management.DAL
+namespace Knowledge_Management
 {
     public class Encryption
     {

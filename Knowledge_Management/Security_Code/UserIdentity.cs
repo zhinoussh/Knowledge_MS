@@ -4,12 +4,15 @@ using System.Linq;
 using System.Web;
 using System.Security.Principal;
 using System.Web.Security;
+using Knowledge_Management.DAL;
 
-namespace Knowledge_Management.App_Code
+namespace Knowledge_Management
 {
     public class UserIdentity : IIdentity, IPrincipal
     {
         private readonly FormsAuthenticationTicket _ticket;
+        
+        public string Fullname {get; set;}
 
         public UserIdentity(FormsAuthenticationTicket ticket)
         {
