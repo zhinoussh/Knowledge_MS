@@ -10,7 +10,7 @@ using System.Web.Security;
 
 namespace Knowledge_Management.Controllers
 {
-    [Authorize(Roles = "DataView")]
+    [CustomAuthorize(Roles = "DataView")]
     public class SearchKeyController : Controller
     {
         // GET: SearchKey

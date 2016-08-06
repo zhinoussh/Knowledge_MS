@@ -10,7 +10,7 @@ using Knowledge_Management.DAL;
 namespace Knowledge_Management.Controllers
 {
     
-    [Authorize(Roles="Admin")]
+    [CustomAuthorize(Roles="Admin")]
     public class StrategyController : Controller
     {
         // GET: Show strategies

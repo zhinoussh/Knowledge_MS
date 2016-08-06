@@ -61,7 +61,7 @@ namespace Knowledge_Management.App_Code
         public override bool IsUserInRole(string username, string roleName)
         {
             KnowledgeMSDAL DAL = new KnowledgeMSDAL();
-            return DAL.checke_userinRole(username, roleName);
+            return DAL.check_userinRole(username, roleName);
            // throw new NotImplementedException();
         }
 

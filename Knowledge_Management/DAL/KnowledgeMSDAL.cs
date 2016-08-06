@@ -48,13 +48,12 @@ namespace Knowledge_Management.DAL
             else if (role == "4")
                 return new string[] { "DataView" };
             else
-                return null;
+                return new string[] { "Public" };
 
         }
 
-        public bool checke_userinRole(string pcode, string role)
+        public bool check_userinRole(string pcode, string role)
         { 
-            
             string role_code="";
             if(role=="Admin")
                 role_code="1";
@@ -62,6 +61,8 @@ namespace Knowledge_Management.DAL
                 role_code="3";
             else if(role=="DataView")
                 role_code="4";
+            else if(role=="Public")
+                role_code = "5";
 
             tbl_login l= db.tbl_login.Where(x => x.username == pcode && x.role == role_code).FirstOrDefault();
 
@@ -290,7 +291,14 @@ namespace Knowledge_Management.DAL
         public int InsertEmployee(int emp_id, string first_name, string last_name,string personel_code
             , int dep_id, int job_id, string password, bool data_entry, bool data_view)
         {
-            
+            string emp_role = "5";
+            if (data_entry && data_view)
+                emp_role = "2";
+            else if (data_entry && !data_view)
+                emp_role = "3";
+            else if (!data_entry && data_view)
+                emp_role = "4";
+
             tbl_employee s;
             if (emp_id == 0)
             {
@@ -314,13 +322,6 @@ namespace Knowledge_Management.DAL
                     int newPK = s.pkey;
                     string pass = (new Encryption()).Encrypt(password);
 
-                    string emp_role = "";
-                    if(data_entry && data_view)
-                        emp_role = "2";
-                    else if(data_entry && !data_view)
-                        emp_role = "3";
-                    else if (!data_entry && data_view)
-                        emp_role = "4";
 
                     tbl_login login_obj = new tbl_login { username = personel_code, role = emp_role, pass = pass, fk_emp = newPK };
                     db.tbl_login.Add(login_obj);
@@ -343,6 +344,13 @@ namespace Knowledge_Management.DAL
                 s.data_view = data_view;
                 db.SaveChanges();
 
+
+                tbl_login l = db.tbl_login.Where(x => x.fk_emp == emp_id).FirstOrDefault();
+                if (l != null)
+                {
+                    l.role = emp_role;
+                    db.SaveChanges();
+                }
                 return 1;
 
             }

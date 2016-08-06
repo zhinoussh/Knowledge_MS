@@ -13,8 +13,6 @@ namespace Knowledge_Management.Controllers
     [Authorize(Roles = "DataEntry")]
     public class InsertInfoController : Controller
     {
-
-        
         // GET: InsertInfo
         public ActionResult Index()
         {

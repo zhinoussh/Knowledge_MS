@@ -10,26 +10,16 @@ using System.Web.Security;
 
 namespace Knowledge_Management.Controllers
 {
-    [Authorize(Roles = "DataView")]
+    [CustomAuthorize(Roles = "DataView")]
     public class SearchInfoController : Controller
     {
         // GET: SearchInfo
         public ActionResult SearchAll(int?id)
         {
-            KnowledgeMSDAL DAL = new KnowledgeMSDAL();
-
-            string cookieName = FormsAuthentication.FormsCookieName; //Find cookie name
-            HttpCookie authCookie = HttpContext.Request.Cookies[cookieName]; //Get the cookie by it's name
-            FormsAuthenticationTicket ticket = FormsAuthentication.Decrypt(authCookie.Value); //Decrypt it
-            string UserName = ticket.Name; //You have the UserName!
-
-            
             ViewBag.key_id = id == null ? 0 : id;
             
             return View();
         }
-
-       
         
         public ActionResult SearchQuestionAjaxHandler(jQueryDataTableParamModel request)
         {
@@ -91,8 +81,6 @@ namespace Knowledge_Management.Controllers
             },
             JsonRequestBehavior.AllowGet);
         }
-
-
       
     }
 }

@@ -26,11 +26,14 @@
                     </a>
                 </li>
                 @if (User.IsInRole("DataEntry"))
-                {<li>
+                {
+                    <li>
                     <a href="/InsertInfo/Index"><i class="fa fa-fw fa-pencil-square-o fa-lg"></i> ورود اطلاعات و دانش</a>
-                </li>}
+                </li>
+                }
                @if (User.IsInRole("DataView"))
-               { <li class="dropdown" >
+               {
+                     <li class="dropdown" >
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-fw fa-search fa-lg"></i>جستجوی راهکار<span class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu">
                         <li class="dropdown-header"></li>
@@ -38,7 +41,8 @@
                         <li><a href="/SearchKey/Index">لیست تمام کلیدواژه های جستجو</a></li>
                         <li><a href="/Solution/YourSolution">راهکارهای شما</a></li>
                     </ul>
-                </li>}
+                </li>
+               }
                <li>
                    <a href="/EmployeeProfile/Index"><i class="fa fa-fw fa-user fa-lg"></i>ویرایش اطلاعات پرسنلی</a>
                 </li>

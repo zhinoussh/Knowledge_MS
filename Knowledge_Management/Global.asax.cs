@@ -31,7 +31,8 @@ namespace Knowledge_Management
                 {
                     
                     var ticket = FormsAuthentication.Decrypt(encTicket);
-                    var id = new UserIdentity(ticket);
+                    
+                    var id = new Knowledge_Management.App_Code.UserIdentity(ticket);
                     var userRoles = Roles.GetRolesForUser(id.Name);
                     var prin = new GenericPrincipal(id, userRoles);
                     HttpContext.Current.User = prin;

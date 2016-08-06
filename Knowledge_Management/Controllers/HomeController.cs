@@ -49,7 +49,7 @@ namespace Knowledge_Management.Controllers
                             return Json(new { url = "/InsertInfo/Index" });
                         else if (roles.Contains("DataView"))
                             return Json(new { url = "/SearchInfo/SearchAll" });
-                        else
+                        else if (roles.Contains("Public"))
                             return Json(new { url = "/EmployeeProfile/Index" });
                     }
                 }

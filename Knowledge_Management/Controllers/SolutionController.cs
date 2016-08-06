@@ -10,7 +10,7 @@ using Knowledge_Management.Models;
 
 namespace Knowledge_Management.Controllers
 {
-    [Authorize(Roles = "DataView")]
+    [CustomAuthorize(Roles = "DataView")]
     public class SolutionController : Controller
     {
 
