@@ -15,75 +15,75 @@
 </head>
 <body>
 
-    <div id="wrapper" class="toggled">
-        @*<div class="overlay"></div>*@
-
-        <!-- Sidebar -->
-        <nav class="navbar navbar-inverse navbar-fixed-top" id="sidebar-wrapper" role="navigation">
-            <ul class="nav sidebar-nav">
-                <li class="sidebar-brand">
-                    <a href="#">
-                        بخش های سیستم
-                    </a>
-                </li>
-                @if (User.IsInRole("DataEntry"))
-                {
+    <div id="wrapper" >
+        <div id="sidebar-wrapper">
+            <!-- Sidebar -->
+            <nav class="navbar navbar-inverse navbar-fixed-top" id="sidebar-wrapper" role="navigation">
+                <ul class="nav sidebar-nav">
+                    <li class="sidebar-brand">
+                        <a id="menu-toggle" href="#">
+                            بخش های سیستم
+                            <span id="main_icon" class="glyphicon glyphicon-chevron-left"></span>
+                        </a>
+                    </li>
+                    @if (User.IsInRole("DataEntry"))
+                    {
+                        <li>
+                            <a href="/InsertInfo/Index"> ورود اطلاعات و دانش <i class="sub_icon fa fa-fw fa-pencil-square-o fa-lg"></i> </a>
+                        </li>
+                    }
+                    @if (User.IsInRole("DataView"))
+                    {
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="caret"></span> جستجوی راهکار<i class="sub_icon fa fa-fw fa-search fa-lg"></i></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li class="dropdown-header"></li>
+                                <li><a href="/SearchInfo/SearchAll">جستجوی مسائل</a></li>
+                                <li><a href="/SearchKey/Index">لیست تمام کلیدواژه های جستجو</a></li>
+                                <li><a href="/Solution/YourSolution">راهکارهای شما</a></li>
+                            </ul>
+                        </li>
+                    }
                     <li>
-                    <a href="/InsertInfo/Index"><i class="fa fa-fw fa-pencil-square-o fa-lg"></i> ورود اطلاعات و دانش</a>
-                </li>
-                }
-               @if (User.IsInRole("DataView"))
-               {
-                     <li class="dropdown" >
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-fw fa-search fa-lg"></i>جستجوی راهکار<span class="caret"></span></a>
-                    <ul class="dropdown-menu" role="menu">
-                        <li class="dropdown-header"></li>
-                        <li><a href="/SearchInfo/SearchAll">جستجوی مسائل</a></li>
-                        <li><a href="/SearchKey/Index">لیست تمام کلیدواژه های جستجو</a></li>
-                        <li><a href="/Solution/YourSolution">راهکارهای شما</a></li>
-                    </ul>
-                </li>
-               }
-               <li>
-                   <a href="/EmployeeProfile/Index"><i class="fa fa-fw fa-user fa-lg"></i>ویرایش اطلاعات پرسنلی</a>
-                </li>
-                <li>
-                    <a href="/Home/Logout"><i class="fa fa-fw fa-sign-out fa-lg"></i>خروج</a>
-                </li>
+                        <a href="/EmployeeProfile/Index">ویرایش اطلاعات پرسنلی <i class="sub_icon fa fa-fw fa-user fa-lg"></i> </a>
+                    </li>
+                    <li>
+                        <a href="/Home/Logout"> خروج <i class="sub_icon fa fa-fw fa-sign-out fa-lg"></i> </a>
+                    </li>
 
-            </ul>
-        </nav>
-        <!-- /#sidebar-wrapper -->
-        <!-- Page Content -->
-        <div id="page-content-wrapper">
-            
-            <div class="container">
-                <div class="row">
-                    <div class="col-sm-11 col-sm-offset-1">
-                        <div class="editor-field" ><img src="~/img/header2.png" alt="" class="header_mng" /></div>
-                        <div class="editor-field" style="margin-right:50%">
-                            کابر گرامی،
-                            <span style="color:#0094ff">
-                            @((User.Identity as UserIdentity).Fullname)
-                            
-                            </span>
-                             خوش آمدید
-                        </div>
+                </ul>
+            </nav>
+            </div><!-- /#sidebar-wrapper -->
+            <!-- Page Content -->
+            <div id="page-content-wrapper">
+
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-11 col-sm-offset-1">
+                            <div class="editor-field"><img src="~/img/header2.png" alt="" class="header_mng" /></div>
+                            <div class="editor-field" style="margin-right:50%">
+                                کابر گرامی،
+                                <span style="color:#0094ff">
+                                    @((User.Identity as UserIdentity).Fullname)
+
+                                </span>
+                                خوش آمدید
+                            </div>
                         </div>
                         <div class="col-sm-10 col-sm-offset-2">
-                            
+
                             @RenderBody()
-                            
+
                         </div>
-                       
+
                     </div>
+                </div>
+
+
             </div>
-          
+            <!-- /#page-content-wrapper -->
 
         </div>
-        <!-- /#page-content-wrapper -->
-
-    </div>
     <!-- /#wrapper -->
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/jqueryval")
