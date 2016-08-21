@@ -1,0 +1,46 @@
+﻿@model Knowledge_Management.ViewModels.ViewQuestionViewModel
+
+@{
+    ViewBag.Title = "مشاهده مسائل مطرح شده";
+    Layout = "~/Views/Shared/_ManagementLayout.cshtml";
+}
+
+<h5>مشاهده مسائل</h5>
+<span class="border_admin" style="margin-bottom:0;"></span>
+
+    <div class="editor-field" style="width:100%;">  
+        @Html.DisplayFor(model => model.Description)
+    </div>
+
+@Html.HiddenFor(model => model.emp_id, new { id = "hd_id_emp" })
+@Html.HiddenFor(model => model.job_id, new { id = "hd_id_job" })
+@Html.HiddenFor(model => model.dep_id, new { id = "hd_id_dep" })
+@Html.HiddenFor(model => model.jobDesc_id, new { id = "hd_id_jobDesc" })
+@Html.HiddenFor(model => model.depObj_id, new { id = "hd_id_depObj" })
+@Html.HiddenFor(model => model.strategy_id, new { id = "hd_id_strategy" })
+
+
+<div style="float:right; width:100%;margin:2% 0 2% 0">
+    <table id="SearchQuestionDT" class="display">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Keywords</th>
+                <th>job_Desc</th>
+                <th>dep_Obj</th>
+                <th>Strategy</th>
+                <th>fullQuestion</th>
+                <th class="dt-head-right">ردیف</th>
+                <th class="dt-head-right">شرح مسئله</th>
+                <th>جزئیات</th>
+                <th>راهکارها</th>
+                <th>راهکار جدید</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+</div>
+@section scripts{
+    <script src="~/Scripts/Datatables/ViewQuestionDT.js"></script>
+
+}

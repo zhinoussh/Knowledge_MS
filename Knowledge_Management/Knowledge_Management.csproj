@@ -116,6 +116,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\ViewEntryInfoController.cs" />
     <Compile Include="Security_Code\CustomRoleProvider.cs" />
     <Compile Include="Security_Code\CustomAuthorizeAttribute.cs" />
     <Compile Include="Security_Code\UserIdentity.cs" />
@@ -185,6 +186,7 @@
     <Compile Include="ViewModels\SolutionViewModel.cs" />
     <Compile Include="ViewModels\StrategyViewModel.cs" />
     <Compile Include="ViewModels\UploadViewModel.cs" />
+    <Compile Include="ViewModels\ViewQuestionViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\ExploreCalifornia.mdf" />
@@ -246,6 +248,7 @@
     <Content Include="Scripts\dataTables.jqueryui.min.js" />
     <Content Include="Scripts\Datatables\DepartmentDT.js" />
     <Content Include="Scripts\Datatables\EmployeeDT.js" />
+    <Content Include="Scripts\Datatables\EmployeeEntryDT.js" />
     <Content Include="Scripts\Datatables\JobDescDT.js" />
     <Content Include="Scripts\Datatables\JobDT.js" />
     <Content Include="Scripts\Datatables\KeywordDT.js" />
@@ -254,6 +257,7 @@
     <Content Include="Scripts\Datatables\SearchQuestionDT.js" />
     <Content Include="Scripts\Datatables\SolutionDT.js" />
     <Content Include="Scripts\Datatables\UploadDT.js" />
+    <Content Include="Scripts\Datatables\ViewQuestionDT.js" />
     <Content Include="Scripts\DynamicField.js" />
     <Content Include="Scripts\jquery-2.2.3.js" />
     <Content Include="Scripts\jquery-2.2.3.min.js" />
@@ -317,6 +321,8 @@
     <Content Include="Views\Solution\_PartialDeleteUpload.cshtml" />
     <Content Include="Views\Solution\YourSolution.cshtml" />
     <Content Include="Views\Solution\_PartialDeleteSolution.cshtml" />
+    <Content Include="Views\ViewEntryInfo\Personel.cshtml" />
+    <Content Include="Views\ViewEntryInfo\Question.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

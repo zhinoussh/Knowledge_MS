@@ -1,0 +1,36 @@
+﻿
+@{
+    ViewBag.Title = "مشاهده مسائل، راهکارها و اسناد وارد شده توسط پرسنل سازمان";
+    Layout = "~/Views/Shared/_ManagementLayout.cshtml";
+}
+
+
+<h5>مشاهده مسائل، راهکارها و اسناد وارد شده توسط پرسنل سازمان</h5>
+<span class="border_admin"></span>
+
+<table id="EmployeeEntryDT" class="display">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th class="dt-head-right">ردیف</th>
+            <th class="dt-head-right">نام</th>
+            <th class="dt-head-right">نام خانوادگی</th>
+            <th class="dt-head-right">کد ملی</th>
+            <th class="dt-head-right">واحد سازمانی</th>
+            <th class="dt-head-right">شغل</th>
+            <th>ورود اطلاعات</th>
+            <th>مشاهده اطلاعات</th>
+            <th>مسائل مطرح شده</th>
+            <th>راهکارها و اسناد</th>
+
+
+
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+
+@section scripts{
+    <script src="~/Scripts/Datatables/EmployeeEntryDT.js"></script>
+}
+
