@@ -5,9 +5,9 @@
             "url": "/Content/lang.txt"
         },
         "bServerSide": true,
-        "sAjaxSource": "/SearchInfo/SearchQuestionAjaxHandler",
+        "sAjaxSource": "/ViewEntryInfo/SearchQuestionAjaxHandler",
         "fnServerParams": function (aoData) {
-            aoData.push({ "name": "key_id", "value": $('#hd_id_keyword').val() });
+            aoData.push({ "name": "emp_id", "value": $('#hd_id_emp').val() });
         },
         "bProcessing": true,
         "pagingType": "numbers"
@@ -80,19 +80,6 @@
                             , "sClass": "dt-body-center",
                             "mRender": function (data, type, row) {
                                 return "<a class='glyphicon glyphicon-list-alt a_clickable' href='/Solution/Index/" + row[0] + "'></a>"
-                            }
-
-                        }
-                        ,
-                        {
-                            "sName": "New_Solution",
-                            "sWidth": '2%',
-                            "bSearchable": false,
-                            "bSortable": false,
-                            "sDefaultContent": " "
-                            , "sClass": "dt-body-center",
-                            "mRender": function (data, type, row) {
-                                return "<a class='glyphicon glyphicon-file a_clickable' href='/Solution/NewSolution/" + row[0] + "'></a>"
                             }
 
                         }

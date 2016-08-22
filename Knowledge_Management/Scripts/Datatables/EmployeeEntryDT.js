@@ -1,6 +1,6 @@
 ﻿$(document).ready(function () {
 
-    var oTable = $('#EmployeeDT').dataTable({
+    var oTable = $('#EmployeeEntryDT').dataTable({
         "language": {
             "url": "/Content/lang.txt"
         },
@@ -62,7 +62,7 @@
                             "sDefaultContent": " "
                             , "sClass": "dt-body-center",
                             "mRender": function (data, type, row) {
-                                return "<a class='glyphicon glyphicon-list a_clickable' href='/Question?pId=" + row[0] + "'></a>"
+                                return "<a class='glyphicon glyphicon-list a_clickable' href='/ViewEntryInfo/Question?pId=" + row[0] + "'></a>"
 
                             }
                         }
@@ -74,7 +74,7 @@
                             "sDefaultContent": " "
                             , "sClass": "dt-body-center"
                             , "mRender": function (data, type, row) {
-                                return "<a class='glyphicon glyphicon-list-alt a_clickable' href='/Solution?pId=" + row[0] + "'></a>"
+                                return "<a class='glyphicon glyphicon-list-alt a_clickable' href='/ViewEntryInfo/Solution?pId=" + row[0] + "'></a>"
                             }
                         }
 

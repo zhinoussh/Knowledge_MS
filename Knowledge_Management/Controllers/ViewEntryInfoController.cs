@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Knowledge_Management.ViewModels;
 
 namespace Knowledge_Management.Controllers
 {
@@ -74,7 +75,7 @@ namespace Knowledge_Management.Controllers
             });
 
             var result = from s in indexed_list
-                         select new[] { s.SID, s.DepId, s.JobId, s.SIndex, s.FNAME, s.LNAME, s.Pcode
+                         select new[] { s.SID, s.SIndex, s.FNAME, s.LNAME, s.Pcode
                              , s.DepName, s.Jobname,s.Dt_Entry,s.DT_View };
 
 
@@ -94,11 +95,81 @@ namespace Knowledge_Management.Controllers
         #region Question
         public ActionResult Question(int pId)
         {
-            if(pId!=null)
+            KnowledgeMSDAL dal=new KnowledgeMSDAL();
+            ViewQuestionViewModel vm = new ViewQuestionViewModel();
+            if (pId != 0)
+            {
+                List<string> emp_props=dal.get_Employee_byId(pId);
+                vm.emp_id = pId;
+                vm.Description = "مطرح شده توسط آقای/خانم  " + emp_props[1] + " کد پرسنلی: " + emp_props[0];
+            }
 
-            return View();
+
+            return View(vm);
         }
 
+        public ActionResult SearchQuestionAjaxHandler(jQueryDataTableParamModel request)
+        {
+            KnowledgeMSDAL DAL = new KnowledgeMSDAL();
+            List<QuestionViewModel> all_items = new List<QuestionViewModel>();
+
+            int emp_id = Request["emp_id"].ToString() == "" ? 0 : Convert.ToInt32(Request["emp_id"].ToString());
+
+            if (emp_id != 0)
+            {
+                List<string> emp_props = DAL.get_Employee_byId(emp_id);
+                all_items = DAL.get_all_Questions_by_employee(emp_props[0]);
+            }
+
+            //filtering 
+            List<QuestionViewModel> filtered = new List<QuestionViewModel>();
+
+            if (!string.IsNullOrEmpty(request.sSearch))
+            {
+                filtered = all_items.Where(i => i.question.Contains(request.sSearch)
+                                             || i.lst_keywords.Contains(request.sSearch)).ToList();
+
+            }
+            else
+                filtered = all_items;
+
+
+            var sortDirection = Request["sSortDir_0"]; // asc or desc
+            if (sortDirection == "asc")
+                filtered = filtered.OrderBy(s => s.question).ToList();
+            else
+                filtered = filtered.OrderByDescending(s => s.question).ToList();
+
+            //pagination
+            filtered = filtered.Skip(request.iDisplayStart).Take(request.iDisplayLength).ToList();
+
+            var indexed_list = filtered.Select((s, index) => new
+            {
+                QID = s.question_id + "",
+                KeyWords = s.lst_keywords,
+                Dep_Obj = s.dep_objective,
+                Strategy = s.strategy_name,
+                Job_Desc = s.job_desc,
+                QIndex = (index + 1) + "",
+                QSubject = s.question
+            });
+
+
+            var result = from s in indexed_list
+                         select new[] { s.QID, s.KeyWords, s.Job_Desc, s.Dep_Obj, s.Strategy, s.QSubject, s.QIndex, s.QSubject.Length <= 200 ? s.QSubject : (s.QSubject.Substring(0, 200) + "...") };
+
+
+
+            return Json(new
+            {
+                sEcho = request.sEcho,
+                iTotalRecords = all_items.Count(),
+                iTotalDisplayRecords = all_items.Count(),
+                aaData = result
+            },
+            JsonRequestBehavior.AllowGet);
+        }
+      
         #endregion Question
 
 

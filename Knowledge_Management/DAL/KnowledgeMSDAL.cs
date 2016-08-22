@@ -271,6 +271,19 @@ namespace Knowledge_Management.DAL
             return lst_employee ;
         }
 
+        public List<string> get_Employee_byId(int emp_id)
+        {
+            List<string> props = new List<string>();
+            props = (from e in db.tbl_employee
+                            where e.pkey == emp_id
+                     select new List<string>
+                                {
+                                    e.personel_code,
+                                     e.fname+" "+e.lname
+                                }).FirstOrDefault();
+
+            return props;
+        }
         public List<string> get_Employee_prop(string pcode)
         {
             List<string> lst_employee = new List<string>();
