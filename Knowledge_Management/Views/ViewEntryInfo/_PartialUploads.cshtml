@@ -1,0 +1,159 @@
+﻿@model Knowledge_Management.ViewModels.SolutionEmployeeViewModel
+
+@{
+
+    Layout = null;
+}
+
+
+<!-- Modal -->
+<div class="modal fade" id="DeleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" id="confirm-container">
+
+        </div>
+    </div>
+</div>
+<!-- /end Modal -->
+
+
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close" aria-hidden="true">&times;</button>
+</div>
+<div class="modal-body">
+@Html.HiddenFor(model => model.solution_id, new { id = "hd_solution_id" })
+
+    <table id="UploadDT" class="display">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>FilePath</th>
+                <th class="dt-head-right">ردیف</th>
+                <th class="dt-head-right">شرح بارگذاری</th>
+                <th>دانلود</th>
+                <th>حذف</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+   
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        var oTable = $('#UploadDT').dataTable({
+            "language": {
+                "url": "/Content/lang.txt"
+            },
+            "bServerSide": true,
+            "sAjaxSource": "/ViewEntryInfo/UploadAjaxHandler",
+            "fnServerParams": function (aoData) {
+                aoData.push({ "name": "solution_id", "value": $('#hd_solution_id').val() });
+            },
+            "bProcessing": true,
+            "bFilter": false,
+            "bSort": false,
+            "pagingType": "numbers"
+            , "aoColumns": [
+                            {
+                                "sName": "ID",
+                                "bSearchable": false,
+                                "bSortable": false,
+                                "bVisible": false
+                            },
+                             {
+                                 "sName": "filePath",
+                                 "bSearchable": false,
+                                 "bSortable": false,
+                                 "bVisible": false
+                             },
+                            {
+                                "sName": "radif", "sWidth": '2%', "sClass": "dt-body-center"
+                                    , "bSearchable": false, "bSortable": false
+                            },
+                            { "sName": "upload", "sWidth": '80%' },
+                            {
+                                "sName": "download",
+                                "sWidth": '2%',
+                                "bSearchable": false,
+                                "bSortable": false,
+                                "sDefaultContent": " "
+                                 , "sClass": "dt-body-center",
+                                "mRender": function (data, type, row) {
+                                    return "<a class='glyphicon glyphicon-download a_clickable' onclick='download_file(" + row[0] + ")'></a>"
+
+                                }
+                            }
+                             , {
+                                 "sName": "DELETE",
+                                 "sWidth": '3%',
+                                 "bSearchable": false,
+                                 "bSortable": false,
+                                 "sDefaultContent": " "
+                                , "sClass": "dt-body-center"
+                                , "mRender": function (data, type, row) {
+                                    return "<a class='glyphicon glyphicon-remove a_clickable' onclick='delete_dialog(" + row[0] + ")'></a>"
+                                }
+                             }
+
+            ]
+        });
+
+
+        $("#close_delete_modal").click(function () {
+            $("#div_alert").css("visibility", "hidden");
+            return false;
+        });
+
+
+
+    });
+
+
+    var SuccessMessage = function (result) {
+        if (result.msg) {
+            $("#alert_success").html(result.msg);
+            $("#div_alert").css("visibility", "visible");
+
+        }
+
+    }
+
+
+    var download_file = function (upload_id) {
+
+        $.ajax(
+               {
+                   url: '/Solution/DownloadFile',
+                   contentType: 'application/json; charset=utf-8',
+                   datatype: 'json',
+                   data: {
+                       uploadID: upload_id
+                   },
+                   type: "GET",
+                   success: function () {
+                       window.location = '/Solution/DownloadFile?uploadID=' + upload_id;
+                   }
+               });
+    }
+
+    var delete_dialog = function (upload_id) {
+
+        var url = "/Solution/Delete_Upload"; // the url to the controller
+        $.get(url + '/' + upload_id, function (data) {
+            $('#confirm-container').html(data);
+            $('#DeleteModal').modal('show');
+        });
+    }
+
+
+
+
+
+</script>
+
+
+
+

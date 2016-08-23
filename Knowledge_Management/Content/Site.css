@@ -78,7 +78,7 @@ textarea {
      color:#815eae; 
 }
 
-.glyphicon-phone-alt{
+.glyphicon-phone-alt {
     font-size:20px;
     line-height:1.5;
     color:#815eae;    
@@ -89,21 +89,21 @@ textarea {
     color:#4304e3; 
 
 }
-.glyphicon-edit  {
+.glyphicon-edit {
      font-size:20px;
-    color:#eff561;  
+    color:#ebf24b;  
 }
 
-.glyphicon-list-alt {
+.glyphicon-list-alt,.glyphicon-folder-open {
     font-size:20px;
     color:#36cc8b;  
 }
 
-.glyphicon-file ,.glyphicon-download{
+.glyphicon-file ,.glyphicon-download,.glyphicon-comment{
      font-size:20px;
     color:#288df5; 
 }
-.glyphicon-file:hover ,.glyphicon-download:hover{
+.glyphicon-file:hover ,.glyphicon-download:hover,.glyphicon-comment:hover{
      font-size:22px;
     color:#095bae; 
     text-decoration:none; 
@@ -114,13 +114,13 @@ textarea {
     color:#2d0396;  
     text-decoration:none; 
     }
-  .glyphicon-list-alt:hover {
+  .glyphicon-list-alt:hover,.glyphicon-folder-open:hover  {
      font-size:22px;
-    color:#0e814f;  
+    color:#208d5d;  
     text-decoration:none; 
     }
 
-    .glyphicon-edit:hover {
+    .glyphicon-edit:hover{
      font-size:25px;
     color:#f0f92b; 
     text-decoration:none; 
@@ -323,7 +323,7 @@ cursor:pointer;
       
     height:50px;
 	color:#fff;
-    padding:5px 10px 0 0;
+    padding:8px;
     border-bottom:1px solid #eee;
     background-color: #d9534f;
     -webkit-border-top-left-radius: 5px;
@@ -333,7 +333,7 @@ cursor:pointer;
      border-top-left-radius: 5px;
      border-top-right-radius: 5px;
 }
-    .modal-header-danger h6 {
+    .modal-header-danger h6 , .modal-header-info h6 {
          font-size:15pt;
          text-align:left;
          padding:7px 0 0 10px;
@@ -342,6 +342,7 @@ cursor:pointer;
     .modal-body{
          overflow-y: auto;
          font-size:10pt;
+         text-align:right;
     }
 .border-modal {
     height: 400px;
@@ -355,9 +356,9 @@ cursor:pointer;
 
 .glyphicon-info-sign {
      color:#fff; 
-     font-size:20pt;
-     padding:0;
-     float:left;
+     font-size:15pt;
+   margin-right:10px;
+
 }
 .glyphicon-alert {
 margin-right:10px;
@@ -374,14 +375,18 @@ width:80px;
 
 .add-more {
     float:left;
-     height:30px;
+     height:25px;
     width:12%;
     background-color:#b8b8b8;
+      margin:8px 5px 0 0;
+
 }
 .remove-me {
      float:left;
-    height:30px;
+    height:25px;
     width:12%;
+    margin:8px 5px 0 0;
+
 }
 
 .txt_keyword {
@@ -396,6 +401,7 @@ width:80px;
     border-radius: 4px;
     font-size:9pt;
     direction:rtl;
+    margin-top:5px;
 }
 
 .field_title {
@@ -425,14 +431,18 @@ color:#288df5;
 .link_solution {
   font-size:11pt;
     color:#623799;
-
 }
+
 .link_solution:hover {
     text-decoration:underline;
     color:#7222d9;
   font-size:12pt;
 }
 
+.table-striped {
+  direction:rtl
+
+}
 .table-striped > tbody > tr:nth-of-type(odd) {
   background-color: #d5d8f4;
 }
@@ -441,16 +451,11 @@ color:#288df5;
   background-color: #f9f9f9;
 }
 
-.question_box {
-    float: right;
-    width: 98%;
+.well {
     margin-top: 3%;
-    border-radius: 5px;
- background: -webkit-linear-gradient(to left, #5C258D , #4389A2); /* Chrome 10-25, Safari 5.1-6 */
-background: linear-gradient(to left, #5C258D , #4389A2); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-    padding: 8px;
     min-height: 100px;
-    overflow-y: auto;
+    background: -webkit-linear-gradient(to left, #5C258D , #4389A2); /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to left, #5C258D , #4389A2); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
 
 thead th {
@@ -461,4 +466,6 @@ thead th {
 .alert-success {
     height:40px;
     padding:5px;
+    text-align:right;
+    margin-top:2%;
 }

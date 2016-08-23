@@ -13,6 +13,7 @@ namespace Knowledge_Management.ViewModels
         public int jobDesc_id { get; set; }
         public int emp_id { get; set; }
         public int job_id { get; set; }
+        public int question_id { get; set; }
 
         public string Description { get; set; }
     }

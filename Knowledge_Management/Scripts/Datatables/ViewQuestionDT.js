@@ -79,16 +79,30 @@
                             "sDefaultContent": " "
                             , "sClass": "dt-body-center",
                             "mRender": function (data, type, row) {
-                                return "<a class='glyphicon glyphicon-list-alt a_clickable' href='/Solution/Index/" + row[0] + "'></a>"
+                                return "<a class='glyphicon glyphicon-list-alt a_clickable' href='/ViewEntryInfo/SolutionList/" + row[0] + "'></a>"
                             }
 
                         }
+                         , {
+                             "sName": "DELETE",
+                             "sWidth": '2%',
+                             "bSearchable": false,
+                             "bSortable": false,
+                             "sDefaultContent": " "
+                            , "sClass": "dt-body-center"
+                            , "mRender": function (data, type, row) {
+                                return "<a class='glyphicon glyphicon-remove a_clickable' onclick='delete_dialog(" + row[0] + ")'></a>"
+                            }
+                         }
 
 
         ]
     });
 
-
+    $("#close_delete_modal").click(function () {
+        $("#div_alert").css("visibility", "hidden");
+        return false;
+    });
 
 });
 
@@ -101,6 +115,14 @@ var details = function (s) {
     $('#DetailModal').modal('show');
 }
 
+var delete_dialog = function (q_id) {
+
+    var url = "/ViewEntryInfo/Delete_Question"; // the url to the controller
+    $.get(url + '/' + q_id, function (data) {
+        $('#confirm-container').html(data);
+        $('#DeleteModal').modal('show');
+    });
+}
 
 
 

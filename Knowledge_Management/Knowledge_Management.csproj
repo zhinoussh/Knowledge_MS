@@ -258,6 +258,7 @@
     <Content Include="Scripts\Datatables\SolutionDT.js" />
     <Content Include="Scripts\Datatables\UploadDT.js" />
     <Content Include="Scripts\Datatables\ViewQuestionDT.js" />
+    <Content Include="Scripts\Datatables\ViewSolutionDT.js" />
     <Content Include="Scripts\DynamicField.js" />
     <Content Include="Scripts\jquery-2.2.3.js" />
     <Content Include="Scripts\jquery-2.2.3.min.js" />
@@ -279,6 +280,7 @@
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\sidebar.js" />
     <Content Include="Scripts\Datatables\StrategyDT.js" />
+    <Content Include="Scripts\Datatables\ViewUploadDT.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -323,6 +325,11 @@
     <Content Include="Views\Solution\_PartialDeleteSolution.cshtml" />
     <Content Include="Views\ViewEntryInfo\Personel.cshtml" />
     <Content Include="Views\ViewEntryInfo\Question.cshtml" />
+    <Content Include="Views\ViewEntryInfo\_PartialDeleteQuestion.cshtml" />
+    <Content Include="Views\ViewEntryInfo\SolutionList.cshtml" />
+    <Content Include="Views\ViewEntryInfo\_PartialDeleteSolution.cshtml" />
+    <Content Include="Views\ViewEntryInfo\_PartialUploads.cshtml" />
+    <Content Include="Views\ViewEntryInfo\_PartialDeleteUpload.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

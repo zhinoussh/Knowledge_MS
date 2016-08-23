@@ -6,12 +6,23 @@
 }
 
 <!-- Modal -->
+<div class="modal fade" id="DeleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" id="confirm-container">
+
+        </div>
+    </div>
+</div>
+<!-- /end Modal -->
+
+<!-- Modal -->
 <div class="modal fade" id="DetailModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content" id="confirm-container">
             <div class="modal-header modal-header-info">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close" aria-hidden="true">&times;</button>
-                <i class="glyphicon glyphicon-info-sign"></i>
+               <button type="button" class="close" data-dismiss="modal" aria-label="Close" aria-hidden="true">&times;</button>
+                <h6><i class="glyphicon glyphicon-info-sign"></i>جزئیات مسئله</h6>
+
             </div>
             <div class="modal-body">
                 <div class="border-modal">
@@ -40,7 +51,7 @@
 <!-- /end Modal -->
 
 <h5>مشاهده مسائل</h5>
-<span class="border_admin" style="margin-bottom:0;"></span>
+<span class="border_admin" ></span>
 
     <div class="editor-field" style="width:100%;">  
         @Html.DisplayFor(model => model.Description)
@@ -53,8 +64,12 @@
 @Html.HiddenFor(model => model.depObj_id, new { id = "hd_id_depObj" })
 @Html.HiddenFor(model => model.strategy_id, new { id = "hd_id_strategy" })
 
+<div class="alert alert-success fade in" role="alert" style="float:right; width:100%; visibility:hidden" id="div_alert">
+    <a href="#" class="close" id="close_delete_modal">&times;</a>
+    <label id="alert_success" style="margin-right:5px"></label>
+</div>
 
-<div style="float:right; width:100%;margin:2% 0 2% 0">
+<div style="float:right; width:100%;margin:0 0 2% 0">
     <table id="SearchQuestionDT" class="display">
         <thead>
             <tr>
@@ -64,15 +79,18 @@
                 <th>dep_Obj</th>
                 <th>Strategy</th>
                 <th>fullQuestion</th>
-                <th class="dt-head-right">ردیف</th>
+                <th>ردیف</th>
                 <th class="dt-head-right">شرح مسئله</th>
                 <th>جزئیات</th>
                 <th>راهکارها</th>
+                <th>حذف</th>
+
             </tr>
         </thead>
         <tbody></tbody>
     </table>
 </div>
+
 @section scripts{
     <script src="~/Scripts/Datatables/ViewQuestionDT.js"></script>
 

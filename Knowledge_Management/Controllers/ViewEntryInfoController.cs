@@ -169,10 +169,227 @@ namespace Knowledge_Management.Controllers
             },
             JsonRequestBehavior.AllowGet);
         }
+
+
+        [HttpGet] // this action result returns the partial containing the modal
+        public ActionResult Delete_Question(int id)
+        {
+            ViewQuestionViewModel q = new ViewQuestionViewModel();
+            q.question_id = id;
+            return PartialView("_PartialDeleteQuestion", q);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Delete_Question(ViewQuestionViewModel q)
+        {
+            if (ModelState.IsValid)
+            {
+                KnowledgeMSDAL DAL = new KnowledgeMSDAL();
+
+                DAL.DeleteQuestion(q.question_id);
+                return Json(new { msg = "مسئله با موفقیت حذف شد" });
+            }
+            else
+            {
+                ModelState.AddModelError("Delete_Question", "error in deleting Question");
+            }
+            return View(q);
+
+        }
       
         #endregion Question
 
+        #region Solution
+
+        public ActionResult SolutionList(int id)
+        {
+            KnowledgeMSDAL dal=new KnowledgeMSDAL();
+            SolutionViewModel vm = new SolutionViewModel();
+            if (id != 0)
+            {
+                vm.question = dal.get_question_name(id);
+                vm.question_id = id;              
+            }
+
+            return View(vm);
+        }
+
+        public ActionResult SoutionListAjaxHandler(jQueryDataTableParamModel request)
+        {
+            KnowledgeMSDAL DAL = new KnowledgeMSDAL();
+
+            int question_id = Request.QueryString["q_id"].ToString() == "" ? 0 : Int32.Parse(Request.QueryString["q_id"].ToString());
+
+            List<SolutionEmployeeViewModel> all_items = DAL.get_Solutions_by_Question(question_id);
+
+            //filtering 
+            List<SolutionEmployeeViewModel> filtered = new List<SolutionEmployeeViewModel>();
+
+            if (!string.IsNullOrEmpty(request.sSearch))
+            {
+                filtered = all_items.Where(i => i.solution.Contains(request.sSearch)).ToList();
+
+            }
+            else
+                filtered = all_items;
 
 
+            var sortDirection = Request["sSortDir_0"]; // asc or desc
+            if (sortDirection == "asc")
+                filtered = filtered.OrderBy(s => s.solution).ToList();
+            else
+                filtered = filtered.OrderByDescending(s => s.solution).ToList();
+
+            //pagination
+            filtered = filtered.Skip(request.iDisplayStart).Take(request.iDisplayLength).ToList();
+
+            var indexed_list = filtered.Select((s, index) => new
+            {
+                SID = s.solution_id + "",
+                FullSolution = s.solution,
+                SIndex = (index + 1) + ""
+                ,Uploads=s.count_upload+""
+            });
+
+
+            var result = from s in indexed_list
+                         select new[] { s.SID, s.FullSolution,  s.SIndex
+                             ,s.FullSolution.Length <= 200 ? s.FullSolution : (s.FullSolution.Substring(0, 200) + "...")
+                             ,s.Uploads};
+
+
+
+            return Json(new
+            {
+                sEcho = request.sEcho,
+                iTotalRecords = all_items.Count(),
+                iTotalDisplayRecords = all_items.Count(),
+                aaData = result
+            },
+            JsonRequestBehavior.AllowGet);
+        }
+
+
+        [HttpGet] // this action result returns the partial containing the modal
+        public ActionResult Delete_Solution(int id)
+        {
+            SolutionEmployeeViewModel q = new SolutionEmployeeViewModel();
+            q.solution_id = id;
+            return PartialView("_PartialDeleteSolution", q);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Delete_Solution(SolutionEmployeeViewModel q)
+        {
+            if (ModelState.IsValid)
+            {
+                KnowledgeMSDAL DAL = new KnowledgeMSDAL();
+                long id_solution = q.solution_id;
+
+                List<tbl_solution_uploads> lst_uploads = DAL.get_uploads_by_solution(id_solution);
+                //delete uploaded files
+                foreach (var item in lst_uploads)
+                {
+                    System.IO.File.Delete(Server.MapPath(@"~/Upload/" + item.file_path));
+                }
+
+                //delete solution and upload from db
+                DAL.Delete_Solution(id_solution);
+
+                return Json(new { msg = "راهکار مورد نظر با موفقیت حذف شد" });
+            }
+            else
+            {
+                ModelState.AddModelError("Delete_Solution", "error in deleting Solution");
+            }
+            return View(q);
+
+        }
+
+        [HttpGet]
+        public ActionResult Get_Uploads(int id)
+        {
+            SolutionEmployeeViewModel vm = new SolutionEmployeeViewModel();
+            vm.solution_id = id;
+            return PartialView("_PartialUploads",vm); 
+        }
+        #endregion Solution
+
+
+        #region UPLOAD FILES
+
+
+        [HttpGet] // this action result returns the partial containing the modal
+        public ActionResult Delete_Upload(int id)
+        {
+            UploadViewModel q = new UploadViewModel();
+            q.upload_id = id;
+            return PartialView("_PartialDeleteUpload", q);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Delete_Upload(UploadViewModel q)
+        {
+            if (ModelState.IsValid)
+            {
+                KnowledgeMSDAL DAL = new KnowledgeMSDAL();
+
+                System.IO.File.Delete(Server.MapPath(@"~\Upload\" + DAL.get_file_path(q.upload_id)));
+
+                DAL.DeleteUpload(q.upload_id);
+                return Json(new { msg = "فایل بارگذاری شده با موفقیت حذف شد" });
+            }
+            else
+            {
+                ModelState.AddModelError("Delete_Upload", "error in deleting Upload");
+            }
+            return View(q);
+
+        }
+
+        public ActionResult UploadAjaxHandler(jQueryDataTableParamModel request)
+        {
+            KnowledgeMSDAL DAL = new KnowledgeMSDAL();
+
+            long solution_id = Convert.ToInt32(Request["solution_id"].ToString());
+
+            List<tbl_solution_uploads> filtered = DAL.get_uploads_by_solution(solution_id);
+
+
+            //pagination
+            filtered = filtered.Skip(request.iDisplayStart).Take(request.iDisplayLength).ToList();
+
+            var indexed_list = filtered.Select((s, index) => new { SID = s.pkey + "", FILEPATH = s.file_path, SIndex = (index + 1) + "", SNAME = "فایل " + (index + 1) });
+
+            var result = from s in indexed_list
+                         select new[] { s.SID, s.FILEPATH, s.SIndex, s.SNAME };
+
+
+            return Json(new
+            {
+                sEcho = request.sEcho,
+                iTotalRecords = filtered.Count(),
+                iTotalDisplayRecords = filtered.Count(),
+                aaData = result
+            },
+            JsonRequestBehavior.AllowGet);
+        }
+
+
+        public ActionResult DownloadFile(int uploadID)
+        {
+            KnowledgeMSDAL DAL = new KnowledgeMSDAL();
+
+            string file_name = DAL.get_file_path(uploadID);
+            string file_path = Server.MapPath(@"~\Upload\" + file_name);
+            byte[] fileBytes = System.IO.File.ReadAllBytes(file_path);
+
+            return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, file_name);
+        }
+
+        #endregion UPLOAD FILES
     }
 }

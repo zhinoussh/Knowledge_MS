@@ -62,7 +62,7 @@
                             "sDefaultContent": " "
                             , "sClass": "dt-body-center",
                             "mRender": function (data, type, row) {
-                                return "<a class='glyphicon glyphicon-list a_clickable' href='/ViewEntryInfo/Question?pId=" + row[0] + "'></a>"
+                                return "<a class='glyphicon glyphicon-comment a_clickable' href='/ViewEntryInfo/Question?pId=" + row[0] + "'></a>"
 
                             }
                         }

@@ -525,17 +525,17 @@ namespace Knowledge_Management.DAL
              int fk_emp = db.tbl_employee.Where(x => x.personel_code == pcode).Select(x => x.pkey).First();
 
              List<QuestionViewModel> lst_questions = (from q in db.tbl_questions
-                                                    join s in db.tbl_question_solutions.Where(x=>x.fk_employee==fk_emp)
-                                                     on q.pkey equals s.fk_question into tbl_solution
-                                                      from qq in tbl_solution.DefaultIfEmpty()
+                                                   // join s in db.tbl_question_solutions.Where(x=>x.fk_employee==fk_emp)
+                                                   //  on q.pkey equals s.fk_question into tbl_solution
+                                                      //from qq in tbl_solution.DefaultIfEmpty()
                                                       where q.fk_employee == fk_emp
                                                   select new QuestionViewModel { 
                                                         question_id=q.pkey,
                                                         question = q.subject,
                                                         job_desc_id = q.fk_jobDesc,
                                                         dep_obj_id = q.fk_depObj,
-                                                        strategy_id = q.fk_strategy,
-                                                       solution = qq.solution
+                                                        strategy_id = q.fk_strategy
+                                                       // ,solution = qq.solution
                                                   }).OrderByDescending(x => x.question_id).ToList();
 
              string str_keyword = "";
@@ -670,6 +670,21 @@ namespace Knowledge_Management.DAL
             }
             return lst_solutions;
         }
+
+
+         public List<SolutionEmployeeViewModel> get_Solutions_by_Question(long question_id)
+        {
+            List<SolutionEmployeeViewModel> lst_solutions = (from s in db.tbl_question_solutions
+                                                             where s.fk_question == question_id
+                                                             select new SolutionEmployeeViewModel { 
+                                                                solution_id=s.pkey
+                                                                ,solution=s.solution
+                                                                ,count_upload=db.tbl_solution_uploads.Count(x=>x.fk_solution==s.pkey)
+                                                             }).OrderBy(x => x.solution)
+                                                             .ToList<SolutionEmployeeViewModel>();
+
+            return lst_solutions;
+         }
 
         public List<SolutionEmployeeViewModel> get_Solutions_by_employee(string username)
         {
