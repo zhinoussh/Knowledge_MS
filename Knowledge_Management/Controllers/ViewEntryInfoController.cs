@@ -248,17 +248,16 @@ namespace Knowledge_Management.Controllers
             {
                 SID = s.solution_id + "",
                 FullSolution = s.solution,
+                Confirm=s.confirm.ToString(),
                 SIndex = (index + 1) + ""
                 ,Uploads=s.count_upload+""
             });
 
 
             var result = from s in indexed_list
-                         select new[] { s.SID, s.FullSolution,  s.SIndex
+                         select new[] { s.SID,  s.SIndex
                              ,s.FullSolution.Length <= 200 ? s.FullSolution : (s.FullSolution.Substring(0, 200) + "...")
-                             ,s.Uploads};
-
-
+                            ,s.Confirm,s.Uploads};
 
             return Json(new
             {
@@ -308,13 +307,23 @@ namespace Knowledge_Management.Controllers
 
         }
 
-        [HttpGet]
-        public ActionResult Get_Uploads(int id)
+        public ActionResult ViewFullSolution(int id)
         {
-            SolutionEmployeeViewModel vm = new SolutionEmployeeViewModel();
-            vm.solution_id = id;
-            return PartialView("_PartialUploads",vm); 
+            KnowledgeMSDAL DAL=new KnowledgeMSDAL();
+            FullSolutionViewModel vm = new FullSolutionViewModel();
+            vm= DAL.get_Solution_by_id(id);
+            return View(vm);
         }
+
+        [HttpPost]
+        public ActionResult Confirm_Solution(int id)
+        {
+            KnowledgeMSDAL DAL = new KnowledgeMSDAL();
+            DAL.change_confirm_status_solution(id);
+            return View(); 
+        }
+
+
         #endregion Solution
 
 
@@ -389,6 +398,16 @@ namespace Knowledge_Management.Controllers
 
             return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, file_name);
         }
+
+        
+       [HttpPost]
+        public ActionResult Confirm_Upload(int id)
+        {
+            KnowledgeMSDAL DAL = new KnowledgeMSDAL();
+            DAL.change_confirm_status_upload(id);
+            return View(); 
+        }
+
 
         #endregion UPLOAD FILES
     }

@@ -18,17 +18,27 @@
                             "bSortable": false,
                             "bVisible": false
                         },
-                            {
-                                "sName": "fullSolution",
-                                "bSearchable": false,
-                                "bSortable": false,
-                                "bVisible": false
-                            },
-                            {
-                                "sName": "radif", "sWidth": '2%', "sClass": "dt-body-center"
+                        {
+                            "sName": "radif", "sWidth": '2%', "sClass": "dt-body-center"
                                 , "bSearchable": false, "bSortable": false
-                            },
-                        { "sName": "solution", "sWidth": '80%' },
+                        },
+                        { "sName": "solution", "sWidth": '80%' }
+                        , {
+                            "sName": "confirm_status",
+                            "sWidth": '2%',
+                            "bSearchable": false,
+                            "bSortable": false,
+                            "sDefaultContent": " "
+                            , "sClass": "dt-body-center",
+                            "mRender": function (data, type, row) {
+
+                                if (data == "True") {
+                                    return '<input disabled  type=\"checkbox\" checked value="' + data + '">';
+                                } else {
+                                    return '<input disabled  type=\"checkbox\" value="' + data + '">';
+                                }
+                            }
+                        },
                         { "sName": "upload_count", "sWidth": '5%', "sClass": "dt-body-center", "bSearchable": false, "bSortable": false },
                         {
                             "sName": "Show_FullSolution",
@@ -38,22 +48,25 @@
                             "sDefaultContent": " "
                              , "sClass": "dt-body-center",
                             "mRender": function (data, type, row) {
-                                
-                                return '<a class="glyphicon glyphicon-list a_clickable" onclick="details(\'' + row[1] + '\');"></a>'
+                                var q_id=$("#hd_id_question").val();
+                                return '<a class="glyphicon glyphicon-list a_clickable" href="/ViewEntryInfo/ViewFullSolution/' + row[0] + '"></a>'
 
                             }
                         }
                          ,
                           {
-                              "sName": "Show_Uploads",
+                              "sName": "Confirm",
                               "sWidth": '2%',
                               "bSearchable": false,
                               "bSortable": false,
                               "sDefaultContent": " "
                              , "sClass": "dt-body-center",
-                              "mRender": function (data, type, row) {
-
-                                  return "<a class='glyphicon glyphicon-folder-open a_clickable' onclick='show_uploads(" + row[0] + ");'></a>"
+                             "mRender": function (data, type, row) {
+                               
+                                 return (row[3].toString()== "True") ?
+                                     "<a class='glyphicon glyphicon-remove-circle a_clickable' onclick='confirm_solution(" + row[0] + ");'></a>"
+                                     :
+                                    "<a class='glyphicon glyphicon-ok-circle a_clickable' onclick='confirm_solution(" + row[0] + ");'></a>"
 
                               }
                           }
@@ -65,7 +78,7 @@
                              "sDefaultContent": " "
                             , "sClass": "dt-body-center"
                             , "mRender": function (data, type, row) {
-                                return "<a class='glyphicon glyphicon-remove a_clickable' onclick='delete_dialog(" + row[0] + ")'></a>"
+                                return "<a class='glyphicon glyphicon-trash a_clickable' onclick='delete_dialog(" + row[0] + ")'></a>"
                             }
                          }
 
@@ -78,7 +91,7 @@
         return false;
     });
 
-  
+
 });
 
 var details = function (s) {
@@ -94,15 +107,17 @@ var delete_dialog = function (s_id) {
         $('#DeleteModal').modal('show');
     });
 }
-
-var show_uploads=function(s_id)
-{
-    var url = "/ViewEntryInfo/Get_Uploads";
-    $.get(url + '/' + s_id, function (data) {
-        $("#upload-container").html(data);
-        $("#UploadModal").modal('show');
+ 
+var confirm_solution = function (s_id) {
+    
+    var url = "/ViewEntryInfo/Confirm_Solution";
+    $.post(url + "/" + s_id, function (data) {
+        var tbl = $("#SoutionListDT").dataTable({ bRetrieve: true });
+        tbl.fnDraw();
     });
+
 }
+
 
 
 

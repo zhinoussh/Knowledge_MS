@@ -126,13 +126,23 @@ textarea {
     text-decoration:none; 
     }
 
-.glyphicon-remove{
-    font-size:20px;
-    color:#f20031;  
+.glyphicon-ok {
+  font-size:20px;
+    color:#39ae47; 
 }
-    .glyphicon-remove:hover {
-     font-size:25px;
-    color:#d80731;  
+.glyphicon-ok:hover {
+  font-size:24px;
+    color:#31863b; 
+    text-decoration:none
+}
+
+.glyphicon-trash{
+    font-size:18px;
+    color:#f60e3e;  
+}
+    .glyphicon-trash:hover {
+     font-size:22px;
+    color:#c1082e;  
     text-decoration:none; 
     }
 .jumbotron {
@@ -451,7 +461,7 @@ color:#288df5;
   background-color: #f9f9f9;
 }
 
-.well {
+.well_question {
     margin-top: 3%;
     min-height: 100px;
     background: -webkit-linear-gradient(to left, #5C258D , #4389A2); /* Chrome 10-25, Safari 5.1-6 */

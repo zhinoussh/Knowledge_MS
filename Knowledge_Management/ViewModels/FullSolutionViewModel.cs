@@ -8,11 +8,16 @@ namespace Knowledge_Management.ViewModels
 {
     public class FullSolutionViewModel
     {
+        public long solution_id { get; set; }
+
         [Display(Name = "شرح راهکار: ")]
         public string full_solution { get; set; }
 
         [Display(Name = "شرح مسئله: ")]
         public string question { get; set; }
+
+        public long question_id { get; set; }
+
 
     }
 }

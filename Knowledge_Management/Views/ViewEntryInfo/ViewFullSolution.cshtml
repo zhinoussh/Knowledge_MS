@@ -1,0 +1,66 @@
+﻿@model Knowledge_Management.ViewModels.FullSolutionViewModel
+
+@{
+    ViewBag.Title = "مشاهده کامل راهکار";
+    Layout = "~/Views/Shared/_ManagementLayout.cshtml";
+}
+
+<!-- Delete Modal -->
+<div class="modal fade" id="DeleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" id="confirm-container">
+
+        </div>
+    </div>
+</div>
+<!-- /end Delete Modal -->
+
+<h5>مشاهده کامل راهکار</h5>
+<span class="border_admin"></span>
+
+
+<div class="well well_question">
+
+    <div class="field_title" style="width:8%">
+        @Html.LabelFor(model => model.question)
+    </div>
+
+    <div class="field_title" style="width:85%;">
+        @Html.DisplayFor(model => model.question)
+    </div>
+</div>
+
+<div class="col-sm-12" style="margin:2% 0 2% 0">
+    <div class="editor-field" style="width:8%">
+        @Html.LabelFor(model => model.full_solution)
+    </div>
+
+    <div class="editor-field" style="width:85%;">
+        @Html.DisplayFor(model => model.full_solution)
+    </div>
+</div>
+@Html.HiddenFor(model => model.solution_id, new { id = "hd_id_solution" })
+
+<div class="alert alert-success fade in" role="alert" style="float:right; width:100%; visibility:hidden" id="div_alert">
+    <a href="#" class="close" id="close_delete_modal">&times;</a>
+    <label id="alert_success" style="margin-right:5px"></label>
+</div>
+<table id="UploadDT" class="display">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>FilePath</th>
+            <th class="dt-head-right">ردیف</th>
+            <th class="dt-head-right">شرح بارگذاری</th>
+            <th>وضعیت تایید</th>
+            <th>دانلود</th>
+            <th>تایید/ رد</th>
+            <th>حذف</th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+
+@section scripts{
+    <script src="~/Scripts/Datatables/ViewUploadDT.js"></script>
+}

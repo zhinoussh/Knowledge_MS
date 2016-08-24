@@ -7,7 +7,7 @@
         "bServerSide": true,
         "sAjaxSource": "/ViewEntryInfo/UploadAjaxHandler",
         "fnServerParams": function (aoData) {
-            aoData.push({ "name": "solution_id", "value": $('#hd_solution_id').val() });
+            aoData.push({ "name": "solution_id", "value": $('#hd_id_solution').val() });
         },
         "bProcessing": true,
         "bFilter": false,
@@ -30,8 +30,23 @@
                             "sName": "radif", "sWidth": '2%', "sClass": "dt-body-center"
                                 , "bSearchable": false, "bSortable": false
                         },
-                        { "sName": "upload", "sWidth": '80%' },
-                        {
+                        { "sName": "upload", "sWidth": '80%' }
+                         , {
+                             "sName": "confirm_status",
+                             "sWidth": '2%',
+                             "bSearchable": false,
+                             "bSortable": false,
+                             "sDefaultContent": " "
+                            , "sClass": "dt-body-center",
+                             "mRender": function (data, type, row) {
+
+                                 if (data == "True") {
+                                     return '<input disabled  type=\"checkbox\" checked value="' + data + '">';
+                                 } else {
+                                     return '<input disabled  type=\"checkbox\" value="' + data + '">';
+                                 }
+                             }
+                         },{
                             "sName": "download",
                             "sWidth": '2%',
                             "bSearchable": false,
@@ -43,6 +58,21 @@
 
                             }
                         }
+                        ,
+                          {
+                              "sName": "Confirm",
+                              "sWidth": '2%',
+                              "bSearchable": false,
+                              "bSortable": false,
+                              "sDefaultContent": " "
+                             , "sClass": "dt-body-center",
+                              "mRender": function (data, type, row) {
+                                  if (row[3].toString() == "True")
+                                      return "<a class='glyphicon glyphicon-remove a_clickable' onclick='confirm_upload(" + row[0] + ");'></a>"
+                                  else
+                                      return "<a class='glyphicon glyphicon-ok a_clickable' onclick='confirm_upload(" + row[0] + ");'></a>"
+                              }
+                          }
                          , {
                              "sName": "DELETE",
                              "sWidth": '3%',
@@ -51,7 +81,7 @@
                              "sDefaultContent": " "
                             , "sClass": "dt-body-center"
                             , "mRender": function (data, type, row) {
-                                return "<a class='glyphicon glyphicon-remove a_clickable' onclick='delete_dialog(" + row[0] + ")'></a>"
+                                return "<a class='glyphicon glyphicon-trash a_clickable' onclick='delete_dialog(" + row[0] + ")'></a>"
                             }
                          }
 
@@ -59,7 +89,7 @@
     });
 
 
-    $("#close_upload_modal").click(function () {
+    $("#close_delete_modal").click(function () {
         $("#div_alert").css("visibility", "hidden");
         return false;
     });
@@ -83,7 +113,7 @@ var download_file = function (upload_id) {
 
     $.ajax(
            {
-               url: '/Solution/DownloadFile',
+               url: '/ViewEntryInfo/DownloadFile',
                contentType: 'application/json; charset=utf-8',
                datatype: 'json',
                data: {
@@ -91,20 +121,29 @@ var download_file = function (upload_id) {
                },
                type: "GET",
                success: function () {
-                   window.location = '/Solution/DownloadFile?uploadID=' + upload_id;
+                   window.location = '/ViewEntryInfo/DownloadFile?uploadID=' + upload_id;
                }
            });
 }
 
 var delete_dialog = function (upload_id) {
 
-    var url = "/Solution/Delete_Upload"; // the url to the controller
+    var url = "/ViewEntryInfo/Delete_Upload"; // the url to the controller
     $.get(url + '/' + upload_id, function (data) {
         $('#confirm-container').html(data);
         $('#DeleteModal').modal('show');
     });
 }
 
+var confirm_upload= function (s_id) {
+
+    var url = "/ViewEntryInfo/Confirm_Upload";
+    $.post(url + "/" + s_id, function (data) {
+        var tbl = $("#UploadDT").dataTable({ bRetrieve: true });
+        tbl.fnDraw();
+    });
+
+}
 
 
 

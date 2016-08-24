@@ -117,6 +117,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\ViewEntryInfoController.cs" />
+    <Compile Include="Migrations\201608240801401_ALTER_SOLUTION_UPLOAD_Tables.cs" />
+    <Compile Include="Migrations\201608240801401_ALTER_SOLUTION_UPLOAD_Tables.Designer.cs">
+      <DependentUpon>201608240801401_ALTER_SOLUTION_UPLOAD_Tables.cs</DependentUpon>
+    </Compile>
     <Compile Include="Security_Code\CustomRoleProvider.cs" />
     <Compile Include="Security_Code\CustomAuthorizeAttribute.cs" />
     <Compile Include="Security_Code\UserIdentity.cs" />
@@ -330,6 +334,7 @@
     <Content Include="Views\ViewEntryInfo\_PartialDeleteSolution.cshtml" />
     <Content Include="Views\ViewEntryInfo\_PartialUploads.cshtml" />
     <Content Include="Views\ViewEntryInfo\_PartialDeleteUpload.cshtml" />
+    <Content Include="Views\ViewEntryInfo\ViewFullSolution.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -350,6 +355,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201607290730413_strategyQuestionCascadeOndelete.resx">
       <DependentUpon>201607290730413_strategyQuestionCascadeOndelete.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201608240801401_ALTER_SOLUTION_UPLOAD_Tables.resx">
+      <DependentUpon>201608240801401_ALTER_SOLUTION_UPLOAD_Tables.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

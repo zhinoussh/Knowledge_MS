@@ -14,17 +14,8 @@
 </div>
 <!-- /end Delete Modal -->
 
-<!-- Upload Modal -->
-<div class="modal fade" id="UploadModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content" id="upload-container">
 
-        </div>
-    </div>
-</div>
-<!-- /end Upload Modal -->
-
-<!-- Detail Modal -->
+<!-- Detail Modal 
 <div class="modal fade" id="DetailModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content" id="confirm-container">
@@ -50,9 +41,7 @@
 <h5>راهکارهای مسئله</h5>
 <span class="border_admin"></span>
 
-
-
-<div class="well well-lg">
+<div class="well well_question">
 
     <div class="field_title" style="width:8%">
         @Html.LabelFor(model => model.question)
@@ -75,12 +64,12 @@
         <thead>
             <tr>
                 <th>ID</th>
-                <th>FullSolution</th>
                 <th>ردیف</th>
                 <th class="dt-head-right">راهکار</th>
+                <th>وضعیت تایید</th>
                 <th>تعداد اسناد</th>
                 <th>مشاهده کامل</th>
-                <th>مشاهده اسناد</th>
+                <th>تایید / رد</th>
                 <th>حذف</th>
 
             </tr>
