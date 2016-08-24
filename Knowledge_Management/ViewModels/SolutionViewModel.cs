@@ -13,6 +13,7 @@ namespace Knowledge_Management.ViewModels
         [Display(Name = "شرح مسئله")]
          public string question { get; set; }
 
+        [Display(Name = "راهکارهای مسئله")]
         public string[][] solutions { get; set; }
 
 

@@ -496,16 +496,24 @@ thead th {
 /*************PANEL*/
 .panel-default{
     text-align:right;
+background:#e3e2e2 !important;
 
 }
 .panel-heading {
 direction:rtl;
-    background-image: -webkit-linear-gradient(to left, #5C258D , #4389A2);
-    background-image: linear-gradient(to left, #5C258D , #4389A2);
-
+/*background:#4e5c7d !important;*/
+background:#5c4f82 !important;
+    border-color:#d0c2f7;
+   
 }
 .panel-title {
-    font-family:'B Yekan';
+    font-family:'Myriad Arabic';
+    font-size:14pt;
     text-align:right;
-
+    color:#e9e8e8;
 }
+    .panel-title:hover {
+    text-decoration:none;
+    font-size:16pt;
+
+    }
