@@ -260,7 +260,12 @@ namespace Knowledge_Management.Controllers
             FormsAuthenticationTicket ticket = FormsAuthentication.Decrypt(authCookie.Value); //Decrypt it
             string UserName = ticket.Name; //You have the UserName!
 
-            List<SolutionEmployeeViewModel> all_items = DAL.get_Solutions_by_employee(UserName);
+            int emp_id=0;
+            List<string> emp_prop = DAL.get_Employee_prop(UserName);
+            if (emp_prop != null)
+                emp_id = Int32.Parse(emp_prop[5]);
+
+            List<SolutionEmployeeViewModel> all_items = DAL.get_Solutions_by_employee(emp_id);
 
             //filtering 
             List<SolutionEmployeeViewModel> filtered = new List<SolutionEmployeeViewModel>(); ;
@@ -296,9 +301,9 @@ namespace Knowledge_Management.Controllers
 
 
             var result = from s in indexed_list
-                         select new[] {s.Sol_Id, s.QID , s.QSubject, s.Soution, s.QIndex
-                             ,s.QSubject.Length <= 50 ? s.QSubject: (s.QSubject.Substring(0, 50) + "..."), 
-                                 s.Soution.Length <= 50 ? s.Soution : (s.Soution.Substring(0, 50) + "..."),
+                         select new[] {s.Sol_Id, s.QID , s.QIndex
+                             ,s.QSubject.Length <= 50 ? s.QSubject: (s.QSubject.Substring(0, 200) + "..."), 
+                                 s.Soution.Length <= 50 ? s.Soution : (s.Soution.Substring(0, 200) + "..."),
                                  s.uploadCount
                          };
 

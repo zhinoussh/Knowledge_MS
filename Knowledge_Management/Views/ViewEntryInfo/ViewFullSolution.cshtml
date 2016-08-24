@@ -1,0 +1,95 @@
+﻿@model Knowledge_Management.ViewModels.FullSolutionViewModel
+
+@{
+    ViewBag.Title = "مشاهده کامل راهکار";
+    Layout = "~/Views/Shared/_ManagementLayout.cshtml";
+}
+
+<!-- Delete Modal -->
+<div class="modal fade" id="DeleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" id="confirm-container">
+
+        </div>
+    </div>
+</div>
+<!-- /end Delete Modal -->
+
+<h5>مشاهده جزئیات راهکار</h5>
+<span class="border_admin"></span>
+
+<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+    <div class="panel panel-default">
+        <div class="panel-heading" role="tab" id="headingOne">
+            <h6 class="panel-title">
+                <a role="button" data-toggle="collapse" href="#collapseQuestion" aria-expanded="true" aria-controls="collapseOne">
+                    @Html.LabelFor(model => model.question)
+                </a>
+            </h6>
+        </div>
+        <div id="collapseQuestion" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+            <div class="panel-body">
+                @Html.DisplayFor(model => model.question)
+            </div>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading" role="tab" id="headingOne">
+            <h6 class="panel-title">
+                <a role="button" data-toggle="collapse" href="#collapseSolution" aria-expanded="true" aria-controls="collapseOne">
+                    @Html.LabelFor(model => model.full_solution)
+                </a>
+            </h6>
+        </div>
+        <div id="collapseSolution" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+            <div class="panel-body">
+                @Html.DisplayFor(model => model.full_solution)
+            </div>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading" role="tab" id="headingTwo">
+            <h4 class="panel-title">
+                <a class="collapsed" role="button" data-toggle="collapse" href="#collapseUpload" aria-expanded="false" aria-controls="collapseTwo">
+                    @Html.LabelFor(model => model.uploads)
+                </a>
+            </h4>
+        </div>
+        <div id="collapseUpload" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingTwo">
+            <div class="panel-body">
+
+                <div class="alert alert-success fade in" role="alert" style="float:right; width:100%; visibility:hidden" id="div_alert">
+                    <a href="#" class="close" id="close_delete_modal">&times;</a>
+                    <label id="alert_success" style="margin-right:5px"></label>
+                </div>
+                <table id="UploadDT" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>FilePath</th>
+                            <th class="dt-head-right">ردیف</th>
+                            <th class="dt-head-right">شرح بارگذاری</th>
+                            <th>وضعیت تایید</th>
+                            <th>دانلود</th>
+                            <th>تایید/ رد</th>
+                            <th>حذف</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+
+@Html.HiddenFor(model => model.solution_id, new { id = "hd_id_solution" })
+
+
+
+@section scripts{
+    <script src="~/Scripts/Datatables/ViewUploadDT.js"></script>
+}

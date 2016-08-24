@@ -126,13 +126,32 @@ textarea {
     text-decoration:none; 
     }
 
-.glyphicon-remove{
-    font-size:20px;
-    color:#f20031;  
+.glyphicon-remove-circle {
+     font-size:22px;
+    color:red; 
 }
-    .glyphicon-remove:hover {
+.glyphicon-remove-circle:hover {
      font-size:25px;
-    color:#d80731;  
+    color:#c10606; 
+    text-decoration:none
+}
+.glyphicon-ok-circle {
+  font-size:22px;
+    color:#39ae47; 
+}
+.glyphicon-ok-circle:hover {
+  font-size:25px;
+    color:#31863b; 
+    text-decoration:none
+}
+
+.glyphicon-trash{
+    font-size:18px;
+    color:#f60e3e;  
+}
+    .glyphicon-trash:hover {
+     font-size:22px;
+    color:#c1082e;  
     text-decoration:none; 
     }
 .jumbotron {
@@ -451,11 +470,14 @@ color:#288df5;
   background-color: #f9f9f9;
 }
 
-.well {
+.well_question {
     margin-top: 3%;
     min-height: 100px;
-    background: -webkit-linear-gradient(to left, #5C258D , #4389A2); /* Chrome 10-25, Safari 5.1-6 */
-    background: linear-gradient(to left, #5C258D , #4389A2); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    background:#e8e1fb;
+    border-color:#d0c2f7;
+    color:#623799
+    /*background: -webkit-linear-gradient(to left, #5C258D , #4389A2);
+    background: linear-gradient(to left, #5C258D , #4389A2);*/
 }
 
 thead th {
@@ -463,9 +485,35 @@ thead th {
   color: white;
 }
 
+
 .alert-success {
     height:40px;
     padding:5px;
     text-align:right;
     margin-top:2%;
 }
+
+/*************PANEL*/
+.panel-default{
+    text-align:right;
+background:#e3e2e2 !important;
+
+}
+.panel-heading {
+direction:rtl;
+/*background:#4e5c7d !important;*/
+background:#5c4f82 !important;
+    border-color:#d0c2f7;
+   
+}
+.panel-title {
+    font-family:'Myriad Arabic';
+    font-size:14pt;
+    text-align:right;
+    color:#e9e8e8;
+}
+    .panel-title:hover {
+    text-decoration:none;
+    font-size:16pt;
+
+    }

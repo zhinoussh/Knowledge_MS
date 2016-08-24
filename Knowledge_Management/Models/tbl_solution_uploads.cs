@@ -19,7 +19,9 @@ namespace Knowledge_Management.Models
         public long? fk_solution { get; set; }
 
         public string file_path { get; set; }
-        
+
+        public bool confirm { get; set; } 
+
         [ForeignKey("fk_solution")]
         public virtual tbl_question_solutions tbl_question_solutions { get; set; }
 

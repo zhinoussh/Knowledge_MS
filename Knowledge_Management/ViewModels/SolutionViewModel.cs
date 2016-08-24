@@ -10,9 +10,10 @@ namespace Knowledge_Management.ViewModels
     {
         public int question_id { get; set; }
 
-        [Display(Name = "شرح مسئله: ")]
+        [Display(Name = "شرح مسئله")]
          public string question { get; set; }
 
+        [Display(Name = "راهکارهای مسئله")]
         public string[][] solutions { get; set; }
 
 

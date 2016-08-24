@@ -12,10 +12,12 @@ namespace Knowledge_Management.ViewModels
 
         public string question { get; set; }
 
+
         public string solution { get; set; }
 
         public long solution_id { get; set; }
-        
+
         public int count_upload { get; set; }
+        public bool confirm { get; set; }
     }
 }

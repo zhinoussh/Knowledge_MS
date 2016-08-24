@@ -18,7 +18,8 @@
 
         public long? fk_question { get; set; }
 
-        public string solution { get; set; } 
+        public string solution { get; set; }
+        public bool confirm { get; set; } 
 
 
         public int? fk_employee { get; set; }

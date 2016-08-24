@@ -296,6 +296,7 @@ namespace Knowledge_Management.DAL
                                     e.data_entry+"",
                                     e.data_view+"",
                                     e.fname+" "+e.lname
+                                    ,e.pkey+""
                                 }).FirstOrDefault();
 
             return lst_employee;
@@ -679,6 +680,7 @@ namespace Knowledge_Management.DAL
                                                              select new SolutionEmployeeViewModel { 
                                                                 solution_id=s.pkey
                                                                 ,solution=s.solution
+                                                                ,confirm=s.confirm
                                                                 ,count_upload=db.tbl_solution_uploads.Count(x=>x.fk_solution==s.pkey)
                                                              }).OrderBy(x => x.solution)
                                                              .ToList<SolutionEmployeeViewModel>();
@@ -686,10 +688,9 @@ namespace Knowledge_Management.DAL
             return lst_solutions;
          }
 
-        public List<SolutionEmployeeViewModel> get_Solutions_by_employee(string username)
+         public List<SolutionEmployeeViewModel> get_Solutions_by_employee(int emp_id)
         {
-            int emp_id = db.tbl_employee.Where(p => p.personel_code == username).First().pkey;
-
+            
             List<SolutionEmployeeViewModel> lst_solutions = (from s in db.tbl_question_solutions.Where(s => s.fk_employee == emp_id)
                                                              join q in db.tbl_questions on s.fk_question equals q.pkey
                                                              orderby s.fk_question descending, s.pkey
@@ -700,6 +701,7 @@ namespace Knowledge_Management.DAL
                                                                  solution = s.solution,
                                                                  solution_id = s.pkey,
                                                                  count_upload = db.tbl_solution_uploads.Count(x => x.fk_solution == s.pkey)
+                                                                 ,confirm=s.confirm
                                                              }).ToList();
 
              
@@ -719,6 +721,8 @@ namespace Knowledge_Management.DAL
                                           join q in db.tbl_questions on s.fk_question equals q.pkey
                                           select new FullSolutionViewModel
                                           {
+                                              solution_id=s.pkey
+                                              ,question_id=q.pkey,
                                               full_solution = s.solution,
                                               question = q.subject
                                           }).First();
@@ -747,6 +751,20 @@ namespace Knowledge_Management.DAL
                 return soution_id;
             }
         }
+
+        public void change_confirm_status_solution(long soution_id)
+        {
+          tbl_question_solutions s=  db.tbl_question_solutions.Find(soution_id);
+            if(s!=null)
+            {
+                bool pre_confirm=s.confirm;
+                s.confirm = !pre_confirm;
+                db.SaveChanges();
+            }
+        }
+
+
+
        
         #endregion Solution
 
@@ -787,6 +805,17 @@ namespace Knowledge_Management.DAL
             db.SaveChanges();
         }
 
+
+        public void change_confirm_status_upload(long upload_id)
+        {
+            tbl_solution_uploads s = db.tbl_solution_uploads.Find(upload_id);
+            if (s != null)
+            {
+                bool pre_confirm = s.confirm;
+                s.confirm = !pre_confirm;
+                db.SaveChanges();
+            }
+        }
         #endregion Upload
 
         #region Keyword

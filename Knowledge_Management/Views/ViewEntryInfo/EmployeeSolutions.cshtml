@@ -1,0 +1,58 @@
+﻿@model Knowledge_Management.ViewModels.ViewQuestionViewModel
+
+@{
+    ViewBag.Title = "مشاهده راهکارهای مطرح شده";
+    Layout = "~/Views/Shared/_ManagementLayout.cshtml";
+}
+
+<!-- Modal -->
+<div class="modal fade" id="DeleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" id="confirm-container">
+
+        </div>
+    </div>
+</div>
+<!-- /end Modal -->
+
+<h5>مشاهده راهکارها</h5>
+<span class="border_admin"></span>
+
+<div class="editor-field" style="width:100%;">
+    @Html.DisplayFor(model => model.Description)
+</div>
+
+@Html.HiddenFor(model => model.emp_id, new { id = "hd_id_emp" })
+@Html.HiddenFor(model => model.job_id, new { id = "hd_id_job" })
+@Html.HiddenFor(model => model.dep_id, new { id = "hd_id_dep" })
+@Html.HiddenFor(model => model.jobDesc_id, new { id = "hd_id_jobDesc" })
+@Html.HiddenFor(model => model.depObj_id, new { id = "hd_id_depObj" })
+@Html.HiddenFor(model => model.strategy_id, new { id = "hd_id_strategy" })
+
+<div class="alert alert-success fade in" role="alert" style="float:right; width:100%; visibility:hidden" id="div_alert">
+    <a href="#" class="close" id="close_delete_modal">&times;</a>
+    <label id="alert_success" style="margin-right:5px"></label>
+</div>
+
+<table id="SolutionEmployeeDT" style="width:100%">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>ردیف</th>
+            <th class="dt-head-right">شرح مسئله</th>
+            <th class="dt-head-right">شرح راهکار</th>
+            <th>وضعیت تایید</th>
+            <th>تعداد اسناد</th>
+            <th>مشاهده کامل</th>
+            <th>تایید / رد</th>
+            <th>حذف</th>
+
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+
+@section scripts{
+    <script src="~/Scripts/Datatables/ViewSolutionEmpDT.js"></script>
+
+}

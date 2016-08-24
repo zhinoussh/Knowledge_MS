@@ -93,14 +93,16 @@ namespace Knowledge_Management.Controllers
         #endregion Personel
 
         #region Question
-        public ActionResult Question(int pId)
+
+        [ActionName("Question")]
+        public ActionResult Question_byEmployee(int id)
         {
             KnowledgeMSDAL dal=new KnowledgeMSDAL();
             ViewQuestionViewModel vm = new ViewQuestionViewModel();
-            if (pId != 0)
+            if (id != 0)
             {
-                List<string> emp_props=dal.get_Employee_byId(pId);
-                vm.emp_id = pId;
+                List<string> emp_props = dal.get_Employee_byId(id);
+                vm.emp_id = id;
                 vm.Description = "مطرح شده توسط آقای/خانم  " + emp_props[1] + " کد پرسنلی: " + emp_props[0];
             }
 
@@ -202,7 +204,7 @@ namespace Knowledge_Management.Controllers
 
         #region Solution
 
-        public ActionResult SolutionList(int id)
+        public ActionResult QuestionSolutions(int id)
         {
             KnowledgeMSDAL dal=new KnowledgeMSDAL();
             SolutionViewModel vm = new SolutionViewModel();
@@ -215,7 +217,22 @@ namespace Knowledge_Management.Controllers
             return View(vm);
         }
 
-        public ActionResult SoutionListAjaxHandler(jQueryDataTableParamModel request)
+        public ActionResult EmployeeSolutions(int id)
+        {
+            KnowledgeMSDAL dal = new KnowledgeMSDAL();
+            ViewQuestionViewModel vm = new ViewQuestionViewModel();
+            if (id != 0)
+            {
+                List<string> emp_props = dal.get_Employee_byId(id);
+                vm.emp_id = id;
+                vm.Description = "مطرح شده توسط آقای/خانم  " + emp_props[1] + " کد پرسنلی: " + emp_props[0];
+            }
+
+
+            return View(vm);
+        }
+
+        public ActionResult SolutionQuestionAjaxHandler(jQueryDataTableParamModel request)
         {
             KnowledgeMSDAL DAL = new KnowledgeMSDAL();
 
@@ -248,17 +265,16 @@ namespace Knowledge_Management.Controllers
             {
                 SID = s.solution_id + "",
                 FullSolution = s.solution,
+                Confirm=s.confirm.ToString(),
                 SIndex = (index + 1) + ""
                 ,Uploads=s.count_upload+""
             });
 
 
             var result = from s in indexed_list
-                         select new[] { s.SID, s.FullSolution,  s.SIndex
+                         select new[] { s.SID,  s.SIndex
                              ,s.FullSolution.Length <= 200 ? s.FullSolution : (s.FullSolution.Substring(0, 200) + "...")
-                             ,s.Uploads};
-
-
+                            ,s.Confirm,s.Uploads};
 
             return Json(new
             {
@@ -270,6 +286,63 @@ namespace Knowledge_Management.Controllers
             JsonRequestBehavior.AllowGet);
         }
 
+
+        public ActionResult SolutionEmployeeAjaxHandler(jQueryDataTableParamModel request)
+        {
+            KnowledgeMSDAL DAL = new KnowledgeMSDAL();
+
+            int employee_id = Request.QueryString["emp_id"].ToString() == "" ? 0 : Int32.Parse(Request.QueryString["emp_id"].ToString());
+
+            List<SolutionEmployeeViewModel> all_items = DAL.get_Solutions_by_employee(employee_id);
+
+            //filtering 
+            List<SolutionEmployeeViewModel> filtered = new List<SolutionEmployeeViewModel>();
+
+            if (!string.IsNullOrEmpty(request.sSearch))
+            {
+                filtered = all_items.Where(i => i.solution.Contains(request.sSearch)).ToList();
+
+            }
+            else
+                filtered = all_items;
+
+
+            var sortDirection = Request["sSortDir_0"]; // asc or desc
+            if (sortDirection == "asc")
+                filtered = filtered.OrderBy(s => s.solution).ToList();
+            else
+                filtered = filtered.OrderByDescending(s => s.solution).ToList();
+
+            //pagination
+            filtered = filtered.Skip(request.iDisplayStart).Take(request.iDisplayLength).ToList();
+
+            var indexed_list = filtered.Select((s, index) => new
+            {
+                SID = s.solution_id + "",
+                Question=s.question,
+                FullSolution = s.solution,
+                Confirm = s.confirm.ToString(),
+                SIndex = (index + 1) + ""
+                ,
+                Uploads = s.count_upload + ""
+            });
+
+
+            var result = from s in indexed_list
+                         select new[] { s.SID,  s.SIndex
+                              ,s.Question.Length <= 200 ? s.Question : (s.Question.Substring(0, 200) + "...")
+                             ,s.FullSolution.Length <= 200 ? s.FullSolution : (s.FullSolution.Substring(0, 200) + "...")
+                              ,s.Confirm,s.Uploads};
+
+            return Json(new
+            {
+                sEcho = request.sEcho,
+                iTotalRecords = all_items.Count(),
+                iTotalDisplayRecords = all_items.Count(),
+                aaData = result
+            },
+            JsonRequestBehavior.AllowGet);
+        }
 
         [HttpGet] // this action result returns the partial containing the modal
         public ActionResult Delete_Solution(int id)
@@ -308,13 +381,51 @@ namespace Knowledge_Management.Controllers
 
         }
 
-        [HttpGet]
-        public ActionResult Get_Uploads(int id)
+        public ActionResult ViewFullSolution(int id)
         {
-            SolutionEmployeeViewModel vm = new SolutionEmployeeViewModel();
-            vm.solution_id = id;
-            return PartialView("_PartialUploads",vm); 
+            KnowledgeMSDAL DAL=new KnowledgeMSDAL();
+            FullSolutionViewModel vm = new FullSolutionViewModel();
+            vm= DAL.get_Solution_by_id(id);
+            return View(vm);
         }
+
+        [HttpPost]
+        public ActionResult Confirm_Solution(int s_id, int? q_id, int? emp_id)
+        {
+            KnowledgeMSDAL DAL = new KnowledgeMSDAL();
+            DAL.change_confirm_status_solution(s_id);
+
+
+            if (q_id != null)
+            {
+                int question_id = Int32.Parse(q_id == null ? "0" : q_id + "");
+
+                SolutionViewModel vm = new SolutionViewModel();
+                if (question_id != 0)
+                {
+                    vm.question = DAL.get_question_name(question_id);
+                    vm.question_id = question_id;
+                }
+                return View("QuestionSolutions", vm);
+            }
+            else if (emp_id != null)
+            {
+                int employee_id = Int32.Parse(emp_id == null ? "0" : emp_id + "");
+
+                ViewQuestionViewModel vm = new ViewQuestionViewModel();
+                if (employee_id != 0)
+                {
+                    List<string> emp_props = DAL.get_Employee_byId(employee_id);
+                    vm.emp_id = employee_id;
+                    vm.Description = "مطرح شده توسط آقای/خانم  " + emp_props[1] + " کد پرسنلی: " + emp_props[0];
+                }
+                return View("EmployeeSolutions", vm);
+            }
+            else
+                return View();
+        }
+
+
         #endregion Solution
 
 
@@ -362,10 +473,10 @@ namespace Knowledge_Management.Controllers
             //pagination
             filtered = filtered.Skip(request.iDisplayStart).Take(request.iDisplayLength).ToList();
 
-            var indexed_list = filtered.Select((s, index) => new { SID = s.pkey + "", FILEPATH = s.file_path, SIndex = (index + 1) + "", SNAME = "فایل " + (index + 1) });
+            var indexed_list = filtered.Select((s, index) => new { SID = s.pkey + "", FILEPATH = s.file_path, SIndex = (index + 1) + "", SNAME = "فایل " + (index + 1),Confirm=s.confirm.ToString() });
 
             var result = from s in indexed_list
-                         select new[] { s.SID, s.FILEPATH, s.SIndex, s.SNAME };
+                         select new[] { s.SID, s.FILEPATH, s.SIndex, s.SNAME ,s.Confirm};
 
 
             return Json(new
@@ -389,6 +500,20 @@ namespace Knowledge_Management.Controllers
 
             return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, file_name);
         }
+
+        
+       [HttpPost]
+        public ActionResult Confirm_Upload(int u_id,int s_id)
+        {
+            KnowledgeMSDAL DAL = new KnowledgeMSDAL();
+            DAL.change_confirm_status_upload(u_id);
+          
+           FullSolutionViewModel vm = new FullSolutionViewModel();
+            vm = DAL.get_Solution_by_id(s_id);
+           
+           return View("ViewFullSolution",vm);
+        }
+
 
         #endregion UPLOAD FILES
     }
