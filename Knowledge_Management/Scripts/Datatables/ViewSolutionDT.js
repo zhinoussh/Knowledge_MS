@@ -48,7 +48,6 @@
                             "sDefaultContent": " "
                              , "sClass": "dt-body-center",
                             "mRender": function (data, type, row) {
-                                var q_id=$("#hd_id_question").val();
                                 return '<a class="glyphicon glyphicon-list a_clickable" href="/ViewEntryInfo/ViewFullSolution/' + row[0] + '"></a>'
 
                             }
@@ -94,10 +93,7 @@
 
 });
 
-var details = function (s) {
-    $("#FullSolution").html(s);
-    $('#DetailModal').modal('show');
-}
+
 
 var delete_dialog = function (s_id) {
 
@@ -110,8 +106,8 @@ var delete_dialog = function (s_id) {
  
 var confirm_solution = function (s_id) {
     
-    var url = "/ViewEntryInfo/Confirm_Solution";
-    $.post(url + "/" + s_id, function (data) {
+    var url = "/ViewEntryInfo/Confirm_Solution?s_id=" + s_id + "&q_id=" + $("#hd_id_question").val();
+    $.post(url, function (data) {
         var tbl = $("#SoutionListDT").dataTable({ bRetrieve: true });
         tbl.fnDraw();
     });

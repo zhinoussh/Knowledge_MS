@@ -15,68 +15,67 @@
 <!-- /end Delete Modal -->
 
 
-<!-- Detail Modal 
-<div class="modal fade" id="DetailModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content" id="confirm-container">
-            <div class="modal-header modal-header-info">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close" aria-hidden="true">&times;</button>
-                <h6><i class="glyphicon glyphicon-info-sign"></i>شرح راهکار</h6>
-
-            </div>
-            <div class="modal-body">
-                <div class="border-modal">
-
-                    <div class="editor-field" style="width:100%">
-                        <label id="FullSolution"></label>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- /end Detail Modal -->
 
 <h5>راهکارهای مسئله</h5>
 <span class="border_admin"></span>
 
-<div class="well well_question">
-
-    <div class="field_title" style="width:8%">
-        @Html.LabelFor(model => model.question)
+<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+    <div class="panel panel-default">
+        <div class="panel-heading" role="tab" id="headingOne">
+            <h6 class="panel-title">
+                <a role="button" data-toggle="collapse"  href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                    @Html.LabelFor(model => model.question)
+                </a>
+            </h6>
+        </div>
+        <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+            <div class="panel-body">
+                @Html.DisplayFor(model => model.question)   
+            </div>
+        </div>
     </div>
+    <div class="panel panel-default">
+        <div class="panel-heading" role="tab" id="headingTwo">
+            <h4 class="panel-title">
+                <a class="collapsed" role="button" data-toggle="collapse"  href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                   راهکارها
+                </a>
+            </h4>
+        </div>
+        <div id="collapseTwo" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingTwo">
+            <div class="panel-body">
+             
+                <div class="alert alert-success fade in" role="alert" style="float:right; width:100%; visibility:hidden" id="div_alert">
+                    <a href="#" class="close" id="close_delete_modal">&times;</a>
+                    <label id="alert_success" style="margin-right:5px"></label>
+                </div>
 
-    <div class="field_title" style="width:85%;">
-        @Html.DisplayFor(model => model.question)
+                    <table id="SoutionListDT" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>ردیف</th>
+                                <th class="dt-head-right">راهکار</th>
+                                <th>وضعیت تایید</th>
+                                <th>تعداد اسناد</th>
+                                <th>مشاهده کامل</th>
+                                <th>تایید / رد</th>
+                                <th>حذف</th>
+
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+
+            </div>
+        </div>
     </div>
+ 
 </div>
+
 
 @Html.HiddenFor(model => model.question_id, new { id = "hd_id_question" })
 
-<div class="alert alert-success fade in" role="alert" style="float:right; width:100%; visibility:hidden" id="div_alert">
-    <a href="#" class="close" id="close_delete_modal">&times;</a>
-    <label id="alert_success" style="margin-right:5px"></label>
-</div>
-
-<div style="float:right; width:100%;margin:0 0 2% 0">
-    <table id="SoutionListDT" class="display">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>ردیف</th>
-                <th class="dt-head-right">راهکار</th>
-                <th>وضعیت تایید</th>
-                <th>تعداد اسناد</th>
-                <th>مشاهده کامل</th>
-                <th>تایید / رد</th>
-                <th>حذف</th>
-
-            </tr>
-        </thead>
-        <tbody></tbody>
-    </table>
-</div>
 
 @section scripts{
     <script src="~/Scripts/Datatables/ViewSolutionDT.js"></script>

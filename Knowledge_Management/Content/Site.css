@@ -126,12 +126,21 @@ textarea {
     text-decoration:none; 
     }
 
-.glyphicon-ok {
-  font-size:20px;
+.glyphicon-remove-circle {
+     font-size:22px;
+    color:red; 
+}
+.glyphicon-remove-circle:hover {
+     font-size:25px;
+    color:#c10606; 
+    text-decoration:none
+}
+.glyphicon-ok-circle {
+  font-size:22px;
     color:#39ae47; 
 }
-.glyphicon-ok:hover {
-  font-size:24px;
+.glyphicon-ok-circle:hover {
+  font-size:25px;
     color:#31863b; 
     text-decoration:none
 }
@@ -464,8 +473,11 @@ color:#288df5;
 .well_question {
     margin-top: 3%;
     min-height: 100px;
-    background: -webkit-linear-gradient(to left, #5C258D , #4389A2); /* Chrome 10-25, Safari 5.1-6 */
-    background: linear-gradient(to left, #5C258D , #4389A2); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    background:#e8e1fb;
+    border-color:#d0c2f7;
+    color:#623799
+    /*background: -webkit-linear-gradient(to left, #5C258D , #4389A2);
+    background: linear-gradient(to left, #5C258D , #4389A2);*/
 }
 
 thead th {
@@ -473,9 +485,27 @@ thead th {
   color: white;
 }
 
+
 .alert-success {
     height:40px;
     padding:5px;
     text-align:right;
     margin-top:2%;
+}
+
+/*************PANEL*/
+.panel-default{
+    text-align:right;
+
+}
+.panel-heading {
+direction:rtl;
+    background-image: -webkit-linear-gradient(to left, #5C258D , #4389A2);
+    background-image: linear-gradient(to left, #5C258D , #4389A2);
+
+}
+.panel-title {
+    font-family:'B Yekan';
+    text-align:right;
+
 }

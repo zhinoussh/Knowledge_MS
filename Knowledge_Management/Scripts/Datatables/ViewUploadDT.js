@@ -67,10 +67,10 @@
                               "sDefaultContent": " "
                              , "sClass": "dt-body-center",
                               "mRender": function (data, type, row) {
-                                  if (row[3].toString() == "True")
-                                      return "<a class='glyphicon glyphicon-remove a_clickable' onclick='confirm_upload(" + row[0] + ");'></a>"
+                                  if (row[4].toString() == "True")
+                                      return "<a class='glyphicon glyphicon-remove-circle a_clickable' onclick='confirm_upload(" + row[0] + ");'></a>"
                                   else
-                                      return "<a class='glyphicon glyphicon-ok a_clickable' onclick='confirm_upload(" + row[0] + ");'></a>"
+                                      return "<a class='glyphicon glyphicon-ok-circle a_clickable' onclick='confirm_upload(" + row[0] + ");'></a>"
                               }
                           }
                          , {
@@ -135,10 +135,10 @@ var delete_dialog = function (upload_id) {
     });
 }
 
-var confirm_upload= function (s_id) {
+var confirm_upload= function (u_id) {
 
-    var url = "/ViewEntryInfo/Confirm_Upload";
-    $.post(url + "/" + s_id, function (data) {
+    var url = "/ViewEntryInfo/Confirm_Upload?u_id=" + u_id + "&s_id=" + $("#hd_id_solution").val();
+    $.post(url , function (data) {
         var tbl = $("#UploadDT").dataTable({ bRetrieve: true });
         tbl.fnDraw();
     });

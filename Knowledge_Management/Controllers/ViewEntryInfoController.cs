@@ -316,11 +316,17 @@ namespace Knowledge_Management.Controllers
         }
 
         [HttpPost]
-        public ActionResult Confirm_Solution(int id)
+        public ActionResult Confirm_Solution(int s_id,int q_id)
         {
             KnowledgeMSDAL DAL = new KnowledgeMSDAL();
-            DAL.change_confirm_status_solution(id);
-            return View(); 
+            SolutionViewModel vm = new SolutionViewModel();
+            if (q_id != 0)
+            {
+                vm.question = DAL.get_question_name(q_id);
+                vm.question_id = q_id;
+            }
+            DAL.change_confirm_status_solution(s_id);
+            return View("SolutionList",vm);
         }
 
 
@@ -371,10 +377,10 @@ namespace Knowledge_Management.Controllers
             //pagination
             filtered = filtered.Skip(request.iDisplayStart).Take(request.iDisplayLength).ToList();
 
-            var indexed_list = filtered.Select((s, index) => new { SID = s.pkey + "", FILEPATH = s.file_path, SIndex = (index + 1) + "", SNAME = "فایل " + (index + 1) });
+            var indexed_list = filtered.Select((s, index) => new { SID = s.pkey + "", FILEPATH = s.file_path, SIndex = (index + 1) + "", SNAME = "فایل " + (index + 1),Confirm=s.confirm.ToString() });
 
             var result = from s in indexed_list
-                         select new[] { s.SID, s.FILEPATH, s.SIndex, s.SNAME };
+                         select new[] { s.SID, s.FILEPATH, s.SIndex, s.SNAME ,s.Confirm};
 
 
             return Json(new
@@ -401,11 +407,15 @@ namespace Knowledge_Management.Controllers
 
         
        [HttpPost]
-        public ActionResult Confirm_Upload(int id)
+        public ActionResult Confirm_Upload(int u_id,int s_id)
         {
             KnowledgeMSDAL DAL = new KnowledgeMSDAL();
-            DAL.change_confirm_status_upload(id);
-            return View(); 
+            DAL.change_confirm_status_upload(u_id);
+          
+           FullSolutionViewModel vm = new FullSolutionViewModel();
+            vm = DAL.get_Solution_by_id(s_id);
+           
+           return View("ViewFullSolution",vm);
         }
 
 
