@@ -296,6 +296,7 @@ namespace Knowledge_Management.DAL
                                     e.data_entry+"",
                                     e.data_view+"",
                                     e.fname+" "+e.lname
+                                    ,e.pkey+""
                                 }).FirstOrDefault();
 
             return lst_employee;
@@ -687,10 +688,9 @@ namespace Knowledge_Management.DAL
             return lst_solutions;
          }
 
-        public List<SolutionEmployeeViewModel> get_Solutions_by_employee(string username)
+         public List<SolutionEmployeeViewModel> get_Solutions_by_employee(int emp_id)
         {
-            int emp_id = db.tbl_employee.Where(p => p.personel_code == username).First().pkey;
-
+            
             List<SolutionEmployeeViewModel> lst_solutions = (from s in db.tbl_question_solutions.Where(s => s.fk_employee == emp_id)
                                                              join q in db.tbl_questions on s.fk_question equals q.pkey
                                                              orderby s.fk_question descending, s.pkey
@@ -701,6 +701,7 @@ namespace Knowledge_Management.DAL
                                                                  solution = s.solution,
                                                                  solution_id = s.pkey,
                                                                  count_upload = db.tbl_solution_uploads.Count(x => x.fk_solution == s.pkey)
+                                                                 ,confirm=s.confirm
                                                              }).ToList();
 
              

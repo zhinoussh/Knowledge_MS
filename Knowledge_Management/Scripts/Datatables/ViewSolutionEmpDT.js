@@ -1,13 +1,13 @@
 ﻿$(document).ready(function () {
 
-    var oTable = $('#SoutionListDT').dataTable({
+    var oTable = $('#SolutionEmployeeDT').dataTable({
         "language": {
             "url": "/Content/lang.txt"
         },
         "bServerSide": true,
-        "sAjaxSource": "/ViewEntryInfo/SoutionListAjaxHandler",
+        "sAjaxSource": "/ViewEntryInfo/SolutionEmployeeAjaxHandler",
         "fnServerParams": function (aoData) {
-            aoData.push({ "name": "q_id", "value": $('#hd_id_question').val() });
+            aoData.push({ "name": "emp_id", "value": $('#hd_id_emp').val() });
         },
         "bProcessing": true,
         "pagingType": "numbers"
@@ -22,7 +22,8 @@
                             "sName": "radif", "sWidth": '2%', "sClass": "dt-body-center"
                                 , "bSearchable": false, "bSortable": false
                         },
-                        { "sName": "solution", "sWidth": '80%' }
+                        { "sName": "question", "sWidth": '40%' },
+                        { "sName": "solution", "sWidth": '40%' }
                         , {
                             "sName": "confirm_status",
                             "sWidth": '2%',
@@ -60,12 +61,12 @@
                               "bSortable": false,
                               "sDefaultContent": " "
                              , "sClass": "dt-body-center",
-                             "mRender": function (data, type, row) {
-                               
-                                 return (row[3].toString()== "True") ?
-                                     "<a class='glyphicon glyphicon-remove-circle a_clickable' onclick='confirm_solution(" + row[0] + ");'></a>"
-                                     :
-                                    "<a class='glyphicon glyphicon-ok-circle a_clickable' onclick='confirm_solution(" + row[0] + ");'></a>"
+                              "mRender": function (data, type, row) {
+
+                                  return (row[3].toString() == "True") ?
+                                      "<a class='glyphicon glyphicon-remove-circle a_clickable' onclick='confirm_solution(" + row[0] + ");'></a>"
+                                      :
+                                     "<a class='glyphicon glyphicon-ok-circle a_clickable' onclick='confirm_solution(" + row[0] + ");'></a>"
 
                               }
                           }
@@ -103,12 +104,12 @@ var delete_dialog = function (s_id) {
         $('#DeleteModal').modal('show');
     });
 }
- 
+
 var confirm_solution = function (s_id) {
-    
-    var url = "/ViewEntryInfo/Confirm_Solution?s_id=" + s_id + "&q_id=" + $("#hd_id_question").val();
+
+    var url = "/ViewEntryInfo/Confirm_Solution?s_id=" + s_id + "&emp_id=" + $("#hd_id_emp").val();
     $.post(url, function (data) {
-        var tbl = $("#SoutionListDT").dataTable({ bRetrieve: true });
+        var tbl = $("#SolutionEmployeeDT").dataTable({ bRetrieve: true });
         tbl.fnDraw();
     });
 

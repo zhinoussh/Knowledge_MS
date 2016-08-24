@@ -21,18 +21,6 @@
                             "bSortable": false,
                             "bVisible": false
                         },
-                         {
-                             "sName": "FullQuestion",
-                             "bSearchable": false,
-                             "bSortable": false,
-                             "bVisible": false
-                         },
-                          {
-                              "sName": "fullSolution",
-                              "bSearchable": false,
-                              "bSortable": false,
-                              "bVisible": false
-                          },
                             {
                                 "sName": "radif", "sWidth": '2%', "sClass": "dt-body-center"
                                 , "bSearchable": false, "bSortable": false

@@ -262,7 +262,8 @@
     <Content Include="Scripts\Datatables\SolutionDT.js" />
     <Content Include="Scripts\Datatables\UploadDT.js" />
     <Content Include="Scripts\Datatables\ViewQuestionDT.js" />
-    <Content Include="Scripts\Datatables\ViewSolutionDT.js" />
+    <Content Include="Scripts\Datatables\ViewSolutionQueDT.js" />
+    <Content Include="Scripts\Datatables\ViewSolutionEmpDT.js" />
     <Content Include="Scripts\DynamicField.js" />
     <Content Include="Scripts\jquery-2.2.3.js" />
     <Content Include="Scripts\jquery-2.2.3.min.js" />
@@ -330,11 +331,12 @@
     <Content Include="Views\ViewEntryInfo\Personel.cshtml" />
     <Content Include="Views\ViewEntryInfo\Question.cshtml" />
     <Content Include="Views\ViewEntryInfo\_PartialDeleteQuestion.cshtml" />
-    <Content Include="Views\ViewEntryInfo\SolutionList.cshtml" />
+    <Content Include="Views\ViewEntryInfo\QuestionSolutions.cshtml" />
     <Content Include="Views\ViewEntryInfo\_PartialDeleteSolution.cshtml" />
     <Content Include="Views\ViewEntryInfo\_PartialUploads.cshtml" />
     <Content Include="Views\ViewEntryInfo\_PartialDeleteUpload.cshtml" />
     <Content Include="Views\ViewEntryInfo\ViewFullSolution.cshtml" />
+    <Content Include="Views\ViewEntryInfo\EmployeeSolutions.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
