@@ -63,7 +63,7 @@
                              , "sClass": "dt-body-center",
                               "mRender": function (data, type, row) {
 
-                                  return (row[3].toString() == "True") ?
+                                  return (row[4].toString() == "True") ?
                                       "<a class='glyphicon glyphicon-remove-circle a_clickable' onclick='confirm_solution(" + row[0] + ");'></a>"
                                       :
                                      "<a class='glyphicon glyphicon-ok-circle a_clickable' onclick='confirm_solution(" + row[0] + ");'></a>"
