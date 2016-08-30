@@ -5,9 +5,10 @@
             "url": "/Content/lang.txt"
         },
         "bServerSide": true,
-        "sAjaxSource": "/ViewEntrybyEmployee/SearchQuestionAjaxHandler",
+        "sAjaxSource": "/ViewEntrybyJob/SearchQuestionAjaxHandler",
         "fnServerParams": function (aoData) {
-            aoData.push({ "name": "emp_id", "value": $('#hd_id_emp').val() });
+            aoData.push({ "name": "job_id", "value": $('#dropdown_job').val() });
+            aoData.push({ "name": "dep_id", "value": $('#dropdown_department').val() });
         },
         "bProcessing": true,
         "pagingType": "numbers"
@@ -104,6 +105,37 @@
         return false;
     });
 
+    $("#btn_view_Question").click(function () {
+        var $STTable = $("#SearchQuestionDT").dataTable({ bRetrieve: true });
+        $STTable.fnDraw();
+    });
+
+    $("#dropdown_department").change(function () {
+
+        var dep_id = $('#dropdown_department').val();
+        $.ajax({
+            url: '/ViewEntrybyJob/FillJobs',
+            type: "GET",
+            dataType: 'JSON',
+            data: { DepId: dep_id },
+            success: function (jobs) {
+                $("#dropdown_job").html(""); // clear before appending new list 
+
+                $.each(jobs, function (i, job) {
+                    $("#dropdown_job").append($('<option></option>').val(job.Value).html(job.Text));
+                });
+
+            },
+            error: function (e) {
+                alert('err:' + e.toString());
+            }
+        });
+
+
+    });
+
+
+
 });
 
 var details = function (s) {
@@ -117,13 +149,12 @@ var details = function (s) {
 
 var delete_dialog = function (q_id) {
 
-    var url = "/ViewEntrybyEmployee/Delete_Question"; // the url to the controller
+    var url = "/ViewEntrybyJob/Delete_Question"; // the url to the controller
     $.get(url + '/' + q_id, function (data) {
         $('#confirm-container').html(data);
         $('#DeleteModal').modal('show');
     });
 }
-
 
 
 

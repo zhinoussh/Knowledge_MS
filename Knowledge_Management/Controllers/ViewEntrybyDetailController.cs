@@ -1,66 +1,93 @@
-﻿using Knowledge_Management.DAL;
-using Knowledge_Management.Models;
-using Knowledge_Management.ViewModels;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Knowledge_Management.ViewModels;
+using Knowledge_Management.Models;
+using Knowledge_Management.DAL;
 
 namespace Knowledge_Management.Controllers
 {
-    public class ViewEntrybyJobController : Controller
+    public class ViewEntrybyDetailController : Controller
     {
-        // GET: ViewEntrybyJob
+        // GET: ViewEntrybyDetail
         public ActionResult Index()
         {
-            JobDepQuestionViewModel o = new JobDepQuestionViewModel();
+            DetailQuestionViewModel o = new DetailQuestionViewModel();
             KnowledgeMSDAL DAL = new KnowledgeMSDAL();
+
 
             List<tbl_department> deps = DAL.get_all_Departments();
             o.lst_dep = new SelectList(deps, "pkey", "department_name");
-            o.dep_id = deps.First().pkey + "";
+            o.dep_id = deps.First().pkey;
 
-            List<tbl_job> jobs = DAL.get_Jobs(Int32.Parse(o.dep_id));
+            List<tbl_job> jobs = DAL.get_Jobs(o.dep_id);
             o.lst_job = new SelectList(jobs, "pkey", "job_name");
-            o.job_id = "0";
+            o.job_id = jobs.First().pkey ;
+
+
+            List<tbl_department_objectives> dep_objs = DAL.get_Department_Objectives(o.dep_id);
+            o.lst_dep_objective = new SelectList(dep_objs, "pkey", "objective");
+            o.dep_obj_id = 0;
+
+            List<tbl_strategy> strategies = DAL.get_all_strategies();
+            o.lst_strategy = new SelectList(strategies, "pkey", "strategy_name");
+            o.strategy_id = 0;
+
+            List<tbl_job_description> jobDescs = DAL.get_JobDescriptions(o.job_id);
+            o.lst_job_desc = new SelectList(jobDescs, "pkey", "job_desc");
+            o.job_desc_id = 0;
 
             return View(o);
+
         }
 
-        #region Question
-
-        public JsonResult FillJobs(int DepId)
+        public JsonResult FillObjectives(int DepId)
         {
             KnowledgeMSDAL DAL = new KnowledgeMSDAL();
-            List<tbl_job> jobs = DAL.get_Jobs(DepId);
+            List<tbl_department_objectives> objectives = DAL.get_Department_Objectives(DepId);
 
             List<SelectListItem> lst_obj = new List<SelectListItem>();
-            lst_obj.Add(new SelectListItem { Value =  "0", Text ="همه مشاغل" });
+            lst_obj.Add(new SelectListItem { Value = "0", Text = "----" });
 
-            foreach (tbl_job j in jobs)
+            foreach (tbl_department_objectives o in objectives)
             {
-                lst_obj.Add(new SelectListItem { Value = j.pkey + "", Text = j.job_name });
+                lst_obj.Add(new SelectListItem { Value = o.pkey + "", Text = o.objective });
             }
 
             return Json(lst_obj, JsonRequestBehavior.AllowGet);
         }
-       
+
+        public JsonResult FillJobDescriptions(int JobId)
+        {
+            KnowledgeMSDAL DAL = new KnowledgeMSDAL();
+            List<tbl_job_description> desc = DAL.get_JobDescriptions(JobId);
+
+            List<SelectListItem> lst_obj = new List<SelectListItem>();
+            lst_obj.Add(new SelectListItem { Value = "0", Text ="----" });
+
+            foreach (tbl_job_description jd in desc)
+            {
+                lst_obj.Add(new SelectListItem { Value = jd.pkey + "", Text = jd.job_desc });
+            }
+
+            return Json(lst_obj, JsonRequestBehavior.AllowGet);
+        }
+
+
         public ActionResult SearchQuestionAjaxHandler(jQueryDataTableParamModel request)
         {
             KnowledgeMSDAL DAL = new KnowledgeMSDAL();
             List<QuestionViewModel> all_items = new List<QuestionViewModel>();
 
-            int job_id = Request["job_id"].ToString() == "" ? 0 : Convert.ToInt32(Request["job_id"].ToString());
-            int dep_id = Request["dep_id"].ToString() == "" ? 0 : Convert.ToInt32(Request["dep_id"].ToString());
+            int jobDesc_id = Request["jobDesc_id"].ToString() == "" ? 0 : Convert.ToInt32(Request["jobDesc_id"].ToString());
+            int depObj_id = Request["depObj_id"].ToString() == "" ? 0 : Convert.ToInt32(Request["depObj_id"].ToString());
+            int strategy_id = Request["strategy_id"].ToString() == "" ? 0 : Convert.ToInt32(Request["strategy_id"].ToString());
 
-            if (job_id != 0)
-            {
-                all_items = DAL.get_all_Questions_by_job(job_id);
-            }
-            else if(dep_id!=0)
-                all_items = DAL.get_all_Questions_by_alljobs_department(dep_id);
 
+            all_items = DAL.get_all_Questions_by_details(jobDesc_id, depObj_id,strategy_id);
+            
 
             //filtering 
             List<QuestionViewModel> filtered = new List<QuestionViewModel>();
@@ -115,14 +142,14 @@ namespace Knowledge_Management.Controllers
         [HttpGet] // this action result returns the partial containing the modal
         public ActionResult Delete_Question(int id)
         {
-            JobDepQuestionViewModel q = new JobDepQuestionViewModel();
+            DetailQuestionViewModel q = new DetailQuestionViewModel();
             q.question_id = id;
             return PartialView("_PartialDeleteQuestion", q);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete_Question(JobDepQuestionViewModel q)
+        public ActionResult Delete_Question(DetailQuestionViewModel q)
         {
             if (ModelState.IsValid)
             {
@@ -139,6 +166,5 @@ namespace Knowledge_Management.Controllers
 
         }
 
-        #endregion Question
     }
 }

@@ -5,7 +5,7 @@
             "url": "/Content/lang.txt"
         },
         "bServerSide": true,
-        "sAjaxSource": "/ViewEntryInfo/SolutionQuestionAjaxHandler",
+        "sAjaxSource": "/ViewEntrybyEmployee/SolutionQuestionAjaxHandler",
         "fnServerParams": function (aoData) {
             aoData.push({ "name": "q_id", "value": $('#hd_id_question').val() });
         },
@@ -48,7 +48,7 @@
                             "sDefaultContent": " "
                              , "sClass": "dt-body-center",
                             "mRender": function (data, type, row) {
-                                return '<a class="glyphicon glyphicon-list a_clickable" href="/ViewEntryInfo/ViewFullSolution/' + row[0] + '"></a>'
+                                return '<a class="glyphicon glyphicon-list a_clickable" href="/ViewEntrybyEmployee/ViewFullSolution/' + row[0] + '"></a>'
 
                             }
                         }
@@ -97,7 +97,7 @@
 
 var delete_dialog = function (s_id) {
 
-    var url = "/ViewEntryInfo/Delete_Solution"; // the url to the controller
+    var url = "/ViewEntrybyEmployee/Delete_Solution"; // the url to the controller
     $.get(url + '/' + s_id, function (data) {
         $('#confirm-container').html(data);
         $('#DeleteModal').modal('show');
@@ -106,7 +106,7 @@ var delete_dialog = function (s_id) {
  
 var confirm_solution = function (s_id) {
     
-    var url = "/ViewEntryInfo/Confirm_Solution?s_id=" + s_id + "&q_id=" + $("#hd_id_question").val();
+    var url = "/ViewEntrybyEmployee/Confirm_Solution?s_id=" + s_id + "&q_id=" + $("#hd_id_question").val();
     $.post(url, function (data) {
         var tbl = $("#SoutionListDT").dataTable({ bRetrieve: true });
         tbl.fnDraw();

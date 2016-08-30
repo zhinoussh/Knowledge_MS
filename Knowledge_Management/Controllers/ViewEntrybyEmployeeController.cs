@@ -12,7 +12,7 @@ namespace Knowledge_Management.Controllers
     public class ViewEntrybyEmployeeController : Controller
     {
         #region Personel
-        // GET: ViewEntryInfo
+        // GET: ViewEntrybyEmployee
         public ActionResult Personel()
         {
             return View();

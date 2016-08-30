@@ -1,12 +1,11 @@
-﻿
-@model Knowledge_Management.ViewModels.UploadViewModel
+﻿@model Knowledge_Management.ViewModels.DetailQuestionViewModel
 
 @{
 
     Layout = null;
 }
 
-@using (Ajax.BeginForm("Delete_Upload", "ViewEntryInfo"
+@using (Ajax.BeginForm("Delete_Question", "ViewEntrybyDetail"
                     , new AjaxOptions
                     {
                         InsertionMode = InsertionMode.ReplaceWith,
@@ -29,7 +28,7 @@
     <div class="modal-footer">
         <button type="button" class="btn btn-confirm pull-left" data-dismiss="modal">انصراف</button>
         <input type="submit" class="btn btn-confirm pull-left" value="تایید" />
-        @Html.HiddenFor(d => d.upload_id)
+        @Html.HiddenFor(d => d.question_id)
     </div>
 }
 
@@ -39,10 +38,12 @@
             $('#DeleteModal').modal('hide');
             $("#alert_success").html(result.msg);
             $("#div_alert").css("visibility", "visible");
-            var $STTable = $("#UploadDT").dataTable({ bRetrieve: true });
+            var $STTable = $("#SearchQuestionDT").dataTable({ bRetrieve: true });
             $STTable.fnDraw();
         }
     }
 </script>
+
+
 
 

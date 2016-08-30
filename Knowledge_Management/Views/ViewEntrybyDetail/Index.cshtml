@@ -1,6 +1,6 @@
-﻿@model Knowledge_Management.ViewModels.JobDepQuestionViewModel
+﻿@model Knowledge_Management.ViewModels.DetailQuestionViewModel
 @{
-    ViewBag.Title = "مشاهده مسائل، راهکارها و اسناد وارد شده برای شغل سازمانی";
+    ViewBag.Title = "مشاهده مسائل، راهکارها و اسناد وارد شده بر اساس جزئیات";
     Layout = "~/Views/Shared/_ManagementLayout.cshtml";
 }
 
@@ -48,27 +48,59 @@
 </div>
 <!-- /end Modal -->
 
-<h5>مشاهده مسائل، راهکارها و اسناد وارد شده برای شغل سازمانی</h5>
+<h5>مشاهده مسائل، راهکارها و اسناد وارد شده بر اساس جزئیات</h5>
 <span class="border_admin"></span>
 
-<div style="float:right; width:100%; margin:2% 0 4% 0">
-    <div class="editor-label" style="width:10%;">
-        واحد سازمانی:
+
+<div style="float:right; width:100%; margin:2% 0 0 0">
+    <div class="editor-field" style="width:12%; margin-top:1%">
+        واحد سازمانی
     </div>
     <div class="editor-field" style="width:20%;">
         @Html.DropDownListFor(model => model.dep_id, new SelectList(Model.lst_dep, "Value", "Text")
             , new { @class = "textbox", id = "dropdown_department" })
     </div>
 
-    <div class="editor-label" style="width:5%;">
-        شغل:
+    <div class="editor-label" style="width:7%;">
+        شغل
     </div>
     <div class="editor-field" style="width:20%;">
         @Html.DropDownListFor(model => model.job_id, new SelectList(Model.lst_job, "Value", "Text")
-                     , "همه مشاغل", new { @class = "textbox", id = "dropdown_job" })
+                     , new { @class = "textbox", id = "dropdown_job" })
     </div>
 
-    <div class="btn_add" style="width:150px">
+
+</div>
+
+<div style="float:right; width:100%;margin-top:2%">
+
+
+   
+
+    <div class="editor-field" style="width:12%;margin-top:1%">
+        @Html.LabelFor(model => model.lst_dep_objective)
+    </div>
+    <div class="editor-field" style="width:20%;">
+        @Html.DropDownListFor(model => model.dep_obj_id, new SelectList(Model.lst_dep_objective, "Value", "Text")
+           , "----", new { @class = "textbox", id = "dropdown_dep_Objective" })
+    </div>
+
+    <div class="editor-label" style="width:7%;">
+        @Html.LabelFor(model => model.lst_job_desc)
+    </div>
+    <div class="editor-field" style="width:20%;">
+        @Html.DropDownListFor(model => model.job_desc_id, new SelectList(Model.lst_job_desc, "Value", "Text")
+            , "----", new { @class = "textbox", id = "dropdown_jobDesc" })
+    </div>
+
+    <div class="editor-label" style="width:7%;">
+        @Html.LabelFor(model => model.lst_strategy)
+    </div>
+    <div class="editor-field" style="width:20%;">
+        @Html.DropDownListFor(model => model.strategy_id, new SelectList(Model.lst_strategy, "Value", "Text")
+         , "----", new { @class = "textbox", id = "dropdown_strategy" })
+    </div>
+    <div class="btn_add" style="width:150px; float:right; margin:3% 40% 2% 0">
         <input type="button" class="btn btn-primary" value="مشاهده مسائل" id="btn_view_Question" />
     </div>
 
@@ -97,5 +129,5 @@
 </div>
 
 @section scripts{
-    <script src="~/Scripts/Datatables/JobEntryDT.js"></script>
+    <script src="~/Scripts/Datatables/DetailEntryDT.js"></script>
 }

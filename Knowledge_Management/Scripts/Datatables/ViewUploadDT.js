@@ -5,7 +5,7 @@
             "url": "/Content/lang.txt"
         },
         "bServerSide": true,
-        "sAjaxSource": "/ViewEntryInfo/UploadAjaxHandler",
+        "sAjaxSource": "/ViewEntrybyEmployee/UploadAjaxHandler",
         "fnServerParams": function (aoData) {
             aoData.push({ "name": "solution_id", "value": $('#hd_id_solution').val() });
         },
@@ -113,7 +113,7 @@ var download_file = function (upload_id) {
 
     $.ajax(
            {
-               url: '/ViewEntryInfo/DownloadFile',
+               url: '/ViewEntrybyEmployee/DownloadFile',
                contentType: 'application/json; charset=utf-8',
                datatype: 'json',
                data: {
@@ -121,14 +121,14 @@ var download_file = function (upload_id) {
                },
                type: "GET",
                success: function () {
-                   window.location = '/ViewEntryInfo/DownloadFile?uploadID=' + upload_id;
+                   window.location = '/ViewEntrybyEmployee/DownloadFile?uploadID=' + upload_id;
                }
            });
 }
 
 var delete_dialog = function (upload_id) {
 
-    var url = "/ViewEntryInfo/Delete_Upload"; // the url to the controller
+    var url = "/ViewEntrybyEmployee/Delete_Upload"; // the url to the controller
     $.get(url + '/' + upload_id, function (data) {
         $('#confirm-container').html(data);
         $('#DeleteModal').modal('show');
@@ -137,7 +137,7 @@ var delete_dialog = function (upload_id) {
 
 var confirm_upload= function (u_id) {
 
-    var url = "/ViewEntryInfo/Confirm_Upload?u_id=" + u_id + "&s_id=" + $("#hd_id_solution").val();
+    var url = "/ViewEntrybyEmployee/Confirm_Upload?u_id=" + u_id + "&s_id=" + $("#hd_id_solution").val();
     $.post(url , function (data) {
         var tbl = $("#UploadDT").dataTable({ bRetrieve: true });
         tbl.fnDraw();

@@ -23,8 +23,9 @@
     <div class="panel panel-default">
         <div class="panel-heading" role="tab" id="headingOne">
             <h6 class="panel-title">
-                <a role="button" data-toggle="collapse" href="#collapseQuestion" aria-expanded="true" aria-controls="collapseOne">
+                <a class="accordion-toggle" role="button" data-toggle="collapse" href="#collapseQuestion" aria-expanded="true" aria-controls="collapseOne">
                     @Html.LabelFor(model => model.question)
+                    <i class="fa fa-angle-left pull-right"></i>
                 </a>
             </h6>
         </div>
@@ -37,8 +38,9 @@
     <div class="panel panel-default">
         <div class="panel-heading" role="tab" id="headingTwo">
             <h4 class="panel-title">
-                <a class="collapsed" role="button" data-toggle="collapse" href="#collapseSolution" aria-expanded="false" aria-controls="collapseTwo">
+                <a class="collapsed accordion-toggle" role="button" data-toggle="collapse" href="#collapseSolution" aria-expanded="false" aria-controls="collapseTwo">
                     @Html.LabelFor(model => model.solutions)
+                    <i class="fa fa-angle-left pull-right"></i>
                 </a>
             </h4>
         </div>

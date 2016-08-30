@@ -62,7 +62,7 @@
                             "sDefaultContent": " "
                             , "sClass": "dt-body-center",
                             "mRender": function (data, type, row) {
-                                return "<a class='glyphicon glyphicon-comment a_clickable' href='/ViewEntryInfo/Question/" + row[0] + "'></a>"
+                                return "<a class='glyphicon glyphicon-comment a_clickable' href='/ViewEntrybyEmployee/Question/" + row[0] + "'></a>"
 
                             }
                         }
@@ -74,7 +74,7 @@
                             "sDefaultContent": " "
                             , "sClass": "dt-body-center"
                             , "mRender": function (data, type, row) {
-                                return "<a class='glyphicon glyphicon-list-alt a_clickable' href='/ViewEntryInfo/EmployeeSolutions/" + row[0] + "'></a>"
+                                return "<a class='glyphicon glyphicon-list-alt a_clickable' href='/ViewEntrybyEmployee/EmployeeSolutions/" + row[0] + "'></a>"
                             }
                         }
 

@@ -116,6 +116,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\ViewEntrybyDetailController.cs" />
     <Compile Include="Controllers\ViewEntrybyJobController.cs" />
     <Compile Include="Controllers\ViewEntrybyEmployeeController.cs" />
     <Compile Include="Migrations\201608240801401_ALTER_SOLUTION_UPLOAD_Tables.cs" />
@@ -180,8 +181,10 @@
     <Compile Include="Models\tbl_question_keywords.cs" />
     <Compile Include="Models\tbl_strategy.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\DetailQuestionViewModel.cs" />
     <Compile Include="ViewModels\EmployeeViewModel.cs" />
     <Compile Include="ViewModels\FullSolutionViewModel.cs" />
+    <Compile Include="ViewModels\JobDepQuestionViewModel.cs" />
     <Compile Include="ViewModels\JobDescriptionViewModel.cs" />
     <Compile Include="ViewModels\JobViewModel.cs" />
     <Compile Include="ViewModels\NewSolutionViewModel.cs" />
@@ -252,10 +255,12 @@
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\dataTables.jqueryui.min.js" />
     <Content Include="Scripts\Datatables\DepartmentDT.js" />
+    <Content Include="Scripts\Datatables\DetailEntryDT.js" />
     <Content Include="Scripts\Datatables\EmployeeDT.js" />
     <Content Include="Scripts\Datatables\EmployeeEntryDT.js" />
     <Content Include="Scripts\Datatables\JobDescDT.js" />
     <Content Include="Scripts\Datatables\JobDT.js" />
+    <Content Include="Scripts\Datatables\JobEntryDT.js" />
     <Content Include="Scripts\Datatables\KeywordDT.js" />
     <Content Include="Scripts\Datatables\ObjectiveDT.js" />
     <Content Include="Scripts\Datatables\QuestionDT.js" />
@@ -329,16 +334,19 @@
     <Content Include="Views\Solution\_PartialDeleteUpload.cshtml" />
     <Content Include="Views\Solution\YourSolution.cshtml" />
     <Content Include="Views\Solution\_PartialDeleteSolution.cshtml" />
-    <Content Include="Views\ViewEntryInfo\Personel.cshtml" />
-    <Content Include="Views\ViewEntryInfo\Question.cshtml" />
-    <Content Include="Views\ViewEntryInfo\_PartialDeleteQuestion.cshtml" />
-    <Content Include="Views\ViewEntryInfo\QuestionSolutions.cshtml" />
-    <Content Include="Views\ViewEntryInfo\_PartialDeleteSolution.cshtml" />
-    <Content Include="Views\ViewEntryInfo\_PartialUploads.cshtml" />
-    <Content Include="Views\ViewEntryInfo\_PartialDeleteUpload.cshtml" />
-    <Content Include="Views\ViewEntryInfo\ViewFullSolution.cshtml" />
-    <Content Include="Views\ViewEntryInfo\EmployeeSolutions.cshtml" />
+    <Content Include="Views\ViewEntrybyEmployee\Personel.cshtml" />
+    <Content Include="Views\ViewEntrybyEmployee\Question.cshtml" />
+    <Content Include="Views\ViewEntrybyEmployee\_PartialDeleteQuestion.cshtml" />
+    <Content Include="Views\ViewEntrybyEmployee\QuestionSolutions.cshtml" />
+    <Content Include="Views\ViewEntrybyEmployee\_PartialDeleteSolution.cshtml" />
+    <Content Include="Views\ViewEntrybyEmployee\_PartialUploads.cshtml" />
+    <Content Include="Views\ViewEntrybyEmployee\_PartialDeleteUpload.cshtml" />
+    <Content Include="Views\ViewEntrybyEmployee\ViewFullSolution.cshtml" />
+    <Content Include="Views\ViewEntrybyEmployee\EmployeeSolutions.cshtml" />
     <Content Include="Views\ViewEntrybyJob\Index.cshtml" />
+    <Content Include="Views\ViewEntrybyJob\_PartialDeleteQuestion.cshtml" />
+    <Content Include="Views\ViewEntrybyDetail\Index.cshtml" />
+    <Content Include="Views\ViewEntrybyDetail\_PartialDeleteQuestion.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

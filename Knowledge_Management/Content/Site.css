@@ -231,7 +231,7 @@ h6 {
 float:right;
  font-size:10pt;
  direction:rtl;
- margin-right:5%;
+ margin:1% 5% 0 0;
 }
 
 .editor-field {
@@ -239,6 +239,7 @@ float:right;
   direction:rtl;
   font-size:10pt;
   color:#565f73;
+
 }
 .textbox {
     width: 100%;
@@ -502,7 +503,7 @@ background:#e3e2e2 !important;
 .panel-heading {
 direction:rtl;
 /*background:#4e5c7d !important;*/
-background:#5c4f82 !important;
+background:#695d8e !important;
     border-color:#d0c2f7;
    
 }
@@ -512,8 +513,19 @@ background:#5c4f82 !important;
     text-align:right;
     color:#e9e8e8;
 }
+
     .panel-title:hover {
     text-decoration:none;
     font-size:16pt;
 
     }
+
+a.accordion-toggle  i{
+  width: 45px;
+  line-height:55px;
+  font-size: 20px;
+  margin-top: -10px;
+  text-align: center;
+  margin-right: -15px;
+  background:#9c8fc0;
+}

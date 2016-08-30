@@ -1,11 +1,11 @@
-﻿@model Knowledge_Management.ViewModels.ViewQuestionViewModel
+﻿@model Knowledge_Management.ViewModels.SolutionEmployeeViewModel
 
 @{
 
     Layout = null;
 }
 
-@using (Ajax.BeginForm("Delete_Question", "ViewEntryInfo"
+@using (Ajax.BeginForm("Delete_Solution", "ViewEntrybyEmployee"
                     , new AjaxOptions
                     {
                         InsertionMode = InsertionMode.ReplaceWith,
@@ -28,7 +28,7 @@
     <div class="modal-footer">
         <button type="button" class="btn btn-confirm pull-left" data-dismiss="modal">انصراف</button>
         <input type="submit" class="btn btn-confirm pull-left" value="تایید" />
-        @Html.HiddenFor(d => d.question_id)
+        @Html.HiddenFor(d => d.solution_id)
     </div>
 }
 
@@ -38,7 +38,7 @@
             $('#DeleteModal').modal('hide');
             $("#alert_success").html(result.msg);
             $("#div_alert").css("visibility", "visible");
-            var $STTable = $("#SearchQuestionDT").dataTable({ bRetrieve: true });
+            var $STTable = $("#SoutionListDT").dataTable({ bRetrieve: true });
             $STTable.fnDraw();
         }
     }
