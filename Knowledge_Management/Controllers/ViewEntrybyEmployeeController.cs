@@ -9,7 +9,7 @@ using Knowledge_Management.ViewModels;
 
 namespace Knowledge_Management.Controllers
 {
-    public class ViewEntryInfoController : Controller
+    public class ViewEntrybyEmployeeController : Controller
     {
         #region Personel
         // GET: ViewEntryInfo
@@ -98,7 +98,7 @@ namespace Knowledge_Management.Controllers
         public ActionResult Question_byEmployee(int id)
         {
             KnowledgeMSDAL dal=new KnowledgeMSDAL();
-            ViewQuestionViewModel vm = new ViewQuestionViewModel();
+            EmployeeQuestionViewModel vm = new EmployeeQuestionViewModel();
             if (id != 0)
             {
                 List<string> emp_props = dal.get_Employee_byId(id);
@@ -176,14 +176,14 @@ namespace Knowledge_Management.Controllers
         [HttpGet] // this action result returns the partial containing the modal
         public ActionResult Delete_Question(int id)
         {
-            ViewQuestionViewModel q = new ViewQuestionViewModel();
+            EmployeeQuestionViewModel q = new EmployeeQuestionViewModel();
             q.question_id = id;
             return PartialView("_PartialDeleteQuestion", q);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete_Question(ViewQuestionViewModel q)
+        public ActionResult Delete_Question(EmployeeQuestionViewModel q)
         {
             if (ModelState.IsValid)
             {
@@ -220,7 +220,7 @@ namespace Knowledge_Management.Controllers
         public ActionResult EmployeeSolutions(int id)
         {
             KnowledgeMSDAL dal = new KnowledgeMSDAL();
-            ViewQuestionViewModel vm = new ViewQuestionViewModel();
+            EmployeeQuestionViewModel vm = new EmployeeQuestionViewModel();
             if (id != 0)
             {
                 List<string> emp_props = dal.get_Employee_byId(id);
@@ -412,7 +412,7 @@ namespace Knowledge_Management.Controllers
             {
                 int employee_id = Int32.Parse(emp_id == null ? "0" : emp_id + "");
 
-                ViewQuestionViewModel vm = new ViewQuestionViewModel();
+                EmployeeQuestionViewModel vm = new EmployeeQuestionViewModel();
                 if (employee_id != 0)
                 {
                     List<string> emp_props = DAL.get_Employee_byId(employee_id);
@@ -427,7 +427,6 @@ namespace Knowledge_Management.Controllers
 
 
         #endregion Solution
-
 
         #region UPLOAD FILES
 

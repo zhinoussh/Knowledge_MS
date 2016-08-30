@@ -5,7 +5,7 @@ using System.Web;
 
 namespace Knowledge_Management.ViewModels
 {
-    public class ViewQuestionViewModel
+    public class EmployeeQuestionViewModel
     {
         public int dep_id { get; set; }
         public int depObj_id { get; set; }

@@ -1,4 +1,4 @@
-﻿@model Knowledge_Management.ViewModels.ViewQuestionViewModel
+﻿@model Knowledge_Management.ViewModels.EmployeeQuestionViewModel
 
 @{
     ViewBag.Title = "مشاهده مسائل مطرح شده";
@@ -58,11 +58,7 @@
     </div>
 
 @Html.HiddenFor(model => model.emp_id, new { id = "hd_id_emp" })
-@Html.HiddenFor(model => model.job_id, new { id = "hd_id_job" })
-@Html.HiddenFor(model => model.dep_id, new { id = "hd_id_dep" })
-@Html.HiddenFor(model => model.jobDesc_id, new { id = "hd_id_jobDesc" })
-@Html.HiddenFor(model => model.depObj_id, new { id = "hd_id_depObj" })
-@Html.HiddenFor(model => model.strategy_id, new { id = "hd_id_strategy" })
+
 
 <div class="alert alert-success fade in" role="alert" style="float:right; width:100%; visibility:hidden" id="div_alert">
     <a href="#" class="close" id="close_delete_modal">&times;</a>

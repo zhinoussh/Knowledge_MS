@@ -1,0 +1,32 @@
+﻿
+@{
+    ViewBag.Title = "مشاهده مسائل، راهکارها و اسناد وارد شده برای شغل یا واحد سازمانی";
+    Layout = "~/Views/Shared/_ManagementLayout.cshtml";
+}
+
+
+<h5>مشاهده مسائل، راهکارها و اسناد وارد شده برای شغل یا واحد سازمانی</h5>
+<span class="border_admin"></span>
+
+<div style="float:right; width:100%; margin:2% 0 2% 0">
+    <div class="editor-label" style="width:10%;">
+        واحد سازمانی:
+    </div>
+    <div class="editor-field" style="width:20%;">
+        @Html.DropDownListFor(model => model.dep_id, new SelectList(Model.lst_dep, "Value", "Text")
+            , new { @class = "textbox", id = "dropdown_department" })
+    </div>
+
+    <div class="editor-label" style="width:5%;">
+        شغل:
+    </div>
+    <div class="editor-field" style="width:20%;">
+        @Html.DropDownListFor(model => model.job_id, new SelectList(Model.lst_job, "Value", "Text")
+            , new { @class = "textbox", id = "dropdown_job" })
+    </div>
+
+    <div class="btn_add" style="width:150px">
+        <input type="button" class="btn btn-primary" value="مشاهده شرح مشاغل" id="btn_view_jobDesc" />
+    </div>
+
+</div>
