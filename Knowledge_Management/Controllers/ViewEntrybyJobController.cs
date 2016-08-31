@@ -9,6 +9,7 @@ using System.Web.Mvc;
 
 namespace Knowledge_Management.Controllers
 {
+    [CustomAuthorize(Roles = "Admin")]
     public class ViewEntrybyJobController : Controller
     {
         // GET: ViewEntrybyJob

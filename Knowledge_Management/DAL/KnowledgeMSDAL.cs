@@ -838,7 +838,7 @@ namespace Knowledge_Management.DAL
         }
 
 
-         public List<SolutionEmployeeViewModel> get_Solutions_by_Question(long question_id)
+         public List<SolutionEmployeeViewModel> get_Solutions_by_Question(long question_id,int confirm)
         {
             List<SolutionEmployeeViewModel> lst_solutions = (from s in db.tbl_question_solutions
                                                              where s.fk_question == question_id
@@ -849,6 +849,9 @@ namespace Knowledge_Management.DAL
                                                                 ,count_upload=db.tbl_solution_uploads.Count(x=>x.fk_solution==s.pkey)
                                                              }).OrderBy(x => x.solution)
                                                              .ToList<SolutionEmployeeViewModel>();
+
+            if (confirm == 1)
+                lst_solutions = lst_solutions.Where(x => x.confirm == true).ToList();
 
             return lst_solutions;
          }
@@ -940,11 +943,14 @@ namespace Knowledge_Management.DAL
             return count_uploads;
         }
 
-        public List<tbl_solution_uploads> get_uploads_by_solution(long solution_id)
+        public List<tbl_solution_uploads> get_uploads_by_solution(long solution_id,int confirm)
         {
             List<tbl_solution_uploads> lst_uploads = (from u in db.tbl_solution_uploads
                                                       where u.fk_solution == solution_id
                                                       select u).ToList();
+
+            if (confirm == 1)
+                lst_uploads = lst_uploads.Where(x => x.confirm == true).ToList();
 
             return lst_uploads;
           

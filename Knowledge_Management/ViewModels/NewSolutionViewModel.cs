@@ -10,10 +10,10 @@ namespace Knowledge_Management.ViewModels
     {
         public long question_id { get; set; }
 
-        [Display(Name = "شرح مسئله: ")]
+        [Display(Name = "شرح مسئله")]
         public string question { get; set; }
 
-        [Display(Name = "راهکار جدید: ")]
+        [Display(Name ="ثبت راهکار و بارگذاری اسناد")]
         [Required(ErrorMessage = "شرح راهکار را وارد نمایید")]
         public string new_solution { get; set; }
 

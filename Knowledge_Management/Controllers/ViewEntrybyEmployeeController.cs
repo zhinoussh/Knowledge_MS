@@ -9,6 +9,7 @@ using Knowledge_Management.ViewModels;
 
 namespace Knowledge_Management.Controllers
 {
+    [CustomAuthorize(Roles = "Admin")]
     public class ViewEntrybyEmployeeController : Controller
     {
         #region Personel
@@ -238,7 +239,7 @@ namespace Knowledge_Management.Controllers
 
             int question_id = Request.QueryString["q_id"].ToString() == "" ? 0 : Int32.Parse(Request.QueryString["q_id"].ToString());
 
-            List<SolutionEmployeeViewModel> all_items = DAL.get_Solutions_by_Question(question_id);
+            List<SolutionEmployeeViewModel> all_items = DAL.get_Solutions_by_Question(question_id,0);
 
             //filtering 
             List<SolutionEmployeeViewModel> filtered = new List<SolutionEmployeeViewModel>();
@@ -361,7 +362,7 @@ namespace Knowledge_Management.Controllers
                 KnowledgeMSDAL DAL = new KnowledgeMSDAL();
                 long id_solution = q.solution_id;
 
-                List<tbl_solution_uploads> lst_uploads = DAL.get_uploads_by_solution(id_solution);
+                List<tbl_solution_uploads> lst_uploads = DAL.get_uploads_by_solution(id_solution,0);
                 //delete uploaded files
                 foreach (var item in lst_uploads)
                 {
@@ -466,7 +467,7 @@ namespace Knowledge_Management.Controllers
 
             long solution_id = Convert.ToInt32(Request["solution_id"].ToString());
 
-            List<tbl_solution_uploads> filtered = DAL.get_uploads_by_solution(solution_id);
+            List<tbl_solution_uploads> filtered = DAL.get_uploads_by_solution(solution_id,0);
 
 
             //pagination

@@ -471,15 +471,7 @@ color:#288df5;
   background-color: #f9f9f9;
 }
 
-.well_question {
-    margin-top: 3%;
-    min-height: 100px;
-    background:#e8e1fb;
-    border-color:#d0c2f7;
-    color:#623799
-    /*background: -webkit-linear-gradient(to left, #5C258D , #4389A2);
-    background: linear-gradient(to left, #5C258D , #4389A2);*/
-}
+
 
 thead th {
   background-color: #006DCC;
@@ -528,4 +520,8 @@ a.accordion-toggle  i{
   text-align: center;
   margin-right: -15px;
   background:#9c8fc0;
+}
+
+.panel-body {
+direction:rtl;
 }

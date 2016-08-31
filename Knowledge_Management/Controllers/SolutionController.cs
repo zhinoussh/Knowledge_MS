@@ -20,11 +20,63 @@ namespace Knowledge_Management.Controllers
             SolutionViewModel o = new SolutionViewModel();
             KnowledgeMSDAL DAL = new KnowledgeMSDAL();
             o.question_id = id;
-            o.solutions = DAL.get_Solutions(id);
             o.question = DAL.get_question_name(id);
-           
 
             return View(o);
+        }
+
+
+        public ActionResult SolutionsForQuestionAjaxHandler(jQueryDataTableParamModel request)
+        {
+            KnowledgeMSDAL DAL = new KnowledgeMSDAL();
+
+            int question_id = Request.QueryString["q_id"].ToString() == "" ? 0 : Int32.Parse(Request.QueryString["q_id"].ToString());
+
+            List<SolutionEmployeeViewModel> all_items = DAL.get_Solutions_by_Question(question_id,1);
+
+            //filtering 
+            List<SolutionEmployeeViewModel> filtered = new List<SolutionEmployeeViewModel>();
+
+            if (!string.IsNullOrEmpty(request.sSearch))
+            {
+                filtered = all_items.Where(i => i.solution.Contains(request.sSearch)).ToList();
+
+            }
+            else
+                filtered = all_items;
+
+
+            var sortDirection = Request["sSortDir_0"]; // asc or desc
+            if (sortDirection == "asc")
+                filtered = filtered.OrderBy(s => s.solution).ToList();
+            else
+                filtered = filtered.OrderByDescending(s => s.solution).ToList();
+
+            //pagination
+            filtered = filtered.Skip(request.iDisplayStart).Take(request.iDisplayLength).ToList();
+
+            var indexed_list = filtered.Select((s, index) => new
+            {
+                SID = s.solution_id + "",
+                FullSolution = s.solution,
+                SIndex = (index + 1) + ""
+                ,Uploads=s.count_upload+""
+            });
+
+
+            var result = from s in indexed_list
+                         select new[] { s.SID,  s.SIndex
+                             ,s.FullSolution.Length <= 200 ? s.FullSolution : (s.FullSolution.Substring(0, 200) + "...")
+                            ,s.Uploads};
+
+            return Json(new
+            {
+                sEcho = request.sEcho,
+                iTotalRecords = all_items.Count(),
+                iTotalDisplayRecords = all_items.Count(),
+                aaData = result
+            },
+            JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult NewSolution(int id,long? solution_id)
@@ -102,7 +154,7 @@ namespace Knowledge_Management.Controllers
             KnowledgeMSDAL DAL = new KnowledgeMSDAL();
             long id_solution = s.solution_id;
            
-             List<tbl_solution_uploads> lst_uploads=DAL.get_uploads_by_solution(id_solution);
+             List<tbl_solution_uploads> lst_uploads=DAL.get_uploads_by_solution(id_solution,0);
             //delete uploaded files
              foreach (var item in lst_uploads)
             { 
@@ -190,27 +242,11 @@ namespace Knowledge_Management.Controllers
         {
             KnowledgeMSDAL DAL = new KnowledgeMSDAL();
 
-            long solution_id = Convert.ToInt32(Request["solution_id"].ToString());
+            long solution_id = Convert.ToInt64(Request["solution_id"].ToString());
+            int confirm = Convert.ToInt32(Request["confirm"].ToString());
 
-            List<tbl_solution_uploads> filtered = DAL.get_uploads_by_solution(solution_id);
+            List<tbl_solution_uploads> filtered = DAL.get_uploads_by_solution(solution_id,confirm);
 
-
-            //filtering 
-           // List<tbl_solution_uploads> filtered = new List<tbl_solution_uploads>();
-
-            //if (!string.IsNullOrEmpty(request.sSearch))
-            //{
-            //    filtered = all_items.Where(i => i.strategy_name.Contains(request.sSearch)).ToList();
-
-            //}
-            //else
-            //    filtered = all_items;
-           
-            //var sortDirection = Request["sSortDir_0"]; // asc or desc
-            //if (sortDirection == "asc")
-            //    filtered = filtered.OrderBy(s => s.strategy_name).ToList();
-            //else
-            //    filtered = filtered.OrderByDescending(s => s.strategy_name).ToList();
 
             //pagination
             filtered = filtered.Skip(request.iDisplayStart).Take(request.iDisplayLength).ToList();
@@ -296,15 +332,16 @@ namespace Knowledge_Management.Controllers
                 Soution = s.solution,
                 QIndex = (index + 1) + "",
                 QSubject = s.question,
-                uploadCount=s.count_upload+""
+                uploadCount=s.count_upload+"",
+                confirm_status=s.confirm+""
             });
 
 
             var result = from s in indexed_list
                          select new[] {s.Sol_Id, s.QID , s.QIndex
-                             ,s.QSubject.Length <= 50 ? s.QSubject: (s.QSubject.Substring(0, 200) + "..."), 
-                                 s.Soution.Length <= 50 ? s.Soution : (s.Soution.Substring(0, 200) + "..."),
-                                 s.uploadCount
+                             ,s.QSubject.Length <= 200 ? s.QSubject: (s.QSubject.Substring(0, 200) + "..."), 
+                                 s.Soution.Length <= 200 ? s.Soution : (s.Soution.Substring(0, 200) + "..."),
+                                 s.uploadCount,s.confirm_status
                          };
 
 
