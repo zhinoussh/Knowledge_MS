@@ -243,9 +243,8 @@ namespace Knowledge_Management.Controllers
             KnowledgeMSDAL DAL = new KnowledgeMSDAL();
 
             long solution_id = Convert.ToInt64(Request["solution_id"].ToString());
-            int confirm = Convert.ToInt32(Request["confirm"].ToString());
 
-            List<tbl_solution_uploads> filtered = DAL.get_uploads_by_solution(solution_id,confirm);
+            List<tbl_solution_uploads> filtered = DAL.get_uploads_by_solution(solution_id,1);
 
 
             //pagination
@@ -267,6 +266,35 @@ namespace Knowledge_Management.Controllers
             JsonRequestBehavior.AllowGet);
         }
 
+
+        public ActionResult UploadAjaxHandler_NewSOlution(jQueryDataTableParamModel request)
+        {
+            KnowledgeMSDAL DAL = new KnowledgeMSDAL();
+
+            long solution_id = Convert.ToInt64(Request["solution_id"].ToString());
+
+            List<tbl_solution_uploads> filtered = DAL.get_uploads_by_solution(solution_id,0);
+
+
+            //pagination
+            filtered = filtered.Skip(request.iDisplayStart).Take(request.iDisplayLength).ToList();
+
+            var indexed_list = filtered.Select((s, index) => new { SID = s.pkey + "",FILEPATH=s.file_path
+                , SIndex = (index + 1) + "", SNAME = "فایل " + (index + 1) ,Confirm=s.confirm+""});
+
+            var result = from s in indexed_list
+                         select new[] { s.SID, s.FILEPATH, s.SIndex, s.SNAME,s.Confirm };
+
+          
+            return Json(new
+            {
+                sEcho = request.sEcho,
+                iTotalRecords = filtered.Count(),
+                iTotalDisplayRecords = filtered.Count(),
+                aaData = result
+            },
+            JsonRequestBehavior.AllowGet);
+        }
 
         public ActionResult DownloadFile(int uploadID)
         {

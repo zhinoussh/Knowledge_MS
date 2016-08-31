@@ -10,7 +10,6 @@ $(document).ready(function () {
         "sAjaxSource": "/Solution/UploadAjaxHandler",
         "fnServerParams": function (aoData) {
             aoData.push({ "name": "solution_id", "value": $('#hd_id_solution').val() });
-            aoData.push({ "name": "confirm", "value": "1" });
         },
         "bProcessing": true,
         "bFilter": false,
