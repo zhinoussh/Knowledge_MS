@@ -1,4 +1,7 @@
-﻿$(document).ready(function () {
+﻿/***USED IN ViewEntrybyEmployee/ViewFullSolution*************/
+
+
+$(document).ready(function () {
 
     var oTable = $('#UploadDT').dataTable({
         "language": {

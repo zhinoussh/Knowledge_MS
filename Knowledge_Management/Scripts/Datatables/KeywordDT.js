@@ -1,4 +1,5 @@
-﻿$(document).ready(function () {
+﻿/***USED IN Searchkey/Index*************/
+$(document).ready(function () {
 
     var oTable = $('#KeywordDT').dataTable({
         "language": {

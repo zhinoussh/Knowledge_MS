@@ -1,13 +1,16 @@
-﻿$(document).ready(function () {
+﻿/***USED IN Solution/NewSolution*************/
+
+$(document).ready(function () {
 
     var oTable = $('#UploadDT').dataTable({
         "language": {
             "url": "/Content/lang.txt"
         },
         "bServerSide": true,
-        "sAjaxSource": "/Solution/UploadAjaxHandler",
+        "sAjaxSource": "/Solution/UploadAjaxHandler_NewSOlution",
         "fnServerParams": function (aoData) {
             aoData.push({ "name": "solution_id", "value": $('#hd_id_new_solution').val() });
+
         },
         "bProcessing": true,
         "bFilter":false,
@@ -30,7 +33,23 @@
                             "sName": "radif", "sWidth": '2%', "sClass": "dt-body-center"
                                 , "bSearchable": false, "bSortable": false
                         },
-                        { "sName": "upload", "sWidth": '80%' },
+                        { "sName": "upload", "sWidth": '80%' }
+                        , {
+                            "sName": "confirm_status",
+                            "sWidth": '2%',
+                            "bSearchable": false,
+                            "bSortable": false,
+                            "sDefaultContent": " "
+                            , "sClass": "dt-body-center",
+                            "mRender": function (data, type, row) {
+
+                                if (data == "True") {
+                                    return '<input disabled  type=\"checkbox\" checked value="' + data + '">';
+                                } else {
+                                    return '<input disabled  type=\"checkbox\" value="' + data + '">';
+                                }
+                            }
+                        },
                         {
                             "sName": "download",
                             "sWidth": '2%',

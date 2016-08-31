@@ -22,72 +22,97 @@
 
 
 <h5>راهکار جدید</h5>
-<span class="border_admin" style="margin-bottom:0;"></span>
+<span class="border_admin" style="margin-bottom:4%;"></span>
 
-
-<div class="well well-lg">
-
-    <div class="field_title" style="width:8%">
-        @Html.LabelFor(model => model.question)
+<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+    <div class="panel panel-default">
+        <div class="panel-heading" role="tab" id="headingOne">
+            <h6 class="panel-title">
+                <a role="button" class="accordion-toggle" data-toggle="collapse" href="#collapseQuestion" aria-expanded="true" aria-controls="collapseOne">
+                    @Html.LabelFor(model => model.question)
+                    <i class="fa fa-angle-left pull-right"></i>
+                </a>
+            </h6>
+        </div>
+        <div id="collapseQuestion" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+            <div class="panel-body">
+                @Html.DisplayFor(model => model.question)
+            </div>
+        </div>
     </div>
-
-    <div class="field_title" style="width:85%;">
-        @Html.DisplayFor(model => model.question)
-    </div>
-</div>
-
-@using (Ajax.BeginForm("Add_New_Solution", "Solution"
+    <div class="panel panel-default">
+        <div class="panel-heading" role="tab" id="headingOne">
+            <h6 class="panel-title">
+                <a role="button" class="accordion-toggle" data-toggle="collapse" href="#collapseSolution" aria-expanded="true" aria-controls="collapseOne">
+                    @Html.LabelFor(model => model.new_solution)
+                    <i class="fa fa-angle-left pull-right"></i>
+                </a>
+            </h6>
+        </div>
+        <div id="collapseSolution" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+            <div class="panel-body">
+                @using (Ajax.BeginForm("Add_New_Solution", "Solution"
                     , new AjaxOptions
                     {
                         InsertionMode = InsertionMode.ReplaceWith,
                         HttpMethod = "Post",
                         OnSuccess = "SuccessMessage"
                     }))
-{
-    @Html.AntiForgeryToken()
+                {
+                    @Html.AntiForgeryToken()
 
 
-    @Html.HiddenFor(model => model.question_id, new { id = "hd_id_question" })
-    @Html.HiddenFor(model => model.new_solution_id, new { id = "hd_id_new_solution" })
+                    @Html.HiddenFor(model => model.question_id, new { id = "hd_id_question" })
+                    @Html.HiddenFor(model => model.new_solution_id, new { id = "hd_id_new_solution" })
 
-    <div class="editor-field" style="width:98%;margin-top:3%">
-        @Html.ValidationMessageFor(model => model.new_solution, "", new { @class = "error" })
+                    <div class="editor-field" style="width:98%;margin-top:3%">
+                        @Html.ValidationMessageFor(model => model.new_solution, "", new { @class = "error" })
+                    </div>
+                    <div class="editor-field" style="width:98%">
+                        @Html.TextAreaFor(model => model.new_solution, new { @class = "multiline_textbox", id = "txt_new_solution", @placeholder = "شرح راهکار...", style = "height:300px" })
+                    </div>
+
+
+
+                    <div class="alert alert-success fade in" role="alert" style="float:right; width:98%; visibility:hidden" id="div_alert">
+                        <a href="#" class="close" >&times;</a>
+                        <label id="alert_success" style="margin-right:5px"></label>
+                    </div>
+
+
+                    <div class="btn_add" style="margin:0 40% 0 0; width:200px">
+                        <input type="submit" class="btn btn-primary" value="ثبت راهکار" />
+                    </div>
+
+
+                    <div class="btn_add" style="margin:2% 40% 0 0;">
+                        <input type="file" name="file_upload" id="file_upload" />
+                    </div>
+                }
+
+                <table id="UploadDT" class="display">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>FilePath</th>
+                            <th class="dt-head-right">ردیف</th>
+                            <th class="dt-head-right">شرح بارگذاری</th>
+                            <th>وضعیت تایید</th>
+                            <th>دانلود</th>
+                            <th>حذف</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+
+            </div>
+        </div>
     </div>
-        <div class="editor-field" style="width:98%">
-            @Html.TextAreaFor(model => model.new_solution, new { @class = "multiline_textbox", id = "txt_new_solution", @placeholder = "شرح راهکار...",style="height:300px" })
-        </div>
    
-    
-    
-        <div class="alert alert-success fade in" role="alert" style="float:right; width:98%; visibility:hidden" id="div_alert">
-            <a href="#" class="close" >&times;</a>
-            <label id="alert_success" style="margin-right:5px"></label>
-        </div>
-    
 
-        <div class="btn_add" style="margin:0 40% 0 0; width:200px">
-            <input type="submit" class="btn btn-primary" value="ثبت راهکار" />
-        </div>
+</div>
 
 
-        <div class="btn_add" style="margin:2% 52% 0 0;">
-            <input type="file" name="file_upload" id="file_upload" />
-        </div>
-}
-
-    <table id="UploadDT" class="display">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>FilePath</th>
-                <th class="dt-head-right">ردیف</th>
-                <th class="dt-head-right">شرح بارگذاری</th>
-                <th>دانلود</th>
-                <th>حذف</th>
-            </tr>
-        </thead>
-        <tbody></tbody>
-    </table>
 
         @section scripts{
             <script src="~/Scripts/Datatables/UploadDT.js"></script>

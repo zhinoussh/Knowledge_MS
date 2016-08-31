@@ -1,4 +1,7 @@
-﻿$(document).ready(function () {
+﻿/***USED IN ViewEntrybyEmployee/Personel*************/
+
+
+$(document).ready(function () {
 
     var oTable = $('#EmployeeEntryDT').dataTable({
         "language": {

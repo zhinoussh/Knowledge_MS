@@ -1,4 +1,7 @@
-﻿$(document).ready(function () {
+﻿/***USED IN Solution/YourSolution*************/
+
+
+$(document).ready(function () {
 
     var oTable = $('#SolutionDT').dataTable({
         "language": {
@@ -27,8 +30,26 @@
                             },
                         { "sName": "question", "sWidth": '40%' },
                         { "sName": "solution", "sWidth": '40%', "bSearchable": false, "bSortable": false }
-                        , { "sName": "upload_num", "sWidth": '3%', "bSearchable": false, "bSortable": false, "sClass": "dt-body-center" }
+                        , {
+                            "sName": "upload_num", "sWidth": '3%', "bSearchable": false, "bSortable": false,
+                            "sClass": "dt-body-center"
+                        }
                        , {
+                           "sName": "confirm_status",
+                           "sWidth": '2%',
+                           "bSearchable": false,
+                           "bSortable": false,
+                           "sDefaultContent": " "
+                            , "sClass": "dt-body-center",
+                           "mRender": function (data, type, row) {
+
+                               if (data == "True") {
+                                   return '<input disabled  type=\"checkbox\" checked value="' + data + '">';
+                               } else {
+                                   return '<input disabled  type=\"checkbox\" value="' + data + '">';
+                               }
+                           }
+                       }, {
                            "sName": "EDIT",
                            "sWidth": '2%',
                            "bSearchable": false,

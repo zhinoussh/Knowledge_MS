@@ -1,4 +1,6 @@
-﻿$(document).ready(function () {
+﻿/***USED IN ViewEntrybyJob/Index*************/
+
+$(document).ready(function () {
 
     var oTable = $('#SearchQuestionDT').dataTable({
         "language": {

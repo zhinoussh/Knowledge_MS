@@ -1,4 +1,6 @@
-﻿$(document).ready(function () {
+﻿/***USED IN ViewEntrybyEmployee/QuestionSolutions*************/
+
+$(document).ready(function () {
 
     var oTable = $('#SoutionListDT').dataTable({
         "language": {

@@ -123,6 +123,10 @@
     <Compile Include="Migrations\201608240801401_ALTER_SOLUTION_UPLOAD_Tables.Designer.cs">
       <DependentUpon>201608240801401_ALTER_SOLUTION_UPLOAD_Tables.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201608310704431_Alter_SOLUTION_UPLOAD2.cs" />
+    <Compile Include="Migrations\201608310704431_Alter_SOLUTION_UPLOAD2.Designer.cs">
+      <DependentUpon>201608310704431_Alter_SOLUTION_UPLOAD2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Security_Code\CustomRoleProvider.cs" />
     <Compile Include="Security_Code\CustomAuthorizeAttribute.cs" />
     <Compile Include="Security_Code\UserIdentity.cs" />
@@ -266,7 +270,9 @@
     <Content Include="Scripts\Datatables\QuestionDT.js" />
     <Content Include="Scripts\Datatables\SearchQuestionDT.js" />
     <Content Include="Scripts\Datatables\SolutionDT.js" />
+    <Content Include="Scripts\Datatables\SolutionsForQuestion.js" />
     <Content Include="Scripts\Datatables\UploadDT.js" />
+    <Content Include="Scripts\Datatables\UploadsForSolution.js" />
     <Content Include="Scripts\Datatables\ViewQuestionDT.js" />
     <Content Include="Scripts\Datatables\ViewSolutionQueDT.js" />
     <Content Include="Scripts\Datatables\ViewSolutionEmpDT.js" />
@@ -370,6 +376,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201608240801401_ALTER_SOLUTION_UPLOAD_Tables.resx">
       <DependentUpon>201608240801401_ALTER_SOLUTION_UPLOAD_Tables.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201608310704431_Alter_SOLUTION_UPLOAD2.resx">
+      <DependentUpon>201608310704431_Alter_SOLUTION_UPLOAD2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

@@ -1,4 +1,7 @@
-﻿$(document).ready(function () {
+﻿/***USED IN SearchInfo/SearchAll*************/
+
+
+$(document).ready(function () {
 
     var oTable = $('#SearchQuestionDT').dataTable({
         "language": {

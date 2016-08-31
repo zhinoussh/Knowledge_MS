@@ -9,6 +9,7 @@ using Knowledge_Management.DAL;
 
 namespace Knowledge_Management.Controllers
 {
+    [CustomAuthorize(Roles = "Admin")]
     public class ViewEntrybyDetailController : Controller
     {
         // GET: ViewEntrybyDetail
