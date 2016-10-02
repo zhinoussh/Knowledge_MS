@@ -532,15 +532,21 @@ namespace Knowledge_Management.DAL
                                                       into tbl_DepObj
                                                       join st in db.tbl_strategy on q.fk_strategy equals st.pkey
                                                       into tbl_St
+                                                      join sol in db.tbl_question_solutions.Where(x => x.fk_employee == fk_emp)
+                                                      on q.pkey equals sol.fk_question
+                                                      into tbl_Sol
                                                       from j in tbl_JobDesc.DefaultIfEmpty()
                                                       from s in tbl_St.DefaultIfEmpty()
                                                       from o in tbl_DepObj.DefaultIfEmpty()
+                                                      from sol in tbl_Sol.DefaultIfEmpty()
                                                   select new QuestionViewModel { 
                                                         question_id=q.pkey,
                                                         question = q.subject,
                                                         job_desc = j.job_desc,
                                                         dep_objective = o.objective,
-                                                        strategy_name = s.strategy_name
+                                                        strategy_name = s.strategy_name,
+                                                        solution=sol.solution
+
                                                   }).OrderByDescending(x => x.question_id).ToList();
 
              string str_keyword = "";
@@ -769,13 +775,23 @@ namespace Knowledge_Management.DAL
                 q.fk_strategy = strategyId;
 
                 db.SaveChanges();
-
-                tbl_question_solutions s = db.tbl_question_solutions.Where(x => x.fk_question == q_id && x.fk_employee == fk_emp).Select(x => x).FirstOrDefault();
-                if (s != null)
+                
+                if (!String.IsNullOrEmpty(q_solution))
                 {
-                   s.solution=q_solution;
+                    tbl_question_solutions s = db.tbl_question_solutions.Where(x => x.fk_question == q_id && x.fk_employee == fk_emp).Select(x => x).FirstOrDefault();
+                    if (s == null)
+                    {
+                        s = new tbl_question_solutions { fk_employee = fk_emp, fk_question = q_id, solution = q_solution };
+                        db.tbl_question_solutions.Add(s);
+                    }
+                    else
+                    {
+                        s.solution = q_solution;
+                    }
                     db.SaveChanges();
+
                 }
+
 
                 db.tbl_question_keywords.RemoveRange(db.tbl_question_keywords.Where(x => x.fk_question == q_id));
                 tbl_question_keywords key;
