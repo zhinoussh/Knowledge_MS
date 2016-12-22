@@ -9,6 +9,7 @@ using System.Web.Security;
 using System.Security.Principal;
 using System.Security.Claims;
 using Knowledge_Management.DAL;
+using System.Security.Cryptography;
 
 namespace Knowledge_Management
 {
@@ -37,22 +38,29 @@ namespace Knowledge_Management
 
         void Application_PostAuthenticateRequest(object sender, EventArgs e)
         {
-            var authCookie = HttpContext.Current.Request.Cookies[FormsAuthentication.FormsCookieName];
-            if (authCookie != null)
+            try
             {
-                string encTicket = authCookie.Value;
-                if (!String.IsNullOrEmpty(encTicket))
+                var authCookie = HttpContext.Current.Request.Cookies[FormsAuthentication.FormsCookieName];
+                if (authCookie != null)
                 {
-                    
-                    var ticket = FormsAuthentication.Decrypt(encTicket);
-                    
-                    var id = new UserIdentity(ticket);
-                    id.Fullname = ticket.UserData;
-                    var userRoles = Roles.GetRolesForUser(id.Name);
-                    var prin = new GenericPrincipal(id, userRoles);
-                    
-                    HttpContext.Current.User = prin;
+                    string encTicket = authCookie.Value;
+                    if (!String.IsNullOrEmpty(encTicket))
+                    {
+
+                        var ticket = FormsAuthentication.Decrypt(encTicket);
+
+                        var id = new UserIdentity(ticket);
+                        id.Fullname = ticket.UserData;
+                        var userRoles = Roles.GetRolesForUser(id.Name);
+                        var prin = new GenericPrincipal(id, userRoles);
+
+                        HttpContext.Current.User = prin;
+                    }
                 }
+            }
+            catch (CryptographicException ex)
+            {
+                FormsAuthentication.SignOut();
             }
         }
 

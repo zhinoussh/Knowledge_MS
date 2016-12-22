@@ -7,7 +7,7 @@
 @using (Ajax.BeginForm("Index", "Home"
                     , new AjaxOptions
                     {
-                        UpdateTargetId = "targetId",
+                        UpdateTargetId = "div_login",
                         InsertionMode = InsertionMode.ReplaceWith,
                         HttpMethod = "Post",
                         OnSuccess = "onLoginSuccess"
@@ -16,9 +16,10 @@
 
     @Html.AntiForgeryToken()
 
+    <div class="title_login">
+    <i class="fa fa-lock fa-lg"></i> Login
+    </div>
     <div class="login-form">
-
-        <h5>ورود به سیستم</h5>
         <div class="form-group log-status">
             @Html.TextBoxFor(u => u.username, new { @class = "form-control", @placeholder = "Username" })
             <i class="fa fa-user"></i>
@@ -27,9 +28,9 @@
             @Html.PasswordFor(u => u.pass, new { @class = "form-control", @placeholder = "Password" })
             <i class="fa fa-lock"></i>
         </div>
-        <span class="alert">اطلاعات وارد شده صحیح نمی باشد</span>
+        <span class="alert">Login credentials are incorrect</span>
 
-        <input type="submit" class="log-btn" value="ورود" />
+        <input type="submit" class="log-btn" value="login" />
     </div>
 
 }

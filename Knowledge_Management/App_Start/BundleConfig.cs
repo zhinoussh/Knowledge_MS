@@ -34,7 +34,8 @@ namespace Knowledge_Management
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/bootstrap-theme.min.css",
-                      "~/Content/Site.css"));
+                      "~/Content/Site.css",
+                      "~/Content/font-awesome.min.css"));
 
             bundles.Add(new StyleBundle("~/Content/management").Include(
                       "~/Content/sidebar_css.css"
