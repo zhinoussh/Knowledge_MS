@@ -8,6 +8,7 @@ using System.Web.Routing;
 using System.Web.Security;
 using System.Security.Principal;
 using System.Security.Claims;
+using Knowledge_Management.DAL;
 
 namespace Knowledge_Management
 {
@@ -20,6 +21,18 @@ namespace Knowledge_Management
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
+            //initialise admin user
+            RegisterAdminUser();
+        }
+
+        private void RegisterAdminUser()
+        {
+            KnowledgeMSDAL db = new KnowledgeMSDAL();
+            if (!db.check_userinRole("admin", "Admin"))
+            {
+                string encrypt_pass = (new Encryption()).Encrypt("1");
+                db.initialise_admin_user(encrypt_pass);
+            }
         }
 
         void Application_PostAuthenticateRequest(object sender, EventArgs e)

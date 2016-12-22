@@ -69,6 +69,13 @@ namespace Knowledge_Management.DAL
             return (l == null ? false : true);
         }
 
+        public void initialise_admin_user(string encrypt_pass)
+        {
+            tbl_login login_obj = new tbl_login { username = "admin", role = "1", pass = encrypt_pass };
+            db.tbl_login.Add(login_obj);
+            db.SaveChanges();
+        }
+
         #region STRATEGY
         public List<tbl_strategy> get_all_strategies()
         {
