@@ -1,23 +1,23 @@
-
-
 .login-form {
-  width: 90%;
+  width:100%;
+  float:right;
   padding:40px 30px;
-  background-color: #cedcec;
+  background-color: #dee8f2;
   -moz-border-radius: 4px;
   -webkit-border-radius: 4px;
   border-radius: 4px;
+    border-top-right-radius:0px;
+  border-top-left-radius:0px;
 }
 
 .title_login {
-    background-color:#0d3e6f;
+    background-color:#29417f;
     color:#C6C6C6;
     font-size:12pt;
-    margin:10% 1% 0 0;
     height:40px;
     float:right;
     text-align:left;
-    width:97%;
+    width:100%;
     padding:2%;
     -moz-border-radius: 4px;
   -webkit-border-radius: 4px;
@@ -44,14 +44,22 @@
   -webkit-border-radius: 4px;
   border-radius: 4px;
 }
+.zoomIn {
+    -webkit-animation-name: zoomIn;
+    animation-name: zoomIn;
+    -webkit-animation-duration:2s;
+    -webkit-animation-delay:0;
+    animation-duration:2s;
+    animation-delay:0;
+}
 .form-control:focus, .form-control:focus + .fa {
-  border-color: #583e7e;
-  color: #583e7e;
+  border-color: #0b2e86;
+  color: #0b2e86;
 }
 
 .form-group .fa {
   position: absolute;
-  right: 15px;
+  right:35px;
   top: 17px;
   color: #999;
 }
@@ -68,11 +76,12 @@
 }
 
 .log-btn {
-  background: #f4cf42;
+  background: #29417f;
   dispaly: inline-block;
   width: 98%;
   font-size: 16px;
   height: 50px;
+  margin-top:1%;
   color: #fff;
   text-decoration: none;
   border: none;
@@ -97,6 +106,8 @@
   display: none;
   font-size: 12px;
   color: #f00;
+  text-align:center;
+  width:100%;
 }
 
 @-moz-keyframes wrong-log {

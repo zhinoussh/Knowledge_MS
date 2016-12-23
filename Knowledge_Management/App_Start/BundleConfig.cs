@@ -29,12 +29,14 @@ namespace Knowledge_Management
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                       "~/Scripts/bootstrap.js",
-                      "~/Scripts/respond.js"));
+                      "~/Scripts/respond.js",
+                      "~/Scripts/Site.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/bootstrap-theme.min.css",
                       "~/Content/Site.css",
+                      "~/Content/animate.css",
                       "~/Content/font-awesome.min.css"));
 
             bundles.Add(new StyleBundle("~/Content/management").Include(

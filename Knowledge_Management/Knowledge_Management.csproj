@@ -116,6 +116,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Components\HtmlBootstrapButton.cs" />
+    <Compile Include="Components\HtmlCommon.cs" />
     <Compile Include="Controllers\ViewEntrybyDetailController.cs" />
     <Compile Include="Controllers\ViewEntrybyJobController.cs" />
     <Compile Include="Controllers\ViewEntrybyEmployeeController.cs" />
@@ -205,6 +207,8 @@
     <Content Include="App_Data\ExploreCalifornia_log.ldf">
       <DependentUpon>ExploreCalifornia.mdf</DependentUpon>
     </Content>
+    <Content Include="Content\animate.css" />
+    <Content Include="Content\animate.min.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -233,8 +237,6 @@
     <Content Include="Content\style_login.css" />
     <Content Include="Content\uploadify.css" />
     <Content Include="Content\font-awesome.min.css" />
-    <Content Include="css\font-awesome.css" />
-    <Content Include="css\font-awesome.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -300,6 +302,7 @@
     <Content Include="Scripts\sidebar.js" />
     <Content Include="Scripts\Datatables\StrategyDT.js" />
     <Content Include="Scripts\Datatables\ViewUploadDT.js" />
+    <Content Include="Scripts\Site.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -312,8 +315,8 @@
     </Content>
     <Content Include="Views\Web.config" />
     <Content Include="Views\Shared\Error.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
+    <Content Include="Views\Home\_AboutPartial.cshtml" />
+    <Content Include="Views\Home\_ContactPartial.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\_HomeLayout.cshtml" />
     <Content Include="Views\Home\_LoginPartial.cshtml" />
