@@ -4,7 +4,7 @@ body {
     padding-bottom: 20px;
     font-family:'Open Sans', sans-serif;
     font-size:10pt;
-    background:#fff;
+    background:#f1f6f7;
 }
 
 /* Set padding to keep content from hitting the edges */
@@ -27,12 +27,63 @@ textarea {
     max-width: 280px;
 }
 /*Home Page*/
-.red_home_box {
+.btn-home{
    -moz-border-radius: 4px;
   -webkit-border-radius: 4px;
   border-radius: 4px;
+  width:220px;
+  height:200px;
+  margin:50px;
+  color:#fff;
+  text-align:center;
+  font-size:12pt;
+  font-weight:bold;
+  line-height:2;
+   -webkit-transition: width 0.5s, height 0.5s, margin 0.5s,padding 0.5s;
+    -moz-transition: width 0.5s, height 0.5s, margin 0.5s,padding 0.5s;
+    -ms-transition: width 0.5s, height 0.5s, margin 0.5s,padding 0.5s;
+    transition: width 0.5s, height 0.5s, margin 0.5s,padding 0.5s;
+}
+.btn-home:hover {
+    box-shadow:10px 10px 10px 0 #c1c1c1;
+    width:250px;
+  height:230px;
+  cursor:pointer;
+  margin:25px;
+  color:#fff;
+
+}
+.red_box {
   border:2px solid #db3806;
   background-color:#ec5a2d;
+}
+.green_box {
+  border:2px solid #5dac2d;
+  background-color:#72c242;
+}
+.yellow_box {
+  border:2px solid #fdc32c;
+  background-color:#fdc73d;
+}
+
+/*Navbar*/
+
+.navbar-brand a,.navbar-brand i {
+color:#fff;
+text-decoration:none;
+cursor:pointer;
+}
+
+.top_buffer10 {
+margin-top:10px;
+}
+
+.top_buffer20 {
+margin-top:20px;
+}
+
+.top_buffer50 {
+margin-top:50px;
 }
 
 /* Header*/
@@ -40,7 +91,7 @@ textarea {
 .header_img {
     width:100%;
     height:250px;
-    margin-top:20px;
+    margin-top:50px;
 }
 .header_mng {
     width:auto;
@@ -49,17 +100,9 @@ textarea {
 }
 
 /*   ICONS        */
-.glyphicon-phone ,.glyphicon-globe, .glyphicon-envelope{
-    font-size:20px;
-     color:#815eae; 
+.fa-phone-square ,.fa-map-marker, .fa-envelope,.fa-internet-explorer{
+     color:#29417f; 
 }
-
-.glyphicon-phone-alt {
-    font-size:20px;
-    line-height:1.5;
-    color:#815eae;    
-}
-
 .glyphicon-list {
    font-size:22px;
     color:#4304e3; 
@@ -132,18 +175,18 @@ textarea {
     }
 .jumbotron {
     margin-top:2%;
-    direction:rtl;
     line-height:2;
     text-align:justify;
-    background-color:#dad8db;
+    background-color:#dee8f2;
+    font-size:12pt;
 }
 
 .border {
-  background: #b200ff;
+  background: #29417f;
   display: block;
   height: 2px;
   margin: 0 auto;
-  width: 60px;
+  width:200px;
   margin-bottom: 40px;
 }
 
@@ -163,7 +206,7 @@ h3,
 h4,
 h5,
 h6 {
-  color: #4e1a64;
+  color: #29417f;
   font-family:'Open Sans', sans-serif !important;
   font-weight: 200;
   margin-top: 0;

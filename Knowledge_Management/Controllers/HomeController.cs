@@ -27,7 +27,7 @@ namespace Knowledge_Management.Controllers
 
                 if(DAL.login(user.username, user.pass))
                 {
-                    ViewBag.Fail = "false";
+                    //ViewBag.Fail = "false";
                     //FormsAuthentication.SetAuthCookie(user.username, false);
 
                     List<string> emp_prop = DAL.get_Employee_prop(user.username);
@@ -59,7 +59,7 @@ namespace Knowledge_Management.Controllers
                     }
                 }
 
-                ViewBag.Fail = "true";
+               // ViewBag.Fail = "true";
                 return PartialView("_LoginPartial",user);
             }
             else
