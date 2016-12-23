@@ -6,22 +6,22 @@
 
 $(document).on('click', '.showlogin', function() {
     $("#pnl_main").fadeOut();
-    $("#pnl_about").fadeOut();
-    $("#pnl_contact").fadeOut();
+    $("#pnl_about").addClass('hidden');
+    $("#pnl_contact").addClass('hidden');
     $("#pnl_login").removeClass('hidden').addClass('zoomIn');
 });
 
 $(document).on('click', '.showAbout', function () {
     $("#pnl_main").fadeOut();
-    $("#pnl_contact").fadeOut();
-    $("#pnl_login").fadeOut();
+    $("#pnl_contact").addClass('hidden');
+    $("#pnl_login").addClass('hidden');
     $("#pnl_about").removeClass('hidden').addClass('zoomIn');
 });
 
 $(document).on('click', '.showContact', function () {
     $("#pnl_main").fadeOut();
-    $("#pnl_about").fadeOut();
-    $("#pnl_login").fadeOut();
+    $("#pnl_about").addClass('hidden');
+    $("#pnl_login").addClass('hidden');
     $("#pnl_contact").removeClass('hidden').addClass('zoomIn');
 });
 

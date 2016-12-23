@@ -8,8 +8,8 @@ namespace Knowledge_Management.ViewModels
 {
     public class DepartmentViewModel
     {
-        [Display(Name = "نام واحد سازمانی: ")]
-        [MaxLength(200, ErrorMessage = "تعداد کاراکتر واحد سازمانی، بیش از حد مجاز وارد شده است")]
+        [Display(Name = "Department Name: ")]
+        [MaxLength(200, ErrorMessage = "Max length exceeded.")]
         public string dep_name { get; set; }
 
         public int dep_id { get; set; }

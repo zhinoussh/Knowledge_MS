@@ -9,8 +9,8 @@ namespace Knowledge_Management.ViewModels
     public class StrategyViewModel
     {
 
-        [Display(Name="شرح استراتژی: ")]
-        [MaxLength(500, ErrorMessage = "شرح استراتژی بیش از حد مجاز وارد شده است")]
+        [Display(Name = "Strategy Description: ")]
+        [MaxLength(500, ErrorMessage = "Max length exceeded.")]
         public string strategy_name { get; set; }
 
         public int strategy_id { get; set; }
