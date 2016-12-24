@@ -1,9 +1,10 @@
-namespace Knowledge_Management.Models
+namespace Knowledge_Management.DAL
 {
     using System;
     using System.Data.Entity;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Linq;
+    using Knowledge_Management.Models;
 
     public partial class KnowledgeMsDB : DbContext
     {

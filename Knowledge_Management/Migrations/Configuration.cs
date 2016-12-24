@@ -1,18 +1,16 @@
 namespace Knowledge_Management.Migrations
 {
-    using System;
-    using System.Data.Entity;
+    using Knowledge_Management.DAL;
     using System.Data.Entity.Migrations;
-    using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<Knowledge_Management.Models.KnowledgeMsDB>
+    internal sealed class Configuration : DbMigrationsConfiguration<KnowledgeMsDB>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = true;
         }
 
-        protected override void Seed(Knowledge_Management.Models.KnowledgeMsDB context)
+        protected override void Seed(KnowledgeMsDB context)
         {
             //  This method will be called after migrating to the latest version.
 

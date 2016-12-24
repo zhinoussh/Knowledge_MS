@@ -1,87 +1,90 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using Knowledge_Management.Models;
 using Knowledge_Management.ViewModels;
 using Knowledge_Management.DAL;
-
+using Knowledge_Management.Helpers;
 
 namespace Knowledge_Management.Controllers
 {
     [CustomAuthorize(Roles = "Admin")]
-    public class DepartmentController : Controller
+    public class JobController : Controller
     {
-        // GET: Show Departments
+        // GET: Show Jobs
         public ActionResult Index()
         {
-            return View(new DepartmentViewModel());
+            JobViewModel o = new JobViewModel();
+            KnowledgeMSDAL DAL = new KnowledgeMSDAL();
+            List<tbl_department> deps = DAL.get_all_Departments();
+            o.lst_dep = new SelectList(deps, "pkey", "department_name");
+            o.job_id = 0;
+            o.job_name = "";
+            o.selected_dep = deps.First().pkey+"";
+            return View(o);
         }
 
-        //create a Department
+        //create a Job
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Add_Edit_Department(DepartmentViewModel s)
+        public ActionResult Add_Edit_Job(JobViewModel s)
         {
             if (ModelState.IsValid)
             {
                 KnowledgeMSDAL DAL = new KnowledgeMSDAL();
 
-                DAL.InsertDepartment(s.dep_id, s.dep_name);
-                return Json(new { msg = "واحد سازمانی با موفقیت ذخیره شد" });
+                DAL.InsertJob(s.job_id,s.job_name, Int32.Parse(s.selected_dep));
+                return Json(new { msg = "شغل با موفقیت ذخیره شد" });
             }
             else
             {
-                ModelState.AddModelError("ADD_DepartmentErr", "Department length is exeeding");
+                ModelState.AddModelError("ADD_JobErr", "Job length is exeeding");
             }
             return View(s);
         }
 
 
         [HttpGet] // this action result returns the partial containing the modal
-        public ActionResult Delete_Department(int id)
+        public ActionResult Delete_Job(int id)
         {
-            DepartmentViewModel s = new DepartmentViewModel();
-            s.dep_id = id;
-            return PartialView("_PartialDeleteDep", s);
+            JobViewModel s = new JobViewModel();
+            s.job_id = id;
+            return PartialView("_PartialDeleteJob", s);
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]        
-        public ActionResult Delete_Department(DepartmentViewModel s)
+        [ValidateAntiForgeryToken]
+        public ActionResult Delete_Job(JobViewModel s)
         {
             if (ModelState.IsValid)
             {
                 KnowledgeMSDAL DAL = new KnowledgeMSDAL();
 
-                DAL.DeleteDepartment(s.dep_id);
-               return Json(new { msg = "واحد سازمانی با موفقیت حذف شد" });
+                DAL.DeleteJob(s.job_id);
+                return Json(new { msg = "شغل با موفقیت حذف شد" });
             }
             else
             {
-                ModelState.AddModelError("Delete_DepartmentErr", "error in deleting Department");
+                ModelState.AddModelError("Delete_JobErr", "error in deleting Job");
             }
             return View(s);
 
         }
 
-
-
-        public ActionResult DepartmentAjaxHandler(jQueryDataTableParamModel request)
+        public ActionResult JobAjaxHandler(jQueryDataTableParamModel request)
         {
             KnowledgeMSDAL DAL = new KnowledgeMSDAL();
 
-            List<tbl_department> all_items = DAL.get_all_Departments();
-
+            int dep_id = Convert.ToInt32(Request["dep_id"].ToString());
+             List<tbl_job> all_items = DAL.get_Jobs(dep_id);
 
             //filtering 
-            List<tbl_department> filtered = new List<tbl_department>();
+            List<tbl_job> filtered = new List<tbl_job>();
 
             if (!string.IsNullOrEmpty(request.sSearch))
             {
-                filtered = all_items.Where(i => i.department_name.Contains(request.sSearch)).ToList();
-
+                filtered = all_items.Where(i => i.job_name.Contains(request.sSearch)).ToList();
             }
             else
                 filtered = all_items;
@@ -95,19 +98,19 @@ namespace Knowledge_Management.Controllers
 
             var sortDirection = Request["sSortDir_0"]; // asc or desc
             if (sortDirection == "asc")
-                filtered = filtered.OrderBy(s => s.department_name).ToList();
+                filtered = filtered.OrderBy(s => s.job_name).ToList();
             else
-                filtered = filtered.OrderByDescending(s => s.department_name).ToList();
+                filtered = filtered.OrderByDescending(s => s.job_name).ToList();
 
             //pagination
             filtered = filtered.Skip(request.iDisplayStart).Take(request.iDisplayLength).ToList();
 
-            var indexed_list = filtered.Select((s, index) => new { SID = s.pkey + "", SIndex = (index + 1) + "", SNAME = s.department_name });
+            var indexed_list = filtered.Select((s, index) => new { SID = s.pkey + "", SIndex = (index + 1) + "", SNAME = s.job_name });
 
             var result = from s in indexed_list
                          select new[] { s.SID, s.SIndex, s.SNAME };
 
-      
+
 
             return Json(new
             {

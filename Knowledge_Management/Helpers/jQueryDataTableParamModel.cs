@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace Knowledge_Management.Models
+namespace Knowledge_Management.Helpers
 {
     public class jQueryDataTableParamModel
     {

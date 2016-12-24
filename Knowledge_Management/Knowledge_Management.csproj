@@ -116,11 +116,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Components\HtmlBootstrapButton.cs" />
     <Compile Include="Components\HtmlCommon.cs" />
-    <Compile Include="Controllers\ViewEntrybyDetailController.cs" />
-    <Compile Include="Controllers\ViewEntrybyJobController.cs" />
-    <Compile Include="Controllers\ViewEntrybyEmployeeController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ViewEntrybyDetailController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ViewEntrybyJobController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ViewEntrybyEmployeeController.cs" />
     <Compile Include="Migrations\201608240801401_ALTER_SOLUTION_UPLOAD_Tables.cs" />
     <Compile Include="Migrations\201608240801401_ALTER_SOLUTION_UPLOAD_Tables.Designer.cs">
       <DependentUpon>201608240801401_ALTER_SOLUTION_UPLOAD_Tables.cs</DependentUpon>
@@ -135,13 +136,13 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="Controllers\DepartmentController.cs" />
-    <Compile Include="Controllers\EmployeeController.cs" />
+    <Compile Include="Areas\Admin\Controllers\DepartmentController.cs" />
+    <Compile Include="Areas\Admin\Controllers\EmployeeController.cs" />
     <Compile Include="Controllers\EmployeeProfileController.cs" />
     <Compile Include="Controllers\InsertInfoController.cs" />
-    <Compile Include="Controllers\JobController.cs" />
-    <Compile Include="Controllers\JobDescriptionController.cs" />
-    <Compile Include="Controllers\ObjectiveDepartmentController.cs" />
+    <Compile Include="Areas\Admin\Controllers\JobController.cs" />
+    <Compile Include="Areas\Admin\Controllers\JobDescriptionController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ObjectiveDepartmentController.cs" />
     <Compile Include="Controllers\SearchInfoController.cs" />
     <Compile Include="Controllers\SearchKeyController.cs" />
     <Compile Include="Controllers\SolutionController.cs" />
@@ -166,17 +167,17 @@
     <Compile Include="Models\tbl_questions.cs" />
     <Compile Include="Models\tbl_question_solutions.cs" />
     <Compile Include="Models\tbl_solution_uploads.cs" />
-    <Compile Include="ViewModels\DepartmentObjectiveViewModel.cs" />
-    <Compile Include="ViewModels\DepartmentViewModel.cs" />
+    <Compile Include="Areas\Admin\ViewModels\DepartmentObjectiveViewModel.cs" />
+    <Compile Include="Areas\Admin\ViewModels\DepartmentViewModel.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\StrategyController.cs" />
+    <Compile Include="Areas\Admin\Controllers\StrategyController.cs" />
     <Compile Include="Security_Code\Encryption.cs" />
     <Compile Include="DAL\KnowledgeMSDAL.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\jQueryDataTableParamModel.cs" />
-    <Compile Include="Models\KnowledgeMsDB.cs" />
+    <Compile Include="Helpers\jQueryDataTableParamModel.cs" />
+    <Compile Include="DAL\KnowledgeMsDB.cs" />
     <Compile Include="Models\tbl_department.cs" />
     <Compile Include="Models\tbl_department_objectives.cs" />
     <Compile Include="Models\tbl_employee.cs" />
@@ -188,17 +189,17 @@
     <Compile Include="Models\tbl_strategy.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\DetailQuestionViewModel.cs" />
-    <Compile Include="ViewModels\EmployeeViewModel.cs" />
+    <Compile Include="Areas\Admin\ViewModels\EmployeeViewModel.cs" />
     <Compile Include="ViewModels\FullSolutionViewModel.cs" />
     <Compile Include="ViewModels\JobDepQuestionViewModel.cs" />
-    <Compile Include="ViewModels\JobDescriptionViewModel.cs" />
-    <Compile Include="ViewModels\JobViewModel.cs" />
+    <Compile Include="Areas\Admin\ViewModels\JobDescriptionViewModel.cs" />
+    <Compile Include="Areas\Admin\ViewModels\JobViewModel.cs" />
     <Compile Include="ViewModels\NewSolutionViewModel.cs" />
     <Compile Include="ViewModels\QuestionViewModel.cs" />
     <Compile Include="ViewModels\SearchKeywordViewModel.cs" />
     <Compile Include="ViewModels\SolutionEmployeeViewModel.cs" />
     <Compile Include="ViewModels\SolutionViewModel.cs" />
-    <Compile Include="ViewModels\StrategyViewModel.cs" />
+    <Compile Include="Areas\Admin\ViewModels\StrategyViewModel.cs" />
     <Compile Include="ViewModels\UploadViewModel.cs" />
     <Compile Include="ViewModels\EmployeeQuestionViewModel.cs" />
   </ItemGroup>
@@ -258,6 +259,7 @@
     <Content Include="fonts\fontawesome-webfont.ttf" />
     <Content Include="fonts\fontawesome-webfont.eot" />
     <Content Include="fonts\FontAwesome.otf" />
+    <Content Include="Areas\Admin\Views\web.config" />
     <None Include="Properties\PublishProfiles\Zhinous.pubxml" />
     <None Include="Scripts\jquery-2.2.3.intellisense.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -320,19 +322,19 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\_HomeLayout.cshtml" />
     <Content Include="Views\Home\_LoginPartial.cshtml" />
-    <Content Include="Views\Shared\_ManagementLayout.cshtml" />
-    <Content Include="Views\Strategy\Index.cshtml" />
-    <Content Include="Views\Strategy\_PartialDeleteStrategy.cshtml" />
-    <Content Include="Views\Department\Index.cshtml" />
-    <Content Include="Views\Department\_PartialDeleteDep.cshtml" />
-    <Content Include="Views\ObjectiveDepartment\Index.cshtml" />
-    <Content Include="Views\ObjectiveDepartment\_PartialDeleteObjective.cshtml" />
-    <Content Include="Views\Job\Index.cshtml" />
-    <Content Include="Views\Job\_PartialDeleteJob.cshtml" />
-    <Content Include="Views\Employee\Index.cshtml" />
-    <Content Include="Views\Employee\_PartialDeleteEmp.cshtml" />
-    <Content Include="Views\JobDescription\Index.cshtml" />
-    <Content Include="Views\JobDescription\_PartialDeleteJobDesc.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\_ManagementLayout.cshtml" />
+    <Content Include="Areas\Admin\Views\Strategy\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Strategy\_PartialDeleteStrategy.cshtml" />
+    <Content Include="Areas\Admin\Views\Department\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Department\_PartialDeleteDep.cshtml" />
+    <Content Include="Areas\Admin\Views\ObjectiveDepartment\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\ObjectiveDepartment\_PartialDeleteObjective.cshtml" />
+    <Content Include="Areas\Admin\Views\Job\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Job\_PartialDeleteJob.cshtml" />
+    <Content Include="Areas\Admin\Views\Employee\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Employee\_PartialDeleteEmp.cshtml" />
+    <Content Include="Areas\Admin\Views\JobDescription\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\JobDescription\_PartialDeleteJobDesc.cshtml" />
     <Content Include="Views\Shared\_EmployeeLayout.cshtml" />
     <Content Include="Views\InsertInfo\Index.cshtml" />
     <Content Include="Views\InsertInfo\_PartialDeleteQuestion.cshtml" />
@@ -345,19 +347,19 @@
     <Content Include="Views\Solution\_PartialDeleteUpload.cshtml" />
     <Content Include="Views\Solution\YourSolution.cshtml" />
     <Content Include="Views\Solution\_PartialDeleteSolution.cshtml" />
-    <Content Include="Views\ViewEntrybyEmployee\Personel.cshtml" />
-    <Content Include="Views\ViewEntrybyEmployee\Question.cshtml" />
-    <Content Include="Views\ViewEntrybyEmployee\_PartialDeleteQuestion.cshtml" />
-    <Content Include="Views\ViewEntrybyEmployee\QuestionSolutions.cshtml" />
-    <Content Include="Views\ViewEntrybyEmployee\_PartialDeleteSolution.cshtml" />
-    <Content Include="Views\ViewEntrybyEmployee\_PartialUploads.cshtml" />
-    <Content Include="Views\ViewEntrybyEmployee\_PartialDeleteUpload.cshtml" />
-    <Content Include="Views\ViewEntrybyEmployee\ViewFullSolution.cshtml" />
-    <Content Include="Views\ViewEntrybyEmployee\EmployeeSolutions.cshtml" />
-    <Content Include="Views\ViewEntrybyJob\Index.cshtml" />
-    <Content Include="Views\ViewEntrybyJob\_PartialDeleteQuestion.cshtml" />
-    <Content Include="Views\ViewEntrybyDetail\Index.cshtml" />
-    <Content Include="Views\ViewEntrybyDetail\_PartialDeleteQuestion.cshtml" />
+    <Content Include="Areas\Admin\Views\ViewEntrybyEmployee\Personel.cshtml" />
+    <Content Include="Areas\Admin\Views\ViewEntrybyEmployee\Question.cshtml" />
+    <Content Include="Areas\Admin\Views\ViewEntrybyEmployee\_PartialDeleteQuestion.cshtml" />
+    <Content Include="Areas\Admin\Views\ViewEntrybyEmployee\QuestionSolutions.cshtml" />
+    <Content Include="Areas\Admin\Views\ViewEntrybyEmployee\_PartialDeleteSolution.cshtml" />
+    <Content Include="Areas\Admin\Views\ViewEntrybyEmployee\_PartialUploads.cshtml" />
+    <Content Include="Areas\Admin\Views\ViewEntrybyEmployee\_PartialDeleteUpload.cshtml" />
+    <Content Include="Areas\Admin\Views\ViewEntrybyEmployee\ViewFullSolution.cshtml" />
+    <Content Include="Areas\Admin\Views\ViewEntrybyEmployee\EmployeeSolutions.cshtml" />
+    <Content Include="Areas\Admin\Views\ViewEntrybyJob\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\ViewEntrybyJob\_PartialDeleteQuestion.cshtml" />
+    <Content Include="Areas\Admin\Views\ViewEntrybyDetail\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\ViewEntrybyDetail\_PartialDeleteQuestion.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -387,6 +389,8 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Areas\Admin\Models\" />
+    <Folder Include="Areas\Admin\Scripts\" />
     <Folder Include="Upload\" />
   </ItemGroup>
   <PropertyGroup>
