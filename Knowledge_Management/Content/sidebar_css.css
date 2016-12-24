@@ -1,6 +1,8 @@
 ﻿/*@import "http://designmodo.github.io/Flat-UI/dist/css/flat-ui.min.css";*/
 /*@import "https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css";*/
 /*@import "https://daneden.github.io/animate.css/animate.min.css";*/
+@import url('https://fonts.googleapis.com/css?family=Montserrat');
+
 /*-------------------------------*/
 /*           VARIABLES           */
 /*-------------------------------*/
@@ -104,11 +106,10 @@
   line-height: 20px;
   position: relative;
   width: 100%;
-  text-align:right;
-  font-size:11pt;
+  font-size:10pt;
 }
 .sidebar-nav li:before {
-  background-color: #7477b6;
+  background-color: #213e8e;
   content: '';
   height: 100%;
   left: 0;
@@ -123,22 +124,22 @@
   color: #bbb7b7;
 }
 .sidebar-nav li:first-child a {
-  background-color: #7477b6;
+  background-color: #304fa5;
   color: #ffffff;
   text-align:center;
-
+  font-size:12pt;
 }
 .sidebar-nav li:nth-child(2):before {
-  background-color: #402d5c;
+  background-color: #203a84;
 }
 .sidebar-nav li:nth-child(3):before {
-  background-color: #4c366d;
+  background-color: #2f4995;
 }
 .sidebar-nav li:nth-child(4):before {
-  background-color: #583e7e;
+  background-color: #405cad;
 }
 .sidebar-nav li:nth-child(5):before {
-  background-color: #64468f;
+  background-color: #5976c8;
 }
 .sidebar-nav li:nth-child(6):before {
   background-color: #704fa0;
@@ -160,7 +161,7 @@
 .sidebar-nav li a {
   color: #dddddd;
   display: block;
-  padding: 10px 15px 10px 30px;
+  padding: 10px 10px 10px 10px;
   text-decoration: none;
   
 }
@@ -175,12 +176,20 @@
   border: none;
   box-shadow: none;
   margin: 0;
-  padding: 0;
+  padding:0;
   position: relative;
   width: 100%;
 }
 .sidebar-nav .dropdown-menu li a {
-    font-size:small
+    font-size:small;
+    padding-left:20px;
+}
+
+.sidebar-nav .dropdown-menu li a:hover {
+    background:#5976c8 !important;
+}
+.caret {
+margin-right:4px;
 }
 .sidebar-nav li a:hover,
 .sidebar-nav li a:active,
@@ -221,6 +230,5 @@ color:#ce0a0a;
 
 body {
   background-color:#eff0eb;
-  font-family:'B Yekan'
-
+  font-family:'Montserrat', sans-serif;
 }

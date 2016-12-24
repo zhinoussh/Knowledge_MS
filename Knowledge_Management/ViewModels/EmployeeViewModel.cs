@@ -12,11 +12,11 @@ namespace Knowledge_Management.ViewModels
         public int emp_id { get; set; }
 
         [Display(Name = "نام: ")]
-        [MaxLength(50, ErrorMessage = "تعداد کاراکتر وارد شده، بیش از حد مجاز است")]
+        [MaxLength(50, ErrorMessage = "Max length exceeded.")]
         public string first_name { get; set; }
 
         [Display(Name = "نام خانوادگی: ")]
-        [MaxLength(50, ErrorMessage = "تعداد کاراکتر وارد شده، بیش از حد مجاز است")]
+        [MaxLength(50, ErrorMessage = "Max length exceeded.")]
         public string last_name { get; set; }
 
         [Display(Name = "کد ملی: ")]

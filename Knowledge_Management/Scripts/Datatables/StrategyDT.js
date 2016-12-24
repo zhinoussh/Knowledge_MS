@@ -1,9 +1,6 @@
 ﻿$(document).ready(function () {
 
     var oTable = $('#strategyDT').dataTable({
-        "language": {
-            "url": "/Content/lang.txt"
-        },
         "bServerSide": true,
         "sAjaxSource": "StrategyAjaxHandler",
         "bProcessing": true,
@@ -15,7 +12,10 @@
                             "bSortable": false,
                             "bVisible": false
                         },
-                        { "sName": "radif", "sWidth": '3%', "sClass": "dt-body-center" },
+                        {
+                            "sName": "radif", "sWidth": '3%', "sClass": "dt-body-center", "bSearchable": false,
+                            "bSortable": false
+                        },
                         { "sName": "strategy_name", "sWidth": '90%' }
                         , {
                             "sName": "EDIT",
@@ -43,8 +43,6 @@
         ]
     });
 
-     
-
     $("#reset_btn").click(function () {
         $("#frmStrategy").find('input:text,textarea,field-validation-error').val("");
         $("#alert_success").empty();
@@ -52,12 +50,6 @@
         $("#hd_id_strategy").val("0");
 
     });
-
-    $(".close").click(function () {
-        $("#div_alert").css("visibility", "hidden");
-        return false;
-    });
-    
     
 });
 
@@ -79,7 +71,7 @@ var edit_strategy = function (st_id,st_name) {
 var SuccessMessage = function (result) {
     if (result.msg) {
         $("#alert_success").html(result.msg);
-        $("#div_alert").css("visibility", "visible");
+        $("#div_alert").slideDown(500);
         $("#frmStrategy").find('input:text,textarea').val("");
         $("#hd_id_strategy").val("0");
 

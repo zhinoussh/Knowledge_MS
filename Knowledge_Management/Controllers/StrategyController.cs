@@ -29,7 +29,7 @@ namespace Knowledge_Management.Controllers
                 KnowledgeMSDAL DAL = new KnowledgeMSDAL();
 
                 DAL.InsertStrategy(s.strategy_id,s.strategy_name);
-                return Json(new { msg = "شرح استراتژی با موفقیت ذخیره شد"});
+                return Json(new { msg = "Strategy description inserted successfully."});
             }
             else
             {
@@ -56,7 +56,7 @@ namespace Knowledge_Management.Controllers
                 KnowledgeMSDAL DAL = new KnowledgeMSDAL();
 
                 DAL.DeleteStrategy(s.strategy_id);
-                return Json(new { msg = "شرح استراتژی با موفقیت حذف شد" });
+                return Json(new { msg = "Strategy description deleted successfully." });
             }
             else
             {
