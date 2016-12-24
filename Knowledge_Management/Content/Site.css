@@ -336,10 +336,9 @@ cursor:pointer;
      border-top-right-radius: 5px;
 }
 .modal-header-danger {
-      
     height:50px;
 	color:#fff;
-    padding:8px;
+    padding:0px;
     border-bottom:1px solid #eee;
     background-color: #d9534f;
     -webkit-border-top-left-radius: 5px;
@@ -355,11 +354,7 @@ cursor:pointer;
          padding:7px 0 0 10px;
          color:#fff;
     }
-    .modal-body{
-         overflow-y: auto;
-         font-size:10pt;
-         text-align:right;
-    }
+
 .border-modal {
     height: 400px;
     float: right;
@@ -476,9 +471,8 @@ thead th {
 
 
 .alert-success {
-    height:40px;
-    padding:5px;
-    text-align:right;
+    height:50px;
+    padding:15px;
     margin-top:2%;
 }
 

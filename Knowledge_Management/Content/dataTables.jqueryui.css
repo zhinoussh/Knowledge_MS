@@ -1,13 +1,13 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
 /*
  * Table styles
  */
 table.dataTable {
-  width: 100%;
-  margin: 0 auto;
+  width:95% !important;
+  margin: 0 0 0 2%;
   clear: both;
   border-collapse: separate;
   border-spacing: 0;
-  direction:rtl;
   /*
    * Header and footer styles
    */
@@ -20,7 +20,6 @@ table.dataTable thead th,
 table.dataTable tfoot th {
   font-weight: bold;
   background-color:#cacbe1;
-
 }
 table.dataTable thead th,
 table.dataTable thead td {
@@ -71,12 +70,10 @@ table.dataTable.cell-border tbody th, table.dataTable.cell-border tbody td {
 table.dataTable.cell-border tbody tr th:first-child,
 table.dataTable.cell-border tbody tr td:first-child {
   border-left: 1px solid #ddd;
-
 }
 table.dataTable.cell-border tbody tr:first-child th,
 table.dataTable.cell-border tbody tr:first-child td {
   border-top: none;
-
 }
 table.dataTable.stripe tbody tr.odd, table.dataTable.display tbody tr.odd {
   background-color: #f9f9f9;
@@ -266,25 +263,24 @@ table.dataTable td {
   *zoom: 1;
   zoom: 1;
   font-size:10pt;
+  font-family:'Open Sans', sans-serif;
 }
 .dataTables_wrapper .dataTables_length {
-  float: left;
-
+  float: right; 
+  margin-top:1%;
 }
 .dataTables_wrapper .dataTables_filter {
-  float: right;
-  text-align: right;
-  direction:rtl;
+  float: left;
+  margin-top:1%;
+
 }
 .dataTables_wrapper .dataTables_filter input
 {
   border:2px solid #eee;
   border-radius:5px;
-  float: left;
-  height:25px;
-  margin:5px;
+  float: right;
+  margin-left:5px;
   font-size:10pt;
-
 }
 .dataTables_wrapper .dataTables_info {
   clear: both;
@@ -304,7 +300,6 @@ table.dataTable td {
   text-align: center;
   text-decoration: none !important;
   cursor: pointer;
-  *cursor: hand;
   color: #333 !important;
   border: 1px solid transparent;
   border-radius: 2px;
@@ -494,6 +489,8 @@ table.dataTable tfoot th.ui-state-default:first-child {
 }
 .dataTables_wrapper .ui-widget-header {
   font-weight: normal;
+  margin-left:2%;
+  width:95%;
 }
 .dataTables_wrapper .ui-toolbar {
   padding: 8px;

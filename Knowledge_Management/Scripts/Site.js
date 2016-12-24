@@ -29,7 +29,10 @@ $(document).on('keypress', '.form-control', function () {
       $('.log-status').removeClass('wrong-entry');
 });
 
-
+$(document).on('click', '#close_alert', function () {
+    $("#div_alert").slideUp(500);
+    return false;
+});
 
 var onLoginSuccess = function (result) {
     if (result.url) {
