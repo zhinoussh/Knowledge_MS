@@ -338,7 +338,7 @@ cursor:pointer;
 .modal-header-danger {
     height:50px;
 	color:#fff;
-    padding:0px;
+    padding:10px;
     border-bottom:1px solid #eee;
     background-color: #d9534f;
     -webkit-border-top-left-radius: 5px;
