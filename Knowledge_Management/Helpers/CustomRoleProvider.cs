@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.Security;
 using Knowledge_Management.DAL;
 
-namespace Knowledge_Management.Security_Code
+namespace Knowledge_Management
 {
     public class CustomRoleProvider:RoleProvider
     {
