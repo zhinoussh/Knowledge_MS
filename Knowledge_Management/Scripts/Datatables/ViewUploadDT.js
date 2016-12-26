@@ -105,7 +105,7 @@ $(document).ready(function () {
 var SuccessMessage = function (result) {
     if (result.msg) {
         $("#alert_success").html(result.msg);
-        $("#div_alert").css("visibility", "visible");
+        $("#div_alert").slideDown(500);
 
     }
 

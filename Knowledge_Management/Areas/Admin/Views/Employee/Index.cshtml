@@ -108,12 +108,12 @@
         <div class="editor-field" style="width:12%;">
             @Html.LabelFor(model => model.data_view)
         </div>  
-            <div class="btn_add" style="margin-right:30%">
-                <input type="submit" class="btn btn-primary" value="ثبت" />
+            <div class="col-xs-2" style="margin-right:30%">
+                <input type="submit" class="btn btn-primary" value="Submit" />
             </div>
 
-            <div class="btn_add">
-                <input type="button" class="btn btn-primary" value="بازسازی" id="reset_btn" />
+            <div class="col-xs-2">
+                <input type="button" class="btn btn-primary" value="Refresh" id="reset_btn" />
             </div>
         </div>
             @Html.HiddenFor(model => model.emp_id, new { id = "hd_id_emp" })
@@ -131,16 +131,16 @@
                     <th>ID</th>
                     <th>Dep_Id</th>
                     <th>Job_Id</th>
-                    <th class="dt-head-right">ردیف</th>
-                    <th class="dt-head-right">نام</th>
-                    <th class="dt-head-right">نام خانوادگی</th>
-                    <th class="dt-head-right">کد ملی</th>
-                    <th class="dt-head-right">واحد سازمانی</th>
-                    <th class="dt-head-right">شغل</th>
+                    <th >ردیف</th>
+                    <th >نام</th>
+                    <th >نام خانوادگی</th>
+                    <th >کد ملی</th>
+                    <th >واحد سازمانی</th>
+                    <th >شغل</th>
                     <th>ورود اطلاعات</th>
                     <th>مشاهده اطلاعات</th>
-                    <th>ویرایش</th>
-                    <th>حذف</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
 
 
 

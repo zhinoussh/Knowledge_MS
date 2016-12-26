@@ -84,7 +84,7 @@ var edit_objective = function (obj_id, obj_name) {
 var SuccessMessage = function (result) {
     if (result.msg) {
         $("#alert_success").html(result.msg);
-        $("#div_alert").css("visibility", "visible");
+        $("#div_alert").slideDown(500);
         $("#frmObjective").find('input:text,textarea').val("");
         $("#hd_id_obj").val("0");
 

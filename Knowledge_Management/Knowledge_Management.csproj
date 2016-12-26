@@ -266,7 +266,7 @@
     <None Include="Scripts\jquery-2.2.3.intellisense.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\dataTables.jqueryui.min.js" />
-    <Content Include="Scripts\Datatables\DepartmentDT.js" />
+    <Content Include="Areas\Admin\Scripts\DepartmentDT.js" />
     <Content Include="Scripts\Datatables\DetailEntryDT.js" />
     <Content Include="Scripts\Datatables\EmployeeDT.js" />
     <Content Include="Scripts\Datatables\EmployeeEntryDT.js" />
@@ -304,7 +304,7 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\sidebar.js" />
-    <Content Include="Scripts\Datatables\StrategyDT.js" />
+    <Content Include="Areas\Admin\Scripts\StrategyDT.js" />
     <Content Include="Scripts\Datatables\ViewUploadDT.js" />
     <Content Include="Scripts\Site.js" />
     <Content Include="Scripts\_references.js" />
@@ -322,7 +322,7 @@
     <Content Include="Areas\Employee\Views\Home\_AboutPartial.cshtml" />
     <Content Include="Areas\Employee\Views\Home\_ContactPartial.cshtml" />
     <Content Include="Areas\Employee\Views\Home\Index.cshtml" />
-    <Content Include="Areas\Employee\Views\Shared\_HomeLayout.cshtml" />
+    <Content Include="Views\Shared\_HomeLayout.cshtml" />
     <Content Include="Areas\Employee\Views\Home\_LoginPartial.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\_ManagementLayout.cshtml" />
     <Content Include="Areas\Admin\Views\Strategy\Index.cshtml" />
@@ -392,7 +392,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Admin\Models\" />
-    <Folder Include="Areas\Admin\Scripts\" />
     <Folder Include="Areas\Employee\Models\" />
     <Folder Include="Controllers\" />
     <Folder Include="Upload\" />

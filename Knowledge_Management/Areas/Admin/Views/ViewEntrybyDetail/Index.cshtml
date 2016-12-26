@@ -100,7 +100,7 @@
         @Html.DropDownListFor(model => model.strategy_id, new SelectList(Model.lst_strategy, "Value", "Text")
          , "----", new { @class = "textbox", id = "dropdown_strategy" })
     </div>
-    <div class="btn_add" style="width:150px; float:right; margin:3% 40% 2% 0">
+    <div class="col-xs-2" style="width:150px; float:right; margin:3% 40% 2% 0">
         <input type="button" class="btn btn-primary" value="مشاهده مسائل" id="btn_view_Question" />
     </div>
 
@@ -117,10 +117,10 @@
                 <th>Strategy</th>
                 <th>fullQuestion</th>
                 <th>ردیف</th>
-                <th class="dt-head-right">شرح مسئله</th>
+                <th >شرح مسئله</th>
                 <th>جزئیات</th>
                 <th>راهکارها</th>
-                <th>حذف</th>
+                <th>Delete</th>
 
             </tr>
         </thead>

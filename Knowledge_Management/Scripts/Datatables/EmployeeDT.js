@@ -182,7 +182,7 @@ var edit_employee = function (s) {
 var SuccessMessage = function (result) {
     if (result.msg) {
         $("#alert_success").html(result.msg);
-        $("#div_alert").css("visibility", "visible");
+        $("#div_alert").slideDown(500);
 
         //if success
         if (result.result == 1) {

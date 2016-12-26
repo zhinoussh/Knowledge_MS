@@ -165,7 +165,7 @@ namespace Knowledge_Management.Controllers
             //delete solution and upload from db
             DAL.Delete_Solution(id_solution);
             
-            return Json(new { msg="راهکار مورد نظر با موفقیت حذف شد"});
+            return Json(new { msg="راهکار مورد نظر با موفقیت Delete شد"});
 
         }
 
@@ -229,7 +229,7 @@ namespace Knowledge_Management.Controllers
                 System.IO.File.Delete(Server.MapPath(@"~\Upload\" + DAL.get_file_path(q.upload_id)));
 
                 DAL.DeleteUpload(q.upload_id);
-                return Json(new { msg = "فایل بارگذاری شده با موفقیت حذف شد" });
+                return Json(new { msg = "فایل بارگذاری شده با موفقیت Delete شد" });
             }
             else
             {

@@ -63,7 +63,7 @@ namespace Knowledge_Management.Controllers
                 KnowledgeMSDAL DAL = new KnowledgeMSDAL();
 
                 DAL.DeleteObjective(s.obj_id);
-                return Json(new { msg = "شرح هدف با موفقیت حذف شد" });
+                return Json(new { msg = "شرح هدف با موفقیت Delete شد" });
             }
             else
             {

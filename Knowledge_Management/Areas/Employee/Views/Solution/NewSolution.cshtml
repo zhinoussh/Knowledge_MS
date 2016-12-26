@@ -80,12 +80,12 @@
                     </div>
 
 
-                    <div class="btn_add" style="margin:0 40% 0 0; width:200px">
-                        <input type="submit" class="btn btn-primary" value="ثبت راهکار" />
+                    <div class="col-xs-2" style="margin:0 40% 0 0; width:200px">
+                        <input type="submit" class="btn btn-primary" value="Submit راهکار" />
                     </div>
 
 
-                    <div class="btn_add" style="margin:2% 40% 0 0;">
+                    <div class="col-xs-2" style="margin:2% 40% 0 0;">
                         <input type="file" name="file_upload" id="file_upload" />
                     </div>
                 }
@@ -95,11 +95,11 @@
                         <tr>
                             <th>ID</th>
                             <th>FilePath</th>
-                            <th class="dt-head-right">ردیف</th>
-                            <th class="dt-head-right">شرح بارگذاری</th>
+                            <th >ردیف</th>
+                            <th >شرح بارگذاری</th>
                             <th>وضعیت Confirm</th>
                             <th>دانلود</th>
-                            <th>حذف</th>
+                            <th>Delete</th>
                         </tr>
                     </thead>
                     <tbody></tbody>
@@ -132,7 +132,7 @@
                         }
                         , 'onUploadSuccess': function (file, data, response) {
                             $("#alert_success").html('فایل با موفقیت بارگذاری شد');
-                            $("#div_alert").css("visibility", "visible");
+                            $("#div_alert").slideDown(500);
                             $("#hd_id_new_solution").val(data);
                             var $STTable = $("#UploadDT").dataTable({ bRetrieve: true });
                             $STTable.fnDraw();

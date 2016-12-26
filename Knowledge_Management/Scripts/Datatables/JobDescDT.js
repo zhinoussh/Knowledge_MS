@@ -115,7 +115,7 @@ var edit_JobDesc = function (jd_id,job_desc) {
 var SuccessMessage = function (result) {
     if (result.msg) {
         $("#alert_success").html(result.msg);
-        $("#div_alert").css("visibility", "visible");
+        $("#div_alert").slideDown(500);
         $("#frmJobDesc").find('input:text,textarea').val("");
         $("#hd_id_jobDsc").val("0");
 

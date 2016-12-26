@@ -129,7 +129,7 @@ namespace Knowledge_Management.Controllers
                 KnowledgeMSDAL DAL = new KnowledgeMSDAL();
 
                 DAL.DeleteQuestion(q.question_id);
-                return Json(new { msg = "مسئله با موفقیت حذف شد" });
+                return Json(new { msg = "مسئله با موفقیت Delete شد" });
             }
             else
             {

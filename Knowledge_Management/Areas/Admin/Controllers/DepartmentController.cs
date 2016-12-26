@@ -55,7 +55,7 @@ namespace Knowledge_Management.Controllers
                 KnowledgeMSDAL DAL = new KnowledgeMSDAL();
 
                 DAL.DeleteDepartment(s.dep_id);
-               return Json(new { msg = "واحد سازمانی با موفقیت حذف شد" });
+               return Json(new { msg = "واحد سازمانی با موفقیت Delete شد" });
             }
             else
             {

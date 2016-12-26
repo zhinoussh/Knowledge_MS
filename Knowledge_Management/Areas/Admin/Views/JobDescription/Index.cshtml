@@ -51,7 +51,7 @@
             , new { @class = "textbox", id = "dropdown_job" })
         </div>
 
-        <div class="btn_add" style="width:150px">
+        <div class="col-xs-2" style="width:150px">
             <input type="button" class="btn btn-primary" value="مشاهده شرح مشاغل" id="btn_view_jobDesc" />
         </div>
 
@@ -72,8 +72,8 @@
 
     <div style="float:right; width:100%;margin-top:2%">
         
-        <input type="button" class="btn btn-primary pull-left" style="width:100px" value="بازسازی" id="reset_btn" />
-        <input type="submit" class="btn btn-primary pull-left" style="width:100px; margin-left:20px" value="ثبت" />
+        <input type="button" class="btn btn-primary pull-left" style="width:100px" value="Refresh" id="reset_btn" />
+        <input type="submit" class="btn btn-primary pull-left" style="width:100px; margin-left:20px" value="Submit" />
 
     </div>
         @Html.HiddenFor(model => model.jobDesc_id, new { id = "hd_id_jobDsc" })
@@ -89,10 +89,10 @@
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th class="dt-head-right">ردیف</th>
-                    <th class="dt-head-right">شرح شغل</th>
-                    <th>ویرایش</th>
-                    <th>حذف</th>
+                    <th >ردیف</th>
+                    <th >شرح شغل</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
 
                 </tr>
             </thead>

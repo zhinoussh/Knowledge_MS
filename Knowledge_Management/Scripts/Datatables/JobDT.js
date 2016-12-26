@@ -88,7 +88,7 @@ var edit_job = function (job_id, job_name) {
 var SuccessMessage = function (result) {
     if (result.msg) {
         $("#alert_success").html(result.msg);
-        $("#div_alert").css("visibility", "visible");
+        $("#div_alert").slideDown(500);
         $("#frmJob").find('input:text,textarea').val("");
         $("#hd_id_job").val("0");
 

@@ -50,7 +50,7 @@ namespace Knowledge_Management.Controllers
                 if(result>0)
                     return Json(new { msg = "پرسنل با موفقیت ذخیره شد" ,result=1});
                 else
-                    return Json(new { msg = "این کد پرسنلی قبلا در سیستم ثبت شده است", result = -1 });
+                    return Json(new { msg = "این کد پرسنلی قبلا در سیستم Submit شده است", result = -1 });
 
             }
             else
@@ -95,7 +95,7 @@ namespace Knowledge_Management.Controllers
                 KnowledgeMSDAL DAL = new KnowledgeMSDAL();
 
                 DAL.DeleteEmployee(s.emp_id);
-                return Json(new { msg = "پرسنل مورد نظر با موفقیت حذف شد" });
+                return Json(new { msg = "پرسنل مورد نظر با موفقیت Delete شد" });
             }
             else
             {

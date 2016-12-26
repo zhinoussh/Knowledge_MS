@@ -13,7 +13,7 @@ namespace Knowledge_Management.ViewModels
         [Display(Name = "شرح مسئله")]
         public string question { get; set; }
 
-        [Display(Name ="ثبت راهکار و بارگذاری اسناد")]
+        [Display(Name ="Submit راهکار و بارگذاری اسناد")]
         [Required(ErrorMessage = "شرح راهکار را وارد نمایید")]
         public string new_solution { get; set; }
 

@@ -45,12 +45,12 @@
             @Html.ValidationMessageFor(model => model.obj_name, "", new { @class = "error" })
         </div>
 
-        <div class="btn_add">
-            <input type="submit" class="btn btn-primary" value="ثبت" />
+        <div class="col-xs-2">
+            <input type="submit" class="btn btn-primary" value="Submit" />
         </div>
 
-        <div class="btn_add">
-            <input type="button" class="btn btn-primary" value="بازسازی" id="reset_btn" />
+        <div class="col-xs-2">
+            <input type="button" class="btn btn-primary" value="Refresh" id="reset_btn" />
         </div>
     </div>
     @Html.HiddenFor(model => model.obj_id, new { id = "hd_id_obj" })
@@ -67,10 +67,10 @@
     <thead>
         <tr>
             <th>ID</th>
-     <th class="dt-head-right">ردیف</th>
-    <th class="dt-head-right">شرح هدف</th>
-    <th>ویرایش</th>
-     <th>حذف</th>
+     <th >ردیف</th>
+    <th >شرح هدف</th>
+    <th>Edit</th>
+     <th>Delete</th>
 
         </tr>
     </thead>

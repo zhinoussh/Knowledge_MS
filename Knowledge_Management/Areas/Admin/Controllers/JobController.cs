@@ -62,7 +62,7 @@ namespace Knowledge_Management.Controllers
                 KnowledgeMSDAL DAL = new KnowledgeMSDAL();
 
                 DAL.DeleteJob(s.job_id);
-                return Json(new { msg = "شغل با موفقیت حذف شد" });
+                return Json(new { msg = "شغل با موفقیت Delete شد" });
             }
             else
             {

@@ -149,7 +149,7 @@ var edit_question = function (s) {
 var SuccessMessage = function (result) {
     if (result.msg) {
         $("#alert_success").html(result.msg);
-        $("#div_alert").css("visibility", "visible");
+        $("#div_alert").slideDown(500);
 
         $("#frmQuestion").find('input:text').val("");
         $("#hd_id_question").val("0");

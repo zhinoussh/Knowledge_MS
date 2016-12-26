@@ -37,7 +37,7 @@
         if (result.msg) {
             $('#DeleteModal').modal('hide');
             $("#alert_success").html(result.msg);
-            $("#div_alert").css("visibility", "visible");
+            $("#div_alert").slideDown(500);
             var $STTable = $("#SolutionDT").dataTable({ bRetrieve: true });
             $STTable.fnDraw();
         }

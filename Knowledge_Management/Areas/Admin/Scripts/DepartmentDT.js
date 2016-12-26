@@ -1,9 +1,6 @@
 ﻿$(document).ready(function () {
 
     var oTable = $('#departmentDT').dataTable({
-        "language": {
-            "url": "/Content/lang.txt"
-        },
         "bServerSide": true,
         "sAjaxSource": "DepartmentAjaxHandler",
         "bProcessing": true,
@@ -63,10 +60,6 @@
         $("#div_alert").css("visibility", "hidden");
     });
 
-    $(".close").click(function () {
-        $("#div_alert").css("visibility", "hidden");
-        return false;
-    });
 
 });
 
@@ -90,10 +83,21 @@ var edit_department = function (dep_id, dep_name) {
 var SuccessMessage = function (result) {
     if (result.msg) {
         $("#alert_success").html(result.msg);
-        $("#div_alert").css("visibility", "visible");
+        $("#div_alert").slideDown(500);
 
         $("#frmDepartment").find('input:text,textarea').val("");
         $("#hd_id_department").val("0");
+
+        var $STTable = $("#departmentDT").dataTable({ bRetrieve: true });
+        $STTable.fnDraw();
+    }
+}
+
+var SuccessDelete = function (result) {
+    if (result.msg) {
+        $('#DeleteModal').modal('hide');
+        $("#alert_success").html(result.msg);
+        $("#div_alert").slideDown(500);
 
         var $STTable = $("#departmentDT").dataTable({ bRetrieve: true });
         $STTable.fnDraw();

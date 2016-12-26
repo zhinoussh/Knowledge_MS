@@ -10,7 +10,7 @@
                     {
                         InsertionMode = InsertionMode.ReplaceWith,
                         HttpMethod = "Post",
-                        OnSuccess = "SuccessAction"
+                        OnSuccess = "SuccessDelete"
                     }))
 {
     @Html.AntiForgeryToken()
@@ -31,15 +31,3 @@
     </div>
 }
 
-<script type="text/javascript">
-    var SuccessAction = function (result) {
-        if (result.msg) {
-            $('#DeleteModal').modal('hide');
-            $("#alert_success").html(result.msg);
-            $("#div_alert").css("visibility", "visible");
-
-            var $STTable = $("#departmentDT").dataTable({ bRetrieve: true });
-            $STTable.fnDraw();
-        }
-    }
-</script>
