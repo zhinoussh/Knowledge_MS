@@ -7,7 +7,7 @@ using Knowledge_Management.DAL;
 using System.Web.Security;
 
 
-namespace Knowledge_Management.Controllers
+namespace Knowledge_Management.Areas.User.Controllers
 {
     [CustomAuthorize(Roles = "Public")]
     public class EmployeeProfileController : Controller

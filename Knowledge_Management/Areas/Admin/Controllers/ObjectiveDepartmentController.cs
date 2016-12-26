@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using Knowledge_Management.Models;
-using Knowledge_Management.ViewModels;
 using Knowledge_Management.DAL;
+using Knowledge_Management.Areas.Admin.ViewModels;
 
 
 
-namespace Knowledge_Management.Controllers
+namespace Knowledge_Management.Areas.Admin.Controllers
 {
     [CustomAuthorize(Roles = "Admin")]
     public class ObjectiveDepartmentController : Controller

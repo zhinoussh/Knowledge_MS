@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.ComponentModel.DataAnnotations;
 
-namespace Knowledge_Management.ViewModels
+namespace Knowledge_Management.Areas.Admin.ViewModels
 {
     public class StrategyViewModel
     {

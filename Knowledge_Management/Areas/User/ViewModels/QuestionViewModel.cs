@@ -5,7 +5,7 @@ using System.Web;
 using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
 
-namespace Knowledge_Management.ViewModels
+namespace Knowledge_Management.Areas.User.ViewModels
 {
     public class QuestionViewModel
     {

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.ComponentModel.DataAnnotations;
 
-namespace Knowledge_Management.ViewModels
+namespace Knowledge_Management.Areas.Admin.ViewModels
 {
     public class DepartmentViewModel
     {

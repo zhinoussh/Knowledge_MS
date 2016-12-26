@@ -5,7 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace Knowledge_Management.ViewModels
+namespace Knowledge_Management.Areas.Admin.ViewModels
 {
     public class DetailQuestionViewModel
     {

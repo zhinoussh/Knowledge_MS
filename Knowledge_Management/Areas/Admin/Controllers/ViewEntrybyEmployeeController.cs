@@ -1,13 +1,14 @@
-﻿using Knowledge_Management.DAL;
+﻿using Knowledge_Management.Areas.Admin.ViewModels;
+using Knowledge_Management.Areas.User.ViewModels;
+using Knowledge_Management.DAL;
 using Knowledge_Management.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
-using Knowledge_Management.ViewModels;
 
 
-namespace Knowledge_Management.Controllers
+namespace Knowledge_Management.Areas.Admin.Controllers
 {
     [CustomAuthorize(Roles = "Admin")]
     public class ViewEntrybyEmployeeController : Controller

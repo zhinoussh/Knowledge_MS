@@ -4,13 +4,13 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Knowledge_Management.Models;
-using Knowledge_Management.ViewModels;
 using Knowledge_Management.DAL;
 using System.Web.Security;
+using Knowledge_Management.Areas.User.ViewModels;
 
 
 
-namespace Knowledge_Management.Controllers
+namespace Knowledge_Management.Areas.User.Controllers
 {
     [CustomAuthorize(Roles = "DataEntry")]
     public class InsertInfoController : Controller

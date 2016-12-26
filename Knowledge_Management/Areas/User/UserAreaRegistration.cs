@@ -1,22 +1,22 @@
 ﻿using System.Web.Mvc;
 
-namespace Knowledge_Management.Areas.Employee
+namespace Knowledge_Management.Areas.User
 {
-    public class EmployeeAreaRegistration : AreaRegistration 
+    public class UserAreaRegistration : AreaRegistration 
     {
         public override string AreaName 
         {
             get 
             {
-                return "Employee";
+                return "User";
             }
         }
 
         public override void RegisterArea(AreaRegistrationContext context) 
         {
             context.MapRoute(
-                "Employee_default",
-                "Employee/{controller}/{action}/{id}",
+                "User_default",
+                "User/{controller}/{action}/{id}",
                 new { action = "Index", id = UrlParameter.Optional }
             );
         }

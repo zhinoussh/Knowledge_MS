@@ -7,7 +7,7 @@ using Knowledge_Management.DAL;
 using Knowledge_Management.Models;
 using System.Web.Security;
 
-namespace Knowledge_Management.Controllers
+namespace Knowledge_Management.Areas.User.Controllers
 {
     [AllowAnonymous]
     public class HomeController : Controller
@@ -15,6 +15,7 @@ namespace Knowledge_Management.Controllers
         public ActionResult Index()
         {
             return View();
+            
         }
 
         [HttpPost]
@@ -47,7 +48,7 @@ namespace Knowledge_Management.Controllers
 
                     string[] roles = Roles.GetRolesForUser(user.username);
                     if (roles.Contains("Admin"))
-                        return Json(new { url = "/Strategy/Index" });
+                        return Json(new { url = "/Admin/Strategy/Index" });
                     else
                     {
                         if (roles.Contains("DataEntry"))

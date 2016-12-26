@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations;
 using Knowledge_Management.Models;
 using System.Web.Mvc;
 
-namespace Knowledge_Management.ViewModels
+namespace Knowledge_Management.Areas.Admin.ViewModels
 {
     public class JobViewModel
     {

@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Data.Entity;
 using Knowledge_Management.Models;
-using Knowledge_Management.ViewModels;
-using System.Web.Security;
+using Knowledge_Management.Areas.User.ViewModels;
 
 namespace Knowledge_Management.DAL
 {
