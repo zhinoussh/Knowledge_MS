@@ -1,11 +1,8 @@
 ﻿$(document).ready(function () {
 
     var oTable = $('#EmployeeDT').dataTable({
-        "language": {
-            "url": "/Content/lang.txt"
-        },
         "bServerSide": true,
-        "sAjaxSource": "EmployeeAjaxHandler",
+        "sAjaxSource": "/Admin/Employee/EmployeeAjaxHandler",
         "bProcessing": true,
         "pagingType": "numbers"
         , "aoColumns": [
@@ -102,7 +99,7 @@
     $("#reset_btn").click(function () {
         $("#frmEmployee").find('input:text,textarea,field-validation-error').val("");
         $("#alert_success").empty();
-        $("#div_alert").css("visibility", "hidden");
+        $("#div_alert").slideDown(500);
 
         $("#hd_id_emp").val("0");
         $('input[type="checkbox"]').prop('checked', false);
@@ -125,7 +122,7 @@
       
         var dep_id = $('#dropdown_department').val();
         $.ajax({
-            url: '/Employee/FillJobs',
+            url: '/Admin/Employee/FillJobs',
             type: "GET",
             dataType: 'JSON',
             data: { DepId: dep_id },
@@ -145,17 +142,12 @@
 
     });
 
-    $(".close").click(function () {
-        $("#div_alert").css("visibility", "hidden");
-        return false;
-    });
-
 
 });
 
 var delete_dialog = function (emp_id) {
 
-    var url = "/Employee/Delete_Employee"; // the url to the controller
+    var url = "/Admin/Employee/Delete_Employee"; // the url to the controller
     $.get(url + '/' + emp_id, function (data) {
         $('#confirm-container').html(data);
         $('#DeleteModal').modal('show');
@@ -196,6 +188,16 @@ var SuccessMessage = function (result) {
             var $STTable = $("#EmployeeDT").dataTable({ bRetrieve: true });
             $STTable.fnDraw();
         }
+    }
+}
+
+var SuccessDelete = function (result) {
+    if (result.msg) {
+        $('#DeleteModal').modal('hide');
+        $("#alert_success").html(result.msg);
+        $("#div_alert").slideDown(500);
+        var $STTable = $("#EmployeeDT").dataTable({ bRetrieve: true });
+        $STTable.fnDraw();
     }
 }
 

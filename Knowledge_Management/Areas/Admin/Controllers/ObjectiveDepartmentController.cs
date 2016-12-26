@@ -36,7 +36,7 @@ namespace Knowledge_Management.Areas.Admin.Controllers
                 KnowledgeMSDAL DAL = new KnowledgeMSDAL();
 
                 DAL.InsertObjective(s.obj_id, s.obj_name,s.dep_id);
-                return Json(new { msg = "شرح هدف با موفقیت ذخیره شد" });
+                return Json(new { msg = "Objective for department inserted successfully." });
             }
             else
             {
@@ -63,7 +63,7 @@ namespace Knowledge_Management.Areas.Admin.Controllers
                 KnowledgeMSDAL DAL = new KnowledgeMSDAL();
 
                 DAL.DeleteObjective(s.obj_id);
-                return Json(new { msg = "شرح هدف با موفقیت Delete شد" });
+                return Json(new { msg = "Objective for department deleted successfully." });
             }
             else
             {

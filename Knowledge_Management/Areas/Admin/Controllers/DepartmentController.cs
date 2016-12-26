@@ -28,7 +28,7 @@ namespace Knowledge_Management.Areas.Admin.Controllers
                 KnowledgeMSDAL DAL = new KnowledgeMSDAL();
 
                 DAL.InsertDepartment(s.dep_id, s.dep_name);
-                return Json(new { msg = "واحد سازمانی با موفقیت ذخیره شد" });
+                return Json(new { msg = "Department inserted successfully." });
             }
             else
             {
@@ -55,7 +55,7 @@ namespace Knowledge_Management.Areas.Admin.Controllers
                 KnowledgeMSDAL DAL = new KnowledgeMSDAL();
 
                 DAL.DeleteDepartment(s.dep_id);
-               return Json(new { msg = "واحد سازمانی با موفقیت Delete شد" });
+                return Json(new { msg = "Department deleted successfully." });
             }
             else
             {

@@ -1,7 +1,7 @@
 ﻿@model Knowledge_Management.ViewModels.JobDepQuestionViewModel
 @{
     ViewBag.Title = "مشاهده مسائل، راهکارها و اسناد وارد شده برای شغل سازمانی";
-    Layout = "~/Views/Shared/_ManagementLayout.cshtml";
+    Layout = "~/Areas/Admin/Views/Shared/_ManagementLayout.cshtml";
 }
 
 <!-- Modal -->
@@ -57,7 +57,7 @@
     </div>
     <div class="editor-field" style="width:20%;">
         @Html.DropDownListFor(model => model.dep_id, new SelectList(Model.lst_dep, "Value", "Text")
-            , new { @class = "textbox", id = "dropdown_department" })
+            , new { @class = "form-control", id = "dropdown_department" })
     </div>
 
     <div class="editor-label" style="width:5%;">
@@ -65,7 +65,7 @@
     </div>
     <div class="editor-field" style="width:20%;">
         @Html.DropDownListFor(model => model.job_id, new SelectList(Model.lst_job, "Value", "Text")
-                     , "همه مشاغل", new { @class = "textbox", id = "dropdown_job" })
+                     , "همه مشاغل", new { @class = "form-control", id = "dropdown_job" })
     </div>
 
     <div class="col-xs-2" style="width:150px">
@@ -84,7 +84,7 @@
                 <th>dep_Obj</th>
                 <th>Strategy</th>
                 <th>fullQuestion</th>
-                <th>ردیف</th>
+                <th>#</th>
                 <th >شرح مسئله</th>
                 <th>جزئیات</th>
                 <th>راهکارها</th>

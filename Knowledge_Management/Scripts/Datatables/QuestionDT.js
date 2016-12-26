@@ -85,7 +85,7 @@
     $("#reset_btn").click(function () {
         $("#frmQuestion").find('input:text,field-validation-error').val("");
         $("#alert_success").empty();
-        $("#div_alert").css("visibility", "hidden");
+        $("#div_alert").slideDown(500);
         $("#hd_id_question").val("0");
         $("#txt_solution").val("");
 
@@ -102,7 +102,7 @@
 
    
     $(".close").click(function () {
-        $("#div_alert").css("visibility", "hidden");
+        $("#div_alert").slideDown(500);
         return false;
     });
 

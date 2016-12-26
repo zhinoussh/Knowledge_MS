@@ -1,4 +1,4 @@
-﻿@model Knowledge_Management.ViewModels.EmployeeViewModel
+﻿@model Knowledge_Management.Areas.Admin.ViewModels.EmployeeViewModel
 
 @{
 
@@ -10,7 +10,7 @@
                     {
                         InsertionMode = InsertionMode.ReplaceWith,
                         HttpMethod = "Post",
-                        OnSuccess = "SuccessAction"
+                        OnSuccess = "SuccessDelete"
                     }))
 {
 
@@ -32,15 +32,4 @@
     </div>
 }
 
-<script type="text/javascript">
-    var SuccessAction = function (result) {
-        if (result.msg) {
-            $('#DeleteModal').modal('hide');
-            $("#alert_success").html(result.msg);
-            $("#div_alert").slideDown(500);
-            var $STTable = $("#EmployeeDT").dataTable({ bRetrieve: true });
-            $STTable.fnDraw();
-        }
-    }
-</script>
 

@@ -5,7 +5,7 @@ using System.Web;
 using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
 
-namespace Knowledge_Management.Areas.Admin.ViewModelss
+namespace Knowledge_Management.Areas.Admin.ViewModels
 {
     public class EmployeeViewModel
     {

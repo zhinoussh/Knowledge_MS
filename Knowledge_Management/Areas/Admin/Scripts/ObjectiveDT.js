@@ -1,25 +1,22 @@
 ﻿$(document).ready(function () {
 
-    var oTable = $('#JobDT').dataTable({
-        "language": {
-            "url": "/Content/lang.txt"
-        },
+    var oTable = $('#ObjectiveDT').dataTable({
         "bServerSide": true,
-        "sAjaxSource": "/Job/JobAjaxHandler",
-        "fnServerParams": function (aoData) {
-            aoData.push({ "name": "dep_id", "value": $('#dropdown_department').val() });
+        "sAjaxSource": "/Admin/ObjectiveDepartment/ObjectiveAjaxHandler",
+        "fnServerParams": function ( aoData ) {
+            aoData.push({ "name": "dep_id", "value": $("#hd_id_dep").val() });
         },
         "bProcessing": true,
         "pagingType": "numbers"
-        , "aoColumns": [
+        ,"aoColumns": [
                         {
                             "sName": "ID",
                             "bSearchable": false,
                             "bSortable": false,
                             "bVisible": false
                         }
-                        , { "sName": "radif", "sWidth": '3%', "sClass": "dt-body-center" },
-                        { "sName": "job_name", "sWidth": '90%' }
+                        ,{ "sName": "radif", "sWidth": '3%', "sClass": "dt-body-center" },
+                        { "sName": "obj_name", "sWidth": '90%' }
                         , {
                             "sName": "EDIT",
                             "sWidth": '2%',
@@ -28,7 +25,7 @@
                             "sDefaultContent": " "
                             , "sClass": "dt-body-center",
                             "mRender": function (data, type, row) {
-                                return '<a class="glyphicon glyphicon-edit a_clickable" onclick="edit_job(' + row[0] + ',\'' + row[2] + '\');"></a>'
+                                return '<a class="glyphicon glyphicon-edit a_clickable" onclick="edit_objective(' + row[0] + ',\'' + row[2] + '\');"></a>'
 
                             }
                         }
@@ -49,29 +46,19 @@
 
 
     $("#reset_btn").click(function () {
-        $("#frmJob").find('input:text,textarea,field-validation-error').val("");
+        $("#frmObjective").find('input:text,textarea,field-validation-error').val("");
         $("#alert_success").empty();
-        $("#div_alert").css("visibility", "hidden");
-        $("#hd_id_job").val("0");
+        $("#div_alert").slideDown(500);
+        $("#hd_id_obj").val("0");
 
-    });
-
-    $("#dropdown_department").change(function () {
-        var $STTable = $("#JobDT").dataTable({ bRetrieve: true });
-        $STTable.fnDraw();
-    });
-
-    $(".close").click(function () {
-        $("#div_alert").css("visibility", "hidden");
-        return false;
     });
 
 });
 
-var delete_dialog = function (job_id) {
+var delete_dialog = function (obj_id) {
 
-    var url = "/Job/Delete_Job"; // the url to the controller
-    $.get(url + '/' + job_id, function (data) {
+    var url = "/Admin/ObjectiveDepartment/Delete_Objective"; // the url to the controller
+    $.get(url + '/' + obj_id, function (data) {
         $('#confirm-container').html(data);
         $('#DeleteModal').modal('show');
     });
@@ -79,9 +66,9 @@ var delete_dialog = function (job_id) {
 
 
 
-var edit_job = function (job_id, job_name) {
-    $("#hd_id_job").val(job_id);
-    $("#txt_job_name").val(job_name);
+var edit_objective = function (obj_id, obj_name) {
+    $("#hd_id_obj").val(obj_id);
+    $("#txt_obj_name").val(obj_name);
 }
 
 
@@ -89,13 +76,21 @@ var SuccessMessage = function (result) {
     if (result.msg) {
         $("#alert_success").html(result.msg);
         $("#div_alert").slideDown(500);
-        $("#frmJob").find('input:text,textarea').val("");
-        $("#hd_id_job").val("0");
+        $("#frmObjective").find('input:text,textarea').val("");
+        $("#hd_id_obj").val("0");
 
-        var $STTable = $("#JobDT").dataTable({ bRetrieve: true });
+        var $STTable = $("#ObjectiveDT").dataTable({ bRetrieve: true });
         $STTable.fnDraw();
     }
 }
 
-
+var SuccessDelete = function (result) {
+    if (result.msg) {
+        $('#DeleteModal').modal('hide');
+        $("#alert_success").html(result.msg);
+        $("#div_alert").slideDown(500);
+        var $STTable = $("#ObjectiveDT").dataTable({ bRetrieve: true });
+        $STTable.fnDraw();
+    }
+}
 

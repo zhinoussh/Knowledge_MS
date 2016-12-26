@@ -1,9 +1,9 @@
 ﻿{
 	"sProcessing": "در حال پردازش...",
-	"sLengthMenu": "نمایش _MENU_ ردیف",
+	"sLengthMenu": "نمایش _MENU_ #",
 	"sZeroRecords": "موردی با این مشخصات یافت نشد",
-	"sInfo": "نمایش _START_ تا _END_ از _TOTAL_ ردیف",
-	"sInfoEmpty": "نمایش 0 تا 0 از 0 ردیف",
+	"sInfo": "نمایش _START_ تا _END_ از _TOTAL_ #",
+	"sInfoEmpty": "نمایش 0 تا 0 از 0 #",
 	"sInfoFiltered": "",
 	"sInfoPostFix": "",
 	"sSearch": "جستجو: ",

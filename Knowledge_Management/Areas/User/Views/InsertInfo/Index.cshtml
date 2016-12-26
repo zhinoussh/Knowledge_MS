@@ -40,7 +40,7 @@
         </div>
         <div class="editor-field" style="width:20%;">
             @Html.DropDownListFor(model => model.strategy_id, new SelectList(Model.lst_strategy, "Value", "Text")
-         , "----", new { @class = "textbox", id = "dropdown_strategy" })
+         , "----", new { @class = "form-control", id = "dropdown_strategy" })
         </div>
 
         <div class="editor-label" style="width:12%;">
@@ -48,7 +48,7 @@
         </div>
         <div class="editor-field" style="width:20%;">
             @Html.DropDownListFor(model => model.dep_obj_id, new SelectList(Model.lst_dep_objective, "Value", "Text")
-           ,"----" , new { @class = "textbox", id = "dropdown_dep_Objective" })
+           ,"----" , new { @class = "form-control", id = "dropdown_dep_Objective" })
         </div>
 
         <div class="editor-label" style="width:7%;">
@@ -56,7 +56,7 @@
         </div>
         <div class="editor-field" style="width:20%;">
             @Html.DropDownListFor(model => model.job_desc_id, new SelectList(Model.lst_job_desc, "Value", "Text")
-            ,"----", new { @class = "textbox", id = "dropdown_jobDesc" })
+            ,"----", new { @class = "form-control", id = "dropdown_jobDesc" })
         </div>
 
 
@@ -69,7 +69,7 @@
             </div>
 
             <div class="editor-field" style="width:89%;">
-                @Html.TextBoxFor(model => model.question, new { @class = "textbox", id = "txt_question" })
+                @Html.TextBoxFor(model => model.question, new { @class = "form-control", id = "txt_question" })
                 @Html.ValidationMessageFor(model => model.question, "", new { @class = "error" })
             </div>
        </div>
@@ -130,7 +130,7 @@
             <th>DepObj_Id</th>
             <th>JobDesc_Id</th>
             <th>Strategy_Id</th>
-            <th >ردیف</th>
+            <th >#</th>
             <th >شرح مسئله</th>
             <th>Solution</th>
             <th>Keywords</th>

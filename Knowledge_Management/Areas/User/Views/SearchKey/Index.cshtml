@@ -18,7 +18,7 @@
     </div>
     <div class="editor-field" style="width:20%;">
         @Html.DropDownListFor(model => model.strategy_id, new SelectList(Model.lst_strategy, "Value", "Text")
-                  , "همه موارد", new { @class = "textbox", id = "dropdown_strategy" })
+                  , "همه موارد", new { @class = "form-control", id = "dropdown_strategy" })
     </div>
 
     <div class="editor-label" style="width:12%;">
@@ -26,7 +26,7 @@
     </div>
     <div class="editor-field" style="width:20%;">
         @Html.DropDownListFor(model => model.dep_obj_id, new SelectList(Model.lst_dep_objective, "Value", "Text")
-           , "همه موارد", new { @class = "textbox", id = "dropdown_dep_Objective" })
+           , "همه موارد", new { @class = "form-control", id = "dropdown_dep_Objective" })
     </div>
 
     <div class="editor-label" style="width:7%;">
@@ -34,7 +34,7 @@
     </div>
     <div class="editor-field" style="width:20%;">
         @Html.DropDownListFor(model => model.job_desc_id, new SelectList(Model.lst_job_desc, "Value", "Text")
-                     , "همه موارد", new { @class = "textbox", id = "dropdown_jobDesc" })
+                     , "همه موارد", new { @class = "form-control", id = "dropdown_jobDesc" })
     </div>
 
 
@@ -56,7 +56,7 @@
             <th>DepObj_Id</th>
             <th>JobDesc_Id</th>
             <th>Strategy_Id</th>
-            <th >ردیف</th>
+            <th >#</th>
             <th >کلیدواژه</th>
             <th>جزئیات</th>
             <th>مشاهده مسائل</th>

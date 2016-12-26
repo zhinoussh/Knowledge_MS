@@ -4,18 +4,13 @@
 <head>
     <meta name="viewport" content="width=device-width" , initial-scale="1.0" />
     <title>@ViewBag.Title</title>
-
     @Styles.Render("~/Content/css")
     @Styles.Render("~/Content/management")
-
     @RenderSection("HeadSection", false)
-
-   
 </head>
 <body >
 
     <div id="wrapper">
-        @*<div class="overlay"></div>*@
         <div id="sidebar-wrapper">
             <!-- Sidebar -->
             <nav class="navbar navbar-inverse navbar-fixed-top" id="sidebar-wrapper" role="navigation">
@@ -31,26 +26,26 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="caret"></span>Base Information<i class="sub_icon fa fa-fw fa-cog fa-lg"></i></a>
                         <ul class="dropdown-menu" role="menu">
                             <li class="dropdown-header">Define Base Information...</li>
-                            <li><a href="/Strategy/Index">Organization Strategy</a></li>
-                            <li><a href="/Department/Index">Organization Departments</a></li>
-                            <li><a href="/Job/Index">Occupations</a></li>
-                            <li><a href="/Employee/Index">Employees</a></li>
+                            <li><a href="@Url.Action("Index", "Strategy", new { Area="Admin"})">Strategy Description</a></li>
+                            <li><a href="@Url.Action("Index", "Department", new { area = "Admin" })">Organization Departments</a></li>
+                            <li><a href="@Url.Action("Index", "Job", new { area = "Admin" })">Job Titles</a></li>
+                            <li><a href="@Url.Action("Index", "Employee", new { area = "Admin" })">Employees</a></li>
                         </ul>
                     </li>
                     <li style="padding-left:15px">
-                        <a href="/JobDescription/Index">Job Descriptions<i class="sub_icon fa fa-fw fa-bank fa-lg"></i></a>
+                        <a href="@Url.Action(" index", "JobDescription" , new { area="Admin" })">Job Descriptions<i class="sub_icon fa fa-fw fa-bank fa-lg"></i></a>
                     </li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="caret"></span>Questions & Solutions<i class="sub_icon fa fa-fw fa-folder fa-lg"></i></a>
                         <ul class="dropdown-menu" role="menu">
                             <li class="dropdown-header">Based on...</li>
-                            <li><a href="/ViewEntrybyEmployee/Personel">Employees</a></li>
-                            <li><a href="/ViewEntrybyJob/Index">Occupations</a></li>
-                            <li><a href="/ViewEntrybyDetail/Index">Details</a></li>
+                            <li><a href="@Url.Action("Personel", "ViewEntrybyEmployee", new { area = "Admin" })">Employees</a></li>
+                            <li><a href="@Url.Action("Index", "ViewEntrybyJob", new { area = "Admin" })">Occupations</a></li>
+                            <li><a href="@Url.Action("Index", "ViewEntrybyDetail", new { area = "Admin" })">Details</a></li>
                         </ul>
                     </li>
                     <li style="padding-left:15px">
-                        <a href="/Home/Logout">Logout <i class="sub_icon fa fa-fw fa-sign-out fa-lg"></i></a>
+                        <a href="@Url.Action("Logout", "Home", new { area = "User" })">Logout <i class="sub_icon fa fa-fw fa-sign-out fa-lg"></i></a>
                     </li>
 
                 </ul>
@@ -69,6 +64,7 @@
                             <div class="col-xs-8 top_buffer50">
                                 <h5>@ViewBag.Title</h5>
                                 <span class="border_admin"></span>
+                                <h6 style="color:#8076a2">@ViewBag.Subtitle </h6>
                             </div>
                        </div>
 
@@ -77,11 +73,6 @@
                             </div>
                         </div>
                 </div>
-                @*<button type="button" class="hamburger is-closed animated fadeInLeft" data-toggle="offcanvas">
-                    <span class="hamb-top"></span>
-                    <span class="hamb-middle"></span>
-                    <span class="hamb-bottom"></span>
-                </button>*@
 
             </div>
             <!-- /#page-content-wrapper -->

@@ -53,7 +53,7 @@
     $("#reset_btn").click(function () {
         $("#frmJobDesc").find('input:text,textarea,field-validation-error').val("");
         $("#alert_success").empty();
-        $("#div_alert").css("visibility", "hidden");
+        $("#div_alert").slideDown(500);
         $("#hd_id_jobDsc").val("0");
 
         $('#dropdown_department option:selected').removeAttr('selected');
@@ -91,7 +91,7 @@
     });
 
     $(".close").click(function () {
-        $("#div_alert").css("visibility", "hidden");
+        $("#div_alert").slideDown(500);
         return false;
     });
 

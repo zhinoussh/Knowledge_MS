@@ -102,7 +102,7 @@ $(document).ready(function () {
     });
 
     $("#close_delete_modal").click(function () {
-        $("#div_alert").css("visibility", "hidden");
+        $("#div_alert").slideDown(500);
         return false;
     });
 

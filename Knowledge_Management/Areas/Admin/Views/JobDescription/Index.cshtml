@@ -4,7 +4,7 @@
 @{
 
     ViewBag.Title = "شرح مشاغل سازمان";
-    Layout = "~/Views/Shared/_ManagementLayout.cshtml";
+    Layout = "~/Areas/Admin/Views/Shared/_ManagementLayout.cshtml";
 }
 
 <!-- Modal -->
@@ -40,7 +40,7 @@
         </div>
         <div class="editor-field" style="width:20%;">
             @Html.DropDownListFor(model => model.dep_id, new SelectList(Model.lst_dep, "Value", "Text")
-            , new { @class = "textbox", id = "dropdown_department" })
+            , new { @class = "form-control", id = "dropdown_department" })
         </div>
 
         <div class="editor-label" style="width:5%;">
@@ -48,7 +48,7 @@
         </div>
         <div class="editor-field" style="width:20%;">
             @Html.DropDownListFor(model => model.job_id, new SelectList(Model.lst_job, "Value", "Text")
-            , new { @class = "textbox", id = "dropdown_job" })
+            , new { @class = "form-control", id = "dropdown_job" })
         </div>
 
         <div class="col-xs-2" style="width:150px">
@@ -63,7 +63,7 @@
         </div>
 
         <div class="editor-field" style="width:85%;">
-            @Html.TextBoxFor(model => model.jobDesc, new { @class = "textbox", id = "txt_job_desc" })
+            @Html.TextBoxFor(model => model.jobDesc, new { @class = "form-control", id = "txt_job_desc" })
             @Html.ValidationMessageFor(model => model.jobDesc, "", new { @class = "error" })
         </div>
 
@@ -89,7 +89,7 @@
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th >ردیف</th>
+                    <th >#</th>
                     <th >شرح شغل</th>
                     <th>Edit</th>
                     <th>Delete</th>

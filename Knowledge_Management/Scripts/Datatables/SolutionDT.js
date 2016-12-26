@@ -79,7 +79,7 @@ $(document).ready(function () {
     });
 
     $(".close").click(function () {
-        $("#div_alert").css("visibility", "hidden");
+        $("#div_alert").slideDown(500);
         return false;
     });
 

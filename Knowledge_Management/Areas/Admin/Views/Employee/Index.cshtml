@@ -1,10 +1,10 @@
-﻿@using Knowledge_Management.ViewModels
+﻿@using Knowledge_Management.Areas.Admin.ViewModels
 @model EmployeeViewModel
 
 @{
 
     ViewBag.Title = "پرسنل سازمان";
-    Layout = "~/Views/Shared/_ManagementLayout.cshtml";
+    Layout = "~/Areas/Admin/Views/Shared/_ManagementLayout.cshtml";
 }
 
 <!-- Modal -->
@@ -41,7 +41,7 @@
         </div>
 
         <div class="editor-field" style="width:20%;">
-            @Html.TextBoxFor(model => model.first_name, new { @class = "textbox", id = "txt_first_name" })
+            @Html.TextBoxFor(model => model.first_name, new { @class = "form-control", id = "txt_first_name" })
             @Html.ValidationMessageFor(model => model.first_name, "", new { @class = "error" })
         </div>
 
@@ -50,7 +50,7 @@
         </div>
 
         <div class="editor-field" style="width:20%;">
-            @Html.TextBoxFor(model => model.last_name, new { @class = "textbox", id = "txt_last_name" })
+            @Html.TextBoxFor(model => model.last_name, new { @class = "form-control", id = "txt_last_name" })
             @Html.ValidationMessageFor(model => model.last_name, "", new { @class = "error" })
         </div>
 
@@ -59,7 +59,7 @@
         </div>
 
         <div class="editor-field" style="width:20%;">
-            @Html.TextBoxFor(model => model.personel_code, new { @class = "textbox", id = "txt_personel_code",style="text-align:center" })
+            @Html.TextBoxFor(model => model.personel_code, new { @class = "form-control", id = "txt_personel_code",style="text-align:center" })
             @Html.ValidationMessageFor(model => model.personel_code, "", new { @class = "error" })
         </div>
     </div>
@@ -70,14 +70,14 @@
             </div>
 
             <div class="editor-field" style="width:20%;">
-                @Html.PasswordFor(u => u.pass, new { @class = "textbox", style = "text-align:center" })
+                @Html.PasswordFor(u => u.pass, new { @class = "form-control", style = "text-align:center" })
             </div>
             <div class="editor-label" style="width:10%;">
                 واحد سازمانی:
             </div>
             <div class="editor-field" style="width:20%;">
                 @Html.DropDownListFor(model => model.dep_id, new SelectList(Model.lst_dep, "Value", "Text")
-            , new { @class = "textbox", id = "dropdown_department" })
+            , new { @class = "form-control", id = "dropdown_department" })
             </div>
 
             <div class="editor-label" style="width:6%;">
@@ -85,7 +85,7 @@
             </div>
             <div class="editor-field" style="width:20%;">
                 @Html.DropDownListFor(model => model.job_id, new SelectList(Model.lst_job, "Value", "Text")
-            , new { @class = "textbox", id = "dropdown_job" })
+            , new { @class = "form-control", id = "dropdown_job" })
             </div>
 
           
@@ -131,7 +131,7 @@
                     <th>ID</th>
                     <th>Dep_Id</th>
                     <th>Job_Id</th>
-                    <th >ردیف</th>
+                    <th >#</th>
                     <th >نام</th>
                     <th >نام خانوادگی</th>
                     <th >کد ملی</th>

@@ -35,7 +35,7 @@ namespace Knowledge_Management.Areas.Admin.Controllers
                 KnowledgeMSDAL DAL = new KnowledgeMSDAL();
 
                 DAL.InsertJob(s.job_id,s.job_name, Int32.Parse(s.selected_dep));
-                return Json(new { msg = "شغل با موفقیت ذخیره شد" });
+                return Json(new { msg = "Job title inserted successfully." });
             }
             else
             {
@@ -62,7 +62,7 @@ namespace Knowledge_Management.Areas.Admin.Controllers
                 KnowledgeMSDAL DAL = new KnowledgeMSDAL();
 
                 DAL.DeleteJob(s.job_id);
-                return Json(new { msg = "شغل با موفقیت Delete شد" });
+                return Json(new { msg = "Job title deleted successfully." });
             }
             else
             {

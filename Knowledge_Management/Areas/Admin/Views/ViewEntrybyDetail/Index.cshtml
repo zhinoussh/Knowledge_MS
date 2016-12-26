@@ -1,7 +1,7 @@
 ﻿@model Knowledge_Management.ViewModels.DetailQuestionViewModel
 @{
     ViewBag.Title = "مشاهده مسائل، راهکارها و اسناد وارد شده بر اساس جزئیات";
-    Layout = "~/Views/Shared/_ManagementLayout.cshtml";
+    Layout = "~/Areas/Admin/Views/Shared/_ManagementLayout.cshtml";
 }
 
 <!-- Modal -->
@@ -58,7 +58,7 @@
     </div>
     <div class="editor-field" style="width:20%;">
         @Html.DropDownListFor(model => model.dep_id, new SelectList(Model.lst_dep, "Value", "Text")
-            , new { @class = "textbox", id = "dropdown_department" })
+            , new { @class = "form-control", id = "dropdown_department" })
     </div>
 
     <div class="editor-label" style="width:7%;">
@@ -66,7 +66,7 @@
     </div>
     <div class="editor-field" style="width:20%;">
         @Html.DropDownListFor(model => model.job_id, new SelectList(Model.lst_job, "Value", "Text")
-                     , new { @class = "textbox", id = "dropdown_job" })
+                     , new { @class = "form-control", id = "dropdown_job" })
     </div>
 
 
@@ -82,7 +82,7 @@
     </div>
     <div class="editor-field" style="width:20%;">
         @Html.DropDownListFor(model => model.dep_obj_id, new SelectList(Model.lst_dep_objective, "Value", "Text")
-           , "----", new { @class = "textbox", id = "dropdown_dep_Objective" })
+           , "----", new { @class = "form-control", id = "dropdown_dep_Objective" })
     </div>
 
     <div class="editor-label" style="width:7%;">
@@ -90,7 +90,7 @@
     </div>
     <div class="editor-field" style="width:20%;">
         @Html.DropDownListFor(model => model.job_desc_id, new SelectList(Model.lst_job_desc, "Value", "Text")
-            , "----", new { @class = "textbox", id = "dropdown_jobDesc" })
+            , "----", new { @class = "form-control", id = "dropdown_jobDesc" })
     </div>
 
     <div class="editor-label" style="width:7%;">
@@ -98,7 +98,7 @@
     </div>
     <div class="editor-field" style="width:20%;">
         @Html.DropDownListFor(model => model.strategy_id, new SelectList(Model.lst_strategy, "Value", "Text")
-         , "----", new { @class = "textbox", id = "dropdown_strategy" })
+         , "----", new { @class = "form-control", id = "dropdown_strategy" })
     </div>
     <div class="col-xs-2" style="width:150px; float:right; margin:3% 40% 2% 0">
         <input type="button" class="btn btn-primary" value="مشاهده مسائل" id="btn_view_Question" />
@@ -116,7 +116,7 @@
                 <th>dep_Obj</th>
                 <th>Strategy</th>
                 <th>fullQuestion</th>
-                <th>ردیف</th>
+                <th>#</th>
                 <th >شرح مسئله</th>
                 <th>جزئیات</th>
                 <th>راهکارها</th>

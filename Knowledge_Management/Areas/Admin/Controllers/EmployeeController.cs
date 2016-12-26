@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web.Mvc;
 using Knowledge_Management.Models;
 using Knowledge_Management.DAL;
-using Knowledge_Management.Areas.Admin.ViewModelss;
+using Knowledge_Management.Areas.Admin.ViewModels;
 
 
 

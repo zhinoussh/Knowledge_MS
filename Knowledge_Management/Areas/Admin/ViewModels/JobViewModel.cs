@@ -12,8 +12,8 @@ namespace Knowledge_Management.Areas.Admin.ViewModels
     {
         public int job_id { get; set; }
 
-        [Display(Name = "نام شغل: ")]
-        [MaxLength(50, ErrorMessage = "تعداد کاراکتر وارد شده، بیش از حد مجاز است")]
+        [Display(Name = "Job Title: ")]
+        [MaxLength(50, ErrorMessage = "Max length exceeded.")]
         public string job_name { get; set; }
      
         public string selected_dep { get; set; }

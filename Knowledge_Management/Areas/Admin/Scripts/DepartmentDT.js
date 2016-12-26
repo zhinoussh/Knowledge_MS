@@ -2,7 +2,7 @@
 
     var oTable = $('#departmentDT').dataTable({
         "bServerSide": true,
-        "sAjaxSource": "DepartmentAjaxHandler",
+        "sAjaxSource": "/Admin/Department/DepartmentAjaxHandler",
         "bProcessing": true,
         "pagingType": "numbers",
         "aoColumns": [
@@ -22,7 +22,7 @@
                              "sDefaultContent": " "
                             , "sClass": "dt-body-center"
                             , "mRender": function (data, type, row) {
-                                return "<a class='glyphicon glyphicon-list-alt a_clickable' href='/ObjectiveDepartment/Index/" + row[0] + "'></a>"
+                                return "<a class='glyphicon glyphicon-list-alt a_clickable' href='/Admin/ObjectiveDepartment/Index/" + row[0] + "'></a>"
                             }
                          }
                         , {
@@ -57,7 +57,7 @@
         $("#frmDepartment").find('input:text,textarea,field-validation-error').val("");
         $("#alert_success").empty();
         $("#hd_id_department").val("0");
-        $("#div_alert").css("visibility", "hidden");
+        $("#div_alert").slideDown(500);
     });
 
 
@@ -65,7 +65,7 @@
 
 var delete_dialog = function (dep_id) {
 
-    var url = "/Department/Delete_Department"; // the url to the controller
+    var url = "/Admin/Department/Delete_Department"; // the url to the controller
     $.get(url + '/' + dep_id, function (data) {
         $('#confirm-container').html(data);
         $('#DeleteModal').modal('show');

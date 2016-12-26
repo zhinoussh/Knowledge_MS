@@ -2,7 +2,7 @@
 
     var oTable = $('#strategyDT').dataTable({
         "bServerSide": true,
-        "sAjaxSource": "StrategyAjaxHandler",
+        "sAjaxSource": "/Admin/Strategy/StrategyAjaxHandler",
         "bProcessing": true,
         "pagingType": "numbers",
         "aoColumns": [
@@ -46,7 +46,7 @@
     $("#reset_btn").click(function () {
         $("#frmStrategy").find('input:text,textarea,field-validation-error').val("");
         $("#alert_success").empty();
-        $("#div_alert").css("visibility", "hidden");
+        $("#div_alert").slideDown(500);
         $("#hd_id_strategy").val("0");
 
     });
@@ -55,7 +55,7 @@
 
 var delete_dialog = function (st_id) {
     
-    var url = "/Strategy/Delete_Strategy"; // the url to the controller
+    var url = "/Admin/Strategy/Delete_Strategy"; // the url to the controller
      $.get(url + '/' + st_id, function (data) {
         $('#confirm-container').html(data);
         $('#DeleteModal').modal('show');
