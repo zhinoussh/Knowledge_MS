@@ -11,6 +11,7 @@ namespace Knowledge_Management.Areas.Admin.ViewModels
 
         [Display(Name = "Strategy Description: ")]
         [MaxLength(500, ErrorMessage = "Max length exceeded.")]
+        [Required]
         public string strategy_name { get; set; }
 
         public int strategy_id { get; set; }

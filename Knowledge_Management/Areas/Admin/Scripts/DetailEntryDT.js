@@ -1,15 +1,14 @@
-﻿/***USED IN ViewEntrybyEmployee/QUESTION*************/
+﻿/***USED IN ViewEntrybyDetail/Index*************/
 
 $(document).ready(function () {
 
     var oTable = $('#SearchQuestionDT').dataTable({
-        "language": {
-            "url": "/Content/lang.txt"
-        },
         "bServerSide": true,
-        "sAjaxSource": "/ViewEntrybyEmployee/SearchQuestionAjaxHandler",
+        "sAjaxSource": "/Admin/ViewEntrybyDetail/SearchQuestionAjaxHandler",
         "fnServerParams": function (aoData) {
-            aoData.push({ "name": "emp_id", "value": $('#hd_id_emp').val() });
+            aoData.push({ "name": "jobDesc_id", "value": $('#dropdown_jobDesc').val() });
+            aoData.push({ "name": "depObj_id", "value": $('#dropdown_dep_Objective').val() });
+            aoData.push({ "name": "strategy_id", "value": $('#dropdown_strategy').val() });
         },
         "bProcessing": true,
         "pagingType": "numbers"
@@ -81,7 +80,7 @@ $(document).ready(function () {
                             "sDefaultContent": " "
                             , "sClass": "dt-body-center",
                             "mRender": function (data, type, row) {
-                                return "<a class='glyphicon glyphicon-list-alt a_clickable' href='/ViewEntrybyEmployee/QuestionSolutions/" + row[0] + "'></a>"
+                                return "<a class='glyphicon glyphicon-list-alt a_clickable' href='/Admin/ViewEntrybyEmployee/QuestionSolutions/" + row[0] + "'></a>"
                             }
 
                         }
@@ -106,26 +105,85 @@ $(document).ready(function () {
         return false;
     });
 
-});
+    $("#btn_view_Question").click(function () {
+        var $STTable = $("#SearchQuestionDT").dataTable({ bRetrieve: true });
+        $STTable.fnDraw();
+    });
+
+    $("#dropdown_department").change(function () {
+
+        var dep_id = $('#dropdown_department').val();
+        $.ajax({
+            url: '/Admin/ViewEntrybyDetail/FillObjectives',
+            type: "GET",
+            dataType: 'JSON',
+            data: { DepId: dep_id },
+            success: function (jobs) {
+                $("#dropdown_dep_Objective").html(""); // clear before appending new list 
+
+                $.each(jobs, function (i, job) {
+                    $("#dropdown_dep_Objective").append($('<option></option>').val(job.Value).html(job.Text));
+                });
+
+            },
+            error: function (e) {
+                alert('err:' + e.toString());
+            }
+        });
+
+
+    });
+
+    $("#dropdown_job").change(function () {
+
+        var job_id = $('#dropdown_job').val();
+        $.ajax({
+            url: '/Admin/ViewEntrybyDetail/FillJobDescriptions',
+            type: "GET",
+            dataType: 'JSON',
+            data: { JobId: job_id },
+            success: function (jobs) {
+                $("#dropdown_jobDesc").html(""); // clear before appending new list 
+
+                $.each(jobs, function (i, job) {
+                    $("#dropdown_jobDesc").append($('<option></option>').val(job.Value).html(job.Text));
+                });
+
+            },
+            error: function (e) {
+                alert('err:' + e.toString());
+            }
+        });
+
+
+    });
+ });
 
 var details = function (s) {
-    $("#question").html("شرح مسئله: " + s[0].fullQuestion);
-    $("#keywords").html("کلید واژه ها: " + s[0].keywords);
-    $("#strategy_name").html("شرح استراتژی: " + (s[0].strategy == null ? '' : s[0].strategy));
-    $("#dep_objective").html("هدف واحد سازمانی: " + (s[0].dep_objective == null ? '' : s[0].dep_objective));
-    $("#job_desc").html("شرح شغل: " + (s[0].jobdesc == null ? '' : s[0].jobdesc));
+    $("#question").html("Question: " + s[0].fullQuestion);
+    $("#keywords").html("Keywords: " + s[0].keywords);
+    $("#strategy_name").html("Strategy Description: " + (s[0].strategy == null ? '' : s[0].strategy));
+    $("#dep_objective").html("Department Objective: " + (s[0].dep_objective == null ? '' : s[0].dep_objective));
+    $("#job_desc").html("Job Description: " + (s[0].jobdesc == null ? '' : s[0].jobdesc));
     $('#DetailModal').modal('show');
 }
 
 var delete_dialog = function (q_id) {
 
-    var url = "/ViewEntrybyEmployee/Delete_Question"; // the url to the controller
+    var url = "/Admin/ViewEntrybyDetail/Delete_Question"; // the url to the controller
     $.get(url + '/' + q_id, function (data) {
         $('#confirm-container').html(data);
         $('#DeleteModal').modal('show');
     });
 }
 
-
-
+var SuccessDelete = function (result) {
+    if (result.msg) {
+        $('#DeleteModal').modal('hide');
+        $("#alert_success").html(result.msg);
+        $("#div_alert").slideDown(500);
+        var $STTable = $("#SearchQuestionDT").dataTable({ bRetrieve: true });
+        $STTable.fnDraw();
+    }
+}
 

@@ -4,11 +4,8 @@
 $(document).ready(function () {
 
     var oTable = $('#EmployeeEntryDT').dataTable({
-        "language": {
-            "url": "/Content/lang.txt"
-        },
         "bServerSide": true,
-        "sAjaxSource": "EmployeeAjaxHandler",
+        "sAjaxSource": "/Admin/ViewEntrybyEmployee/EmployeeAjaxHandler",
         "bProcessing": true,
         "pagingType": "numbers"
         , "aoColumns": [
@@ -65,7 +62,7 @@ $(document).ready(function () {
                             "sDefaultContent": " "
                             , "sClass": "dt-body-center",
                             "mRender": function (data, type, row) {
-                                return "<a class='glyphicon glyphicon-comment a_clickable' href='/ViewEntrybyEmployee/Question/" + row[0] + "'></a>"
+                                return "<a class='glyphicon glyphicon-comment a_clickable' href='/Admin/ViewEntrybyEmployee/Question/" + row[0] + "'></a>"
 
                             }
                         }
@@ -77,7 +74,7 @@ $(document).ready(function () {
                             "sDefaultContent": " "
                             , "sClass": "dt-body-center"
                             , "mRender": function (data, type, row) {
-                                return "<a class='glyphicon glyphicon-list-alt a_clickable' href='/ViewEntrybyEmployee/EmployeeSolutions/" + row[0] + "'></a>"
+                                return "<a class='glyphicon glyphicon-list-alt a_clickable' href='/Admin/ViewEntrybyEmployee/EmployeeSolutions/" + row[0] + "'></a>"
                             }
                         }
 
@@ -88,5 +85,32 @@ $(document).ready(function () {
 
 });
 
+var SuccessDeleteUpload = function (result) {
+    if (result.msg) {
+        $('#DeleteModal').modal('hide');
+        $("#alert_success").html(result.msg);
+        $("#div_alert").slideDown(500);
+        var $STTable = $("#UploadDT").dataTable({ bRetrieve: true });
+        $STTable.fnDraw();
+    }
+}
 
+var SuccessDeleteSolution = function (result) {
+    if (result.msg) {
+        $('#DeleteModal').modal('hide');
+        $("#alert_success").html(result.msg);
+        $("#div_alert").slideDown(500);
+        var $STTable = $("#SoutionListDT").dataTable({ bRetrieve: true });
+        $STTable.fnDraw();
+    }
+}
 
+var SuccessDeleteQuestion= function (result) {
+    if (result.msg) {
+        $('#DeleteModal').modal('hide');
+        $("#alert_success").html(result.msg);
+        $("#div_alert").slideDown(500);
+        var $STTable = $("#SearchQuestionDT").dataTable({ bRetrieve: true });
+        $STTable.fnDraw();
+    }
+}

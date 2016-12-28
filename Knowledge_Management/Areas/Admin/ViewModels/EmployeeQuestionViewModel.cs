@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -10,6 +11,7 @@ namespace Knowledge_Management.Areas.Admin.ViewModels
         public int emp_id { get; set; }
         public int question_id { get; set; }
 
+        [Required]
         public string Description { get; set; }
     }
 }

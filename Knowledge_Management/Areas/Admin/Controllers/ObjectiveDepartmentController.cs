@@ -46,7 +46,7 @@ namespace Knowledge_Management.Areas.Admin.Controllers
         }
 
 
-        [HttpGet] // this action result returns the partial containing the modal
+        [HttpGet] 
         public ActionResult Delete_Objective(int id)
         {
             DepartmentObjectiveViewModel s = new DepartmentObjectiveViewModel();
@@ -58,6 +58,8 @@ namespace Knowledge_Management.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Delete_Objective(DepartmentObjectiveViewModel s)
         {
+            ModelState["obj_name"].Errors.Clear();
+
             if (ModelState.IsValid)
             {
                 KnowledgeMSDAL DAL = new KnowledgeMSDAL();

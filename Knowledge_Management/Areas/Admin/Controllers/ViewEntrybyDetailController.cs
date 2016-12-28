@@ -158,7 +158,7 @@ namespace Knowledge_Management.Areas.Admin.Controllers
                 KnowledgeMSDAL DAL = new KnowledgeMSDAL();
 
                 DAL.DeleteQuestion(q.question_id);
-                return Json(new { msg = "مسئله با موفقیت Delete شد" });
+                return Json(new { msg = "Question deleted Successfully." });
             }
             else
             {

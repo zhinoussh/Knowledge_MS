@@ -48,9 +48,9 @@ namespace Knowledge_Management.Areas.Admin.Controllers
                     , Int32.Parse(s.dep_id), Int32.Parse(s.job_id),s.pass,s.data_entry,s.data_view);
 
                 if(result>0)
-                    return Json(new { msg = "پرسنل با موفقیت ذخیره شد" ,result=1});
+                    return Json(new { msg = "Employee inserted successfully.", result = 1 });
                 else
-                    return Json(new { msg = "این کد پرسنلی قبلا در سیستم Submit شده است", result = -1 });
+                    return Json(new { msg = "This personel code is already existed.", result = -1 });
 
             }
             else
@@ -90,12 +90,17 @@ namespace Knowledge_Management.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Delete_Employee(EmployeeViewModel s)
         {
+            ModelState["first_name"].Errors.Clear();
+            ModelState["last_name"].Errors.Clear();
+            ModelState["personel_code"].Errors.Clear();
+            ModelState["pass"].Errors.Clear();
+
             if (ModelState.IsValid)
             {
                 KnowledgeMSDAL DAL = new KnowledgeMSDAL();
 
                 DAL.DeleteEmployee(s.emp_id);
-                return Json(new { msg = "پرسنل مورد نظر با موفقیت Delete شد" });
+                return Json(new { msg = "Employee deleted successfully." });
             }
             else
             {

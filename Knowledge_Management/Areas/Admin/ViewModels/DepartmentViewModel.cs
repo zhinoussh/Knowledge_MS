@@ -10,6 +10,7 @@ namespace Knowledge_Management.Areas.Admin.ViewModels
     {
         [Display(Name = "Department Name: ")]
         [MaxLength(200, ErrorMessage = "Max length exceeded.")]
+        [Required]
         public string dep_name { get; set; }
 
         public int dep_id { get; set; }

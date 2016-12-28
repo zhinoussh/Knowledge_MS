@@ -105,7 +105,7 @@ namespace Knowledge_Management.Areas.Admin.Controllers
             {
                 List<string> emp_props = dal.get_Employee_byId(id);
                 vm.emp_id = id;
-                vm.Description = "مطرح شده توسط آقای/خانم  " + emp_props[1] + " کد پرسنلی: " + emp_props[0];
+                vm.Description = "Defined by  " + emp_props[1] + " Personel Code: " + emp_props[0];
             }
 
 
@@ -192,7 +192,7 @@ namespace Knowledge_Management.Areas.Admin.Controllers
                 KnowledgeMSDAL DAL = new KnowledgeMSDAL();
 
                 DAL.DeleteQuestion(q.question_id);
-                return Json(new { msg = "مسئله با موفقیت Delete شد" });
+                return Json(new { msg = "Question deleted Successfully." });
             }
             else
             {
@@ -227,7 +227,7 @@ namespace Knowledge_Management.Areas.Admin.Controllers
             {
                 List<string> emp_props = dal.get_Employee_byId(id);
                 vm.emp_id = id;
-                vm.Description = "مطرح شده توسط آقای/خانم  " + emp_props[1] + " کد پرسنلی: " + emp_props[0];
+                vm.Description = "Defined by  " + emp_props[1] + " Personel Code: " + emp_props[0];
             }
 
 
@@ -373,7 +373,7 @@ namespace Knowledge_Management.Areas.Admin.Controllers
                 //delete solution and upload from db
                 DAL.Delete_Solution(id_solution);
 
-                return Json(new { msg = "راهکار مورد نظر با موفقیت Delete شد" });
+                return Json(new { msg = "Solution deleted successfully" });
             }
             else
             {
@@ -419,7 +419,7 @@ namespace Knowledge_Management.Areas.Admin.Controllers
                 {
                     List<string> emp_props = DAL.get_Employee_byId(employee_id);
                     vm.emp_id = employee_id;
-                    vm.Description = "مطرح شده توسط آقای/خانم  " + emp_props[1] + " کد پرسنلی: " + emp_props[0];
+                    vm.Description = "Defined by  " + emp_props[1] + " Personel Code: " + emp_props[0];
                 }
                 return View("EmployeeSolutions", vm);
             }
@@ -452,7 +452,7 @@ namespace Knowledge_Management.Areas.Admin.Controllers
                 System.IO.File.Delete(Server.MapPath(@"~\Upload\" + DAL.get_file_path(q.upload_id)));
 
                 DAL.DeleteUpload(q.upload_id);
-                return Json(new { msg = "فایل بارگذاری شده با موفقیت Delete شد" });
+                return Json(new { msg = "File deleted successfully" });
             }
             else
             {

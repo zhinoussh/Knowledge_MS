@@ -57,6 +57,8 @@ namespace Knowledge_Management.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Delete_Job(JobViewModel s)
         {
+            ModelState["job_name"].Errors.Clear();
+
             if (ModelState.IsValid)
             {
                 KnowledgeMSDAL DAL = new KnowledgeMSDAL();

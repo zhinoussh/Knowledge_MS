@@ -1,4 +1,5 @@
-﻿using Knowledge_Management.Areas.User.ViewModels;
+﻿using Knowledge_Management.Areas.Admin.ViewModels;
+using Knowledge_Management.Areas.User.ViewModels;
 using Knowledge_Management.DAL;
 using Knowledge_Management.Models;
 using System;
@@ -36,7 +37,7 @@ namespace Knowledge_Management.Areas.Admin.Controllers
             List<tbl_job> jobs = DAL.get_Jobs(DepId);
 
             List<SelectListItem> lst_obj = new List<SelectListItem>();
-            lst_obj.Add(new SelectListItem { Value =  "0", Text ="همه مشاغل" });
+            lst_obj.Add(new SelectListItem { Value =  "0", Text ="All Jobs" });
 
             foreach (tbl_job j in jobs)
             {
@@ -129,7 +130,7 @@ namespace Knowledge_Management.Areas.Admin.Controllers
                 KnowledgeMSDAL DAL = new KnowledgeMSDAL();
 
                 DAL.DeleteQuestion(q.question_id);
-                return Json(new { msg = "مسئله با موفقیت Delete شد" });
+                return Json(new { msg = "Question deleted successfully" });
             }
             else
             {

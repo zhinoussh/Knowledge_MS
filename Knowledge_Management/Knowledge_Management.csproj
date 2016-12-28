@@ -192,7 +192,7 @@
     <Compile Include="Areas\Admin\ViewModels\DetailQuestionViewModel.cs" />
     <Compile Include="Areas\Admin\ViewModels\EmployeeViewModel.cs" />
     <Compile Include="Areas\User\ViewModels\FullSolutionViewModel.cs" />
-    <Compile Include="Areas\User\ViewModels\JobDepQuestionViewModel.cs" />
+    <Compile Include="Areas\Admin\ViewModels\JobDepQuestionViewModel.cs" />
     <Compile Include="Areas\Admin\ViewModels\JobDescriptionViewModel.cs" />
     <Compile Include="Areas\Admin\ViewModels\JobViewModel.cs" />
     <Compile Include="Areas\User\ViewModels\NewSolutionViewModel.cs" />
@@ -234,7 +234,6 @@
     <Content Include="Content\img\uploadify.swf" />
     <Content Include="Content\jquery-ui-1.7.2.custom.css" />
     <Content Include="Content\jquery-ui.css" />
-    <Content Include="Content\lang.txt" />
     <Content Include="Content\sidebar_css.css" />
     <Content Include="Content\style_login.css" />
     <Content Include="Content\uploadify.css" />
@@ -267,12 +266,12 @@
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\dataTables.jqueryui.min.js" />
     <Content Include="Areas\Admin\Scripts\DepartmentDT.js" />
-    <Content Include="Scripts\Datatables\DetailEntryDT.js" />
+    <Content Include="Areas\Admin\Scripts\DetailEntryDT.js" />
     <Content Include="Areas\Admin\Scripts\EmployeeDT.js" />
-    <Content Include="Scripts\Datatables\EmployeeEntryDT.js" />
-    <Content Include="Scripts\Datatables\JobDescDT.js" />
+    <Content Include="Areas\Admin\Scripts\EmployeeEntryDT.js" />
+    <Content Include="Areas\Admin\Scripts\JobDescDT.js" />
     <Content Include="Areas\Admin\Scripts\JobDT.js" />
-    <Content Include="Scripts\Datatables\JobEntryDT.js" />
+    <Content Include="Areas\Admin\Scripts\JobEntryDT.js" />
     <Content Include="Scripts\Datatables\KeywordDT.js" />
     <Content Include="Areas\Admin\Scripts\ObjectiveDT.js" />
     <Content Include="Scripts\Datatables\QuestionDT.js" />
@@ -281,9 +280,9 @@
     <Content Include="Scripts\Datatables\SolutionsForQuestion.js" />
     <Content Include="Scripts\Datatables\UploadDT.js" />
     <Content Include="Scripts\Datatables\UploadsForSolution.js" />
-    <Content Include="Scripts\Datatables\ViewQuestionDT.js" />
-    <Content Include="Scripts\Datatables\ViewSolutionQueDT.js" />
-    <Content Include="Scripts\Datatables\ViewSolutionEmpDT.js" />
+    <Content Include="Areas\Admin\Scripts\ViewQuestionDT.js" />
+    <Content Include="Areas\Admin\Scripts\ViewSolutionQueDT.js" />
+    <Content Include="Areas\Admin\Scripts\ViewSolutionEmpDT.js" />
     <Content Include="Scripts\DynamicField.js" />
     <Content Include="Scripts\jquery-2.2.3.js" />
     <Content Include="Scripts\jquery-2.2.3.min.js" />
@@ -305,7 +304,7 @@
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\sidebar.js" />
     <Content Include="Areas\Admin\Scripts\StrategyDT.js" />
-    <Content Include="Scripts\Datatables\ViewUploadDT.js" />
+    <Content Include="Areas\Admin\Scripts\ViewUploadDT.js" />
     <Content Include="Scripts\Site.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config">

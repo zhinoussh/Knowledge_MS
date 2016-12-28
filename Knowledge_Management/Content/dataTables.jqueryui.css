@@ -3,7 +3,7 @@
  * Table styles
  */
 table.dataTable {
-  width:95% !important;
+  width:100% !important;
   margin: 0 0 0 2%;
   clear: both;
   border-collapse: separate;
@@ -490,7 +490,7 @@ table.dataTable tfoot th.ui-state-default:first-child {
 .dataTables_wrapper .ui-widget-header {
   font-weight: normal;
   margin-left:2%;
-  width:95%;
+  width:100%;
 }
 .dataTables_wrapper .ui-toolbar {
   padding: 8px;

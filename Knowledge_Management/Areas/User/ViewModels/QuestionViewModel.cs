@@ -10,7 +10,7 @@ namespace Knowledge_Management.Areas.User.ViewModels
     public class QuestionViewModel
     {
         [Display(Name = "شرح مسئله: ")]
-        [MaxLength(500, ErrorMessage = "تعداد کاراکتر وارد شده، بیش از حد مجاز است")]
+        [MaxLength(500, ErrorMessage = "Max length exceeded.")]
         public string question { get; set; }
 
         public long question_id { get; set; }

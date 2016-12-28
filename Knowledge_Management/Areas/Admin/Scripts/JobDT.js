@@ -48,7 +48,7 @@
     $("#reset_btn").click(function () {
         $("#frmJob").find('input:text,textarea,field-validation-error').val("");
         $("#alert_success").empty();
-        $("#div_alert").slideDown(500);
+        $("#div_alert").slideUp(500);
         $("#hd_id_job").val("0");
 
     });

@@ -1,4 +1,4 @@
-﻿@model Knowledge_Management.ViewModels.JobDescriptionViewModel
+﻿@model Knowledge_Management.Areas.Admin.ViewModels.JobDescriptionViewModel
 
 @{
 
@@ -10,7 +10,7 @@
                     {
                         InsertionMode = InsertionMode.ReplaceWith,
                         HttpMethod = "Post",
-                        OnSuccess = "SuccessAction"
+                        OnSuccess = "SuccessDelete"
                     }))
 {
 
@@ -26,22 +26,11 @@
     </div>
 
     <div class="modal-footer">
-        <button type="button" class="btn btn-confirm" data-dismiss="modal">Cancel</button>
         <input type="submit" class="btn btn-confirm" value="Confirm" />
+        <button type="button" class="btn btn-confirm" data-dismiss="modal">Cancel</button>
         @Html.HiddenFor(d => d.jobDesc_id)
     </div>
 }
 
-<script type="text/javascript">
-    var SuccessAction = function (result) {
-        if (result.msg) {
-            $('#DeleteModal').modal('hide');
-            $("#alert_success").html(result.msg);
-            $("#div_alert").slideDown(500);
-            var $STTable = $("#JobDescDT").dataTable({ bRetrieve: true });
-            $STTable.fnDraw();
-        }
-    }
-</script>
 
 

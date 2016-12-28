@@ -3,11 +3,8 @@
 $(document).ready(function () {
 
     var oTable = $('#SoutionListDT').dataTable({
-        "language": {
-            "url": "/Content/lang.txt"
-        },
         "bServerSide": true,
-        "sAjaxSource": "/ViewEntrybyEmployee/SolutionQuestionAjaxHandler",
+        "sAjaxSource": "/Admin/ViewEntrybyEmployee/SolutionQuestionAjaxHandler",
         "fnServerParams": function (aoData) {
             aoData.push({ "name": "q_id", "value": $('#hd_id_question').val() });
         },
@@ -50,7 +47,7 @@ $(document).ready(function () {
                             "sDefaultContent": " "
                              , "sClass": "dt-body-center",
                             "mRender": function (data, type, row) {
-                                return '<a class="glyphicon glyphicon-list a_clickable" href="/ViewEntrybyEmployee/ViewFullSolution/' + row[0] + '"></a>'
+                                return '<a class="glyphicon glyphicon-list a_clickable" href="/Admin/ViewEntrybyEmployee/ViewFullSolution/' + row[0] + '"></a>'
 
                             }
                         }
@@ -87,19 +84,13 @@ $(document).ready(function () {
         ]
     });
 
-    $("#close_delete_modal").click(function () {
-        $("#div_alert").slideDown(500);
-        return false;
-    });
-
-
 });
 
 
 
 var delete_dialog = function (s_id) {
 
-    var url = "/ViewEntrybyEmployee/Delete_Solution"; // the url to the controller
+    var url = "/Admin/ViewEntrybyEmployee/Delete_Solution"; // the url to the controller
     $.get(url + '/' + s_id, function (data) {
         $('#confirm-container').html(data);
         $('#DeleteModal').modal('show');
@@ -108,7 +99,7 @@ var delete_dialog = function (s_id) {
  
 var confirm_solution = function (s_id) {
     
-    var url = "/ViewEntrybyEmployee/Confirm_Solution?s_id=" + s_id + "&q_id=" + $("#hd_id_question").val();
+    var url = "/Admin/ViewEntrybyEmployee/Confirm_Solution?s_id=" + s_id + "&q_id=" + $("#hd_id_question").val();
     $.post(url, function (data) {
         var tbl = $("#SoutionListDT").dataTable({ bRetrieve: true });
         tbl.fnDraw();

@@ -14,6 +14,7 @@ namespace Knowledge_Management.Areas.Admin.ViewModels
 
         [Display(Name = "Job Title: ")]
         [MaxLength(50, ErrorMessage = "Max length exceeded.")]
+        [Required]
         public string job_name { get; set; }
      
         public string selected_dep { get; set; }

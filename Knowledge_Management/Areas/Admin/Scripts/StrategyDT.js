@@ -46,7 +46,7 @@
     $("#reset_btn").click(function () {
         $("#frmStrategy").find('input:text,textarea,field-validation-error').val("");
         $("#alert_success").empty();
-        $("#div_alert").slideDown(500);
+        $("#div_alert").slideUp(500);
         $("#hd_id_strategy").val("0");
 
     });

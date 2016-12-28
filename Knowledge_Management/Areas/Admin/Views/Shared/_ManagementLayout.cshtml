@@ -22,25 +22,17 @@
                             <span id="main_icon" class="glyphicon glyphicon-chevron-left"></span>
                         </a>
                     </li>
+                    <li style="padding-left:15px"><a href="@Url.Action("Index", "Strategy", new { Area="Admin"})">Strategy Description<i class="sub_icon fa fa-sticky-note fa-lg" data-toggle="tooltip" title="Strategy Description"></i></a></li>
+                    <li style="padding-left:15px"><a href="@Url.Action("Index", "Department", new { area = "Admin" })">Departments<i class="sub_icon fa fa-bank fa-lg" data-toggle="tooltip" title="Departments"></i></a></li>
+                    <li style="padding-left:15px"><a href="@Url.Action("Index", "Job", new { area = "Admin" })">Job Titles<i class="sub_icon fa fa-suitcase fa-lg" data-toggle="tooltip" title="Job Titles"></i></a></li>
+                    <li style="padding-left:15px"><a href="@Url.Action("Index", "Employee", new { area = "Admin" })">Employees<i class="sub_icon fa fa-user fa-lg" data-toggle="tooltip" title="Employees"></i></a></li>
+                    <li style="padding-left:15px"><a href="@Url.Action("Index", "JobDescription" , new { area="Admin" })">Job Descriptions<i class="sub_icon fa fa-tasks fa-lg" data-toggle="tooltip" title="Job Descriptions"></i></a></li>
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="caret"></span>Base Information<i class="sub_icon fa fa-fw fa-cog fa-lg"></i></a>
-                        <ul class="dropdown-menu" role="menu">
-                            <li class="dropdown-header">Define Base Information...</li>
-                            <li><a href="@Url.Action("Index", "Strategy", new { Area="Admin"})">Strategy Description</a></li>
-                            <li><a href="@Url.Action("Index", "Department", new { area = "Admin" })">Organization Departments</a></li>
-                            <li><a href="@Url.Action("Index", "Job", new { area = "Admin" })">Job Titles</a></li>
-                            <li><a href="@Url.Action("Index", "Employee", new { area = "Admin" })">Employees</a></li>
-                        </ul>
-                    </li>
-                    <li style="padding-left:15px">
-                        <a href="@Url.Action(" index", "JobDescription" , new { area="Admin" })">Job Descriptions<i class="sub_icon fa fa-fw fa-bank fa-lg"></i></a>
-                    </li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="caret"></span>Questions & Solutions<i class="sub_icon fa fa-fw fa-folder fa-lg"></i></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="caret"></span>Questions & Solutions<i class="sub_icon fa fa-fw fa-folder fa-lg" data-toggle="tooltip" title="Questions & Solutions"></i></a>
                         <ul class="dropdown-menu" role="menu">
                             <li class="dropdown-header">Based on...</li>
                             <li><a href="@Url.Action("Personel", "ViewEntrybyEmployee", new { area = "Admin" })">Employees</a></li>
-                            <li><a href="@Url.Action("Index", "ViewEntrybyJob", new { area = "Admin" })">Occupations</a></li>
+                            <li><a href="@Url.Action("Index", "ViewEntrybyJob", new { area = "Admin" })">Job Titles</a></li>
                             <li><a href="@Url.Action("Index", "ViewEntrybyDetail", new { area = "Admin" })">Details</a></li>
                         </ul>
                     </li>

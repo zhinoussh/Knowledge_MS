@@ -1,7 +1,8 @@
-﻿@model Knowledge_Management.ViewModels.EmployeeQuestionViewModel
+﻿@model Knowledge_Management.Areas.Admin.ViewModels.EmployeeQuestionViewModel
 
 @{
-    ViewBag.Title = "مشاهده راهکارهای مطرح شده";
+    ViewBag.Title = "Solutions for Question";
+    ViewBag.Subtitle = Model.Description;
     Layout = "~/Areas/Admin/Views/Shared/_ManagementLayout.cshtml";
 }
 
@@ -15,39 +16,37 @@
 </div>
 <!-- /end Modal -->
 
-<h5>مشاهده راهکارها</h5>
-<span class="border_admin"></span>
 
-<div class="editor-field" style="width:100%;">
-    @Html.DisplayFor(model => model.Description)
-</div>
 
 @Html.HiddenFor(model => model.emp_id, new { id = "hd_id_emp" })
 
-<div class="alert alert-success fade in" role="alert" style="float:right; width:100%; visibility:hidden" id="div_alert">
-    <a href="#" class="close" id="close_delete_modal">&times;</a>
-    <label id="alert_success" style="margin-right:5px"></label>
-</div>
+<div class="col-xs-12 top_buffer10">
+    <div class="alert alert-success" role="alert" style="display:none" id="div_alert">
+        <a href="#" class="close" id="close_alert">&times;</a>
+        <label id="alert_success"></label>
+    </div>
+    </div>
 
-<table id="SolutionEmployeeDT" style="width:100%">
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>#</th>
-            <th >شرح مسئله</th>
-            <th >شرح راهکار</th>
-            <th>وضعیت Confirm</th>
-            <th>تعداد اسناد</th>
-            <th>مشاهده کامل</th>
-            <th>Confirm / رد</th>
-            <th>Delete</th>
+    <div class="col-xs-12 top_buffer50 nopadding ">
+        <table id="SolutionEmployeeDT" class="display">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>#</th>
+                    <th>Question</th>
+                    <th>Solution</th>
+                    <th>Confirm Status</th>
+                    <th>Document Number</th>
+                    <th>Full View</th>
+                    <th>Confirm / Reject</th>
+                    <th>Delete</th>
 
-        </tr>
-    </thead>
-    <tbody></tbody>
-</table>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+    @section scripts{
+        <script src="~/Areas/Admin/Scripts/ViewSolutionEmpDT.js"></script>
 
-@section scripts{
-    <script src="~/Scripts/Datatables/ViewSolutionEmpDT.js"></script>
-
-}
+    }

@@ -70,7 +70,6 @@
                             "sDefaultContent": " "
                             , "sClass": "dt-body-center",
                             "mRender": function (data, type, row) {
-                               // alert(row[9] + "");
                                 var param_array = { id: row[0], dep_id: row[1], job_id: row[2], fname: row[4], lname: row[5], pcode: row[6], dt_e: row[9].toString(), dt_v: row[10].toString() };
                                 var param_obj = [];
                                 param_obj.push(param_array);
@@ -99,7 +98,7 @@
     $("#reset_btn").click(function () {
         $("#frmEmployee").find('input:text,textarea,field-validation-error').val("");
         $("#alert_success").empty();
-        $("#div_alert").slideDown(500);
+        $("#div_alert").slideUp(500);
 
         $("#hd_id_emp").val("0");
         $('input[type="checkbox"]').prop('checked', false);

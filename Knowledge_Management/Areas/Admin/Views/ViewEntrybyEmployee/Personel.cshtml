@@ -1,36 +1,31 @@
 ﻿
 @{
-    ViewBag.Title = "مشاهده مسائل، راهکارها و اسناد وارد شده توسط پرسنل سازمان";
+    ViewBag.Title = "Questions By Employees";
     Layout = "~/Areas/Admin/Views/Shared/_ManagementLayout.cshtml";
 }
 
 
-<h5>مشاهده مسائل، راهکارها و اسناد وارد شده توسط پرسنل سازمان</h5>
-<span class="border_admin"></span>
-
-<table id="EmployeeEntryDT" class="display">
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th >#</th>
-            <th >نام</th>
-            <th >نام خانوادگی</th>
-            <th >کد ملی</th>
-            <th >واحد سازمانی</th>
-            <th >شغل</th>
-            <th>ورود اطلاعات</th>
-            <th>مشاهده اطلاعات</th>
-            <th>مسائل مطرح شده</th>
-            <th>راهکارها و اسناد</th>
-
-
-
-        </tr>
-    </thead>
-    <tbody></tbody>
-</table>
-
-@section scripts{
-    <script src="~/Scripts/Datatables/EmployeeEntryDT.js"></script>
-}
+<div class="col-xs-12 top_buffer50 nopadding ">
+    <table id="EmployeeEntryDT" class="display">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>#</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Personel code</th>
+                <th>Departmentی</th>
+                <th>Job Title</th>
+                <th>Data Entry Access</th>
+                <th>View Information Access</th>
+                <th>Questions</th>
+                <th>Solutions</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+    </div>
+    @section scripts{
+        <script src="~/Areas/Admin/Scripts/EmployeeEntryDT.js"></script>
+    }
 

@@ -43,7 +43,7 @@ namespace Knowledge_Management.Areas.Admin.Controllers
                 KnowledgeMSDAL DAL = new KnowledgeMSDAL();
 
                 DAL.InsertJobDescription(s.jobDesc_id, s.jobDesc,Int32.Parse(s.job_id));
-                return Json(new { msg = "شرح شغل با موفقیت ذخیره شد" });
+                return Json(new { msg = "Job Description inserted successfully." });
             }
             else
             {
@@ -82,12 +82,14 @@ namespace Knowledge_Management.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Delete_JobDesc(JobDescriptionViewModel s)
         {
+            ModelState["jobDesc"].Errors.Clear();
+
             if (ModelState.IsValid)
             {
                 KnowledgeMSDAL DAL = new KnowledgeMSDAL();
 
                 DAL.DeleteJobDescription(s.jobDesc_id);
-                return Json(new { msg = "شرح شغل مورد نظر با موفقیت Delete شد" });
+                return Json(new { msg = "Job Description deleted successfully." });
             }
             else
             {

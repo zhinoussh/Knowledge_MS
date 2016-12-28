@@ -1,11 +1,8 @@
 ﻿$(document).ready(function () {
 
     var oTable = $('#JobDescDT').dataTable({
-        "language": {
-            "url": "/Content/lang.txt"
-        },
         "bServerSide": true,
-        "sAjaxSource": "/JobDescription/JobDescAjaxHandler",
+        "sAjaxSource": "/Admin/JobDescription/JobDescAjaxHandler",
         "fnServerParams": function (aoData) {
             aoData.push({ "name": "job_id", "value": $('#dropdown_job').val() });
         },
@@ -53,7 +50,7 @@
     $("#reset_btn").click(function () {
         $("#frmJobDesc").find('input:text,textarea,field-validation-error').val("");
         $("#alert_success").empty();
-        $("#div_alert").slideDown(500);
+        $("#div_alert").slideUp(500);
         $("#hd_id_jobDsc").val("0");
 
         $('#dropdown_department option:selected').removeAttr('selected');
@@ -70,7 +67,7 @@
 
         var dep_id = $('#dropdown_department').val();
         $.ajax({
-            url: '/JobDescription/FillJobs',
+            url: '/Admin/JobDescription/FillJobs',
             type: "GET",
             dataType: 'JSON',
             data: { DepId: dep_id },
@@ -90,16 +87,12 @@
 
     });
 
-    $(".close").click(function () {
-        $("#div_alert").slideDown(500);
-        return false;
-    });
 
 });
 
 var delete_dialog = function (jd_id) {
 
-    var url = "/JobDescription/Delete_JobDesc"; // the url to the controller
+    var url = "/Admin/JobDescription/Delete_JobDesc"; // the url to the controller
     $.get(url + '/' + jd_id, function (data) {
         $('#confirm-container').html(data);
         $('#DeleteModal').modal('show');
@@ -127,5 +120,13 @@ var SuccessMessage = function (result) {
     }
 }
 
-
+var SuccessDelete = function (result) {
+    if (result.msg) {
+        $('#DeleteModal').modal('hide');
+        $("#alert_success").html(result.msg);
+        $("#div_alert").slideDown(500);
+        var $STTable = $("#JobDescDT").dataTable({ bRetrieve: true });
+        $STTable.fnDraw();
+    }
+}
 

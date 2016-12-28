@@ -4,11 +4,8 @@
 $(document).ready(function () {
 
     var oTable = $('#UploadDT').dataTable({
-        "language": {
-            "url": "/Content/lang.txt"
-        },
         "bServerSide": true,
-        "sAjaxSource": "/ViewEntrybyEmployee/UploadAjaxHandler",
+        "sAjaxSource": "/Admin/ViewEntrybyEmployee/UploadAjaxHandler",
         "fnServerParams": function (aoData) {
             aoData.push({ "name": "solution_id", "value": $('#hd_id_solution').val() });
         },
@@ -92,13 +89,6 @@ $(document).ready(function () {
     });
 
 
-    $("#close_delete_modal").click(function () {
-        $("#div_alert").slideDown(500);
-        return false;
-    });
-
-
-
 });
 
 
@@ -116,7 +106,7 @@ var download_file = function (upload_id) {
 
     $.ajax(
            {
-               url: '/ViewEntrybyEmployee/DownloadFile',
+               url: '/Admin/ViewEntrybyEmployee/DownloadFile',
                contentType: 'application/json; charset=utf-8',
                datatype: 'json',
                data: {
@@ -124,14 +114,14 @@ var download_file = function (upload_id) {
                },
                type: "GET",
                success: function () {
-                   window.location = '/ViewEntrybyEmployee/DownloadFile?uploadID=' + upload_id;
+                   window.location = '/Admin/ViewEntrybyEmployee/DownloadFile?uploadID=' + upload_id;
                }
            });
 }
 
 var delete_dialog = function (upload_id) {
 
-    var url = "/ViewEntrybyEmployee/Delete_Upload"; // the url to the controller
+    var url = "/Admin/ViewEntrybyEmployee/Delete_Upload"; // the url to the controller
     $.get(url + '/' + upload_id, function (data) {
         $('#confirm-container').html(data);
         $('#DeleteModal').modal('show');
@@ -140,7 +130,7 @@ var delete_dialog = function (upload_id) {
 
 var confirm_upload= function (u_id) {
 
-    var url = "/ViewEntrybyEmployee/Confirm_Upload?u_id=" + u_id + "&s_id=" + $("#hd_id_solution").val();
+    var url = "/Admin/ViewEntrybyEmployee/Confirm_Upload?u_id=" + u_id + "&s_id=" + $("#hd_id_solution").val();
     $.post(url , function (data) {
         var tbl = $("#UploadDT").dataTable({ bRetrieve: true });
         tbl.fnDraw();
