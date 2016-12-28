@@ -119,6 +119,7 @@
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\User\UserAreaRegistration.cs" />
     <Compile Include="Components\HtmlBootstrapButton.cs" />
+    <Compile Include="Components\HtmlCheckBox.cs" />
     <Compile Include="Components\HtmlCommon.cs" />
     <Compile Include="Areas\Admin\Controllers\ViewEntrybyDetailController.cs" />
     <Compile Include="Areas\Admin\Controllers\ViewEntrybyJobController.cs" />
@@ -211,6 +212,7 @@
     </Content>
     <Content Include="Content\animate.css" />
     <Content Include="Content\animate.min.css" />
+    <Content Include="Content\awesome-bootstrap-checkbox.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />

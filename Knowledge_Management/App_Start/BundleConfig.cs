@@ -44,6 +44,7 @@ namespace Knowledge_Management
                       , "~/Content/font-awesome.min.css"
                       , "~/Content/dataTables.jqueryui.css"
                       , "~/Content/jquery-ui.css"
+                      , "~/Content/awesome-bootstrap-checkbox.css"
                       ));
         }
     }
