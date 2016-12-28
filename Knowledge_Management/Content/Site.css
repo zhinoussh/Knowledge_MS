@@ -271,14 +271,14 @@ h6 {
 .btn-primary {
     width: 100%;
     height: 35px;
-    background-image: -webkit-linear-gradient(top, #2349ab 0%, #4f6dbd 100%);
-    background-image: -o-linear-gradient(top, #2349ab 0%, #4f6dbd 100%);
-    background-image: -webkit-gradient(linear, left top, left bottom, from(#2349ab), to(#4f6dbd));
-    background-image: linear-gradient(to bottom, #2349ab 0%, #4f6dbd 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff2349ab', endColorstr='#ff4f6dbd', GradientType=0);
+    background-image: -webkit-linear-gradient(top, #5a81ba 0%, #c7d5e0 100%);
+    background-image: -o-linear-gradient(top, #5a81ba 0%, #c7d5e0 100%);
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#5a81ba), to(#c7d5e0));
+    background-image: linear-gradient(to bottom, #5a81ba 0%, #c7d5e0 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff5a81ba', endColorstr='#ffc7d5e0', GradientType=0);
     filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
     background-repeat: repeat-x;
-    border-color: #2349ab;
+    border-color: #5a81ba;
     box-shadow: #B4B5B5 5px 5px 5px 0;
     font-family: 'Open Sans', sans-serif;
 }
@@ -480,39 +480,32 @@ thead th {
 
 /*************PANEL*/
 .panel-default{
-    text-align:right;
-background:#e3e2e2 !important;
+background:#f7f1f1 !important;
 
 }
 .panel-heading {
     /*background:#4e5c7d !important;*/
-    background: #e3f1f2 !important;
-    border-color: #d0c2f7;
+    /*background: #dee7ef !important;*/
+    /*border-color: #c7d5e0;*/
+    height:40px;
+    padding:0;
 }
 .panel-title {
     font-family:'Open Sans', sans-serif;
-    font-size:12pt;
-    text-align:right;
+    font-size:11pt;
     /*color:#e9e8e8;*/
+    text-align:left;
 }
 
-    .panel-title:hover {
-    text-decoration:none;
-    font-size:13pt;
-    }
+    
 
-a.accordion-toggle  i{
-  width: 45px;
-  line-height:55px;
-  font-size: 20px;
-  margin-top: -10px;
+a.accordion-toggle i{
+  width: 40px;
+  font-size: 15px;
   text-align: center;
-  margin-right: -15px;
-  background:#a5d9df;
-}
-
-.panel-body {
-direction:rtl;
+  height:40px;
+  line-height:3;
+  background:#c7d5e0;
 }
 
 .nopadding {

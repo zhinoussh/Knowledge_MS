@@ -21,7 +21,7 @@ $(document).ready(function () {
                             "sName": "radif", "sWidth": '2%', "sClass": "dt-body-center"
                                 , "bSearchable": false, "bSortable": false
                         },
-                        { "sName": "solution", "sWidth": '80%' }
+                        { "sName": "solution", "sWidth": '80%', "sClass": "dt-body-left" }
                         , {
                             "sName": "confirm_status",
                             "sWidth": '2%',
@@ -79,8 +79,6 @@ $(document).ready(function () {
                                 return "<a class='glyphicon glyphicon-trash a_clickable' onclick='delete_dialog(" + row[0] + ")'></a>"
                             }
                          }
-
-
         ]
     });
 

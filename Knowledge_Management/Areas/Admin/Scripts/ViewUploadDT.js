@@ -30,7 +30,7 @@ $(document).ready(function () {
                             "sName": "radif", "sWidth": '2%', "sClass": "dt-body-center"
                                 , "bSearchable": false, "bSortable": false
                         },
-                        { "sName": "upload", "sWidth": '80%' }
+                        { "sName": "upload", "sWidth": '80%', "sClass": "dt-body-left" }
                          , {
                              "sName": "confirm_status",
                              "sWidth": '2%',
