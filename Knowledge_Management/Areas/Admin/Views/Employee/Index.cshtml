@@ -16,6 +16,14 @@
     </div>
 </div>
 <!-- /end Modal -->
+
+<div class="col-xs-12 top_buffer10">
+    <div class="alert alert-success" role="alert" style="display:none" id="div_alert">
+        <a href="#" class="close" id="close_alert">&times;</a>
+        <label id="alert_success"></label>
+    </div>
+</div>
+
 @using (Ajax.BeginForm("Add_Edit_Employee", "Employee"
                     , new AjaxOptions
                     {
@@ -25,12 +33,9 @@
                     }, new { @id = "frmEmployee" }))
 {
 
-
-
     @Html.AntiForgeryToken()
 
-
-    <div class="col-xs-12 top_buffer50">
+    <div class="col-xs-12 top_buffer20">
         <div class="col-xs-1 nopadding top_buffer10">
             @Html.LabelFor(model => model.first_name, new { @class = "div_lable" })
         </div>
@@ -64,7 +69,8 @@
         </div>
 
         <div class="col-xs-2 nopadding">
-            @Html.PasswordFor(u => u.pass, new { @class = "form-control", style = "text-align:center" })
+            @Html.PasswordFor(u => u.pass, new { @class = "form-control", style = "text-align:center", id = "txt_password" })
+            @Html.ValidationMessageFor(model => model.pass, "", new { @class = "error" })
         </div>
         <div class="col-xs-1 top_buffer10" style="width:100px;margin-left:4%">
             @Html.LabelFor(model => model.lst_dep, new { @class = "div_lable" })
@@ -97,12 +103,7 @@
         </div>
     </div>
     @Html.HiddenFor(model => model.emp_id, new { id = "hd_id_emp" })
-    <div class="col-xs-12 top_buffer10">
-        <div class="alert alert-success" role="alert" style="display:none" id="div_alert">
-            <a href="#" class="close" id="close_alert">&times;</a>
-            <label id="alert_success"></label>
-        </div>
-    </div>
+ 
 }
 
 <div class="col-xs-12 top_buffer20 nopadding ">

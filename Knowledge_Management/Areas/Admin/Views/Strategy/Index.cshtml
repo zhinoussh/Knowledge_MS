@@ -15,7 +15,12 @@
     </div>
 </div>
 <!-- /end Modal -->
-
+<div class="col-xs-12 top_buffer10">
+    <div class="alert alert-success" role="alert" id="div_alert" style="display:none">
+        <a href="#" class="close" id="close_alert">&times;</a>
+        <label id="alert_success"></label>
+    </div>
+</div>
 
     @using (Ajax.BeginForm("Add_Edit_Strategy", "Strategy"
                     , new AjaxOptions
@@ -30,7 +35,7 @@
         @Html.AntiForgeryToken()
 
 
-        <div class="col-xs-12 top_buffer50">
+        <div class="col-xs-12 top_buffer20">
             <div class="col-xs-2 nopadding top_buffer10">
                 @Html.LabelFor(model => model.strategy_name, new { @class = "div_lable" })
             </div>
@@ -51,12 +56,7 @@
         </div>
         @Html.HiddenFor(model => model.strategy_id, new { id = "hd_id_strategy" })
 
-    <div class="col-xs-12 top_buffer10">
-        <div class="alert alert-success" role="alert" id="div_alert" style="display:none">
-            <a href="#" class="close" id="close_alert">&times;</a>
-            <label id="alert_success"></label>
-        </div>
-    </div>
+
 
         }
 

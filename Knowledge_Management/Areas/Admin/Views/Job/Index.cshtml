@@ -16,6 +16,14 @@
     </div>
 </div>
 <!-- /end Modal -->
+
+<div class="col-xs-12 top_buffer10">
+    <div class="alert alert-success" role="alert" style="display:none" id="div_alert">
+        <a href="#" class="close" id="close_alert">&times;</a>
+        <label id="alert_success"></label>
+    </div>
+</div>
+
 @using (Ajax.BeginForm("Add_Edit_Job", "Job"
                     , new AjaxOptions
                     {
@@ -28,7 +36,7 @@
     @Html.AntiForgeryToken()
 
 
-    <div class="col-xs-12 top_buffer50">
+    <div class="col-xs-12 top_buffer20">
         <div class="col-xs-2 nopadding top_buffer10">
            Department
         </div>
@@ -59,12 +67,7 @@
     </div>
     @Html.HiddenFor(model => model.job_id, new { id = "hd_id_job" })
     
-    <div class="col-xs-12 top_buffer10">
-        <div class="alert alert-success" role="alert" style="display:none" id="div_alert">
-            <a href="#" class="close" id="close_alert">&times;</a>
-            <label id="alert_success"></label>
-        </div>
-        </div>
+  
         }
 
         <div class="col-xs-12 top_buffer50 nopadding ">
