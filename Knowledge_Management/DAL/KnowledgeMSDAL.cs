@@ -247,15 +247,6 @@ namespace Knowledge_Management.DAL
         public List<Employee> get_Employees()
         {
 
-            //List<Employee> lst_employee = 
-            //    (db.tbl_employee.AsEnumerable().Join(db.tbl_department.AsEnumerable()
-            //    , emp => emp.fk_department, dep => dep.pkey, (e, d) => new Employee
-            //    {
-            //        Emp_Id=e.pkey,Emp_fname=e.fname,Emp_lname=e.lname,Emp_pcode=e.personel_code
-            //        ,Dep_Id=d.pkey,Dep_Name=d.department_name
-            //    })
-            //   ).Join(db.tbl_job.AsEnumerable(), emp => emp.Emp_Id,j=>j.pkey,(e,j)=>)
-
             List<Employee> lst_employee = (from e in db.tbl_employee
                                           join j in db.tbl_job on e.fk_job equals j.pkey
                                           join d in db.tbl_department on e.fk_department equals d.pkey
@@ -339,14 +330,20 @@ namespace Knowledge_Management.DAL
 
                     //insert login data for employee 
                     int newPK = s.pkey;
-                    string pass = (new Encryption()).Encrypt(password);
+
+                    if (password != "000000")
+                    {
+                        string pass = (new Encryption()).Encrypt(password);
 
 
-                    tbl_login login_obj = new tbl_login { username = personel_code, role = emp_role, pass = pass, fk_emp = newPK };
-                    db.tbl_login.Add(login_obj);
-                    db.SaveChanges();
+                        tbl_login login_obj = new tbl_login { username = personel_code, role = emp_role, pass = pass, fk_emp = newPK };
+                        db.tbl_login.Add(login_obj);
+                        db.SaveChanges();
 
-                    return 1;
+                        return 1;
+                    }
+                    else
+                        return -2;
                 }
                 else
                     return -1;
@@ -367,6 +364,8 @@ namespace Knowledge_Management.DAL
                 tbl_login l = db.tbl_login.Where(x => x.fk_emp == emp_id).FirstOrDefault();
                 if (l != null)
                 {
+                    if(password!="000000")
+                        l.pass=(new Encryption()).Encrypt(password);
                     l.role = emp_role;
                     db.SaveChanges();
                 }

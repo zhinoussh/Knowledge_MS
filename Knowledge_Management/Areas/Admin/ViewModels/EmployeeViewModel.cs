@@ -28,6 +28,7 @@ namespace Knowledge_Management.Areas.Admin.ViewModels
 
         [Display(Name = "Password: ")]
         [Required]
+        [MinLength(6,ErrorMessage="Password should be at least 6 characters")]
         public string pass { get; set; }
 
         public string dep_id { get; set; }

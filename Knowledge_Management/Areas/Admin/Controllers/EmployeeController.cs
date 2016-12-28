@@ -40,22 +40,25 @@ namespace Knowledge_Management.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Add_Edit_Employee(EmployeeViewModel s)
         {
+          
             if (ModelState.IsValid)
             {
                 KnowledgeMSDAL DAL = new KnowledgeMSDAL();
 
-              int result=  DAL.InsertEmployee(s.emp_id, s.first_name, s.last_name, s.personel_code
+              int insert_result=  DAL.InsertEmployee(s.emp_id, s.first_name, s.last_name, s.personel_code
                     , Int32.Parse(s.dep_id), Int32.Parse(s.job_id),s.pass,s.data_entry,s.data_view);
 
-                if(result>0)
+              if (insert_result > 0)
                     return Json(new { msg = "Employee inserted successfully.", result = 1 });
-                else
-                    return Json(new { msg = "This personel code is already existed.", result = -1 });
+              else if (insert_result==-1)
+                  return Json(new { msg = "This personel code is already existed.", result = -1 });
+              else if (insert_result == -2)
+                  return Json(new { msg = "This password is not valid.", result = -2 });
 
             }
             else
             {
-                ModelState.AddModelError("ADD_EmployeeErr", "Employee length is exeeding");
+                ModelState.AddModelError("ADD_EmployeeErr", "Error in inserting employee");
             }
             return View(s);
         }

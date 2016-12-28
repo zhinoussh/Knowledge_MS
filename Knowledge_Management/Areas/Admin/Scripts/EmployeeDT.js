@@ -23,7 +23,8 @@
                               "bSearchable": false,
                               "bSortable": false,
                               "bVisible": false
-                          },
+                          }
+                          ,
                             { "sName": "radif", "sWidth": '2%', "sClass": "dt-body-center"
                             , "bSearchable": false, "bSortable": false },
                         { "sName": "fname", "sWidth": '15%' },
@@ -99,6 +100,7 @@
 
     $("#reset_btn").click(function () {
         $("#frmEmployee").find('input:text,textarea,field-validation-error').val("");
+        $("#frmEmployee").find("input[type='password']").val('');
         $("#alert_success").empty();
         $("#div_alert").slideUp(500);
 
@@ -163,6 +165,8 @@ var edit_employee = function (s) {
     $("#txt_first_name").val(s[0].fname);
     $("#txt_last_name").val(s[0].lname);
     $("#txt_personel_code").val(s[0].pcode);
+    $("#txt_password").val("000000");
+    
 
     var dt_entry = s[0].dt_e == "True" ? true : false
     var dt_view = s[0].dt_v == "True" ? true : false
@@ -180,6 +184,7 @@ var SuccessMessage = function (result) {
         //if success
         if (result.result == 1) {
             $("#frmEmployee").find('input:text,textarea').val("");
+            $("#frmEmployee").find("input[type='password']").val('');
             $("#hd_id_emp").val("0");
             $('input[type="checkbox"]').prop('checked', false);
 
