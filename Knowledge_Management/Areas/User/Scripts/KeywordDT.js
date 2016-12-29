@@ -3,7 +3,7 @@ $(document).ready(function () {
 
     var oTable = $('#KeywordDT').dataTable({
         "bServerSide": true,
-        "sAjaxSource": "KeywordAjaxHandler",
+        "sAjaxSource": "/User/SearchKey/KeywordAjaxHandler",
         "fnServerParams": function (aoData) {
             aoData.push({ "name": "jobdesc_id", "value": $('#dropdown_jobDesc').val() });
             aoData.push({ "name": "depObj_id", "value": $('#dropdown_dep_Objective').val() });

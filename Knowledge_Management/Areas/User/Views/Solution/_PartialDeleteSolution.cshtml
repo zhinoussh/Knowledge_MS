@@ -1,4 +1,4 @@
-﻿@model Knowledge_Management.ViewModels.SolutionEmployeeViewModel
+﻿@model Knowledge_Management.Areas.User.ViewModels.SolutionEmployeeViewModel
 
 @{
 
@@ -10,7 +10,7 @@
                     {
                         InsertionMode = InsertionMode.ReplaceWith,
                         HttpMethod = "Post",
-                        OnSuccess = "SuccessAction"
+                        OnSuccess = "SuccessDelete"
                     }))
 {
 
@@ -31,17 +31,5 @@
         @Html.HiddenFor(d => d.solution_id)
     </div>
 }
-
-<script type="text/javascript">
-    var SuccessAction = function (result) {
-        if (result.msg) {
-            $('#DeleteModal').modal('hide');
-            $("#alert_success").html(result.msg);
-            $("#div_alert").slideDown(500);
-            var $STTable = $("#SolutionDT").dataTable({ bRetrieve: true });
-            $STTable.fnDraw();
-        }
-    }
-</script>
 
 

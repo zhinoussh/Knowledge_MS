@@ -1,11 +1,9 @@
 ﻿/***USED IN SearchInfo/SearchAll*************/
-
-
 $(document).ready(function () {
 
     var oTable = $('#SearchQuestionDT').dataTable({
         "bServerSide": true,
-        "sAjaxSource": "/SearchInfo/SearchQuestionAjaxHandler",
+        "sAjaxSource": "/User/SearchInfo/SearchQuestionAjaxHandler",
         "fnServerParams": function (aoData) {
             aoData.push({ "name": "key_id", "value": $('#hd_id_keyword').val() });
         },
@@ -79,7 +77,7 @@ $(document).ready(function () {
                            "sDefaultContent": " "
                             , "sClass": "dt-body-center",
                            "mRender": function (data, type, row) {
-                               return "<a class='glyphicon glyphicon-list-alt a_clickable' href='/Solution/Index/" + row[0] + "'></a>"
+                               return "<a class='glyphicon glyphicon-list-alt a_clickable' href='/User/Solution/Index/" + row[0] + "'></a>"
                            }
 
                         }
@@ -92,7 +90,7 @@ $(document).ready(function () {
                             "sDefaultContent": " "
                             , "sClass": "dt-body-center",
                             "mRender": function (data, type, row) {
-                                return "<a class='glyphicon glyphicon-file a_clickable' href='/Solution/NewSolution/" + row[0] + "'></a>"
+                                return "<a class='glyphicon glyphicon-file a_clickable' href='/User/Solution/NewSolution/" + row[0] + "'></a>"
                             }
 
                         }
@@ -115,9 +113,9 @@ var details = function (s) {
     };
 
     $.ajax({
-        type:'GET',
+        type: 'GET',
         data: QuestionViewModel,
-        url:'/User/SearchInfo/QuestionDetails',
+        url: '/User/SearchInfo/QuestionDetails',
         success: function (result) {
             $('#ModalContainer').html(result);
             $('#ModalContainer').find("#DetailModal").modal('show');
@@ -125,8 +123,8 @@ var details = function (s) {
         error: function (jqXHR, textStatus, errorThrown) {
             alert(errorThrown);
         }
+    });
 }
-
 
 
 

@@ -1,4 +1,4 @@
-﻿@model Knowledge_Management.ViewModels.QuestionViewModel
+﻿@model Knowledge_Management.Areas.User.ViewModels.QuestionViewModel
 
 @{
 
@@ -10,7 +10,7 @@
                     {
                         InsertionMode = InsertionMode.ReplaceWith,
                         HttpMethod = "Post",
-                        OnSuccess = "SuccessAction"
+                        OnSuccess = "SuccessDelete"
                     }))
 {
 
@@ -31,16 +31,4 @@
         @Html.HiddenFor(d => d.question_id)
     </div>
 }
-
-<script type="text/javascript">
-    var SuccessAction = function (result) {
-        if (result.msg) {
-            $('#DeleteModal').modal('hide');
-            $("#alert_success").html(result.msg);
-            $("#div_alert").slideDown(500);
-            var $STTable = $("#QuestionDT").dataTable({ bRetrieve: true });
-            $STTable.fnDraw();
-        }
-    }
-</script>
 

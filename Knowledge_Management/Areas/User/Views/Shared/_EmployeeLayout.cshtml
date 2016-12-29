@@ -4,7 +4,7 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" , initial-scale="1.0" />
-    <title>سیستم مدیریت دانش - @ViewBag.Title</title>
+    <title>Knowledge Management Systems - @ViewBag.Title</title>
 
     @Styles.Render("~/Content/css")
     @Styles.Render("~/Content/management")
@@ -22,33 +22,33 @@
                 <ul class="nav sidebar-nav">
                     <li class="sidebar-brand">
                         <a id="menu-toggle" href="#">
-                            بخش های سیستم
+                            Employee Section
                             <span id="main_icon" class="glyphicon glyphicon-chevron-left"></span>
                         </a>
                     </li>
                     @if (User.IsInRole("DataEntry"))
                     {
-                        <li>
-                            <a href="/InsertInfo/Index"> ورود اطلاعات و دانش <i class="sub_icon fa fa-fw fa-pencil-square-o fa-lg"></i> </a>
+                        <li style="padding-left:15px">
+                            <a href="@Url.Action("Index", "InsertInfo", new { Area = "User" })">Create or Share Knowledge<i class="sub_icon fa fa-fw fa-pencil-square-o fa-lg" data-toggle="tooltip" title="Create or Share Knowledge"></i> </a>
                         </li>
                     }
                     @if (User.IsInRole("DataView"))
                     {
                         <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="caret"></span> جستجوی راهکار<i class="sub_icon fa fa-fw fa-search fa-lg"></i></a>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="caret"></span>Search Knowledge Repository<i class="sub_icon fa fa-fw fa-search fa-lg" data-toggle="tooltip" title="Search Knowledge Repository"></i></a>
                             <ul class="dropdown-menu" role="menu">
                                 <li class="dropdown-header"></li>
-                                <li><a href="/SearchInfo/SearchAll">جستجوی مسائل</a></li>
-                                <li><a href="/SearchKey/Index">لیست تمام کلیدواژه های جستجو</a></li>
-                                <li><a href="/Solution/YourSolution">راهکارهای شما</a></li>
+                                <li><a href="@Url.Action("SearchAll", "SearchInfo", new { Area = "User" })">Search Content</a></li>
+                                <li><a href="@Url.Action("Index", "SearchKey", new { Area = "User" })">Find by Keywords</a></li>
+                                <li><a href="@Url.Action("YourSolution", "Solution", new { Area = "User" })">Your Solutions</a></li>
                             </ul>
                         </li>
                     }
-                    @*<li>
-                        <a href="/EmployeeProfile/Index">Edit اطلاعات پرسنلی <i class="sub_icon fa fa-fw fa-user fa-lg"></i> </a>
-                    </li>*@
                     <li>
-                        <a href="/Home/Logout"> خروج <i class="sub_icon fa fa-fw fa-sign-out fa-lg"></i> </a>
+                        <a href="@Url.Action("Index", "EmployeeProfile", new { Area = "User" })">Profile<i class="sub_icon fa fa-fw fa-user fa-lg" data-toggle="tooltip" title="Profile"></i> </a>
+                    </li>
+                    <li>
+                        <a href="@Url.Action("Logout", "Home", new { area = "User" })"> Logout <i class="sub_icon fa fa-fw fa-sign-out fa-lg" data-toggle="tooltip" title="Logout"></i> </a>
                     </li>
 
                 </ul>
@@ -59,28 +59,38 @@
 
                 <div class="container">
                     <div class="row">
-                        <div class="col-sm-11">
-                            <div class="editor-field"><img src="~/img/header2.png" alt="" class="header_mng" /></div>
-                            <div class="editor-field" style="margin-right:55%">
-                                کابر گرامی،
+
+                        <div class="col-xs-12">
+
+                            <div class="col-xs-2">
+                                <img src="~/img/header2.png" alt="" class="header_mng" />
+                            </div>
+                            <div class="col-xs-2">
+                                Welcome
                                 <span style="color:#0094ff">
                                     @((User.Identity as UserIdentity).Fullname)
 
                                 </span>
-                                خوش آمدید
                             </div>
-                        </div>
-                        <div class="col-sm-9 col-sm-offset-1">
 
+                                <div class="col-xs-8 top_buffer50">
+                                    <h5>@ViewBag.Title</h5>
+                                    <span class="border_admin"></span>
+                                    <h6 style="color:#8076a2">@ViewBag.Subtitle </h6>
+                                </div>
+                        </div>
+
+                        <div class="col-xs-10">
                             @RenderBody()
 
                         </div>
 
                     </div>
+                   
+                    </div>
+
+
                 </div>
-
-
-            </div>
             <!-- /#page-content-wrapper -->
 
         </div>

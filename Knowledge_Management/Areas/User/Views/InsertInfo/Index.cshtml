@@ -1,9 +1,8 @@
-﻿@using Knowledge_Management.ViewModels
-@model QuestionViewModel
+﻿@model Knowledge_Management.Areas.User.ViewModels.QuestionViewModel
 @{
-    ViewBag.Title = "ورود اطلاعات و دانش ضمن خدمت";
-    Layout = "~/Views/Shared/_EmployeeLayout.cshtml";
- }
+    ViewBag.Title = "Data Entry Section";
+    Layout = "~/Areas/User/Views/Shared/_EmployeeLayout.cshtml";
+}
 
 <!-- Modal -->
 <div class="modal fade" id="DeleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -14,10 +13,12 @@
     </div>
 </div>
 <!-- /end Modal -->
-
-<h5>ورود اطلاعات و دانش ضمن خدمت</h5>
-<span class="border_admin" style="margin-bottom:0;"></span>
-
+<div class="col-xs-12 top_buffer10">
+    <div class="alert alert-success" role="alert" style="display:none" id="div_alert">
+        <a href="#" class="close" id="close_alert">&times;</a>
+        <label id="alert_success"></label>
+    </div>
+</div>
 
 @using (Ajax.BeginForm("Add_Edit_Question", "InsertInfo"
                     , new AjaxOptions
@@ -32,120 +33,116 @@
 
     @Html.AntiForgeryToken()
 
-    <div style="float:right; width:100%;margin-top:5%">
+    <div class="col-xs-12 top_buffer20">
 
-
-        <div class="editor-field" style="width:8%;">
-            @Html.LabelFor(model => model.lst_strategy)
+        <div class="col-xs-1 nopadding top_buffer10">
+            @Html.LabelFor(model => model.lst_strategy, new { @class="div_lable"})
         </div>
-        <div class="editor-field" style="width:20%;">
+        <div class="col-xs-4 nopadding">
             @Html.DropDownListFor(model => model.strategy_id, new SelectList(Model.lst_strategy, "Value", "Text")
          , "----", new { @class = "form-control", id = "dropdown_strategy" })
         </div>
 
-        <div class="editor-label" style="width:12%;">
-            @Html.LabelFor(model => model.lst_dep_objective)
+        <div class="col-xs-1 nopadding top_buffer10">
+            @Html.LabelFor(model => model.lst_dep_objective, new { @class = "div_lable" })
         </div>
-        <div class="editor-field" style="width:20%;">
+        <div class="col-xs-4 nopadding">
             @Html.DropDownListFor(model => model.dep_obj_id, new SelectList(Model.lst_dep_objective, "Value", "Text")
-           ,"----" , new { @class = "form-control", id = "dropdown_dep_Objective" })
+           , "----", new { @class = "form-control", id = "dropdown_dep_Objective" })
         </div>
 
-        <div class="editor-label" style="width:7%;">
-            @Html.LabelFor(model => model.lst_job_desc)
+        <div class="col-xs-1 nopadding top_buffer10">
+            @Html.LabelFor(model => model.lst_job_desc, new { @class = "div_lable" })
         </div>
-        <div class="editor-field" style="width:20%;">
+        <div class="col-xs-4 nopadding">
             @Html.DropDownListFor(model => model.job_desc_id, new SelectList(Model.lst_job_desc, "Value", "Text")
-            ,"----", new { @class = "form-control", id = "dropdown_jobDesc" })
+            , "----", new { @class = "form-control", id = "dropdown_jobDesc" })
         </div>
 
 
     </div>
-    
-    <div style="float:right; width:100%;margin-top:2% ">
 
-            <div class="editor-field" style="width:8%;">
-                @Html.LabelFor(model => model.question)
-            </div>
+    <div class="col-xs-12 top_buffer20">
 
-            <div class="editor-field" style="width:89%;">
-                @Html.TextBoxFor(model => model.question, new { @class = "form-control", id = "txt_question" })
-                @Html.ValidationMessageFor(model => model.question, "", new { @class = "error" })
-            </div>
-       </div>
+        <div class="col-xs-1 nopadding top_buffer10">
+            @Html.LabelFor(model => model.question, new { @class = "div_lable" })
+        </div>
 
-    <div style="float:right; width:90%; margin:1% 8% 2% 0">
+        <div class="col-xs-10 nopadding">
+            @Html.TextBoxFor(model => model.question, new { @class = "form-control", id = "txt_question" })
+            @Html.ValidationMessageFor(model => model.question, "", new { @class = "error" })
+        </div>
+    </div>
+
+    <div class="col-xs-12 top_buffer20">
         <input type="hidden" name="count" value="1" id="count" />
-        <div class="control-group" id="fields" >
+        <div class="control-group" id="fields">
             <div class="controls" id="profs">
-                <div class="input-append" >
-                    <div id="field" style=" float:right; width:27%">
+                <div class="input-append">
+                    <div id="field" class="col-xs-2">
                         <input autocomplete="off" class="txt_keyword" id="field1" name="field1" type="text" placeholder="کلیدواژه" data-items="8" />
                         <button id="b1" class="btn add-more" type="button" style="padding:0">+</button>
                     </div>
                 </div>
                 <br />
-                <div class="editor-field" style="width:90%;">
-                    برای افزودن کلیدواژه بیشتر بر روی + کلیک نمایید
+                <div class="col-xs-10">
+                    Click + to add more keywords...
                 </div>
             </div>
         </div>
     </div>
-    
 
-        <div style="float:right; width:100%;">
 
-            <div class="editor-field" style="width:8%;">
-                @Html.LabelFor(model => model.solution)
-            </div>
+    <div class="col-xs-12 top_buffer20">
 
-            <div class="editor-field" style="width:89%;">
-                @Html.TextAreaFor(model => model.solution, new { @class = "multiline_textbox", id = "txt_solution"})
-            </div>
+        <div class="col-xs-1 nopadding top_buffer10">
+            @Html.LabelFor(model => model.solution, new { @class = "div_lable" })
         </div>
 
-        <div style="float:right; width:100%; margin-bottom:3%">
-
-            <div class="col-xs-2" style="margin-right:70%">
-                <input type="submit" class="btn btn-primary" value="Submit" />
-            </div>
-
-            <div class="col-xs-2">
-                <input type="button" class="btn btn-primary" value="Refresh" id="reset_btn" />
-            </div>
+        <div class="col-xs-10 nopadding">
+            @Html.TextAreaFor(model => model.solution, new { @class = "multiline_textbox", id = "txt_solution" })
         </div>
-        @Html.HiddenFor(model => model.question_id, new { id = "hd_id_question" })
-
-    <div class="alert alert-success fade in" role="alert" style="float:right; width:100%; visibility:hidden" id="div_alert">
-        <a href="#" class="close" >&times;</a>
-        <label id="alert_success"></label>
     </div>
+
+    <div class="col-xs-12 top_buffer20">
+
+        <div class="col-xs-2">
+            <input type="submit" class="btn btn-primary" value="Submit" />
+        </div>
+
+        <div class="col-xs-2">
+            <input type="button" class="btn btn-primary" value="Refresh" id="reset_btn" />
+        </div>
+    </div>
+    @Html.HiddenFor(model => model.question_id, new { id = "hd_id_question" })
+
+
 }
 
+<div class="col-xs-12 top_buffer20 nopadding ">
+    <table id="QuestionDT" class="display">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>DepObj_Id</th>
+                <th>JobDesc_Id</th>
+                <th>Strategy_Id</th>
+                <th>#</th>
+                <th>Question</th>
+                <th>Solution</th>
+                <th>Keywords</th>
+                <th>Edit</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+</div>
 
-        <table id="QuestionDT" class="display">
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>DepObj_Id</th>
-            <th>JobDesc_Id</th>
-            <th>Strategy_Id</th>
-            <th >#</th>
-            <th >شرح مسئله</th>
-            <th>Solution</th>
-            <th>Keywords</th>
-            <th>Edit</th>
-            <th>Delete</th>
-        </tr>
-    </thead>
-    <tbody></tbody>
-</table>
-
-        @section scripts{
-            <script src="~/Scripts/Datatables/QuestionDT.js"></script>
-            <script src="~/Scripts/DynamicField.js"></script>
-
-        }
+@section scripts{
+    <script src="~/Areas/User/Scripts/QuestionDT.js"></script>
+    <script src="~/Scripts/DynamicField.js"></script>
+}
 
 
 

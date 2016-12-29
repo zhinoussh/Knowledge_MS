@@ -335,7 +335,6 @@ namespace Knowledge_Management.DAL
                     {
                         string pass = (new Encryption()).Encrypt(password);
 
-
                         tbl_login login_obj = new tbl_login { username = personel_code, role = emp_role, pass = pass, fk_emp = newPK };
                         db.tbl_login.Add(login_obj);
                         db.SaveChanges();
@@ -366,6 +365,7 @@ namespace Knowledge_Management.DAL
                 {
                     if(password!="000000")
                         l.pass=(new Encryption()).Encrypt(password);
+                    l.username = personel_code;
                     l.role = emp_role;
                     db.SaveChanges();
                 }

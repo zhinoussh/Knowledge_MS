@@ -1,11 +1,8 @@
 ﻿$(document).ready(function () {
 
     var oTable = $('#QuestionDT').dataTable({
-        "language": {
-            "url": "/Content/lang.txt"
-        },
         "bServerSide": true,
-        "sAjaxSource": "QuestionAjaxHandler",
+        "sAjaxSource": "/User/InsertInfo/QuestionAjaxHandler",
         "bProcessing": true,
         "pagingType": "numbers"
         , "aoColumns": [
@@ -101,16 +98,12 @@
     });
 
    
-    $(".close").click(function () {
-        $("#div_alert").slideDown(500);
-        return false;
-    });
 
 });
 
 var delete_dialog = function (q_id) {
 
-    var url = "/InsertInfo/Delete_Question"; // the url to the controller
+    var url = "/User/InsertInfo/Delete_Question"; // the url to the controller
     $.get(url + '/' + q_id, function (data) {
         $('#confirm-container').html(data);
         $('#DeleteModal').modal('show');
@@ -168,6 +161,16 @@ var SuccessMessage = function (result) {
         var $STTable = $("#QuestionDT").dataTable({ bRetrieve: true });
         $STTable.fnDraw();
 
+    }
+}
+
+var SuccessDelete = function (result) {
+    if (result.msg) {
+        $('#DeleteModal').modal('hide');
+        $("#alert_success").html(result.msg);
+        $("#div_alert").slideDown(500);
+        var $STTable = $("#QuestionDT").dataTable({ bRetrieve: true });
+        $STTable.fnDraw();
     }
 }
 
