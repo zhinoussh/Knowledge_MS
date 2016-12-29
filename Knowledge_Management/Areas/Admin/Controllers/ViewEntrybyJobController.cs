@@ -112,6 +112,11 @@ namespace Knowledge_Management.Areas.Admin.Controllers
             JsonRequestBehavior.AllowGet);
         }
 
+        [HttpGet]
+        public ActionResult QuestionDetails(QuestionViewModel vm)
+        {
+            return PartialView("_PartialQuestionDetail", vm);
+        }
 
         [HttpGet] // this action result returns the partial containing the modal
         public ActionResult Delete_Question(int id)

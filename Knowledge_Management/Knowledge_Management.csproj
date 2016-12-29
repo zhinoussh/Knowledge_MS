@@ -274,14 +274,14 @@
     <Content Include="Areas\Admin\Scripts\JobDescDT.js" />
     <Content Include="Areas\Admin\Scripts\JobDT.js" />
     <Content Include="Areas\Admin\Scripts\JobEntryDT.js" />
-    <Content Include="Scripts\Datatables\KeywordDT.js" />
+    <Content Include="Areas\User\Scripts\KeywordDT.js" />
     <Content Include="Areas\Admin\Scripts\ObjectiveDT.js" />
-    <Content Include="Scripts\Datatables\QuestionDT.js" />
-    <Content Include="Scripts\Datatables\SearchQuestionDT.js" />
-    <Content Include="Scripts\Datatables\SolutionDT.js" />
-    <Content Include="Scripts\Datatables\SolutionsForQuestion.js" />
-    <Content Include="Scripts\Datatables\UploadDT.js" />
-    <Content Include="Scripts\Datatables\UploadsForSolution.js" />
+    <Content Include="Areas\User\Scripts\QuestionDT.js" />
+    <Content Include="Areas\User\Scripts\SearchQuestionDT.js" />
+    <Content Include="Areas\User\Scripts\SolutionDT.js" />
+    <Content Include="Areas\User\Scripts\SolutionsForQuestion.js" />
+    <Content Include="Areas\User\Scripts\UploadDT.js" />
+    <Content Include="Areas\User\Scripts\UploadsForSolution.js" />
     <Content Include="Areas\Admin\Scripts\ViewQuestionDT.js" />
     <Content Include="Areas\Admin\Scripts\ViewSolutionQueDT.js" />
     <Content Include="Areas\Admin\Scripts\ViewSolutionEmpDT.js" />
@@ -363,6 +363,7 @@
     <Content Include="Areas\Admin\Views\ViewEntrybyJob\_PartialDeleteQuestion.cshtml" />
     <Content Include="Areas\Admin\Views\ViewEntrybyDetail\Index.cshtml" />
     <Content Include="Areas\Admin\Views\ViewEntrybyDetail\_PartialDeleteQuestion.cshtml" />
+    <Content Include="Views\Shared\_PartialQuestionDetail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

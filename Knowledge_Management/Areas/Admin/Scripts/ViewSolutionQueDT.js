@@ -105,6 +105,15 @@ var confirm_solution = function (s_id) {
 
 }
 
+var SuccessDeleteSolution = function (result) {
+    if (result.msg) {
+        $('#DeleteModal').modal('hide');
+        $("#alert_success").html(result.msg);
+        $("#div_alert").slideDown(500);
+        var $STTable = $("#SoutionListDT").dataTable({ bRetrieve: true });
+        $STTable.fnDraw();
+    }
+}
 
 
 

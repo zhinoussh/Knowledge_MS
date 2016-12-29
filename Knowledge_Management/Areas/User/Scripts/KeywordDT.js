@@ -2,9 +2,6 @@
 $(document).ready(function () {
 
     var oTable = $('#KeywordDT').dataTable({
-        "language": {
-            "url": "/Content/lang.txt"
-        },
         "bServerSide": true,
         "sAjaxSource": "KeywordAjaxHandler",
         "fnServerParams": function (aoData) {
@@ -68,7 +65,7 @@ $(document).ready(function () {
                             "sDefaultContent": " "
                             , "sClass": "dt-body-center"
                             , "mRender": function (data, type, row) {
-                                return "<a class='glyphicon glyphicon-list-alt a_clickable' href=/SearchInfo/SearchAll/" + row[0] + "></a>"
+                                return "<a class='glyphicon glyphicon-list-alt a_clickable' href=/User/SearchInfo/SearchAll/" + row[0] + "></a>"
                             }
                         }
 

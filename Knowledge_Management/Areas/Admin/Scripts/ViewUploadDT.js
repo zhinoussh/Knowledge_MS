@@ -140,4 +140,12 @@ var confirm_upload= function (u_id) {
 }
 
 
-
+var SuccessDeleteUpload = function (result) {
+    if (result.msg) {
+        $('#DeleteModal').modal('hide');
+        $("#alert_success").html(result.msg);
+        $("#div_alert").slideDown(500);
+        var $STTable = $("#UploadDT").dataTable({ bRetrieve: true });
+        $STTable.fnDraw();
+    }
+}

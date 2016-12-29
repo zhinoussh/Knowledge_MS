@@ -201,7 +201,13 @@ namespace Knowledge_Management.Areas.Admin.Controllers
             return View(q);
 
         }
-      
+        
+        [HttpGet] 
+        public ActionResult QuestionDetails(QuestionViewModel vm)
+        {
+            return PartialView("_PartialQuestionDetail", vm);
+        }
+
         #endregion Question
 
         #region Solution

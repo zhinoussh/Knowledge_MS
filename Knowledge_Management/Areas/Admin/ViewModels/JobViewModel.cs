@@ -19,6 +19,7 @@ namespace Knowledge_Management.Areas.Admin.ViewModels
      
         public string selected_dep { get; set; }
 
+        [Display(Name = "Department: ")]
         public SelectList lst_dep { get; set; }
         
     }

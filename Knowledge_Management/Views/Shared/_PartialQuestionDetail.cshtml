@@ -1,0 +1,60 @@
+﻿@model Knowledge_Management.Areas.User.ViewModels.QuestionViewModel
+@{
+    Layout = null;
+}
+
+<div class="modal fade" id="DetailModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" id="confirm-container">
+            <div class="modal-header modal-header-info">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" aria-hidden="true">&times;</button>
+                <h6 style="padding:0"><i class="glyphicon glyphicon-info-sign"></i>Question Details</h6>
+            </div>
+            <div class=" modal-body">
+                <div class=" border-modal">
+                    <table class="table detail-table">
+                        <tr class="active">
+                            <td class="col-xs-1 text-center">
+                                @Html.LabelFor(model => model.question)
+                            </td>
+                            <td class="col-xs-11 ">
+                                @Html.DisplayFor(model => model.question)
+                            </td>
+                        </tr>
+                        <tr class="success">
+                            <td class="col-xs-1 text-center">
+                                @Html.LabelFor(model => model.lst_keywords)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(model => model.lst_keywords)
+                            </td>
+                        </tr>
+                        <tr class="warning">
+                            <td class="col-xs-1 text-center">
+                                @Html.LabelFor(model => model.strategy_name)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(model => model.strategy_name)
+                            </td>
+                        </tr>
+                        <tr class="top_buffer10 info">
+                            <td class="col-xs-1 text-center">
+                                @Html.LabelFor(model => model.dep_objective)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(model => model.dep_objective)
+                            </td>
+                        </tr>
+                        <tr class="top_buffer10 danger">
+                            <td class="col-xs-1 text-center">
+                                @Html.LabelFor(model => model.job_desc)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(model => model.job_desc)
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+        </div>
+    </div>
+</div>

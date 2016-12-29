@@ -80,6 +80,11 @@ namespace Knowledge_Management.Areas.User.Controllers
             },
             JsonRequestBehavior.AllowGet);
         }
-      
+
+        [HttpGet]
+        public ActionResult QuestionDetails(QuestionViewModel vm)
+        {
+            return PartialView("_PartialQuestionDetail", vm);
+        }
     }
 }

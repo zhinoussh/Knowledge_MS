@@ -85,32 +85,7 @@ $(document).ready(function () {
 
 });
 
-var SuccessDeleteUpload = function (result) {
-    if (result.msg) {
-        $('#DeleteModal').modal('hide');
-        $("#alert_success").html(result.msg);
-        $("#div_alert").slideDown(500);
-        var $STTable = $("#UploadDT").dataTable({ bRetrieve: true });
-        $STTable.fnDraw();
-    }
-}
 
-var SuccessDeleteSolution = function (result) {
-    if (result.msg) {
-        $('#DeleteModal').modal('hide');
-        $("#alert_success").html(result.msg);
-        $("#div_alert").slideDown(500);
-        var $STTable = $("#SoutionListDT").dataTable({ bRetrieve: true });
-        $STTable.fnDraw();
-    }
-}
 
-var SuccessDeleteQuestion= function (result) {
-    if (result.msg) {
-        $('#DeleteModal').modal('hide');
-        $("#alert_success").html(result.msg);
-        $("#div_alert").slideDown(500);
-        var $STTable = $("#SearchQuestionDT").dataTable({ bRetrieve: true });
-        $STTable.fnDraw();
-    }
-}
+
+

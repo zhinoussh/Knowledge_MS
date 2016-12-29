@@ -138,12 +138,25 @@ $(document).ready(function () {
 });
 
 var details = function (s) {
-    $("#question").html("Question: " + s[0].fullQuestion);
-    $("#keywords").html("Keywords: " + s[0].keywords);
-    $("#strategy_name").html("Strategy Description: " + (s[0].strategy == null ? '' : s[0].strategy));
-    $("#dep_objective").html("Department Objective: " + (s[0].dep_objective == null ? '' : s[0].dep_objective));
-    $("#job_desc").html("Job Description: " + (s[0].jobdesc == null ? '' : s[0].jobdesc));
-    $('#DetailModal').modal('show');
+    var QuestionViewModel = {
+        question:  s[0].fullQuestion,
+        lst_keywords:s[0].keywords,
+        dep_objective: (s[0].dep_objective == null ? '' : s[0].dep_objective),
+        job_desc: (s[0].jobdesc == null ? '' : s[0].jobdesc),
+        strategy_name: (s[0].strategy == null ? '' : s[0].strategy)
+    };
+
+    $.ajax({
+        type:'GET',
+        data: QuestionViewModel,
+        url:'/Admin/ViewEntrybyJob/QuestionDetails',
+        success: function (result) {
+            $('#ModalContainer').html(result);
+            $('#ModalContainer').find("#DetailModal").modal('show');
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            alert(errorThrown);
+        }
 }
 
 var delete_dialog = function (q_id) {

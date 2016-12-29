@@ -1,44 +1,14 @@
 ﻿@{
-    ViewBag.Title = "جستجوی تمامی مسائل";
-    Layout = "~/Views/Shared/_EmployeeLayout.cshtml";
+    ViewBag.Title = "Search Questions";
+    Layout = "~/Areas/User/Views/Shared/_EmployeeLayout.cshtml";
 
 }
 
 <!-- Modal -->
-<div class="modal fade" id="DetailModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content" id="confirm-container">
-            <div class="modal-header modal-header-info">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close" aria-hidden="true">&times;</button>
-                <i class="glyphicon glyphicon-info-sign"></i>
-            </div>
-            <div class="modal-body">
-                <div class="border-modal">
 
-                    <div class="editor-field" style="width:100%">
-                        <label id="question"></label>
-                    </div>
-                    <div class="editor-field" style="width:100%">
-                        <label id="keywords"></label>
-                    </div>
-                    <div class="editor-field" style="width:100%">
-                        <label id="strategy_name"></label>
-                    </div>
-                    <div class="editor-field" style="width:100%">
-                        <label id="dep_objective"></label>
-                    </div>
-                    <div class="editor-field" style="width:100%">
-                        <label id="job_desc"></label>
-                    </div>
+<div id="ModalContainer"></div>
 
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 <!-- /end Modal -->
-<h5>لیست مسئله ها</h5>
-<span class="border_admin" style="margin-bottom:0;"></span>
 
 <input type="hidden" id="hd_id_keyword" value="@ViewBag.key_id" />
 
@@ -54,16 +24,15 @@
                 <th>Strategy</th>
                 <th>fullQuestion</th>
                 <th >#</th>
-                <th >شرح مسئله</th>
-                <th>جزئیات</th>
-                <th>راهکارها</th>
-                <th>راهکار جدید</th>
+                <th >Question Description</th>
+                <th>Details</th>
+                <th>Solutions</th>
+                <th>New Solution</th>
             </tr>
         </thead>
         <tbody></tbody>
     </table>
     </div>
     @section scripts{
-        <script src="~/Scripts/Datatables/SearchQuestionDT.js"></script>
-
+   <script src="~/Areas/User/Scripts/SearchQuestionDT.js"></script>
     }

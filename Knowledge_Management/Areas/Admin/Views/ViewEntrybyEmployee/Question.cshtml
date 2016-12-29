@@ -17,37 +17,7 @@
 <!-- /end Modal -->
 
 <!-- Modal -->
-<div class="modal fade" id="DetailModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content" id="confirm-container">
-            <div class="modal-header modal-header-info">
-               <button type="button" class="close" data-dismiss="modal" aria-label="Close" aria-hidden="true">&times;</button>
-                <h6><i class="glyphicon glyphicon-info-sign"></i>Question Details</h6>
-
-            </div>
-            <div class="modal-body">
-                <div class="border-modal">
-                    <div class="col-xs-12">
-                        <label id="question"></label>
-                    </div>
-                    <div class="col-xs-12">
-                        <label id="keywords"></label>
-                    </div>
-                    <div class="col-xs-12">
-                        <label id="strategy_name"></label>
-                    </div>
-                    <div class="col-xs-12">
-                        <label id="dep_objective"></label>
-                    </div>
-                    <div class="col-xs-12">
-                        <label id="job_desc"></label>
-                    </div>
-                </div>
-                <div class="clearfix"></div>
-            </div>
-        </div>
-    </div>
-</div>
+<div id="ModalContainer"></div>
 <!-- /end Modal -->
 
 @Html.HiddenFor(model => model.emp_id, new { id = "hd_id_emp" })
@@ -55,12 +25,12 @@
 
 <div class="col-xs-12 top_buffer10">
     <div class="alert alert-success" role="alert" style="display:none" id="div_alert">
-        <a href="#" class="close" id="close_delete_modal">&times;</a>
+        <a href="#" class="close" id="close_alert">&times;</a>
         <label id="alert_success"></label>
     </div>
     </div>
 
-    <div class="col-xs-12 top_buffer50 ">
+    <div class="col-xs-12 top_buffer20 ">
         <table id="SearchQuestionDT" class="display">
             <thead>
                 <tr>
@@ -84,5 +54,4 @@
 
     @section scripts{
         <script src="~/Areas/Admin/Scripts/ViewQuestionDT.js"></script>
-
     }
