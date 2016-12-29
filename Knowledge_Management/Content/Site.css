@@ -271,28 +271,23 @@ h6 {
 .btn-primary {
     width: 100%;
     height: 35px;
-    background-image: -webkit-linear-gradient(top, #5a81ba 0%, #c7d5e0 100%);
-    background-image: -o-linear-gradient(top, #5a81ba 0%, #c7d5e0 100%);
-    background-image: -webkit-gradient(linear, left top, left bottom, from(#5a81ba), to(#c7d5e0));
-    background-image: linear-gradient(to bottom, #5a81ba 0%, #c7d5e0 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff5a81ba', endColorstr='#ffc7d5e0', GradientType=0);
+    background-image: -webkit-linear-gradient(top, #29417f 0%, #86aece 100%);
+    background-image: -o-linear-gradient(top, #29417f 0%, #86aece 100%);
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#29417f), to(#86aece));
+    background-image: linear-gradient(to bottom, #29417f 0%, #86aece 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff29417f', endColorstr='#ff86aece', GradientType=0);
     filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
     background-repeat: repeat-x;
-    border-color: #5a81ba;
+    border-color: #29417f;
     box-shadow: #B4B5B5 5px 5px 5px 0;
     font-family: 'Open Sans', sans-serif;
 }
 
     .btn-primary:hover, .btn-primary:focus {
         background-position: 0px !important;
-        background-image: -webkit-linear-gradient(top, #4f6dbd 0%, #809dd9 100%);
-        background-image: -o-linear-gradient(top, #4f6dbd 0%, #809dd9 100%);
-        background-image: -webkit-gradient(linear, left top, left bottom, from(#4f6dbd), to(#809dd9));
-        background-image: linear-gradient(to bottom, #4f6dbd 0%, #809dd9 100%);
-        filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff4f6dbd', endColorstr='#ff809dd9', GradientType=0);
-        filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
-        background-repeat: repeat-x;
-        border-color: #54589f;
+        background-image: none;
+        background-color:#6694b9;
+        border-color: #86aece;
         box-shadow: #B4B5B5 5px 5px 5px 0;
     }
  
