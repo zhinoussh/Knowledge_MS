@@ -33,9 +33,9 @@ $(document).ready(function () {
                                 "mRender": function (data, type, row) {
 
                                     if (data == "True") {
-                                        return '<input disabled  type=\"checkbox\" checked value="' + data + '">';
+                                        return '<div class=\"checkbox checkbox-info\"><input  type=\"checkbox\" id=\"check_dataEntry\" disabled checked value="' + data + '"><label for=\"check_dataEntry\"></label></div>';
                                     } else {
-                                        return '<input disabled  type=\"checkbox\" value="' + data + '">';
+                                        return '<div class=\"checkbox checkbox-info\"><input  type=\"checkbox\" id=\"check_dataEntry\" disabled value="' + data + '"><label for=\"check_dataEntry\"></label></div>';
                                     }
                                 }
                             }
@@ -48,9 +48,9 @@ $(document).ready(function () {
                             , "sClass": "dt-body-center",
                                 "mRender": function (data, type, row) {
                                     if (data == "True") {
-                                        return '<input disabled  type=\"checkbox\" checked value="' + data + '">';
+                                        return '<div class=\"checkbox checkbox-info\"><input  type=\"checkbox\" id=\"check_dataView\" disabled checked value="' + data + '"><label for=\"check_dataView\"></label></div>';
                                     } else {
-                                        return '<input disabled  type=\"checkbox\" value="' + data + '">';
+                                        return '<div class=\"checkbox checkbox-info\"><input  type=\"checkbox\" id=\"check_dataView\" disabled value="' + data + '"><label for=\"check_dataView\"></label></div>';
                                     }
                                 }
                             }

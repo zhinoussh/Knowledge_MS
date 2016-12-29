@@ -42,9 +42,9 @@
                                 "mRender": function (data, type, row) {
                                    
                                     if (data == "True") {
-                                        return '<div class=\"checkbox checkbox-primary\"><input  type=\"checkbox\" id=\"check_dataEntry\" disabled checked value="' + data + '"><label for=\"check_dataEntry\"></label></div>';
+                                        return '<div class=\"checkbox checkbox-info\"><input  type=\"checkbox\" id=\"check_dataEntry\" disabled checked value="' + data + '"><label for=\"check_dataEntry\"></label></div>';
                                     } else {
-                                        return '<div class=\"checkbox checkbox-primary\"><input  type=\"checkbox\" id=\"check_dataEntry\" disabled value="' + data + '"><label for=\"check_dataEntry\"></label></div>';
+                                        return '<div class=\"checkbox checkbox-info\"><input  type=\"checkbox\" id=\"check_dataEntry\" disabled value="' + data + '"><label for=\"check_dataEntry\"></label></div>';
 
                                     }
                                 }
@@ -58,10 +58,10 @@
                             , "sClass": "dt-body-center",
                             "mRender": function (data, type, row) {
                                 if (data == "True") {
-                                    return '<div class=\"checkbox checkbox-primary\"><input  type=\"checkbox\" id=\"check_dataView\" disabled checked value="' + data + '"><label for=\"check_dataView\"></label></div>';
+                                    return '<div class=\"checkbox checkbox-info\"><input  type=\"checkbox\" id=\"check_dataView\" disabled checked value="' + data + '"><label for=\"check_dataView\"></label></div>';
                                 }
                                 else {
-                                    return '<div class=\"checkbox checkbox-primary\"><input  type=\"checkbox\" id=\"check_dataView\" disabled value="' + data + '"><label for=\"check_dataView\"></label></div>';
+                                    return '<div class=\"checkbox checkbox-info\"><input  type=\"checkbox\" id=\"check_dataView\" disabled value="' + data + '"><label for=\"check_dataView\"></label></div>';
                                 }
                             }
                             }

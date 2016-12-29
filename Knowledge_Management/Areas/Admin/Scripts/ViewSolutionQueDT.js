@@ -32,9 +32,9 @@ $(document).ready(function () {
                             "mRender": function (data, type, row) {
 
                                 if (data == "True") {
-                                    return '<input disabled  type=\"checkbox\" checked value="' + data + '">';
+                                    return '<div class=\"checkbox checkbox-info\"><input  type=\"checkbox\" id=\"check_confirm\" disabled checked value="' + data + '"><label for=\"check_confirm\"></label></div>';
                                 } else {
-                                    return '<input disabled  type=\"checkbox\" value="' + data + '">';
+                                    return '<div class=\"checkbox checkbox-info\"><input  type=\"checkbox\" id=\"check_confirm\" disabled value="' + data + '"><label for=\"check_confirm\"></label></div>';
                                 }
                             }
                         },

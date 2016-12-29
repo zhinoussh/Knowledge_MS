@@ -142,16 +142,16 @@
   background-color: #5976c8;
 }
 .sidebar-nav li:nth-child(6):before {
-  background-color: #704fa0;
+  background-color: #768fd9;
 }
 .sidebar-nav li:nth-child(7):before {
-  background-color: #7c5aae;
+  background-color: #90a5e3;
 }
 .sidebar-nav li:nth-child(8):before {
-  background-color: #8a6cb6;
+  background-color: #a5b5e8;
 }
 .sidebar-nav li:nth-child(9):before {
-  background-color: #987dbf;
+  background-color: #b6c3ed;
 }
 .sidebar-nav li:hover:before {
   -webkit-transition: width 0.2s ease-in;
