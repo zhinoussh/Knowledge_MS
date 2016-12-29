@@ -52,11 +52,11 @@ namespace Knowledge_Management.Controllers
                     else
                     {
                         if (roles.Contains("DataEntry"))
-                            return Json(new { url = "/InsertInfo/Index" });
+                            return Json(new { url = "/User/InsertInfo/Index" });
                         else if (roles.Contains("DataView"))
-                            return Json(new { url = "/SearchInfo/SearchAll" });
+                            return Json(new { url = "/User/SearchInfo/SearchAll" });
                         else if (roles.Contains("Public"))
-                            return Json(new { url = "/EmployeeProfile/Index" });
+                            return Json(new { url = "/User/EmployeeProfile/Index" });
                     }
                 }
 
