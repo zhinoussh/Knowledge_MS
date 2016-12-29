@@ -3,11 +3,8 @@
 $(document).ready(function () {
 
     var oTable = $('#UploadDT').dataTable({
-        "language": {
-            "url": "/Content/lang.txt"
-        },
         "bServerSide": true,
-        "sAjaxSource": "/Solution/UploadAjaxHandler",
+        "sAjaxSource": "/User/Solution/UploadAjaxHandler",
         "fnServerParams": function (aoData) {
             aoData.push({ "name": "solution_id", "value": $('#hd_id_solution').val() });
         },
@@ -58,7 +55,7 @@ var download_file = function (upload_id) {
 
     $.ajax(
            {
-               url: '/Solution/DownloadFile',
+               url: '/User/Solution/DownloadFile',
                contentType: 'application/json; charset=utf-8',
                datatype: 'json',
                data: {
@@ -66,7 +63,7 @@ var download_file = function (upload_id) {
                },
                type: "GET",
                success: function () {
-                   window.location = '/Solution/DownloadFile?uploadID=' + upload_id;
+                   window.location = '/User/Solution/DownloadFile?uploadID=' + upload_id;
                }
            });
 }

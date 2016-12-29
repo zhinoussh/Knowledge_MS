@@ -3,11 +3,8 @@
 $(document).ready(function () {
 
     var oTable = $('#SoutionListDT').dataTable({
-        "language": {
-            "url": "/Content/lang.txt"
-        },
         "bServerSide": true,
-        "sAjaxSource": "/Solution/SolutionsForQuestionAjaxHandler",
+        "sAjaxSource": "/User/Solution/SolutionsForQuestionAjaxHandler",
         "fnServerParams": function (aoData) {
             aoData.push({ "name": "q_id", "value": $('#hd_id_question').val() });
         },
@@ -35,7 +32,7 @@ $(document).ready(function () {
                             "sDefaultContent": " "
                              , "sClass": "dt-body-center",
                             "mRender": function (data, type, row) {
-                                return '<a class="glyphicon glyphicon-list a_clickable" href="/Solution/FullSolution/' + row[0] + '"></a>'
+                                return '<a class="glyphicon glyphicon-list a_clickable" href="/User/Solution/FullSolution/' + row[0] + '"></a>'
 
                             }
                         }
@@ -43,12 +40,6 @@ $(document).ready(function () {
 
         ]
     });
-
-    $("#close_delete_modal").click(function () {
-        $("#div_alert").slideDown(500);
-        return false;
-    });
-
 
 });
 

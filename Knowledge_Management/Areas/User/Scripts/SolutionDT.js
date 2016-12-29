@@ -4,11 +4,8 @@
 $(document).ready(function () {
 
     var oTable = $('#SolutionDT').dataTable({
-        "language": {
-            "url": "/Content/lang.txt"
-        },
         "bServerSide": true,
-        "sAjaxSource": "YourSolutionAjaxHandler",
+        "sAjaxSource": "/User/Solution/YourSolutionAjaxHandler",
         "bProcessing": true,
         "pagingType": "numbers"
         , "aoColumns": [
@@ -44,9 +41,9 @@ $(document).ready(function () {
                            "mRender": function (data, type, row) {
 
                                if (data == "True") {
-                                   return '<input disabled  type=\"checkbox\" checked value="' + data + '">';
+                                   return '<div class=\"checkbox checkbox-info\"><input  type=\"checkbox\" id=\"check_confirm\" disabled checked value="' + data + '"><label for=\"check_confirm\"></label></div>';
                                } else {
-                                   return '<input disabled  type=\"checkbox\" value="' + data + '">';
+                                   return '<div class=\"checkbox checkbox-info\"><input  type=\"checkbox\" id=\"check_confirm\" disabled value="' + data + '"><label for=\"check_confirm\"></label></div>';
                                }
                            }
                        }, {
@@ -78,10 +75,6 @@ $(document).ready(function () {
         ]
     });
 
-    $(".close").click(function () {
-        $("#div_alert").slideDown(500);
-        return false;
-    });
 
 });
 
@@ -89,12 +82,21 @@ $(document).ready(function () {
 
 var delete_dialog = function (job_id) {
 
-    var url = "/Solution/Delete_Solution"; // the url to the controller
+    var url = "/User/Solution/Delete_Solution"; // the url to the controller
     $.get(url + '/' + job_id, function (data) {
         $('#confirm-container').html(data);
         $('#DeleteModal').modal('show');
     });
 }
 
+var SuccessDelete = function (result) {
+    if (result.msg) {
+        $('#DeleteModal').modal('hide');
+        $("#alert_success").html(result.msg);
+        $("#div_alert").slideDown(500);
+        var $STTable = $("#SolutionDT").dataTable({ bRetrieve: true });
+        $STTable.fnDraw();
+    }
+}
 
 

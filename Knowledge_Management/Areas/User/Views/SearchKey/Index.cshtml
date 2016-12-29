@@ -1,72 +1,64 @@
-﻿@using Knowledge_Management.ViewModels
-@model SearchKeywordViewModel
+﻿@model Knowledge_Management.Areas.User.ViewModels.SearchKeywordViewModel
 @{
-    ViewBag.Title = "کلیدواژه ها";
+    ViewBag.Title = "Keywords";
     Layout = "~/Areas/User/Views/Shared/_EmployeeLayout.cshtml";
 }
 
 
-<h5>لیست تمام کلیدواژه های جستجو</h5>
-<span class="border_admin" style="margin-bottom:0;"></span>
-
-
-<div style="float:right; width:100%;margin-top:5%">
-
-
-    <div class="editor-field" style="width:8%;">
-        @Html.LabelFor(model => model.lst_strategy)
+<div class="col-xs-12 top_buffer20">
+    <div class="col-xs-1 nopadding top_buffer10" style="width:100px">
+        @Html.LabelFor(model => model.lst_strategy, new { @class = "div_label" })
     </div>
-    <div class="editor-field" style="width:20%;">
+    <div class="col-xs-4 nopadding">
         @Html.DropDownListFor(model => model.strategy_id, new SelectList(Model.lst_strategy, "Value", "Text")
-                  , "همه موارد", new { @class = "form-control", id = "dropdown_strategy" })
+                  , "All items", new { @class = "form-control", id = "dropdown_strategy" })
     </div>
 
-    <div class="editor-label" style="width:12%;">
-        @Html.LabelFor(model => model.lst_dep_objective)
+    <div class="col-xs-1 nopadding top_buffer10" style="width:100px">
+        @Html.LabelFor(model => model.lst_dep_objective, new { @class = "div_label" })
     </div>
-    <div class="editor-field" style="width:20%;">
+    <div class="col-xs-4 nopadding">
         @Html.DropDownListFor(model => model.dep_obj_id, new SelectList(Model.lst_dep_objective, "Value", "Text")
-           , "همه موارد", new { @class = "form-control", id = "dropdown_dep_Objective" })
+                    , "All items", new { @class = "form-control", id = "dropdown_dep_Objective" })
     </div>
 
-    <div class="editor-label" style="width:7%;">
+    <div class="col-xs-1 nopadding top_buffer10" style="width:100px">
         @Html.LabelFor(model => model.lst_job_desc)
     </div>
-    <div class="editor-field" style="width:20%;">
+    <div class="col-xs-4 nopadding">
         @Html.DropDownListFor(model => model.job_desc_id, new SelectList(Model.lst_job_desc, "Value", "Text")
-                     , "همه موارد", new { @class = "form-control", id = "dropdown_jobDesc" })
+                              , "All items", new { @class = "form-control", id = "dropdown_jobDesc" })
     </div>
 
 
 </div>
 
 
-<div style="float:right; width:100%; margin:2% 40% 2% 0">
+<div class="col-xs-12">
 
-    <div class="col-xs-2" style="width:200px">
-        <input type="button" class="btn btn-primary" value="جستجو" id="search_btn" />
-    </div>
+    <input type="button" class="btn btn-primary" value="Search" id="search_btn" />
 </div>
 
-
-<table id="KeywordDT" class="display">
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>DepObj_Id</th>
-            <th>JobDesc_Id</th>
-            <th>Strategy_Id</th>
-            <th >#</th>
-            <th >کلیدواژه</th>
-            <th>جزئیات</th>
-            <th>مشاهده مسائل</th>
-        </tr>
-    </thead>
-    <tbody></tbody>
-</table>
+<div class="col-xs-12 top_buffer50 nopadding ">
+    <table id="KeywordDT" class="display">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>DepObj_Id</th>
+                <th>JobDesc_Id</th>
+                <th>Strategy_Id</th>
+                <th>#</th>
+                <th>Keywords</th>
+                <th>Details</th>
+                <th>View Questions</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+</div>
 
 @section scripts{
-    <script src="~/Scripts/Datatables/KeywordDT.js"></script>
+    <script src="~/Areas/User/Scripts/KeywordDT.js"></script>
 }
 
 

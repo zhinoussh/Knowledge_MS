@@ -3,11 +3,8 @@
 $(document).ready(function () {
 
     var oTable = $('#UploadDT').dataTable({
-        "language": {
-            "url": "/Content/lang.txt"
-        },
         "bServerSide": true,
-        "sAjaxSource": "/Solution/UploadAjaxHandler_NewSOlution",
+        "sAjaxSource": "/User/Solution/UploadAjaxHandler_NewSOlution",
         "fnServerParams": function (aoData) {
             aoData.push({ "name": "solution_id", "value": $('#hd_id_new_solution').val() });
 
@@ -44,9 +41,9 @@ $(document).ready(function () {
                             "mRender": function (data, type, row) {
 
                                 if (data == "True") {
-                                    return '<input disabled  type=\"checkbox\" checked value="' + data + '">';
+                                    return '<div class=\"checkbox checkbox-info\"><input  type=\"checkbox\" id=\"check_confirm\" disabled checked value="' + data + '"><label for=\"check_confirm\"></label></div>';
                                 } else {
-                                    return '<input disabled  type=\"checkbox\" value="' + data + '">';
+                                    return '<div class=\"checkbox checkbox-info\"><input  type=\"checkbox\" id=\"check_confirm\" disabled value="' + data + '"><label for=\"check_confirm\"></label></div>';
                                 }
                             }
                         },
@@ -77,14 +74,6 @@ $(document).ready(function () {
         ]
     });
     
-
-    $(".close").click(function () {
-        $("#div_alert").slideDown(500);
-        return false;
-    });
-
-    
-
 });
 
 
@@ -102,7 +91,7 @@ var download_file = function (upload_id) {
    
     $.ajax(
            {
-               url: '/Solution/DownloadFile',
+               url: '/User/Solution/DownloadFile',
                contentType: 'application/json; charset=utf-8',
                datatype: 'json',
                data: {
@@ -110,20 +99,28 @@ var download_file = function (upload_id) {
                },
                type: "GET",
                success: function () {
-                   window.location = '/Solution/DownloadFile?uploadID=' + upload_id;
+                   window.location = '/User/Solution/DownloadFile?uploadID=' + upload_id;
                }
            });
 }
 
 var delete_dialog = function (upload_id) {
 
-    var url = "/Solution/Delete_Upload"; // the url to the controller
+    var url = "/User/Solution/Delete_Upload"; // the url to the controller
     $.get(url + '/' + upload_id, function (data) {
         $('#confirm-container').html(data);
         $('#DeleteModal').modal('show');
     });
 }
 
-
+var SuccessDelete = function (result) {
+    if (result.msg) {
+        $('#DeleteModal').modal('hide');
+        $("#alert_success").html(result.msg);
+        $("#div_alert").slideDown(500);
+        var $STTable = $("#UploadDT").dataTable({ bRetrieve: true });
+        $STTable.fnDraw();
+    }
+}
 
 
