@@ -171,7 +171,7 @@
     <Compile Include="Models\tbl_solution_uploads.cs" />
     <Compile Include="Areas\Admin\ViewModels\DepartmentObjectiveViewModel.cs" />
     <Compile Include="Areas\Admin\ViewModels\DepartmentViewModel.cs" />
-    <Compile Include="Areas\User\Controllers\HomeController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Areas\Admin\Controllers\StrategyController.cs" />
     <Compile Include="Helpers\Encryption.cs" />
     <Compile Include="DAL\KnowledgeMSDAL.cs" />
@@ -320,11 +320,11 @@
     </Content>
     <Content Include="Views\Web.config" />
     <Content Include="Views\Shared\Error.cshtml" />
-    <Content Include="Areas\User\Views\Home\_AboutPartial.cshtml" />
-    <Content Include="Areas\User\Views\Home\_ContactPartial.cshtml" />
-    <Content Include="Areas\User\Views\Home\Index.cshtml" />
+    <Content Include="Views\Home\_AboutPartial.cshtml" />
+    <Content Include="Views\Home\_ContactPartial.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\_HomeLayout.cshtml" />
-    <Content Include="Areas\User\Views\Home\_LoginPartial.cshtml" />
+    <Content Include="Views\Home\_LoginPartial.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\_ManagementLayout.cshtml" />
     <Content Include="Areas\Admin\Views\Strategy\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Strategy\_PartialDeleteStrategy.cshtml" />
@@ -395,7 +395,7 @@
   <ItemGroup>
     <Folder Include="Areas\Admin\Models\" />
     <Folder Include="Areas\User\Models\" />
-    <Folder Include="Controllers\" />
+    <Folder Include="Areas\User\Views\Home\" />
     <Folder Include="Upload\" />
   </ItemGroup>
   <PropertyGroup>

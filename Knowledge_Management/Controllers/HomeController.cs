@@ -7,7 +7,7 @@ using Knowledge_Management.DAL;
 using Knowledge_Management.Models;
 using System.Web.Security;
 
-namespace Knowledge_Management.Areas.User.Controllers
+namespace Knowledge_Management.Controllers
 {
     [AllowAnonymous]
     public class HomeController : Controller
