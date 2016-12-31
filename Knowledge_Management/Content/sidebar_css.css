@@ -21,9 +21,8 @@
 /*-------------------------------*/
 #wrapper {
 
-  padding-left: 220px;
-    height: 100%;
-
+  padding-left: 270px;
+  height: 100%;
   -moz-transition: all 0.5s ease;
   -o-transition: all 0.5s ease;
   -webkit-transition: all 0.5s ease;
@@ -31,9 +30,9 @@
 }
 
 #sidebar-wrapper {
-    margin-left: -220px;
-    left: 220px;
-    width: 220px;
+    margin-left: -270px;
+    left: 270px;
+    width: 270px;
     background: #2e353d;
     position: fixed;
     height: 100%;
@@ -41,18 +40,18 @@
     transition: all .4s ease 0s;
 }
 
-
 #page-content-wrapper {
     padding-left: 0;
     margin-left: 0;
     width: 100%;
     height: auto;
+    overflow-x:hidden;
 }
 #wrapper.active {
     padding-left: 50px;
 }
 #wrapper.active #sidebar-wrapper {
-    left: 50px;
+    left: 40px;
 }
 
 #page-content-wrapper {
@@ -99,7 +98,7 @@
   padding: 0;
   position: absolute;
   top: 0;
-  width: 220px;
+  width: 270px;
 }
 .sidebar-nav li {
   display: inline-block;

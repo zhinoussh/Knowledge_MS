@@ -28,7 +28,7 @@
                     </li>
                     @if (User.IsInRole("DataEntry"))
                     {
-                        <li style="padding-left:15px">
+                        <li>
                             <a href="@Url.Action("Index", "InsertInfo", new { Area = "User" })">Create or Share Knowledge<i class="sub_icon fa fa-fw fa-pencil-square-o fa-lg" data-toggle="tooltip" title="Create or Share Knowledge"></i> </a>
                         </li>
                     }
@@ -53,7 +53,7 @@
 
                 </ul>
             </nav>
-            </div><!-- /#sidebar-wrapper -->
+        </div><!-- /#sidebar-wrapper -->
             <!-- Page Content -->
             <div id="page-content-wrapper">
 
