@@ -75,7 +75,7 @@ namespace Knowledge_Management.Areas.User.Controllers
 
                 
                 DAL.InsertQuestion(q.question_id, q.question, q.dep_obj_id, q.job_desc_id, q.strategy_id, q.solution, lst_keywords, UserName);
-                return Json(new { msg = "مسئله با موفقیت ذخیره شد" });
+                return Json(new { msg = "Question added Successfully." });
             }
             else
             {
@@ -102,7 +102,7 @@ namespace Knowledge_Management.Areas.User.Controllers
                 KnowledgeMSDAL DAL = new KnowledgeMSDAL();
 
                 DAL.DeleteQuestion(q.question_id);
-                return Json(new { msg = "مسئله با موفقیت Delete شد" });
+                return Json(new { msg = "Question deleted Successfully." });
             }
             else
             {

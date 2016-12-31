@@ -5,9 +5,9 @@
         var addto = "#field" + next;
         var addRemove = "#field" + (next);
         next = next + 1;
-        var newIn = '<input autocomplete="off" class="txt_keyword" id="field' + next + '" name="field' + next + '" type="text" placeholder="کلید واژه">';
+        var newIn = '<input autocomplete="off" class="txt_keyword" id="field' + next + '" name="field' + next + '" type="text" placeholder="Enter Keyword">';
         var newInput = $(newIn);
-        var removeBtn = '<button id="remove' + (next - 1) + '" class="btn btn-danger remove-me" style="padding:0">-</button></div><div id="field">';
+        var removeBtn = '<button id="remove' + (next - 1) + '" class="btn btn-danger remove-me">-</button></div><div id="field">';
         var removeButton = $(removeBtn);
         $(addto).after(newInput);
         $(addRemove).after(removeButton);

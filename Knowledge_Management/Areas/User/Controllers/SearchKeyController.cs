@@ -102,5 +102,15 @@ namespace Knowledge_Management.Areas.User.Controllers
             JsonRequestBehavior.AllowGet);
         }
 
+        [HttpGet]
+        public ActionResult KeywordDetails(KeywordDetailViewModel vm)
+        {
+            KnowledgeMSDAL db = new KnowledgeMSDAL();
+            vm.job_desc = db.get_job_description(vm.jobDescId);
+            vm.dep_obj = db.get_department_objective(vm.depObjId);
+            vm.strategy = db.get_strategy_description(vm.strategyId);
+
+            return PartialView("_PartialDetailKeyWord",vm);
+        }
     }
 }

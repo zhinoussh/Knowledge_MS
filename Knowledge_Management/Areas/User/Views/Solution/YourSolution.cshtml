@@ -1,6 +1,6 @@
 ﻿
 @{
-    ViewBag.Title = "راهکارهای شما";
+    ViewBag.Title = "Your Solutions";
     Layout = "~/Areas/User/Views/Shared/_EmployeeLayout.cshtml";
 }
 
@@ -13,34 +13,33 @@
     </div>
 </div>
 <!-- /end Modal -->
-<h5>راهکارهای معرفی شده توسط شما</h5>
-<span class="border_admin" style="margin-bottom:0;"></span>
-
-
-<div class="alert alert-success fade in" role="alert" style="float:right; width:100%;margin-top:2%; visibility:hidden" id="div_alert">
-    <a href="#" class="close" >&times;</a>
-    <label id="alert_success"></label>
+<div class="col-xs-12 top_buffer10">
+    <div class="alert alert-success" role="alert" style="display:none" id="div_alert">
+        <a href="#" class="close" id="close_alert">&times;</a>
+        <label id="alert_success"></label>
+    </div>
 </div>
-<div style="float:right; width:100%;margin:2% 0 2% 0">
-    <table id="SolutionDT" class="display">
-        <thead>
-            <tr>
-                <th>Sol_id</th>
-                <th>Q_id</th>
-               <th >#</th>
-                <th >شرح مسئله</th>
-                <th >شرح راهکار</th>
-                <th >تعداد اسناد</th>
-                <th>وضعیت Confirm</th>
-                <th>مشاهده و Edit</th>
-                <th>Delete</th>
-            </tr>
-        </thead>
-        <tbody></tbody>
-    </table>
-</div>
-@section scripts{
-    <script src="~/Scripts/Datatables/SolutionDT.js"></script>
 
-}
+<div class="col-xs-12 top_buffer10">
+        <table id="SolutionDT" class="display">
+            <thead>
+                <tr>
+                    <th>Sol_id</th>
+                    <th>Q_id</th>
+                    <th>#</th>
+                    <th>Question</th>
+                    <th>Solution Description</th>
+                    <th>Document Number</th>
+                    <th>Confirm Status</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+    @section scripts{
+        <script src="~/Areas/User/Scripts/SolutionDT.js"></script>
+
+    }
 

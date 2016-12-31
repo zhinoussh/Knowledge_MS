@@ -11,21 +11,22 @@ namespace Knowledge_Management.Areas.User.ViewModels
     {
         public long key_id { get; set; }
 
+        [Display(Name = "Keyword:")]
         public string keyword { get; set; }
 
         public int? dep_obj_id { get; set; }
 
-        [Display(Name = "هدف واحد سازمانی")]
+        [Display(Name = "Department Objective:")]
         public SelectList lst_dep_objective { get; set; }
 
         public long? job_desc_id { get; set; }
 
-        [Display(Name = "شرح شغل")]
+        [Display(Name = "Job description:")]
         public SelectList lst_job_desc { get; set; }
 
         public int? strategy_id { get; set; }
 
-        [Display(Name = "استراتژی")]
+        [Display(Name = "Strategy:")]
         public SelectList lst_strategy { get; set; }
     }
 }

@@ -73,6 +73,40 @@ $(document).ready(function () {
 
         ]
     });
+
+    //Uploadify
+
+    $('#file_upload').uploadify({
+        'swf': "../../../Content/img/uploadify.swf",
+        'uploader': "/User/Solution/Upload",
+        // 'formData': { solution_id: $("#hd_id_new_solution").val(), question_id: $("#hd_id_question").val() },
+        'onUploadStart': function (file) {
+            $('#file_upload').uploadify('settings', 'formData', {
+                'solution_id': $('#hd_id_new_solution').val(),
+                'question_id': $('#hd_id_question').val()
+            });
+        }
+    , 'onUploadSuccess': function (file, data, response) {
+        $("#alert_success").html('File uploaded successfully.');
+        $("#div_alert").slideDown(500);
+        $("#hd_id_new_solution").val(data);
+        var $STTable = $("#UploadDT").dataTable({ bRetrieve: true });
+        $STTable.fnDraw();
+        //data is whatever you return from the server
+        //we're sending the URL from the server so we append this as an image to the #uploaded div
+        //  $("#uploaded").append("<img src='" + data + "' alt='Uploaded Image' />");
+    },
+        'onError': function (a, b, c, d) {
+            if (d.status == 404)
+                alert('Could not find upload script.');
+            else if (d.type === "HTTP")
+                alert('error ' + d.type + ": " + d.status);
+            else if (d.type === "File Size")
+                alert(c.name + ' ' + d.type + ' Limit: ' + Math.round(d.sizeLimit / 1024) + 'KB');
+            else
+                alert('error ' + d.type + ": " + d.text);
+        }
+    });
     
 });
 
@@ -124,3 +158,4 @@ var SuccessDelete = function (result) {
 }
 
 
+  

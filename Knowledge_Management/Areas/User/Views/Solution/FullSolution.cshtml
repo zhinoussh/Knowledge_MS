@@ -1,84 +1,77 @@
-﻿@model Knowledge_Management.ViewModels.FullSolutionViewModel
+﻿@model Knowledge_Management.Areas.User.ViewModels.FullSolutionViewModel
 @{
-    ViewBag.Title = "مشاهده راهکار";
+    ViewBag.Title = "Solution Description";
     Layout = "~/Areas/User/Views/Shared/_EmployeeLayout.cshtml";
 }
 
-<h5>مشاهده راهکار</h5>
-<span class="border_admin" style="margin-bottom:4%;"></span>
-
-
-
-<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-    <div class="panel panel-default">
-        <div class="panel-heading" role="tab" id="headingOne">
-            <h6 class="panel-title">
-                <a role="button" class="accordion-toggle" data-toggle="collapse" href="#collapseQuestion" aria-expanded="true" aria-controls="collapseOne">
-                    @Html.LabelFor(model => model.question)
-                    <i class="fa fa-angle-left pull-right"></i>
-                </a>
-            </h6>
-        </div>
-        <div id="collapseQuestion" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
-            <div class="panel-body">
-                @Html.DisplayFor(model => model.question)
+<div class="col-xs-11 col-xs-offset-1 top_buffer20 nopadding">
+    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="headingOne">
+                <h6 class="panel-title">
+                    <a role="button" class="accordion-toggle" data-toggle="collapse" href="#collapseQuestion" aria-expanded="true" aria-controls="collapseOne">
+                        <i class="glyphicon glyphicon-chevron-down indicator"></i>@Html.LabelFor(model => model.question, new { @class = "div_label" })
+                    </a>
+                </h6>
+            </div>
+            <div id="collapseQuestion" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+                <div class="panel-body">
+                   @Html.DisplayFor(model => model.question)
+                </div>
             </div>
         </div>
-    </div>
-    <div class="panel panel-default">
-        <div class="panel-heading" role="tab" id="headingOne">
-            <h6 class="panel-title">
-                <a role="button" class="accordion-toggle" data-toggle="collapse" href="#collapseSolution" aria-expanded="true" aria-controls="collapseOne">
-                    @Html.LabelFor(model => model.full_solution)
-                    <i class="fa fa-angle-left pull-right"></i>
-                </a>
-            </h6>
-        </div>
-        <div id="collapseSolution" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
-            <div class="panel-body">
-                @Html.DisplayFor(model => model.full_solution)
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="headingOne">
+                <h6 class="panel-title">
+                    <a role="button" class="accordion-toggle" data-toggle="collapse" href="#collapseSolution" aria-expanded="true" aria-controls="collapseOne">
+                        <i class="glyphicon glyphicon-chevron-down indicator"></i>@Html.LabelFor(model => model.full_solution)
+                    </a>
+                </h6>
+            </div>
+            <div id="collapseSolution" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+                <div class="panel-body">
+                    @Html.DisplayFor(model => model.full_solution)
 
+                </div>
             </div>
         </div>
-    </div>
-    <div class="panel panel-default">
-        <div class="panel-heading" role="tab" id="headingTwo">
-            <h4 class="panel-title">
-                <a class="collapsed accordion-toggle" role="button" data-toggle="collapse" href="#collapseUpload" aria-expanded="false" aria-controls="collapseTwo">
-                    @Html.LabelFor(model => model.uploads)
-                    <i class="fa fa-angle-left pull-right"></i>
-                </a>
-            </h4>
-        </div>
-        <div id="collapseUpload" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingTwo">
-            <div class="panel-body">
-
-                <table id="UploadDT" style="width:100%">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>FilePath</th>
-                            <th >#</th>
-                            <th >شرح بارگذاری</th>
-                            <th>دانلود</th>
-                        </tr>
-                    </thead>
-                    <tbody></tbody>
-                </table>
-
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="headingTwo">
+                <h4 class="panel-title">
+                    <a class="collapsed accordion-toggle" role="button" data-toggle="collapse" href="#collapseUpload" aria-expanded="false" aria-controls="collapseTwo">
+                        <i class="glyphicon glyphicon-chevron-up indicator"></i>@Html.LabelFor(model => model.uploads, new { @class = "div_label" })
+                    </a>
+                </h4>
+            </div>
+            <div id="collapseUpload" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingTwo">
+                <div class="panel-body">
+                    <div class="col-xs-12 top_buffer10">
+                        <table id="UploadDT" class="display">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>FilePath</th>
+                                    <th>#</th>
+                                    <th>File Upload</th>
+                                    <th>Download</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                    </div>
             </div>
         </div>
-    </div>
 
+    </div>
 </div>
 
 
-
-@Html.HiddenFor(model => model.solution_id, new { id = "hd_id_solution" })
-
+    @Html.HiddenFor(model => model.solution_id, new { id = "hd_id_solution" })
 
 
-@section scripts{
-    <script src="~/Scripts/Datatables/UploadsForSolution.js"></script>
-}
+
+    @section scripts{
+        <script src="~/Areas/User/Scripts/UploadsForSolution.js"></script>
+    }
 

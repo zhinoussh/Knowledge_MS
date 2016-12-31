@@ -10,11 +10,11 @@ namespace Knowledge_Management.Areas.User.ViewModels
     {
         public long question_id { get; set; }
 
-        [Display(Name = "شرح مسئله")]
+        [Display(Name = "Question Description")]
         public string question { get; set; }
 
-        [Display(Name ="Submit راهکار و بارگذاری اسناد")]
-        [Required(ErrorMessage = "شرح راهکار را وارد نمایید")]
+        [Display(Name ="Submit Solution and Upload Files")]
+        [Required(ErrorMessage="Solution description is not valid.")]
         public string new_solution { get; set; }
 
         public long new_solution_id { get; set; }

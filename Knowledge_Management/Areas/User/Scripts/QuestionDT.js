@@ -91,8 +91,8 @@
         $('#dropdown_strategy option:selected').removeAttr('selected');
 
         //cleare keyword part
-        var field1_input = '<input autocomplete="off" class="txt_keyword" id="field1" name="field1"  type="text" placeholder="کلید واژه" data-items="8">';
-        field1_input += '<button id="b1" class="btn add-more" style="padding:0" type="button">+</button>';
+        var field1_input = '<input autocomplete="off" class="txt_keyword" id="field1" name="field1"  type="text" placeholder="Enter keyword" data-items="8">';
+        field1_input += '<button id="b1" class="btn add-more" type="button">+</button>';
         $("#field").html(field1_input);
         var next = $("#count").val("1");
     });
@@ -119,8 +119,8 @@ var edit_question = function (s) {
     $("#txt_solution").val(s[0].solution);
 
     //cleare keyword part
-    var field1_input = '<input autocomplete="off" class="txt_keyword" id="field1" name="field1"  type="text" placeholder="کلید واژه" data-items="8">';
-    field1_input += '<button id="b1" class="btn add-more" style="padding:0" type="button">+</button>';
+    var field1_input = '<input autocomplete="off" class="txt_keyword" id="field1" name="field1"  type="text" placeholder="Enter Keyword" data-items="8">';
+    field1_input += '<button id="b1" class="btn add-more" type="button">+</button>';
     $("#field").html(field1_input);
     var next = $("#count").val("1");
 
@@ -153,8 +153,8 @@ var SuccessMessage = function (result) {
         $('#dropdown_strategy option:selected').removeAttr('selected');
 
         //cleare keyword part
-        var field1_input = '<input autocomplete="off" class="txt_keyword" id="field1" name="field1"  type="text" placeholder="کلید واژه" data-items="8">';
-        field1_input += '<button id="b1" class="btn add-more" style="padding:0" type="button">+</button>';
+        var field1_input = '<input autocomplete="off" class="txt_keyword" id="field1" name="field1"  type="text" placeholder="Enter keyword" data-items="8">';
+        field1_input += '<button id="b1" class="btn add-more" type="button">+</button>';
         $("#field").html(field1_input);
         var next = $("#count").val("1");
 

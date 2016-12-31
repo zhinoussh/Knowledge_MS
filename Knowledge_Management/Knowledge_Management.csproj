@@ -118,6 +118,7 @@
   <ItemGroup>
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\User\UserAreaRegistration.cs" />
+    <Compile Include="Areas\User\ViewModels\KeywordDetailViewModel.cs" />
     <Compile Include="Components\HtmlBootstrapButton.cs" />
     <Compile Include="Components\HtmlCheckBox.cs" />
     <Compile Include="Components\HtmlCommon.cs" />
@@ -263,6 +264,7 @@
     <Content Include="fonts\FontAwesome.otf" />
     <Content Include="Areas\Admin\Views\web.config" />
     <Content Include="Areas\User\Views\web.config" />
+    <Content Include="Areas\User\Views\SearchKey\_PartialDetailKeyWord.cshtml" />
     <None Include="Properties\PublishProfiles\Zhinous.pubxml" />
     <None Include="Scripts\jquery-2.2.3.intellisense.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -285,7 +287,7 @@
     <Content Include="Areas\Admin\Scripts\ViewQuestionDT.js" />
     <Content Include="Areas\Admin\Scripts\ViewSolutionQueDT.js" />
     <Content Include="Areas\Admin\Scripts\ViewSolutionEmpDT.js" />
-    <Content Include="Scripts\DynamicField.js" />
+    <Content Include="Areas\User\Scripts\DynamicField.js" />
     <Content Include="Scripts\jquery-2.2.3.js" />
     <Content Include="Scripts\jquery-2.2.3.min.js" />
     <Content Include="Scripts\jquery-2.2.3.min.map" />
@@ -295,8 +297,8 @@
     <Content Include="Scripts\jquery.dataTables.min.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
-    <Content Include="Scripts\jquery.uploadify.js" />
-    <Content Include="Scripts\jquery.uploadify.min.js" />
+    <Content Include="Areas\User\Scripts\jquery.uploadify.js" />
+    <Content Include="Areas\User\Scripts\jquery.uploadify.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />

@@ -123,7 +123,7 @@ namespace Knowledge_Management.Areas.User.Controllers
                 long new_id=DAL.InsertNewSolution(q.new_solution_id,q.question_id, q.new_solution, UserName);
                 q.new_solution_id = new_id;
                 
-                return Json(new { msg = "راهکار با موفقیت ذخیره شد" });
+                return Json(new { msg = "Solution Added Successfully." });
             }
 
             return View(q);
@@ -165,7 +165,7 @@ namespace Knowledge_Management.Areas.User.Controllers
             //delete solution and upload from db
             DAL.Delete_Solution(id_solution);
             
-            return Json(new { msg="راهکار مورد نظر با موفقیت Delete شد"});
+            return Json(new { msg="Solution Deleted Successfully."});
 
         }
 
@@ -189,7 +189,7 @@ namespace Knowledge_Management.Areas.User.Controllers
                     string UserName = ticket.Name; //You have the UserName!
 
 
-                    new_id = DAL.InsertNewSolution(new_id, long.Parse(Request.Form["question_id"]), "بدون شرح راهکار", UserName);
+                    new_id = DAL.InsertNewSolution(new_id, long.Parse(Request.Form["question_id"]), "No Solution Description", UserName);
 
                 }
 
@@ -229,7 +229,7 @@ namespace Knowledge_Management.Areas.User.Controllers
                 System.IO.File.Delete(Server.MapPath(@"~\Upload\" + DAL.get_file_path(q.upload_id)));
 
                 DAL.DeleteUpload(q.upload_id);
-                return Json(new { msg = "فایل بارگذاری شده با موفقیت Delete شد" });
+                return Json(new { msg = "File Uploaded Successfully." });
             }
             else
             {
@@ -358,7 +358,7 @@ namespace Knowledge_Management.Areas.User.Controllers
             {
                 QID = s.question_id + "",
                 Sol_Id = s.solution_id + "",
-                Soution = s.solution,
+                Solution = s.solution,
                 QIndex = (index + 1) + "",
                 QSubject = s.question,
                 uploadCount=s.count_upload+"",
@@ -369,7 +369,7 @@ namespace Knowledge_Management.Areas.User.Controllers
             var result = from s in indexed_list
                          select new[] {s.Sol_Id, s.QID , s.QIndex
                              ,s.QSubject.Length <= 200 ? s.QSubject: (s.QSubject.Substring(0, 200) + "..."), 
-                                 s.Soution.Length <= 200 ? s.Soution : (s.Soution.Substring(0, 200) + "..."),
+                                 s.Solution.Length <= 200 ? s.Solution : (s.Solution.Substring(0, 200) + "..."),
                                  s.uploadCount,s.confirm_status
                          };
 

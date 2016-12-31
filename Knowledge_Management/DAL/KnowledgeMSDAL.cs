@@ -111,6 +111,16 @@ namespace Knowledge_Management.DAL
             db.SaveChanges();
         }
 
+        public string get_strategy_description(int id)
+        {
+            string strategy = "";
+            tbl_strategy st=db.tbl_strategy.Find(id);
+            if(st!=null)
+                strategy = st.strategy_name;
+
+            return strategy;
+        }
+
         #endregion STRATEGY
 
         #region Department
@@ -156,6 +166,7 @@ namespace Knowledge_Management.DAL
             db.SaveChanges();
         }
 
+       
         #endregion Department
 
         #region Objective
@@ -198,6 +209,16 @@ namespace Knowledge_Management.DAL
             
             db.tbl_department_objectives.Remove(s);
             db.SaveChanges();
+        }
+
+        public string get_department_objective(int id)
+        {
+            string obj = "";
+            tbl_department_objectives st = db.tbl_department_objectives.Find(id);
+            if (st != null)
+                obj = st.objective;
+
+            return obj;
         }
 
         #endregion Objective
@@ -435,6 +456,15 @@ namespace Knowledge_Management.DAL
             db.SaveChanges();
         }
 
+        public string get_job_description(int id)
+        {
+            string jobDesc = "";
+            tbl_job_description st = db.tbl_job_description.Find(id);
+            if (st != null)
+                jobDesc = st.job_desc;
+
+            return jobDesc;
+        }
         #endregion JobDescription
 
         #region Question
@@ -966,7 +996,7 @@ namespace Knowledge_Management.DAL
         public List<tbl_solution_uploads> get_uploads_by_solution(long solution_id,int confirm)
         {
             List<tbl_solution_uploads> lst_uploads = (from u in db.tbl_solution_uploads
-                                                      where u.fk_solution == solution_id
+                                                      where u.fk_solution == solution_id 
                                                       select u).ToList();
 
             if (confirm == 1)

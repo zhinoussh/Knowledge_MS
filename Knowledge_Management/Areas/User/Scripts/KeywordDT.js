@@ -49,7 +49,7 @@ $(document).ready(function () {
                               "sDefaultContent": " "
                             , "sClass": "dt-body-center",
                               "mRender": function (data, type, row) {
-                                  var param_array = {depobj_id: row[1], jobdesc_id: row[2], st_id: row[3]};
+                                  var param_array = {depobj_id: row[1], jobdesc_id: row[2], st_id: row[3],keyword:row[5]};
                                   var param_obj = [];
                                   param_obj.push(param_array);
                                   // var o = JSON.parse(param_obj);
@@ -81,9 +81,25 @@ $(document).ready(function () {
 
 
 var details = function (s) {
-    $("#dropdown_dep_Objective").val(s[0].depobj_id);
-    $("#dropdown_jobDesc").val(s[0].jobdesc_id);
-    $("#dropdown_strategy").val(s[0].st_id);   
+    var KeywordDetailViewModel = {
+        keyword: s[0].keyword,
+        strategyId: s[0].st_id,
+        depObjId: s[0].depobj_id,
+        jobDescId: s[0].jobdesc_id,
+    };
+
+    $.ajax({
+        type: 'Get',
+        url: '/User/SearchKey/KeywordDetails',
+        data: KeywordDetailViewModel,
+        success: function (result) {
+            $("#ModalContainer").html(result);
+            $("#ModalContainer").find("#DetailModal").modal('show');
+        }
+        , error: function (jqXHR, textStatus, errorThrown) {
+            alert(errorThrown);
+        }
+    });
 
 }
 

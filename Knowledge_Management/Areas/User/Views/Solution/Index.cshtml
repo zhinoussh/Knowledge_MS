@@ -1,66 +1,63 @@
-﻿@using Knowledge_Management.ViewModels
-@model SolutionViewModel
+﻿@model Knowledge_Management.Areas.User.ViewModels.SolutionViewModel
 @{
 
-    ViewBag.Title = "راهکارهای مسئله";
+    ViewBag.Title = "Solution Repository";
     Layout = "~/Areas/User/Views/Shared/_EmployeeLayout.cshtml";
 }
 
+<div class="col-xs-11 col-xs-offset-1 top_buffer20 nopadding">
 
-<h5>راهکارهای مسئله</h5>
-<span class="border_admin" style="margin-bottom:4%;"></span>
-
-
-<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-    <div class="panel panel-default">
-        <div class="panel-heading" role="tab" id="headingOne">
-            <h6 class="panel-title">
-                <a class="accordion-toggle" role="button" data-toggle="collapse" href="#collapseQuestion" aria-expanded="true" aria-controls="collapseOne">
-                    @Html.LabelFor(model => model.question)
-                    <i class="fa fa-angle-left pull-right"></i>
-                </a>
-            </h6>
-        </div>
-        <div id="collapseQuestion" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
-            <div class="panel-body">
-                @Html.DisplayFor(model => model.question)
+    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="headingOne">
+                <h6 class="panel-title">
+                    <a class="accordion-toggle" role="button" data-toggle="collapse" href="#collapseQuestion" aria-expanded="true" aria-controls="collapseOne">
+                        <i class="glyphicon glyphicon-chevron-down indicator"></i>@Html.LabelFor(model => model.question, new { @class = "div_label" })
+                       
+                    </a>
+                </h6>
+            </div>
+            <div id="collapseQuestion" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+                <div class="panel-body">
+                    @Html.DisplayFor(model => model.question)
+                </div>
             </div>
         </div>
-    </div>
-    <div class="panel panel-default">
-        <div class="panel-heading" role="tab" id="headingTwo">
-            <h4 class="panel-title">
-                <a class="collapsed accordion-toggle" role="button" data-toggle="collapse" href="#collapseSolution" aria-expanded="false" aria-controls="collapseTwo">
-                    @Html.LabelFor(model => model.solutions)
-                    <i class="fa fa-angle-left pull-right"></i>
-                </a>
-            </h4>
-        </div>
-        <div id="collapseSolution" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingTwo">
-            <div class="panel-body">
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="headingTwo">
+                <h4 class="panel-title">
+                    <a class="collapsed accordion-toggle" role="button" data-toggle="collapse" href="#collapseSolution" aria-expanded="false" aria-controls="collapseTwo">
+                        <i class="glyphicon glyphicon-chevron-up indicator"></i>@Html.LabelFor(model => model.solutions, new { @class = "div_label" })
+                    </a>
+                </h4>
+            </div>
+            <div id="collapseSolution" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingTwo">
+                <div class="panel-body">
+                    <div class="col-xs-12 top_buffer10" >
 
+                        <table id="SoutionListDT" class="display">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>#</th>
+                                    <th>Solution Description</th>
+                                    <th>Document Number</th>
+                                    <th>Details</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
 
-                <table id="SoutionListDT" style="width:100%">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>#</th>
-                            <th >راهکار</th>
-                            <th>تعداد اسناد</th>
-                            <th>مشاهده کامل</th>
-                        </tr>
-                    </thead>
-                    <tbody></tbody>
-                </table>
-
+                    </div>
             </div>
         </div>
-    </div>
 
+    </div>
 </div>
-@Html.HiddenFor(model => model.question_id, new { id = "hd_id_question" })
+  </div>  
+    @Html.HiddenFor(model => model.question_id, new { id = "hd_id_question" })
 
-@section scripts{
-    <script src="~/Scripts/Datatables/SolutionsForQuestion.js"></script>
-}
+    @section scripts{
+        <script src="~/Areas/User/Scripts/SolutionsForQuestion.js"></script>
+    }
 

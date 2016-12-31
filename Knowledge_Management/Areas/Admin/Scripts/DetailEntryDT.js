@@ -157,17 +157,17 @@ $(document).ready(function () {
 
 var details = function (s) {
     var QuestionViewModel = {
-        question:  s[0].fullQuestion,
-        lst_keywords:s[0].keywords,
+        question: s[0].fullQuestion,
+        lst_keywords: s[0].keywords,
         dep_objective: (s[0].dep_objective == null ? '' : s[0].dep_objective),
         job_desc: (s[0].jobdesc == null ? '' : s[0].jobdesc),
         strategy_name: (s[0].strategy == null ? '' : s[0].strategy)
     };
 
     $.ajax({
-        type:'GET',
+        type: 'GET',
         data: QuestionViewModel,
-        url:'/Admin/ViewEntrybyDetail/QuestionDetails',
+        url: '/Admin/ViewEntrybyDetail/QuestionDetails',
         success: function (result) {
             $('#ModalContainer').html(result);
             $('#ModalContainer').find("#DetailModal").modal('show');
@@ -175,6 +175,7 @@ var details = function (s) {
         error: function (jqXHR, textStatus, errorThrown) {
             alert(errorThrown);
         }
+    });
 }
 
 var delete_dialog = function (q_id) {

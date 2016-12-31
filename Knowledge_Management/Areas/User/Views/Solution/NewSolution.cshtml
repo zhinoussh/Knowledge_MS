@@ -1,8 +1,7 @@
-﻿@using Knowledge_Management.ViewModels
-@model NewSolutionViewModel
+﻿@model Knowledge_Management.Areas.User.ViewModels.NewSolutionViewModel
 @{
 
-    ViewBag.Title = "راهکار جدید";
+    ViewBag.Title = "Enter Your Solution";
     Layout = "~/Areas/User/Views/Shared/_EmployeeLayout.cshtml";
 }
 
@@ -20,138 +19,101 @@
 </div>
 <!-- /end Modal -->
 
+<div class="col-xs-11 col-xs-offset-1 top_buffer20 nopadding">
 
-<h5>راهکار جدید</h5>
-<span class="border_admin" style="margin-bottom:4%;"></span>
+    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="headingOne">
+                <h6 class="panel-title">
+                    <a role="button" class="accordion-toggle" data-toggle="collapse" href="#collapseQuestion" aria-expanded="true" aria-controls="collapseOne">
+                        <i class="glyphicon glyphicon-chevron-down indicator"></i>@Html.LabelFor(model => model.question, new { @class = "div_label" })
 
-<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-    <div class="panel panel-default">
-        <div class="panel-heading" role="tab" id="headingOne">
-            <h6 class="panel-title">
-                <a role="button" class="accordion-toggle" data-toggle="collapse" href="#collapseQuestion" aria-expanded="true" aria-controls="collapseOne">
-                    @Html.LabelFor(model => model.question)
-                    <i class="fa fa-angle-left pull-right"></i>
-                </a>
-            </h6>
-        </div>
-        <div id="collapseQuestion" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
-            <div class="panel-body">
-                @Html.DisplayFor(model => model.question)
+                    </a>
+                </h6>
+            </div>
+            <div id="collapseQuestion" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+                <div class="panel-body">
+                    @Html.DisplayFor(model => model.question)
+                </div>
             </div>
         </div>
-    </div>
-    <div class="panel panel-default">
-        <div class="panel-heading" role="tab" id="headingOne">
-            <h6 class="panel-title">
-                <a role="button" class="accordion-toggle" data-toggle="collapse" href="#collapseSolution" aria-expanded="true" aria-controls="collapseOne">
-                    @Html.LabelFor(model => model.new_solution)
-                    <i class="fa fa-angle-left pull-right"></i>
-                </a>
-            </h6>
-        </div>
-        <div id="collapseSolution" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
-            <div class="panel-body">
-                @using (Ajax.BeginForm("Add_New_Solution", "Solution"
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="headingOne">
+                <h6 class="panel-title">
+                    <a role="button" class="accordion-toggle" data-toggle="collapse" href="#collapseSolution" aria-expanded="true" aria-controls="collapseOne">
+                        <i class="glyphicon glyphicon-chevron-down indicator"></i>@Html.LabelFor(model => model.new_solution, new { @class = "div_label" })
+                    </a>
+                </h6>
+            </div>
+            <div id="collapseSolution" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                <div class="panel-body">
+                    <div class="col-xs-12 top_buffer10">
+
+                        <div class="alert alert-success" role="alert" style="display:none" id="div_alert">
+                            <a href="#" class="close" id="close_alert">&times;</a>
+                            <label id="alert_success"></label>
+                        </div>
+                    </div>
+
+                    @using (Ajax.BeginForm("Add_New_Solution", "Solution"
                     , new AjaxOptions
                     {
                         InsertionMode = InsertionMode.ReplaceWith,
                         HttpMethod = "Post",
                         OnSuccess = "SuccessMessage"
                     }))
-                {
-                    @Html.AntiForgeryToken()
+                    {
+                        @Html.AntiForgeryToken()
 
 
-                    @Html.HiddenFor(model => model.question_id, new { id = "hd_id_question" })
-                    @Html.HiddenFor(model => model.new_solution_id, new { id = "hd_id_new_solution" })
+                        @Html.HiddenFor(model => model.question_id, new { id = "hd_id_question" })
+                        @Html.HiddenFor(model => model.new_solution_id, new { id = "hd_id_new_solution" })
 
-                    <div class="editor-field" style="width:98%;margin-top:3%">
-                        @Html.ValidationMessageFor(model => model.new_solution, "", new { @class = "error" })
-                    </div>
-                    <div class="editor-field" style="width:98%">
-                        @Html.TextAreaFor(model => model.new_solution, new { @class = "multiline_textbox", id = "txt_new_solution", @placeholder = "شرح راهکار...", style = "height:300px" })
-                    </div>
+                        <div class="col-xs-12 nopadding">
+                            @Html.ValidationMessageFor(model => model.new_solution, "", new { @class = "error" })
+                        </div>
+                        <div class="col-xs-12 nopadding">
 
-
-
-                    <div class="alert alert-success fade in" role="alert" style="float:right; width:98%; visibility:hidden" id="div_alert">
-                        <a href="#" class="close" >&times;</a>
-                        <label id="alert_success"></label>
-                    </div>
+                            @Html.TextAreaFor(model => model.new_solution, new { @class = "multiline_textbox", id = "txt_new_solution", @placeholder = "Solution Description" })
+                        </div>
 
 
-                    <div class="col-xs-2" style="margin:0 40% 0 0; width:200px">
-                        <input type="submit" class="btn btn-primary" value="Submit راهکار" />
-                    </div>
+                            <div class="col-xs-3 col-xs-offset-4 top_buffer20">
+                                <input type="submit" class="btn btn-primary" value="Submit" />
+                            </div>
 
 
-                    <div class="col-xs-2" style="margin:2% 40% 0 0;">
-                        <input type="file" name="file_upload" id="file_upload" />
-                    </div>
-                }
+                            <div class="col-xs-4 col-xs-offset-4 top_buffer20">
+                                <input type="file" name="file_upload" id="file_upload" />
+                            </div>
+                    }
+        <div class="col-xs-12 top_buffer10">
+            <table id="UploadDT" class="display">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>FilePath</th>
+                        <th>#</th>
+                        <th>File Upload</th>
+                        <th>Confirm Status</th>
+                        <th>Download</th>
+                        <th>Delete</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
 
-                <table id="UploadDT" class="display">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>FilePath</th>
-                            <th >#</th>
-                            <th >شرح بارگذاری</th>
-                            <th>وضعیت Confirm</th>
-                            <th>دانلود</th>
-                            <th>Delete</th>
-                        </tr>
-                    </thead>
-                    <tbody></tbody>
-                </table>
-
-            </div>
         </div>
     </div>
-   
+            </div>
+        </div>
 
+
+    </div>
 </div>
 
 
-
-        @section scripts{
-            <script src="~/Scripts/Datatables/UploadDT.js"></script>
-            <script src="~/Scripts/jquery.uploadify.js"></script>
-
-            <script type="text/javascript">
-                $(function () {
-                    $('#file_upload').uploadify({
-                        'swf': "@Url.Content("~/Content/img/uploadify.swf")",
-                        'uploader': "@Url.Action("Upload", "Solution")",
-                        // 'formData': { solution_id: $("#hd_id_new_solution").val(), question_id: $("#hd_id_question").val() },
-                        'onUploadStart': function (file) {
-                            $('#file_upload').uploadify('settings', 'formData', {
-                                'solution_id': $('#hd_id_new_solution').val(),
-                                'question_id': $('#hd_id_question').val()
-                            });
-                        }
-                        , 'onUploadSuccess': function (file, data, response) {
-                            $("#alert_success").html('فایل با موفقیت بارگذاری شد');
-                            $("#div_alert").slideDown(500);
-                            $("#hd_id_new_solution").val(data);
-                            var $STTable = $("#UploadDT").dataTable({ bRetrieve: true });
-                            $STTable.fnDraw();
-                            //data is whatever you return from the server
-                            //we're sending the URL from the server so we append this as an image to the #uploaded div
-                            //  $("#uploaded").append("<img src='" + data + "' alt='Uploaded Image' />");
-                        },
-                        'onError': function (a, b, c, d) {
-                            if (d.status == 404)
-                                alert('Could not find upload script.');
-                            else if (d.type === "HTTP")
-                                alert('error ' + d.type + ": " + d.status);
-                            else if (d.type === "File Size")
-                                alert(c.name + ' ' + d.type + ' Limit: ' + Math.round(d.sizeLimit / 1024) + 'KB');
-                            else
-                                alert('error ' + d.type + ": " + d.text);
-                        }
-                    });
-                });
-
-            </script>
-        }
+    @section scripts{
+        <script src="~/Areas/User/Scripts/UploadDT.js"></script>
+        <script src="~/Areas/User/Scripts/jquery.uploadify.js"></script>
+    }
