@@ -94,8 +94,8 @@ var delete_dialog = function (jd_id) {
 
     var url = "/Admin/JobDescription/Delete_JobDesc"; // the url to the controller
     $.get(url + '/' + jd_id, function (data) {
-        $('#confirm-container').html(data);
-        $('#DeleteModal').modal('show');
+        $('#ModalContainer').html(data);
+        $('#ModalContainer').find("#DeleteModal").modal('show');
     });
 }
 

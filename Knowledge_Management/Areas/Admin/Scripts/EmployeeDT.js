@@ -152,8 +152,8 @@ var delete_dialog = function (emp_id) {
 
     var url = "/Admin/Employee/Delete_Employee"; // the url to the controller
     $.get(url + '/' + emp_id, function (data) {
-        $('#confirm-container').html(data);
-        $('#DeleteModal').modal('show');
+        $('#ModalContainer').html(data);
+        $('#ModalContainer').find("#DeleteModal").modal('show');
     });
 }
 

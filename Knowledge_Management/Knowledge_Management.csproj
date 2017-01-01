@@ -357,7 +357,6 @@
     <Content Include="Areas\Admin\Views\ViewEntrybyEmployee\_PartialDeleteQuestion.cshtml" />
     <Content Include="Areas\Admin\Views\ViewEntrybyEmployee\QuestionSolutions.cshtml" />
     <Content Include="Areas\Admin\Views\ViewEntrybyEmployee\_PartialDeleteSolution.cshtml" />
-    <Content Include="Areas\Admin\Views\ViewEntrybyEmployee\_PartialUploads.cshtml" />
     <Content Include="Areas\Admin\Views\ViewEntrybyEmployee\_PartialDeleteUpload.cshtml" />
     <Content Include="Areas\Admin\Views\ViewEntrybyEmployee\ViewFullSolution.cshtml" />
     <Content Include="Areas\Admin\Views\ViewEntrybyEmployee\EmployeeSolutions.cshtml" />

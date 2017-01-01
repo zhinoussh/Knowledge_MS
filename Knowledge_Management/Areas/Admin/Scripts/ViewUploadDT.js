@@ -124,8 +124,8 @@ var delete_dialog = function (upload_id) {
 
     var url = "/Admin/ViewEntrybyEmployee/Delete_Upload"; // the url to the controller
     $.get(url + '/' + upload_id, function (data) {
-        $('#confirm-container').html(data);
-        $('#DeleteModal').modal('show');
+        $('#ModalContainer').html(data);
+        $('#ModalContainer').find("#DeleteModal").modal('show');
     });
 }
 

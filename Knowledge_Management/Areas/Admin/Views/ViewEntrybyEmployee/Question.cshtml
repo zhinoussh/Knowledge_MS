@@ -5,21 +5,7 @@
     ViewBag.Subtitle = Model.Description;
     Layout = "~/Areas/Admin/Views/Shared/_ManagementLayout.cshtml";
 }
-
-<!-- Modal -->
-<div class="modal fade" id="DeleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content" id="confirm-container">
-
-        </div>
-    </div>
-</div>
-<!-- /end Modal -->
-
-<!-- Modal -->
-<div id="ModalContainer"></div>
-<!-- /end Modal -->
-
+s
 @Html.HiddenFor(model => model.emp_id, new { id = "hd_id_emp" })
 
 

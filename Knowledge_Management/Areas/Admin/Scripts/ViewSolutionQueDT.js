@@ -90,8 +90,8 @@ var delete_dialog = function (s_id) {
 
     var url = "/Admin/ViewEntrybyEmployee/Delete_Solution"; // the url to the controller
     $.get(url + '/' + s_id, function (data) {
-        $('#confirm-container').html(data);
-        $('#DeleteModal').modal('show');
+        $('#ModalContainer').html(data);
+        $('#ModalContainer').find("#DeleteModal").modal('show');
     });
 }
  

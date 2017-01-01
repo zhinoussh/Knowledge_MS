@@ -164,8 +164,8 @@ var delete_dialog = function (q_id) {
 
     var url = "/Admin/ViewEntrybyJob/Delete_Question"; // the url to the controller
     $.get(url + '/' + q_id, function (data) {
-        $('#confirm-container').html(data);
-        $('#DeleteModal').modal('show');
+        $('#ModalContainer').html(data);
+        $('#ModalContainer').find("#DeleteModal").modal('show');
     });
 }
 
