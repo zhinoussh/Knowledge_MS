@@ -67,8 +67,8 @@ var delete_dialog = function (dep_id) {
 
     var url = "/Admin/Department/Delete_Department"; // the url to the controller
     $.get(url + '/' + dep_id, function (data) {
-        $('#confirm-container').html(data);
-        $('#DeleteModal').modal('show');
+        $('#ModalContainer').html(data);
+        $('#ModalContainer').find("#DeleteModal").modal('show');
     });
 }
 

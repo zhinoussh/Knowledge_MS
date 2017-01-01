@@ -59,8 +59,8 @@ var delete_dialog = function (obj_id) {
 
     var url = "/Admin/ObjectiveDepartment/Delete_Objective"; // the url to the controller
     $.get(url + '/' + obj_id, function (data) {
-        $('#confirm-container').html(data);
-        $('#DeleteModal').modal('show');
+        $('#ModalContainer').html(data);
+        $('#ModalContainer').find("#DeleteModal").modal('show');
     });
 }
 

@@ -57,8 +57,8 @@ var delete_dialog = function (st_id) {
     
     var url = "/Admin/Strategy/Delete_Strategy"; // the url to the controller
      $.get(url + '/' + st_id, function (data) {
-        $('#confirm-container').html(data);
-        $('#DeleteModal').modal('show');
+         $('#ModalContainer').html(data);
+         $('#ModalContainer').find("#DeleteModal").modal('show');
     });
 }
 
