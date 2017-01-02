@@ -29,24 +29,62 @@
                               "bSearchable": false,
                               "bSortable": false,
                               "bVisible": false
+                          }, {
+                              "sName": "keys",
+                              "bSearchable": false,
+                              "bSortable": false,
+                              "bVisible": false
                           },
                             {
                                 "sName": "radif", "sWidth": '2%', "sClass": "dt-body-center"
                             , "bSearchable": false, "bSortable": false
                             },
-                        { "sName": "question", "sWidth": '80%' }
-                       ,{
-                              "sName": "solution",
-                              "bSearchable": false,
-                              "bSortable": false,
-                              "bVisible": false
-                          },
+                        { "sName": "question", "sWidth": '80%' },
+                         
                           {
-                              "sName": "keys",
+                              "sName": "details",
+                              "sWidth": '2%',
                               "bSearchable": false,
                               "bSortable": false,
-                              "bVisible": false
-                          }, {
+                              "sDefaultContent": " "
+                             , "sClass": "dt-body-center",
+                              "mRender": function (data, type, row) {
+                                  var param_array = {
+                                      dep_objective: row[1], jobdesc: row[2], strategy: row[3],keywords: row[4]
+                                      , fullQuestion: row[6]
+                                  };
+                                  var param_obj = [];
+                                  param_obj.push(param_array);
+                                  return "<a class='glyphicon glyphicon-list a_clickable' onclick='details(" + JSON.stringify(param_obj) + ");'></a>"
+
+                              }
+                          },
+                        {
+                            "sName": "Solutions",
+                            "sWidth": '2%',
+                            "bSearchable": false,
+                            "bSortable": false,
+                            "sDefaultContent": " "
+                            , "sClass": "dt-body-center",
+                            "mRender": function (data, type, row) {
+                                return "<a class='glyphicon glyphicon-list-alt a_clickable' href='/User/Solution/Index/" + row[0] + "'></a>"
+                            }
+
+                        }
+                        ,
+                        {
+                            "sName": "New_Solution",
+                            "sWidth": '2%',
+                            "bSearchable": false,
+                            "bSortable": false,
+                            "sDefaultContent": " "
+                            , "sClass": "dt-body-center",
+                            "mRender": function (data, type, row) {
+                                return "<a class='glyphicon glyphicon-file a_clickable' href='/User/Solution/NewSolution/" + row[0] + "'></a>"
+                            }
+
+                        },
+                          {
                             "sName": "EDIT",
                             "sWidth": '2%',
                             "bSearchable": false,
@@ -54,11 +92,7 @@
                             "sDefaultContent": " "
                             , "sClass": "dt-body-center",
                             "mRender": function (data, type, row) {
-                                var param_array = { id: row[0], depobj_id: row[1], jobdesc_id: row[2], st_id: row[3], question: row[5], solution: row[6], keys: row[7]};
-                                var param_obj = [];
-                                param_obj.push(param_array);
-                                // var o = JSON.parse(param_obj);
-                                return "<a class='glyphicon glyphicon-edit a_clickable' onclick='edit_question(" + JSON.stringify(param_obj) + ");'></a>"
+                                return "<a class='glyphicon glyphicon-edit a_clickable' href='/User/InsertInfo/NewQuestion/" + row[0] + "'></a>"
 
                             }
                         }
@@ -84,7 +118,6 @@
         $("#alert_success").empty();
         $("#div_alert").slideDown(500);
         $("#hd_id_question").val("0");
-        $("#txt_solution").val("");
 
         $('#dropdown_dep_Objective option:selected').removeAttr('selected');
         $('#dropdown_jobDesc option:selected').removeAttr('selected');
@@ -96,8 +129,6 @@
         $("#field").html(field1_input);
         var next = $("#count").val("1");
     });
-
-   
 
 });
 
@@ -110,59 +141,30 @@ var delete_dialog = function (q_id) {
     });
 }
 
-var edit_question = function (s) {
-    $("#hd_id_question").val(s[0].id);
-    $("#dropdown_dep_Objective").val(s[0].depobj_id);
-    $("#dropdown_jobDesc").val(s[0].jobdesc_id);
-    $("#dropdown_strategy").val(s[0].st_id);
-    $("#txt_question").val(s[0].question);
-    $("#txt_solution").val(s[0].solution);
+var details = function (s) {
+    var QuestionViewModel = {
+        question: s[0].fullQuestion,
+        lst_keywords: s[0].keywords,
+        dep_objective: (s[0].dep_objective == null ? '' : s[0].dep_objective),
+        job_desc: (s[0].jobdesc == null ? '' : s[0].jobdesc),
+        strategy_name: (s[0].strategy == null ? '' : s[0].strategy)
+    };
 
-    //cleare keyword part
-    var field1_input = '<input autocomplete="off" class="txt_keyword" id="field1" name="field1"  type="text" placeholder="Enter Keyword" data-items="8">';
-    field1_input += '<button id="b1" class="btn add-more" type="button">+</button>';
-    $("#field").html(field1_input);
-    var next = $("#count").val("1");
-
-    var array = s[0].keys.split(",");
-    var count_key = array.length;
-    if (count_key > 0)
-    {
-        $("#field1").val(array[0]);
-        for (j = 1; j < count_key ; j++) {
-            $(".add-more").click();
-            $("#field"+(j+1)).val(array[j]);
+    $.ajax({
+        type: 'GET',
+        data: QuestionViewModel,
+        url: '/User/SearchInfo/QuestionDetails',
+        success: function (result) {
+            $('#ModalContainer').html(result);
+            $('#ModalContainer').find("#DetailModal").modal('show');
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            alert(errorThrown);
         }
-    }
-    
+    });
 }
 
 
-
-var SuccessMessage = function (result) {
-    if (result.msg) {
-        $("#alert_success").html(result.msg);
-        $("#div_alert").slideDown(500);
-
-        $("#frmQuestion").find('input:text').val("");
-        $("#hd_id_question").val("0");
-        $("#txt_solution").val("");
-
-        $('#dropdown_dep_Objective option:selected').removeAttr('selected');
-        $('#dropdown_jobDesc option:selected').removeAttr('selected');
-        $('#dropdown_strategy option:selected').removeAttr('selected');
-
-        //cleare keyword part
-        var field1_input = '<input autocomplete="off" class="txt_keyword" id="field1" name="field1"  type="text" placeholder="Enter keyword" data-items="8">';
-        field1_input += '<button id="b1" class="btn add-more" type="button">+</button>';
-        $("#field").html(field1_input);
-        var next = $("#count").val("1");
-
-        var $STTable = $("#QuestionDT").dataTable({ bRetrieve: true });
-        $STTable.fnDraw();
-
-    }
-}
 
 var SuccessDelete = function (result) {
     if (result.msg) {

@@ -211,6 +211,7 @@
     <Content Include="App_Data\ExploreCalifornia_log.ldf">
       <DependentUpon>ExploreCalifornia.mdf</DependentUpon>
     </Content>
+    <Content Include="Areas\User\Scripts\NewQuestion.js" />
     <Content Include="Content\animate.css" />
     <Content Include="Content\animate.min.css" />
     <Content Include="Content\awesome-bootstrap-checkbox.css" />
@@ -265,6 +266,7 @@
     <Content Include="Areas\Admin\Views\web.config" />
     <Content Include="Areas\User\Views\web.config" />
     <Content Include="Areas\User\Views\SearchKey\_PartialDetailKeyWord.cshtml" />
+    <Content Include="Areas\User\Views\InsertInfo\NewQuestion.cshtml" />
     <None Include="Properties\PublishProfiles\Zhinous.pubxml" />
     <None Include="Scripts\jquery-2.2.3.intellisense.js" />
     <Content Include="Scripts\bootstrap.min.js" />
