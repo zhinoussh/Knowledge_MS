@@ -471,7 +471,7 @@ namespace Knowledge_Management.DAL
 
         public List<QuestionViewModel> get_all_Questions()
         {
-           
+
             List<QuestionViewModel> lst_questions = (from q in db.tbl_questions
                                                      join jd in db.tbl_job_description on q.fk_jobDesc equals jd.pkey
                                                      into tbl_JobDesc
@@ -486,27 +486,13 @@ namespace Knowledge_Management.DAL
                                                      {
                                                          question_id = q.pkey,
                                                          question = q.subject,
-                                                         job_desc=j.job_desc,
+                                                         job_desc = j.job_desc,
                                                          dep_objective = o.objective,
-                                                         strategy_name=s.strategy_name
+                                                         strategy_name = s.strategy_name
                                                      }).OrderByDescending(x => x.question_id).ToList();
 
-            string str_keyword = "";
+            lst_questions.ForEach(x => x.lst_keywords = string.Join(",", (from k in db.tbl_question_keywords where k.fk_question == x.question_id select k.keyword).ToList()));
 
-            foreach (QuestionViewModel q in lst_questions)
-            {
-                str_keyword = "";
-                List<string> lst_keywords = (from k in db.tbl_question_keywords
-                                             where k.fk_question == q.question_id
-                                             select k.keyword).ToList<string>();
-                foreach (string k in lst_keywords)
-                    str_keyword += (k + " , ");
-                //remove last , if it is not null
-                if (str_keyword != "")
-                    str_keyword = str_keyword.Remove(str_keyword.Length - 2, 2);
-
-                q.lst_keywords = str_keyword;
-            }
             return lst_questions;
         }
 
@@ -533,24 +519,11 @@ namespace Knowledge_Management.DAL
                                                          job_desc = j.job_desc,
                                                          dep_objective = o.objective,
                                                          strategy_name = s.strategy_name
-                                                     }).OrderByDescending(x => x.question_id).ToList();
+                                                        }).OrderByDescending(x => x.question_id).ToList();
+            
+            lst_questions.ForEach(x => x.lst_keywords = string.Join(",", (from k in db.tbl_question_keywords where k.fk_question == x.question_id select k.keyword).ToList()));
 
-            string str_keyword = "";
-
-            foreach (QuestionViewModel q in lst_questions)
-            {
-                str_keyword = "";
-                List<string> lst_keywords = (from k in db.tbl_question_keywords
-                                             where k.fk_question == q.question_id
-                                             select k.keyword).ToList<string>();
-                foreach (string k in lst_keywords)
-                    str_keyword += (k + " , ");
-                //remove last , if it is not null
-                if (str_keyword != "")
-                    str_keyword = str_keyword.Remove(str_keyword.Length - 2, 2);
-
-                q.lst_keywords = str_keyword;
-            }
+           
             return lst_questions;
         }
 
@@ -566,51 +539,6 @@ namespace Knowledge_Management.DAL
                                                       into tbl_DepObj
                                                       join st in db.tbl_strategy on q.fk_strategy equals st.pkey
                                                       into tbl_St
-                                                      join sol in db.tbl_question_solutions.Where(x => x.fk_employee == fk_emp)
-                                                      on q.pkey equals sol.fk_question
-                                                      into tbl_Sol
-                                                      from j in tbl_JobDesc.DefaultIfEmpty()
-                                                      from s in tbl_St.DefaultIfEmpty()
-                                                      from o in tbl_DepObj.DefaultIfEmpty()
-                                                      from sol in tbl_Sol.DefaultIfEmpty()
-                                                  select new QuestionViewModel { 
-                                                        question_id=q.pkey,
-                                                        question = q.subject,
-                                                        job_desc = j.job_desc,
-                                                        dep_objective = o.objective,
-                                                        strategy_name = s.strategy_name,
-                                                        solution=sol.solution
-
-                                                  }).OrderByDescending(x => x.question_id).ToList();
-
-             string str_keyword = "";
-
-            foreach (QuestionViewModel q in lst_questions)
-            {
-                str_keyword = "";
-                List<string> lst_keywords = (from k in db.tbl_question_keywords
-                                             where k.fk_question == q.question_id
-                                             select k.keyword).ToList<string>();
-                foreach (string k in lst_keywords)
-                    str_keyword += (k + ",");
-                //remove last , if it is not null
-                if (str_keyword != "")
-                    str_keyword = str_keyword.Remove(str_keyword.Length - 1, 1);
-
-                q.lst_keywords = str_keyword;
-            }
-            return lst_questions;
-        }
-
-        public List<QuestionViewModel> get_all_Questions_by_job(int job_id)
-        {
-             List<QuestionViewModel> lst_questions = (from q in db.tbl_questions
-                                                      join jd in db.tbl_job_description.Where(x => x.fk_job == job_id)
-                                                      on q.fk_jobDesc equals jd.pkey  into tbl_JobDesc
-                                                      join obj in db.tbl_department_objectives on q.fk_depObj equals obj.pkey
-                                                      into tbl_DepObj
-                                                      join st in db.tbl_strategy on q.fk_strategy equals st.pkey
-                                                      into tbl_St
                                                       from j in tbl_JobDesc.DefaultIfEmpty()
                                                       from s in tbl_St.DefaultIfEmpty()
                                                       from o in tbl_DepObj.DefaultIfEmpty()
@@ -622,29 +550,41 @@ namespace Knowledge_Management.DAL
                                                         strategy_name = s.strategy_name
                                                   }).OrderByDescending(x => x.question_id).ToList();
 
-             string str_keyword = "";
+       lst_questions.ForEach(x=> x.lst_keywords = string.Join(",",(from k in db.tbl_question_keywords where k.fk_question == x.question_id select k.keyword).ToList()));
+            
+            return lst_questions;
+        }
 
-            foreach (QuestionViewModel q in lst_questions)
-            {
-                str_keyword = "";
-                List<string> lst_keywords = (from k in db.tbl_question_keywords
-                                             where k.fk_question == q.question_id
-                                             select k.keyword).ToList<string>();
-                foreach (string k in lst_keywords)
-                    str_keyword += (k + ",");
-                //remove last , if it is not null
-                if (str_keyword != "")
-                    str_keyword = str_keyword.Remove(str_keyword.Length - 1, 1);
+        public List<QuestionViewModel> get_all_Questions_by_job(int job_id)
+        {
+            List<QuestionViewModel> lst_questions = (from q in db.tbl_questions
+                                                     join jd in db.tbl_job_description.Where(x => x.fk_job == job_id)
+                                                     on q.fk_jobDesc equals jd.pkey into tbl_JobDesc
+                                                     join obj in db.tbl_department_objectives on q.fk_depObj equals obj.pkey
+                                                     into tbl_DepObj
+                                                     join st in db.tbl_strategy on q.fk_strategy equals st.pkey
+                                                     into tbl_St
+                                                     from j in tbl_JobDesc.DefaultIfEmpty()
+                                                     from s in tbl_St.DefaultIfEmpty()
+                                                     from o in tbl_DepObj.DefaultIfEmpty()
+                                                     select new QuestionViewModel
+                                                     {
+                                                         question_id = q.pkey,
+                                                         question = q.subject,
+                                                         job_desc = j.job_desc,
+                                                         dep_objective = o.objective,
+                                                         strategy_name = s.strategy_name
+                                                     }).OrderByDescending(x => x.question_id).ToList();
+           
+            lst_questions.ForEach(x => x.lst_keywords = string.Join(",", (from k in db.tbl_question_keywords where k.fk_question == x.question_id select k.keyword).ToList()));
 
-                q.lst_keywords = str_keyword;
-            }
+   
             return lst_questions;
         }
 
         public List<QuestionViewModel> get_all_Questions_by_alljobs_department(int dep_id)
         {
-            List<QuestionViewModel> lst_questions = (from q in db.tbl_questions
-                                                     
+            List<QuestionViewModel> lst_questions = (from q in db.tbl_questions                                                     
                                                      join jd in db.tbl_job_description on q.fk_jobDesc equals jd.pkey 
                                                      into tbl_JobDesc
                                                      join obj in db.tbl_department_objectives on q.fk_depObj equals obj.pkey
@@ -664,22 +604,8 @@ namespace Knowledge_Management.DAL
                                                          strategy_name = s.strategy_name
                                                      }).OrderByDescending(x => x.question_id).ToList();
 
-            string str_keyword = "";
-
-            foreach (QuestionViewModel q in lst_questions)
-            {
-                str_keyword = "";
-                List<string> lst_keywords = (from k in db.tbl_question_keywords
-                                             where k.fk_question == q.question_id
-                                             select k.keyword).ToList<string>();
-                foreach (string k in lst_keywords)
-                    str_keyword += (k + ",");
-                //remove last , if it is not null
-                if (str_keyword != "")
-                    str_keyword = str_keyword.Remove(str_keyword.Length - 1, 1);
-
-                q.lst_keywords = str_keyword;
-            }
+            lst_questions.ForEach(x => x.lst_keywords = string.Join(",", (from k in db.tbl_question_keywords where k.fk_question == x.question_id select k.keyword).ToList()));
+            
             return lst_questions;
         }
 
@@ -708,6 +634,7 @@ namespace Knowledge_Management.DAL
                         dep_objective = o.objective,
                         strategy_name = s.strategy_name
                     }).OrderByDescending(x => x.question_id);
+
 
               List<QuestionViewModel> lst_questions = null;
 
@@ -745,26 +672,13 @@ namespace Knowledge_Management.DAL
             else
                 lst_questions = query.ToList<QuestionViewModel>();
 
-             string str_keyword = "";
-
-            foreach (QuestionViewModel q in lst_questions)
-            {
-                str_keyword = "";
-                List<string> lst_keywords = (from k in db.tbl_question_keywords
-                                             where k.fk_question == q.question_id
-                                             select k.keyword).ToList<string>();
-                foreach (string k in lst_keywords)
-                    str_keyword += (k + ",");
-                //remove last , if it is not null
-                if (str_keyword != "")
-                    str_keyword = str_keyword.Remove(str_keyword.Length - 1, 1);
-
-                q.lst_keywords = str_keyword;
-            }
+            lst_questions.ForEach(x => x.lst_keywords = string.Join(",", (from k in db.tbl_question_keywords where k.fk_question == x.question_id select k.keyword).ToList()));
+            
+           
             return lst_questions;
         }
 
-        public void InsertQuestion(long q_id, string q_subject,int? depObjId,long? jobDescId,int? strategyId,string q_solution
+        public void InsertQuestion(long q_id, string q_subject,int? depObjId,long? jobDescId,int? strategyId
             ,List<string> keywords,string pcode )
         {
             int fk_emp = db.tbl_employee.Where(x => x.personel_code == pcode).Select(x => x.pkey).First();
@@ -782,13 +696,6 @@ namespace Knowledge_Management.DAL
                 db.SaveChanges();
 
                 long new_pk = q.pkey;
-
-                if(!String.IsNullOrEmpty(q_solution))
-                {
-                    tbl_question_solutions s = new tbl_question_solutions { fk_employee = fk_emp, fk_question = new_pk, solution = q_solution };
-                    db.tbl_question_solutions.Add(s);
-                    db.SaveChanges();
-                }
 
                 tbl_question_keywords key;
                 foreach (string k in keywords)
@@ -810,22 +717,6 @@ namespace Knowledge_Management.DAL
 
                 db.SaveChanges();
                 
-                if (!String.IsNullOrEmpty(q_solution))
-                {
-                    tbl_question_solutions s = db.tbl_question_solutions.Where(x => x.fk_question == q_id && x.fk_employee == fk_emp).Select(x => x).FirstOrDefault();
-                    if (s == null)
-                    {
-                        s = new tbl_question_solutions { fk_employee = fk_emp, fk_question = q_id, solution = q_solution };
-                        db.tbl_question_solutions.Add(s);
-                    }
-                    else
-                    {
-                        s.solution = q_solution;
-                    }
-                    db.SaveChanges();
-
-                }
-
 
                 db.tbl_question_keywords.RemoveRange(db.tbl_question_keywords.Where(x => x.fk_question == q_id));
                 tbl_question_keywords key;
@@ -856,6 +747,24 @@ namespace Knowledge_Management.DAL
         {
             string question_name = db.tbl_questions.Find(q_id).subject;
             return question_name;
+        }
+
+        public QuestionViewModel get_question_byId(int q_id)
+        {
+            tbl_questions question= db.tbl_questions.Find(q_id);
+            QuestionViewModel vm = new QuestionViewModel();
+
+            if (question != null)
+            {
+                vm.question = question.subject;
+                vm.dep_obj_id = question.fk_depObj;
+                vm.job_desc_id = question.fk_jobDesc;
+                vm.strategy_id = question.fk_strategy;
+                vm.question = question.subject;
+                vm.lst_keywords = string.Join(",", (from k in db.tbl_question_keywords where k.fk_question == q_id select k.keyword).ToList());
+            }
+                
+            return vm;
         }
 
         #endregion Question
