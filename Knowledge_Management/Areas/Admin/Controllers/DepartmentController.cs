@@ -4,6 +4,7 @@ using System.Web.Mvc;
 using Knowledge_Management.Models;
 using Knowledge_Management.DAL;
 using Knowledge_Management.Areas.Admin.ViewModels;
+using System;
 
 
 
@@ -12,6 +13,12 @@ namespace Knowledge_Management.Areas.Admin.Controllers
     [CustomAuthorize(Roles = "Admin")]
     public class DepartmentController : Controller
     {
+        private IKnowledgeMSSL serviceLayer;
+
+        public DepartmentController(IKnowledgeMSSL service)
+        {
+            serviceLayer = service;
+        }
         // GET: Show Departments
         public ActionResult Index()
         {
@@ -21,100 +28,53 @@ namespace Knowledge_Management.Areas.Admin.Controllers
         //create a Department
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Add_Edit_Department(DepartmentViewModel s)
+        [ModelValidator]
+        public ActionResult Add_Edit_Department(DepartmentViewModel d)
         {
-            if (ModelState.IsValid)
-            {
-                KnowledgeMSDAL DAL = new KnowledgeMSDAL();
-
-                DAL.InsertDepartment(s.dep_id, s.dep_name);
-                return Json(new { msg = "Department inserted successfully." });
-            }
-            else
-            {
-                ModelState.AddModelError("ADD_DepartmentErr", "Department length is exeeding");
-            }
-            return View(s);
+            serviceLayer.Post_Add_Edit_Department(d);
+            return Json(new { msg = "Department inserted successfully." });
         }
 
 
         [HttpGet] // this action result returns the partial containing the modal
         public ActionResult Delete_Department(int id)
         {
-            DepartmentViewModel s = new DepartmentViewModel();
-            s.dep_id = id;
-            return PartialView("_PartialDeleteDep", s);
+           DepartmentViewModel vm= serviceLayer.Get_Delete_Department(id);
+           return PartialView("_PartialDeleteDep", vm);
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]        
-        public ActionResult Delete_Department(DepartmentViewModel s)
+        [ValidateAntiForgeryToken]
+        [ModelValidator]
+        public ActionResult Delete_Department(DepartmentViewModel d)
         {
             ModelState["dep_name"].Errors.Clear();
-
-            if (ModelState.IsValid)
-            {
-                KnowledgeMSDAL DAL = new KnowledgeMSDAL();
-
-                DAL.DeleteDepartment(s.dep_id);
-                return Json(new { msg = "Department deleted successfully." });
-            }
-            else
-            {
-                ModelState.AddModelError("Delete_DepartmentErr", "error in deleting Department");
-            }
-            return View(s);
-
+            serviceLayer.Post_Add_Edit_Department(d);
+            return Json(new { msg = "Department deleted successfully." });
         }
 
 
 
         public ActionResult DepartmentAjaxHandler(jQueryDataTableParamModel request)
         {
-            KnowledgeMSDAL DAL = new KnowledgeMSDAL();
+           Tuple<List<tbl_department>,int> tbl_content = serviceLayer.Get_DepartmentTableContent(request.sSearch,
+                                            Request["sSortDir_0"], request.iDisplayStart, request.iDisplayLength);
 
-            List<tbl_department> all_items = DAL.get_all_Departments();
 
-
-            //filtering 
-            List<tbl_department> filtered = new List<tbl_department>();
-
-            if (!string.IsNullOrEmpty(request.sSearch))
+            var indexed_list = tbl_content.Item1.Select((s, index) => new
             {
-                filtered = all_items.Where(i => i.department_name.Contains(request.sSearch)).ToList();
+                SID = s.pkey + "",
+                SIndex = (index + 1) + ""
+                , SNAME = s.department_name 
+            });
 
-            }
-            else
-                filtered = all_items;
-
-
-            //sorting
-            //      var sortColumnIndex = Convert.ToInt32(Request["iSortCol_0"]);
-            //Func<Company, string> orderingFunction = (c => sortColumnIndex == 1 ? c.Name :
-            //                                            sortColumnIndex == 2 ? c.Address :
-            //                                            c.Town);
-
-            var sortDirection = Request["sSortDir_0"]; // asc or desc
-            if (sortDirection == "asc")
-                filtered = filtered.OrderBy(s => s.department_name).ToList();
-            else
-                filtered = filtered.OrderByDescending(s => s.department_name).ToList();
-
-            //pagination
-            filtered = filtered.Skip(request.iDisplayStart).Take(request.iDisplayLength).ToList();
-
-            var indexed_list = filtered.Select((s, index) => new { SID = s.pkey + "", SIndex = (index + 1) + "", SNAME = s.department_name });
-
-            var result = from s in indexed_list
-                         select new[] { s.SID, s.SIndex, s.SNAME };
-
-      
+            var result = from s in indexed_list select new[] { s.SID, s.SIndex, s.SNAME };
 
             return Json(new
             {
                 sEcho = request.sEcho,
-                iTotalRecords = all_items.Count(),
-                iTotalDisplayRecords = all_items.Count(),
+                iTotalRecords =  tbl_content.Item2,
+                iTotalDisplayRecords =  tbl_content.Item2,
                 aaData = result
             },
             JsonRequestBehavior.AllowGet);
