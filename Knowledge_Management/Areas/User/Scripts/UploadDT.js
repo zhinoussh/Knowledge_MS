@@ -144,14 +144,7 @@ $(document).on('click', '#close_alert_upload', function () {
     $("#div_alert_upload").slideUp(500);
     return false;
 });
-var SuccessMessage = function (result) {
-    if (result.msg) {
-        $("#alert_success").html(result.msg);
-        $("#div_alert").slideDown(500);
 
-    }
-
-}
 
 
 var download_file = function (upload_id) {
@@ -226,5 +219,14 @@ var SuccessMessage_Editupload = function (result)
     }
 }
 
-
   
+var SuccessMessage_AddSolution = function (result) {
+    if (result.msg) {
+        $("#alert_success").html(result.msg);
+        $("#div_alert").slideDown(500);
+
+        $('#hd_id_new_solution').val(result.new_solution_id);
+
+    }
+
+}
