@@ -121,7 +121,6 @@ namespace Knowledge_Management.Areas.User.Controllers
                 string UserName = ticket.Name; //You have the UserName!
 
                 long new_id=DAL.InsertNewSolution(q.new_solution_id,q.question_id, q.new_solution, UserName);
-                //q.new_solution_id = new_id;
 
                 return Json(new { msg = "Solution Added Successfully.", new_solution_id =new_id});
             }
