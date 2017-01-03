@@ -297,5 +297,130 @@ namespace Knowledge_Management.DAL
 
         #endregion JobController
 
+        #region JobDescriptionController
+
+        public JobDescriptionViewModel Get_JobDescription_Index_Page()
+        {
+            JobDescriptionViewModel o = new JobDescriptionViewModel();
+
+            List<tbl_department> deps = DataLayer.get_all_Departments();
+            o.lst_dep = new SelectList(deps, "pkey", "department_name");
+            o.dep_id = deps.First().pkey + "";
+
+            List<tbl_job> jobs = DataLayer.get_Jobs(Int32.Parse(o.dep_id));
+            o.lst_job = new SelectList(jobs, "pkey", "job_name");
+            o.job_id = jobs.First().pkey + "";
+
+            o.jobDesc_id = 0;
+            o.jobDesc = "";
+
+            return o;
+        }
+
+        public void Post_Add_Edit_JobDescription(JobDescriptionViewModel j)
+        {
+            DataLayer.InsertJobDescription(j.jobDesc_id, j.jobDesc, Int32.Parse(j.job_id));
+        }
+
+        public JobDescriptionViewModel Get_Delete_JobDescription(int JobDescriptionId)
+        {
+            JobDescriptionViewModel s = new JobDescriptionViewModel();
+            s.jobDesc_id = JobDescriptionId;
+
+            return s;
+        }
+
+        public void Post_Delete_JobDescription(JobDescriptionViewModel vm)
+        {
+            DataLayer.DeleteJobDescription(vm.jobDesc_id);
+        }
+
+        public Tuple<List<tbl_job_description>, int> Get_JobDescriptionTableContent(int jobId, string filter, string sortDirection, int displayStart, int displayLength)
+        {
+            List<tbl_job_description> all_items = DataLayer.get_JobDescriptions(jobId);
+
+            //filtering 
+            List<tbl_job_description> filtered = new List<tbl_job_description>();
+
+            if (!string.IsNullOrEmpty(filter))
+            {
+                filtered = all_items.Where(i => i.job_desc.Contains(filter)).ToList();
+            }
+            else
+                filtered = all_items;
+
+            //sorting
+            if (sortDirection == "asc")
+                filtered = filtered.OrderBy(s => s.job_desc).ToList();
+            else
+                filtered = filtered.OrderByDescending(s => s.job_desc).ToList();
+
+            //pagination
+            filtered = filtered.Skip(displayStart).Take(displayLength).ToList();
+
+            return new Tuple<List<tbl_job_description>, int>(filtered, all_items.Count);
+        }
+
+        #endregion JobDescriptionController
+
+        #region DepartmentObjectiveController
+
+        public DepartmentObjectiveViewModel Get_DepartmentObjective_Index_Page(int departmentId)
+        {
+            DepartmentObjectiveViewModel o = new DepartmentObjectiveViewModel();
+            o.dep_id = departmentId;
+            o.dep_name = DataLayer.get_department_name(departmentId);
+            o.obj_id = 0;
+            o.obj_name = "";
+
+            return o;
+        }
+
+        public void Post_Add_Edit_DepartmentObjective(DepartmentObjectiveViewModel o)
+        {
+            DataLayer.InsertObjective(o.obj_id, o.obj_name, o.dep_id);
+        }
+
+        public DepartmentObjectiveViewModel Get_Delete_DepartmentObjective(int DepartmentObjectiveId)
+        {
+            DepartmentObjectiveViewModel s = new DepartmentObjectiveViewModel();
+            s.obj_id = DepartmentObjectiveId;
+
+            return s;
+        }
+
+        public void Post_Delete_DepartmentObjective(DepartmentObjectiveViewModel vm)
+        {
+            DataLayer.DeleteObjective(vm.obj_id);
+        }
+
+        public Tuple<List<tbl_department_objectives>, int> Get_DepartmentObjectiveTableContent(int departmentId, string filter, string sortDirection, int displayStart, int displayLength)
+        {
+            List<tbl_department_objectives> all_items = DataLayer.get_Department_Objectives(departmentId);
+
+            //filtering 
+            List<tbl_department_objectives> filtered = new List<tbl_department_objectives>();
+
+            if (!string.IsNullOrEmpty(filter))
+            {
+                filtered = all_items.Where(i => i.objective.Contains(filter)).ToList();
+
+            }
+            else
+                filtered = all_items;
+
+
+            if (sortDirection == "asc")
+                filtered = filtered.OrderBy(s => s.objective).ToList();
+            else
+                filtered = filtered.OrderByDescending(s => s.objective).ToList();
+
+            //pagination
+            filtered = filtered.Skip(displayStart).Take(displayLength).ToList();
+
+            return new Tuple<List<tbl_department_objectives>, int>(filtered, all_items.Count);
+        }
+
+        #endregion DepartmentObjectiveController
     }
 }

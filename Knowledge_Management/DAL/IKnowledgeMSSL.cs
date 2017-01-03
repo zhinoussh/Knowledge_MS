@@ -48,5 +48,25 @@ namespace Knowledge_Management.DAL
 
         #endregion JobController
 
+        #region JobDescriptionController
+
+        JobDescriptionViewModel Get_JobDescription_Index_Page();
+        void Post_Add_Edit_JobDescription(JobDescriptionViewModel j);
+        JobDescriptionViewModel Get_Delete_JobDescription(int JobDescriptionId);
+        void Post_Delete_JobDescription(JobDescriptionViewModel vm);
+        Tuple<List<tbl_job_description>, int> Get_JobDescriptionTableContent(int jobId, string filter, string sortDirection, int displayStart, int displayLength);
+
+        #endregion JobDescriptionController
+
+        #region DepartmentObjectiveController
+
+        DepartmentObjectiveViewModel Get_DepartmentObjective_Index_Page();
+        void Post_Add_Edit_DepartmentObjective(DepartmentObjectiveViewModel j);
+        DepartmentObjectiveViewModel Get_Delete_DepartmentObjective(int DepartmentObjectiveId);
+        void Post_Delete_DepartmentObjective(DepartmentObjectiveViewModel vm);
+        Tuple<List<tbl_department_objectives>, int> Get_DepartmentObjectiveTableContent(int departmentId, string filter, string sortDirection, int displayStart, int displayLength);
+
+        #endregion DepartmentObjectiveController
+
     }
 }
