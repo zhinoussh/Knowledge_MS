@@ -1,11 +1,11 @@
 ﻿@model Knowledge_Management.Areas.Admin.ViewModels.EmployeeQuestionViewModel
 
 @{
-    ViewBag.Title = "Question by Details";
+    ViewBag.Title = "Questions by Details";
     ViewBag.Subtitle = Model.Description;
     Layout = "~/Areas/Admin/Views/Shared/_ManagementLayout.cshtml";
 }
-s
+
 @Html.HiddenFor(model => model.emp_id, new { id = "hd_id_emp" })
 
 

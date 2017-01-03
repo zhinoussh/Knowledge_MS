@@ -219,7 +219,8 @@ namespace Knowledge_Management.Areas.Admin.Controllers
             if (id != 0)
             {
                 vm.question = dal.get_question_name(id);
-                vm.question_id = id;              
+                vm.question_id = id;
+                vm.employee_prop = "Defined by: "+dal.get_Question_Writer(id);
             }
 
             return View(vm);
@@ -394,6 +395,8 @@ namespace Knowledge_Management.Areas.Admin.Controllers
             KnowledgeMSDAL DAL=new KnowledgeMSDAL();
             FullSolutionViewModel vm = new FullSolutionViewModel();
             vm= DAL.get_Solution_by_id(id);
+            vm.solution_writer = "Defined by: " + vm.solution_writer;
+            vm.question_writer = "Defined by: " + vm.question_writer;
             return View(vm);
         }
 

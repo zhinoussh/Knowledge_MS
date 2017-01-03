@@ -319,6 +319,7 @@ namespace Knowledge_Management.DAL
             return lst_employee;
         }
 
+       
         public int InsertEmployee(int emp_id, string first_name, string last_name,string personel_code
             , int dep_id, int job_id, string password, bool data_entry, bool data_view)
         {
@@ -468,6 +469,15 @@ namespace Knowledge_Management.DAL
         #endregion JobDescription
 
         #region Question
+
+        public string get_Question_Writer(int question_id)
+        {
+            string emp_prop = (from q in db.tbl_questions
+                               join e in db.tbl_employee on q.fk_employee equals e.pkey
+                               select (e.fname + " " + e.lname + " - personel code: " + e.personel_code)).FirstOrDefault();
+
+            return emp_prop;
+        }
 
         public List<QuestionViewModel> get_all_Questions()
         {
@@ -846,12 +856,17 @@ namespace Knowledge_Management.DAL
         {
             FullSolutionViewModel temp = (from s in db.tbl_question_solutions.Where(s=>s.pkey==solution_id)
                                           join q in db.tbl_questions on s.fk_question equals q.pkey
+                                          join e1 in db.tbl_employee on s.fk_employee equals e1.pkey
+                                          join e2 in db.tbl_employee on q.fk_employee equals e2.pkey
                                           select new FullSolutionViewModel
                                           {
                                               solution_id=s.pkey
                                               ,question_id=q.pkey,
                                               full_solution = s.solution,
-                                              question = q.subject
+                                              question = q.subject,
+                                              solution_writer=e1.fname+" "+e1.lname+" - personel code: "+e1.personel_code,
+                                              question_writer=e2.fname+" "+e2.lname+" - personel code: "+e2.personel_code
+                                              
                                           }).First();
 
             return temp;

@@ -18,13 +18,13 @@ $(document).ready(function () {
                             "bVisible": false
                         },
                         {
-                            "sName": "radif", "sWidth": '2%', "sClass": "dt-body-center"
+                            "sName": "radif", "sWidth": '1%', "sClass": "dt-body-center"
                                 , "bSearchable": false, "bSortable": false
                         },
-                        { "sName": "solution", "sWidth": '80%', "sClass": "dt-body-left" }
+                        { "sName": "solution", "sWidth": '50%', "sClass": "dt-body-left" }
                         , {
                             "sName": "confirm_status",
-                            "sWidth": '2%',
+                            "sWidth": '1%',
                             "bSearchable": false,
                             "bSortable": false,
                             "sDefaultContent": " "
@@ -38,47 +38,29 @@ $(document).ready(function () {
                                 }
                             }
                         },
-                        { "sName": "upload_count", "sWidth": '5%', "sClass": "dt-body-center", "bSearchable": false, "bSortable": false },
+                        { "sName": "upload_count", "sWidth": '2%', "sClass": "dt-body-center", "bSearchable": false, "bSortable": false },
                         {
-                            "sName": "Show_FullSolution",
-                            "sWidth": '2%',
+                            "sName": "Actions",
+                            "sWidth": '10%',
                             "bSearchable": false,
                             "bSortable": false,
                             "sDefaultContent": " "
                              , "sClass": "dt-body-center",
-                            "mRender": function (data, type, row) {
-                                return '<a class="glyphicon glyphicon-list a_clickable" href="/Admin/ViewEntrybyEmployee/ViewFullSolution/' + row[0] + '"></a>'
+                             "mRender": function (data, type, row) {
 
+                                 var confirm_btn=(
+                                     (row[3].toString()== "True") ?
+                                     " <a class='glyphicon glyphicon-remove-circle a_clickable' onclick='confirm_solution(" + row[0] + ");' data-toggle='tooltip' title='Reject'></a>"
+                                     :
+                                    " <a class='glyphicon glyphicon-ok-circle a_clickable' onclick='confirm_solution(" + row[0] + ");' data-toggle='tooltip' title='Confirm'></a>"
+                                     );
+
+                                 return '<a class="glyphicon glyphicon-list a_clickable" href="/Admin/ViewEntrybyEmployee/ViewFullSolution/' + row[0] + '" data-toggle="tooltip" title="Details"></a>'
+                                         + " <a class='glyphicon glyphicon-trash a_clickable' onclick='delete_dialog(" + row[0] + ")' data-toggle='tooltip' title='Delete'></a>"
+                                + confirm_btn;
                             }
                         }
-                         ,
-                          {
-                              "sName": "Confirm",
-                              "sWidth": '2%',
-                              "bSearchable": false,
-                              "bSortable": false,
-                              "sDefaultContent": " "
-                             , "sClass": "dt-body-center",
-                             "mRender": function (data, type, row) {
-                               
-                                 return (row[3].toString()== "True") ?
-                                     "<a class='glyphicon glyphicon-remove-circle a_clickable' onclick='confirm_solution(" + row[0] + ");'></a>"
-                                     :
-                                    "<a class='glyphicon glyphicon-ok-circle a_clickable' onclick='confirm_solution(" + row[0] + ");'></a>"
-
-                              }
-                          }
-                         , {
-                             "sName": "DELETE",
-                             "sWidth": '2%',
-                             "bSearchable": false,
-                             "bSortable": false,
-                             "sDefaultContent": " "
-                            , "sClass": "dt-body-center"
-                            , "mRender": function (data, type, row) {
-                                return "<a class='glyphicon glyphicon-trash a_clickable' onclick='delete_dialog(" + row[0] + ")'></a>"
-                            }
-                         }
+                         
         ]
     });
 

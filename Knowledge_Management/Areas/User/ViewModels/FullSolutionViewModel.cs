@@ -10,6 +10,10 @@ namespace Knowledge_Management.Areas.User.ViewModels
     {
         public long solution_id { get; set; }
 
+        public string solution_writer { get; set; }
+        public string question_writer { get; set; }
+
+
         [Display(Name = "Solution Description")]
         public string full_solution { get; set; }
 

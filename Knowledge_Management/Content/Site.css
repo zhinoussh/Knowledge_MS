@@ -516,3 +516,7 @@ padding:0;
   border-collapse: separate;
     border-spacing: 0 .5em;
 }
+
+.subTitle {
+    color:#8076a2;
+}

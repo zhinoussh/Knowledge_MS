@@ -16,6 +16,8 @@
             </div>
             <div id="collapseQuestion" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
                 <div class="panel-body">
+                    <span class="subTitle">@Html.DisplayFor(model => model.employee_prop, new { @class = "" })</span><br /><br />
+
                     @Html.DisplayFor(model => model.question)
                 </div>
             </div>
@@ -44,11 +46,9 @@
                                     <th>ID</th>
                                     <th>#</th>
                                     <th>Solution Description</th>
-                                    <th>Confirm Status</th>
-                                    <th>Document Numbers</th>
-                                    <th>Full View</th>
-                                    <th>Confirm / Reject</th>
-                                    <th>Delete</th>
+                                    <th class="dt-head-center">Confirm Status</th>
+                                    <th>Documents</th>
+                                    <th>Actions</th>
                                 </tr>
                             </thead>
                             <tbody></tbody>
