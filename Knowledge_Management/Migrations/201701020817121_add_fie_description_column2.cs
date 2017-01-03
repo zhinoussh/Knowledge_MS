@@ -3,7 +3,7 @@ namespace Knowledge_Management.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class ALTER_SOLUTION_UPLOAD_Tables : DbMigration
+    public partial class add_fie_description_column2 : DbMigration
     {
         public override void Up()
         {

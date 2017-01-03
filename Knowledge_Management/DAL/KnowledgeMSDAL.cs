@@ -915,13 +915,22 @@ namespace Knowledge_Management.DAL
           
         }
 
-        public void InsertNewUpload(long solution_id, string filepath)
+        public void InsertNewUpload(long solution_id, string filepath,string upload_desc)
         {
-            tbl_solution_uploads u = new tbl_solution_uploads { fk_solution = solution_id, file_path = filepath };
+            tbl_solution_uploads u = new tbl_solution_uploads { fk_solution = solution_id, file_path = filepath, file_desc = upload_desc };
             db.tbl_solution_uploads.Add(u);
             db.SaveChanges();
         }
 
+        public void Edit_upload_description(long upload_id, string upload_desc)
+        {
+            tbl_solution_uploads u = db.tbl_solution_uploads.Find(upload_id);
+            if (u != null)
+            {
+                u.file_desc = upload_desc;
+                db.SaveChanges();
+            }
+        }
         public string get_file_path(long upload_id)
         {
             string file_path = db.tbl_solution_uploads.Find(upload_id).file_path;

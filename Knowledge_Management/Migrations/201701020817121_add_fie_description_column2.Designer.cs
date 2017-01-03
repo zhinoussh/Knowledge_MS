@@ -7,18 +7,18 @@ namespace Knowledge_Management.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class strategyQuestionCascadeOndelete : IMigrationMetadata
+    public sealed partial class add_fie_description_column2 : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(strategyQuestionCascadeOndelete));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(add_fie_description_column2));
         
         string IMigrationMetadata.Id
         {
-            get { return "201607290730413_strategyQuestionCascadeOndelete"; }
+            get { return "201701020817121_add_fie_description_column2"; }
         }
         
         string IMigrationMetadata.Source
         {
-            get { return null; }
+            get { return Resources.GetString("Source"); }
         }
         
         string IMigrationMetadata.Target

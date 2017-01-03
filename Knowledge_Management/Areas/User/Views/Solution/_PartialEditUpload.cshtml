@@ -1,0 +1,38 @@
+﻿@model Knowledge_Management.Areas.User.ViewModels.NewSolutionViewModel
+@{
+    Layout = null;
+}
+
+@using (Ajax.BeginForm("Edit_Upload_description", "Solution"
+                                            , new AjaxOptions
+                                            {
+                                                InsertionMode = InsertionMode.ReplaceWith,
+                                                HttpMethod = "Post",
+                                                OnSuccess = "SuccessMessage_Editupload"
+                                            }))
+ {
+    @Html.AntiForgeryToken()
+                    <div class="modal fade" id="EditModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content" id="confirm-container">
+
+                            <div class="modal-header modal-header-info">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close" aria-hidden="true">&times;</button>
+                                <h6><i class="glyphicon glyphicon-pencil"></i> Edit Upload Description</h6>
+                            </div>
+                            <div class="modal-body">
+                                @Html.TextBoxFor(model => model.file_description, new { @class = "form-control", @placeholder = "Enter Upload Description" })
+
+                                @Html.HiddenFor(model => model.upload_id)
+                                
+                            </div>
+
+                            <div class="modal-footer">
+                                    <input type="submit" class="btn btn-edit" value="Edit" />
+                                <button type="button" class="btn btn-edit" data-dismiss="modal">Cancel</button>
+                                </div>
+
+                        </div>
+                    </div>
+                </div>
+}

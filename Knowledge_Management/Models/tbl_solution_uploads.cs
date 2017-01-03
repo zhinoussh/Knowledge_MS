@@ -20,6 +20,8 @@ namespace Knowledge_Management.Models
 
         public string file_path { get; set; }
 
+        public string file_desc { get; set; }
+
         public bool confirm { get; set; } 
 
         [ForeignKey("fk_solution")]

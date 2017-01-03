@@ -10,6 +10,7 @@
 }
 
 
+
 <div class="col-xs-11 col-xs-offset-1 top_buffer20 nopadding">
 
     <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
@@ -18,7 +19,6 @@
                 <h6 class="panel-title">
                     <a role="button" class="accordion-toggle" data-toggle="collapse" href="#collapseQuestion" aria-expanded="true" aria-controls="collapseOne">
                         <i class="glyphicon glyphicon-chevron-down indicator"></i>@Html.LabelFor(model => model.question, new { @class = "div_label" })
-
                     </a>
                 </h6>
             </div>
@@ -28,77 +28,73 @@
                 </div>
             </div>
         </div>
-        <div class="panel panel-default">
-            <div class="panel-heading" role="tab" id="headingOne">
+       
+         <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="headingTwo">
                 <h6 class="panel-title">
                     <a role="button" class="accordion-toggle" data-toggle="collapse" href="#collapseSolution" aria-expanded="true" aria-controls="collapseOne">
                         <i class="glyphicon glyphicon-chevron-down indicator"></i>@Html.LabelFor(model => model.new_solution, new { @class = "div_label" })
                     </a>
                 </h6>
             </div>
-            <div id="collapseSolution" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+            <div id="collapseSolution" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
                 <div class="panel-body">
-                    <div class="col-xs-12 top_buffer10">
-
-                        <div class="alert alert-success" role="alert" style="display:none" id="div_alert">
-                            <a href="#" class="close" id="close_alert">&times;</a>
-                            <label id="alert_success"></label>
-                        </div>
-                    </div>
-
-                    @using (Ajax.BeginForm("Add_New_Solution", "Solution"
-                    , new AjaxOptions
-                    {
-                        InsertionMode = InsertionMode.ReplaceWith,
-                        HttpMethod = "Post",
-                        OnSuccess = "SuccessMessage"
-                    }))
-                    {
-                        @Html.AntiForgeryToken()
-
-
-                        @Html.HiddenFor(model => model.question_id, new { id = "hd_id_question" })
-                        @Html.HiddenFor(model => model.new_solution_id, new { id = "hd_id_new_solution" })
-
-                        <div class="col-xs-12 nopadding">
-                            @Html.ValidationMessageFor(model => model.new_solution, "", new { @class = "error" })
-                        </div>
-                        <div class="col-xs-12 nopadding">
-
-                            @Html.TextAreaFor(model => model.new_solution, new { @class = "multiline_textbox", id = "txt_new_solution", @placeholder = "Solution Description" })
-                        </div>
-
-
-                            <div class="col-xs-3 col-xs-offset-4 top_buffer20">
-                                <input type="submit" class="btn btn-primary" value="Submit" />
-                            </div>
-
-
-                            <div class="col-xs-4 col-xs-offset-4 top_buffer20">
-                                <input type="file" name="file_upload" id="file_upload" />
-                            </div>
-                    }
-        <div class="col-xs-12 top_buffer10">
-            <table id="UploadDT" class="display">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>FilePath</th>
-                        <th>#</th>
-                        <th>File Upload</th>
-                        <th>Confirm Status</th>
-                        <th>Download</th>
-                        <th>Delete</th>
-                    </tr>
-                </thead>
-                <tbody></tbody>
-            </table>
-
-        </div>
-    </div>
+                  @{Html.RenderPartial("_PartialAddNewSolution", Model);}
+                </div>
             </div>
         </div>
 
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="headingthree">
+                <h6 class="panel-title">
+                    <a role="button" class="accordion-toggle" data-toggle="collapse" href="#collapseUpload" aria-expanded="true" aria-controls="collapseOne">
+                        <i class="glyphicon glyphicon-chevron-up indicator"></i>@Html.LabelFor(model => model.file_description, new { @class = "div_label" })
+
+                    </a>
+                </h6>
+            </div>
+            <div id="collapseUpload" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingthree">
+                <div class="panel-body">
+
+                    <div class="col-xs-12 top_buffer10">
+
+                        <div class="alert alert-success" role="alert" style="display:none" id="div_alert_upload">
+                            <a href="#" class="close" id="close_alert_upload">&times;</a>
+                            <label id="alert_success_upload"></label>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 nopadding">
+                        @Html.ValidationMessageFor(model => model.file_description, "", new { @class = "error" })
+                    </div>
+                    <div class="col-xs-12 nopadding">
+                        @Html.TextBoxFor(model => model.file_description, new { @class = "form-control", id = "txt_upload_desc", @placeholder = "Enter Upload Description" })
+                    </div>
+
+                    <div class="col-xs-4 col-xs-offset-4 top_buffer20">
+                        <input type="file" name="file_upload" id="file_upload" />
+                    </div>
+                    
+                    <div class="col-xs-12 top_buffer10">
+                        <table id="UploadDT" class="display">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>FilePath</th>
+                                    <th>#</th>
+                                    <th>File Upload</th>
+                                    <th class="dt-head-center">Confirm Status</th>
+                                    <th>Download</th>
+                                    <th>Edit</th>
+                                    <th>Delete</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
 
     </div>
 </div>
