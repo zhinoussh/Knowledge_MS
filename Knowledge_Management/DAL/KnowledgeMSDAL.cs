@@ -574,6 +574,7 @@ namespace Knowledge_Management.DAL
                                                      into tbl_DepObj
                                                      join st in db.tbl_strategy on q.fk_strategy equals st.pkey
                                                      into tbl_St
+                                                     join e in db.tbl_employee on q.fk_employee equals e.pkey
                                                      from j in tbl_JobDesc.DefaultIfEmpty()
                                                      from s in tbl_St.DefaultIfEmpty()
                                                      from o in tbl_DepObj.DefaultIfEmpty()
@@ -583,7 +584,8 @@ namespace Knowledge_Management.DAL
                                                          question = q.subject,
                                                          job_desc = j.job_desc,
                                                          dep_objective = o.objective,
-                                                         strategy_name = s.strategy_name
+                                                         strategy_name = s.strategy_name,
+                                                         emp_prop=e.fname+" "+e.lname+" -personel code: "+e.personel_code
                                                      }).OrderByDescending(x => x.question_id).ToList();
            
             lst_questions.ForEach(x => x.lst_keywords = string.Join(",", (from k in db.tbl_question_keywords where k.fk_question == x.question_id select k.keyword).ToList()));
@@ -601,6 +603,7 @@ namespace Knowledge_Management.DAL
                                                      into tbl_DepObj
                                                      join st in db.tbl_strategy on q.fk_strategy equals st.pkey
                                                      into tbl_St
+                                                     join e in db.tbl_employee on q.fk_employee equals e.pkey
                                                      from j in tbl_JobDesc.DefaultIfEmpty()
                                                      from s in tbl_St.DefaultIfEmpty()
                                                      from o in tbl_DepObj.DefaultIfEmpty()
@@ -611,7 +614,8 @@ namespace Knowledge_Management.DAL
                                                          question = q.subject,
                                                          job_desc = j.job_desc,
                                                          dep_objective = o.objective,
-                                                         strategy_name = s.strategy_name
+                                                         strategy_name = s.strategy_name,
+                                                         emp_prop = e.fname + " " + e.lname + " -personel code: " + e.personel_code
                                                      }).OrderByDescending(x => x.question_id).ToList();
 
             lst_questions.ForEach(x => x.lst_keywords = string.Join(",", (from k in db.tbl_question_keywords where k.fk_question == x.question_id select k.keyword).ToList()));
@@ -631,6 +635,7 @@ namespace Knowledge_Management.DAL
                         into tbl_DepObj
                         join st in db.tbl_strategy on q.fk_strategy equals st.pkey
                         into tbl_St
+                        join e in db.tbl_employee on q.fk_employee equals e.pkey
                         from j in tbl_JobDesc.DefaultIfEmpty()
                         from s in tbl_St.DefaultIfEmpty()
                         from o in tbl_DepObj.DefaultIfEmpty()
@@ -642,7 +647,8 @@ namespace Knowledge_Management.DAL
                         strategy_id = s.pkey,
                         job_desc = j.job_desc,
                         dep_objective = o.objective,
-                        strategy_name = s.strategy_name
+                        strategy_name = s.strategy_name,
+                        emp_prop = e.fname + " " + e.lname + " -personel code: " + e.personel_code
                     }).OrderByDescending(x => x.question_id);
 
 

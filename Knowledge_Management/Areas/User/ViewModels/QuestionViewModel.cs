@@ -15,6 +15,10 @@ namespace Knowledge_Management.Areas.User.ViewModels
 
         public long question_id { get; set; }
 
+        [Display(Name = "Defined By: ")]
+        public string emp_prop { get; set; }
+
+
         [Display(Name = "Keywords: ")]
         //seprated with ,
         public String lst_keywords { get; set; }

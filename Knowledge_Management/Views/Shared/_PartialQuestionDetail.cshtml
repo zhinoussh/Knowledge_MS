@@ -13,7 +13,15 @@
             <div class=" modal-body">
                 <div class=" border-modal">
                     <table class="table detail-table">
-                        <tr class="active">
+                        <tr class="">
+                            <td class="col-xs-1 text-center">
+                                @Html.LabelFor(model => model.emp_prop)
+                            </td>
+                            <td class="col-xs-11 ">
+                                @Html.DisplayFor(model => model.emp_prop)
+                            </td>
+                        </tr>
+                            <tr class="active">
                             <td class="col-xs-1 text-center">
                                 @Html.LabelFor(model => model.question)
                             </td>

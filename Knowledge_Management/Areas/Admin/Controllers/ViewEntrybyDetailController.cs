@@ -121,12 +121,13 @@ namespace Knowledge_Management.Areas.Admin.Controllers
                 Strategy = s.strategy_name,
                 Job_Desc = s.job_desc,
                 QIndex = (index + 1) + "",
-                QSubject = s.question
+                QSubject = s.question,
+                QWriter = s.emp_prop
             });
 
 
             var result = from s in indexed_list
-                         select new[] { s.QID, s.KeyWords, s.Job_Desc, s.Dep_Obj, s.Strategy, s.QSubject, s.QIndex, s.QSubject.Length <= 200 ? s.QSubject : (s.QSubject.Substring(0, 200) + "...") };
+                         select new[] { s.QID, s.KeyWords, s.Job_Desc, s.Dep_Obj, s.Strategy, s.QSubject,s.QWriter, s.QIndex, s.QSubject.Length <= 200 ? s.QSubject : (s.QSubject.Substring(0, 200) + "...") };
 
 
 
