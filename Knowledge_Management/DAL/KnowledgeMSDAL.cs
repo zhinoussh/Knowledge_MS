@@ -7,14 +7,14 @@ using Knowledge_Management.Areas.User.ViewModels;
 
 namespace Knowledge_Management.DAL
 {
-    public class KnowledgeMSDAL
+    public class KnowledgeMSDAL : IKnowledgeMSDAL
     {
         KnowledgeMsDB db;
 
 
-        public KnowledgeMSDAL()
+        public KnowledgeMSDAL(KnowledgeMsDB _dbContext)
         {
-            db = new KnowledgeMsDB();
+            db = _dbContext;
         }
         public bool login(string username, string password)
         {
@@ -982,7 +982,6 @@ namespace Knowledge_Management.DAL
 
         public List<SearchKeywordViewModel> get_Keywords(int jobDesc_id,int depObj_id,int st_id)
         {
-
             var query = (from k in db.tbl_question_keywords
                          join q in db.tbl_questions on k.fk_question equals q.pkey
                          select new SearchKeywordViewModel
@@ -993,7 +992,6 @@ namespace Knowledge_Management.DAL
                          dep_obj_id = q.fk_depObj,
                          strategy_id = q.fk_strategy
                      });
-
 
             if (jobDesc_id != 0)
                 query = query.Where(x => x.job_desc_id == jobDesc_id);

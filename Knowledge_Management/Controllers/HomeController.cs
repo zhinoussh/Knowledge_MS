@@ -12,73 +12,35 @@ namespace Knowledge_Management.Controllers
     [AllowAnonymous]
     public class HomeController : Controller
     {
+        private IKnowledgeMSSL serviceLayer;
+
+        public HomeController(IKnowledgeMSSL service)
+        {
+            serviceLayer = service;
+        }
+
         public ActionResult Index()
         {
             return View();
-            
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [ModelValidator]
         public ActionResult Index(tbl_login user)
         {
-            if (ModelState.IsValid)
-            {
-                KnowledgeMSDAL DAL = new KnowledgeMSDAL();
+            string returnUrl = serviceLayer.Post_Login(user.username, user.pass, this);
 
-                if(DAL.login(user.username, user.pass))
-                {
-                    //ViewBag.Fail = "false";
-                    //FormsAuthentication.SetAuthCookie(user.username, false);
-
-                    List<string> emp_prop = DAL.get_Employee_prop(user.username);
-                    string fullname = "";
-                    if(emp_prop!=null)
-                        fullname = emp_prop[4];
-
-                    var authTicket = new FormsAuthenticationTicket(1, //version
-                               user.username, // user name
-                               DateTime.Now,             //creation
-                               DateTime.Now.AddMinutes(30), //Expiration
-                               false, //Persistent
-                               fullname);
-
-                    var encTicket = FormsAuthentication.Encrypt(authTicket);
-                    Response.Cookies.Add(new HttpCookie(FormsAuthentication.FormsCookieName, encTicket));
-
-                    string[] roles = Roles.GetRolesForUser(user.username);
-                    if (roles.Contains("Admin"))
-                        return Json(new { url = "/Admin/Strategy/Index" });
-                    else
-                    {
-                        if (roles.Contains("DataEntry"))
-                            return Json(new { url = "/User/InsertInfo/Index" });
-                        else if (roles.Contains("DataView"))
-                            return Json(new { url = "/User/SearchInfo/SearchAll" });
-                        else if (roles.Contains("Public"))
-                            return Json(new { url = "/User/EmployeeProfile/Index" });
-                    }
-                }
-
-               // ViewBag.Fail = "true";
-                return PartialView("_LoginPartial",user);
-            }
+            if(!String.IsNullOrEmpty(returnUrl))
+                return Json(new { url = returnUrl });
             else
-            {
-                ModelState.AddModelError("loginErr", "login data is invalid");
-                return View(user);
-
-            }
-
+                return PartialView("_LoginPartial", user);
         }
-
-        
 
         public ActionResult Logout()
         {
             FormsAuthentication.SignOut();
             return RedirectToAction("Index","Home");
-           
         }
         
         public ActionResult About()
@@ -88,7 +50,6 @@ namespace Knowledge_Management.Controllers
 
         public ActionResult Contact()
         {
-
             return View();
         }
     }
