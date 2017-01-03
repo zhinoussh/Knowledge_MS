@@ -13,80 +13,35 @@ namespace Knowledge_Management.Areas.Admin.Controllers
     [CustomAuthorize(Roles = "Admin")]
     public class EmployeeController : Controller
     {
+        private IKnowledgeMSSL serviceLayer;
+        public EmployeeController(IKnowledgeMSSL service)
+        {
+            serviceLayer = service;
+        }
         // GET: Show Employees
         public ActionResult Index()
         {
-            EmployeeViewModel o = new EmployeeViewModel();
-            KnowledgeMSDAL DAL = new KnowledgeMSDAL();
-            
-            List<tbl_department> deps = DAL.get_all_Departments();
-            o.lst_dep = new SelectList(deps, "pkey", "department_name");
-            o.dep_id = deps.First().pkey + "";
-
-            List<tbl_job> jobs = DAL.get_Jobs(Int32.Parse(o.dep_id));
-            o.lst_job = new SelectList(jobs, "pkey", "job_name");
-            o.job_id = jobs.First().pkey + "";
-
-            o.emp_id = 0;
-            o.first_name = "";
-            o.last_name = "";
-            o.personel_code = "";
-          
+            EmployeeViewModel o = serviceLayer.Get_Index_Employee();
             return View(o);
         }
 
         //create a Employee
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [ModelValidator]
         public ActionResult Add_Edit_Employee(EmployeeViewModel s)
         {
-          
-            if (ModelState.IsValid)
-            {
-                KnowledgeMSDAL DAL = new KnowledgeMSDAL();
-
-              int insert_result=  DAL.InsertEmployee(s.emp_id, s.first_name, s.last_name, s.personel_code
-                    , Int32.Parse(s.dep_id), Int32.Parse(s.job_id),s.pass,s.data_entry,s.data_view);
-
-              if (insert_result > 0)
-                    return Json(new { msg = "Employee inserted successfully.", result = 1 });
-              else if (insert_result==-1)
-                  return Json(new { msg = "This personel code is already existed.", result = -1 });
-              else if (insert_result == -2)
-                  return Json(new { msg = "This password is not valid.", result = -2 });
-
-            }
-            else
-            {
-                ModelState.AddModelError("ADD_EmployeeErr", "Error in inserting employee");
-            }
-            return View(s);
+            Tuple<int, string> result = serviceLayer.Post_Add_Edit_Employee(s);
+            return Json(new { msg = result.Item2, result = result.Item1 });
         }
 
 
         [HttpGet] // this action result returns the partial containing the modal
         public ActionResult Delete_Employee(int id)
         {
-            EmployeeViewModel s = new EmployeeViewModel();
-            s.emp_id = id;
-            return PartialView("_PartialDeleteEmp", s);
-        }
+            EmployeeViewModel e= serviceLayer.Get_Delete_Employee(id);
 
-
-    
-        public JsonResult FillJobs(int DepId)
-        {
-            KnowledgeMSDAL DAL = new KnowledgeMSDAL();
-            List<tbl_job> jobs = DAL.get_Jobs(DepId);
-
-            List<SelectListItem> lst_obj = new List<SelectListItem>();
-            foreach (tbl_job j in jobs)
-            {
-
-                lst_obj.Add(new SelectListItem { Value=j.pkey+"",Text=j.job_name});
-            }
-
-            return Json(lst_obj, JsonRequestBehavior.AllowGet);
+            return PartialView("_PartialDeleteEmp", e);
         }
 
         [HttpPost]
@@ -100,9 +55,7 @@ namespace Knowledge_Management.Areas.Admin.Controllers
 
             if (ModelState.IsValid)
             {
-                KnowledgeMSDAL DAL = new KnowledgeMSDAL();
 
-                DAL.DeleteEmployee(s.emp_id);
                 return Json(new { msg = "Employee deleted successfully." });
             }
             else
@@ -113,60 +66,36 @@ namespace Knowledge_Management.Areas.Admin.Controllers
 
         }
 
+
+        public JsonResult FillJobs(int DepId)
+        {
+            List<tbl_job> lst_obj = serviceLayer.GetJobist(DepId);
+            return Json(lst_obj, JsonRequestBehavior.AllowGet);
+        }
+
+        
         public ActionResult EmployeeAjaxHandler(jQueryDataTableParamModel request)
         {
-            KnowledgeMSDAL DAL = new KnowledgeMSDAL();
 
-            List<Employee> all_items = DAL.get_Employees();
+            Tuple<List<Employee>, int> tbl_content=serviceLayer.Get_EmployeeTableContent(request.sSearch,Convert.ToInt32(Request["iSortCol_0"])
+                                                ,Request["sSortDir_0"],request.iDisplayStart,request.iDisplayLength);
 
-            //filtering 
-            List<Employee> filtered = new List<Employee>();
-
-            if (!string.IsNullOrEmpty(request.sSearch))
+            var indexed_list = tbl_content.Item1.Select((s, index) => new
             {
-                filtered = all_items.Where(i => i.Emp_fname.Contains(request.sSearch)
-                                        || i.Emp_lname.Contains(request.sSearch)
-                                        || i.Emp_pcode.Contains(request.sSearch)
-                                        || i.Dep_Name.Contains(request.sSearch)
-                                        || i.Job_Name.Contains(request.sSearch)
-                    ).ToList();
-            }
-            else
-                filtered = all_items;
-
-
-            //sorting
-            var sortColumnIndex = Convert.ToInt32(Request["iSortCol_0"]);
-            Func<Employee, string> orderingFunction = (c => sortColumnIndex == 2 ? c.Emp_fname :
-                                                        sortColumnIndex == 3 ? c.Emp_lname :
-                                                        sortColumnIndex == 4 ? c.Emp_pcode :
-                                                        sortColumnIndex == 5 ? c.Dep_Name :
-                                                         sortColumnIndex == 6 ? c.Dep_Name : "");
-
-            var sortDirection = Request["sSortDir_0"]; // asc or desc
-            if (sortDirection == "asc")
-                filtered = filtered.OrderBy(orderingFunction).ToList();
-            else
-                filtered = filtered.OrderByDescending(orderingFunction).ToList();
-
-            //pagination
-            filtered = filtered.Skip(request.iDisplayStart).Take(request.iDisplayLength).ToList();
-
-            var indexed_list = filtered.Select((s, index) => new { SID = s.Emp_Id + "", SIndex = (index + 1) + ""
+                SID = s.Emp_Id + "",
+                SIndex = (index + 1) + ""
                 , FNAME = s.Emp_fname , LNAME = s.Emp_lname , Pcode = s.Emp_pcode,DepName=s.Dep_Name,DepId=s.Dep_Id+""
                 ,Jobname=s.Job_Name,JobId=s.Job_Id+"",Dt_Entry=s.data_entry+"",DT_View=s.data_view+""});
 
             var result = from s in indexed_list
                          select new[] { s.SID, s.DepId, s.JobId, s.SIndex, s.FNAME, s.LNAME, s.Pcode
                              , s.DepName, s.Jobname,s.Dt_Entry,s.DT_View };
-
-
-
+            
             return Json(new
             {
                 sEcho = request.sEcho,
-                iTotalRecords = all_items.Count(),
-                iTotalDisplayRecords = all_items.Count(),
+                iTotalRecords = tbl_content.Item2,
+                iTotalDisplayRecords = tbl_content.Item2,
                 aaData = result
             },
             JsonRequestBehavior.AllowGet);
