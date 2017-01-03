@@ -60,7 +60,7 @@ namespace Knowledge_Management.DAL
 
         #region DepartmentObjectiveController
 
-        DepartmentObjectiveViewModel Get_DepartmentObjective_Index_Page();
+        DepartmentObjectiveViewModel Get_DepartmentObjective_Index_Page(int departmentId);
         void Post_Add_Edit_DepartmentObjective(DepartmentObjectiveViewModel j);
         DepartmentObjectiveViewModel Get_Delete_DepartmentObjective(int DepartmentObjectiveId);
         void Post_Delete_DepartmentObjective(DepartmentObjectiveViewModel vm);
@@ -68,5 +68,13 @@ namespace Knowledge_Management.DAL
 
         #endregion DepartmentObjectiveController
 
+        #region StrategyController
+
+        void Post_Add_Edit_Strategy(StrategyViewModel s);
+        StrategyViewModel Get_Delete_Strategy(int StrategyId);
+        void Post_Delete_Strategy(StrategyViewModel vm);
+        Tuple<List<tbl_strategy>, int> Get_StrategyTableContent( string filter, string sortDirection, int displayStart, int displayLength);
+
+        #endregion StrategyController
     }
 }

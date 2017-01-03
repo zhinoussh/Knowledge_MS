@@ -422,5 +422,55 @@ namespace Knowledge_Management.DAL
         }
 
         #endregion DepartmentObjectiveController
+
+        #region StrategyController
+      
+        public void Post_Add_Edit_Strategy(StrategyViewModel s)
+        {
+            DataLayer.InsertStrategy(s.strategy_id, s.strategy_name);
+        }
+
+        public StrategyViewModel Get_Delete_Strategy(int StrategyId)
+        {
+            StrategyViewModel s = new StrategyViewModel();
+            s.strategy_id = StrategyId;
+
+            return s;
+        }
+
+        public void Post_Delete_Strategy(StrategyViewModel vm)
+        {
+            DataLayer.DeleteStrategy(vm.strategy_id);
+        }
+
+        public Tuple<List<tbl_strategy>, int> Get_StrategyTableContent(string filter, string sortDirection, int displayStart, int displayLength)
+        {
+            List<tbl_strategy> all_items = DataLayer.get_all_strategies();
+
+            //filtering 
+            List<tbl_strategy> filtered = new List<tbl_strategy>();
+
+            if (!string.IsNullOrEmpty(filter))
+            {
+                filtered = all_items.Where(i => i.strategy_name.Contains(filter)).ToList();
+
+            }
+            else
+                filtered = all_items;
+
+
+            if (sortDirection == "asc")
+                filtered = filtered.OrderBy(s => s.strategy_name).ToList();
+            else
+                filtered = filtered.OrderByDescending(s => s.strategy_name).ToList();
+
+            //pagination
+            filtered = filtered.Skip(displayStart).Take(displayLength).ToList();
+
+            return new Tuple<List<tbl_strategy>, int>(filtered, all_items.Count);
+
+        }
+        
+        #endregion StrategyController
     }
 }
