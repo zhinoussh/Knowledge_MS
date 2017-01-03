@@ -28,9 +28,15 @@
                     </li>
                     @if (User.IsInRole("DataEntry"))
                     {
-                        <li>
-                            <a href="@Url.Action("Index", "InsertInfo", new { Area = "User" })">Create or Share Knowledge<i class="sub_icon fa fa-fw fa-pencil-square-o fa-lg" data-toggle="tooltip" title="Create or Share Knowledge"></i> </a>
-                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="caret"></span>Create or Share Knowledge<i class="sub_icon fa fa-fw fa-pencil-square-o fa-lg" data-toggle="tooltip" title="Create or Share Knowledge"></i> </a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li class="dropdown-header"></li>
+                                <li><a href="@Url.Action("Index", "InsertInfo", new { Area = "User" })">Your Questions<i class="sub_icon fa fa-question fa-lg" data-toggle="tooltip" title="Your Questions"></i></a></li>
+                                <li><a href="@Url.Action("NewQuestion", "InsertInfo", new { Area = "User" })">New Question<i class="sub_icon fa fa-file fa-lg" data-toggle="tooltip" title="New Question"></i></a></li>
+                                <li><a href="@Url.Action("YourSolution", "Solution", new { Area = "User" })">Your Solutions<i class="sub_icon fa fa-commenting fa-lg" data-toggle="tooltip" title="Your Solutions"></i></a></li>
+                            </ul>
+                       </li>
                     }
                     @if (User.IsInRole("DataView"))
                     {
@@ -39,8 +45,7 @@
                             <ul class="dropdown-menu" role="menu">
                                 <li class="dropdown-header"></li>
                                 <li><a href="@Url.Action("SearchAll", "SearchInfo", new { Area = "User" })">Question Repository<i class="sub_icon fa fa-question fa-lg" data-toggle="tooltip" title="Question Repository"></i></a></li>
-                                <li><a href="@Url.Action("Index", "SearchKey", new { Area = "User" })">Find by Keywords<i class="sub_icon fa fa-key fa-lg" data-toggle="tooltip" title="Find by Keywords"></i></a></li>
-                                <li><a href="@Url.Action("YourSolution", "Solution", new { Area = "User" })">Your Solutions<i class="sub_icon fa fa-commenting fa-lg" data-toggle="tooltip" title="Your Solutions"></i></a></li>
+                                <li><a href="@Url.Action("SearchbyKeyword", "SearchInfo", new { Area = "User" })">Find by Keywords<i class="sub_icon fa fa-key fa-lg" data-toggle="tooltip" title="Find by Keywords"></i></a></li>
                             </ul>
                         </li>
                     }

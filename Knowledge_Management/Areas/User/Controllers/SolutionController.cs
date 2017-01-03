@@ -106,11 +106,11 @@ namespace Knowledge_Management.Areas.User.Controllers
             return View(o);
         }
 
-        //create a Question
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Add_New_Solution(NewSolutionViewModel q)
         {
+
             if (ModelState.IsValid)
             {
                 KnowledgeMSDAL DAL = new KnowledgeMSDAL();
@@ -170,44 +170,45 @@ namespace Knowledge_Management.Areas.User.Controllers
         }
 
         #region UPLOAD FILES
-       
+
+        [ValidateAntiForgeryToken]
         public ActionResult Upload()
         {
             long new_id = Request.Form["solution_id"] == null ? 0 : long.Parse(Request.Form["solution_id"].ToString());
-
-            if (Request.Form["question_id"] != null)
+            
+            if (ModelState.IsValid)
             {
-                KnowledgeMSDAL DAL = new KnowledgeMSDAL();
-                // string solution_id = Request.QueryString["id"].ToString();
-                //check soution exist if not insert one
-
-                if (new_id == 0)
+                if (Request.Form["question_id"] != null)
                 {
-                    string cookieName = FormsAuthentication.FormsCookieName; //Find cookie name
-                    HttpCookie authCookie = HttpContext.Request.Cookies[cookieName]; //Get the cookie by it's name
-                    FormsAuthenticationTicket ticket = FormsAuthentication.Decrypt(authCookie.Value); //Decrypt it
-                    string UserName = ticket.Name; //You have the UserName!
+                    KnowledgeMSDAL DAL = new KnowledgeMSDAL();
+                    // string solution_id = Request.QueryString["id"].ToString();
+                    //check soution exist if not insert one
 
+                    if (new_id == 0)
+                    {
+                        string cookieName = FormsAuthentication.FormsCookieName; //Find cookie name
+                        HttpCookie authCookie = HttpContext.Request.Cookies[cookieName]; //Get the cookie by it's name
+                        FormsAuthenticationTicket ticket = FormsAuthentication.Decrypt(authCookie.Value); //Decrypt it
+                        string UserName = ticket.Name; //You have the UserName!
 
-                    new_id = DAL.InsertNewSolution(new_id, long.Parse(Request.Form["question_id"]), "No Solution Description", UserName);
+                        new_id = DAL.InsertNewSolution(new_id, long.Parse(Request.Form["question_id"]), "No Solution Description", UserName);
+                    }
+
+                    //upload file
+                    var file = Request.Files["Filedata"];
+                    var fileNameExt = file.FileName.Substring(file.FileName.LastIndexOf('.'));
+
+                    string file_name = new_id + "_" + (DAL.get_count_solution_uploads(new_id) + 1) + fileNameExt;
+                    string savePath = Server.MapPath(@"~\Upload\" + file_name);
+                    file.SaveAs(savePath);
+
+                    //save upload in DB
+                    if (Request.Form["upload_desc"] != null)
+                        DAL.InsertNewUpload(new_id, file_name, Request.Form["upload_desc"].ToString());
 
                 }
-
-                //upload file
-                var file = Request.Files["Filedata"];
-                var fileNameExt = file.FileName.Substring(file.FileName.LastIndexOf('.'));
-
-                string file_name = new_id + "_" + (DAL.get_count_solution_uploads(new_id) + 1) + fileNameExt;
-                string savePath = Server.MapPath(@"~\Upload\" + file_name);
-                file.SaveAs(savePath);
-
-                //save upload in DB
-                DAL.InsertNewUpload(new_id, file_name);
-
-
             }
             return Content(new_id + "");
-
         }
 
         [HttpGet] // this action result returns the partial containing the modal
@@ -251,7 +252,7 @@ namespace Knowledge_Management.Areas.User.Controllers
             //pagination
             filtered = filtered.Skip(request.iDisplayStart).Take(request.iDisplayLength).ToList();
 
-            var indexed_list = filtered.Select((s, index) => new { SID = s.pkey + "",FILEPATH=s.file_path, SIndex = (index + 1) + "", SNAME = "فایل " + (index + 1) });
+            var indexed_list = filtered.Select((s, index) => new { SID = s.pkey + "",FILEPATH=s.file_path, SIndex = (index + 1) + "", SNAME = s.file_desc});
 
             var result = from s in indexed_list
                          select new[] { s.SID, s.FILEPATH, s.SIndex, s.SNAME };
@@ -281,7 +282,7 @@ namespace Knowledge_Management.Areas.User.Controllers
             filtered = filtered.Skip(request.iDisplayStart).Take(request.iDisplayLength).ToList();
 
             var indexed_list = filtered.Select((s, index) => new { SID = s.pkey + "",FILEPATH=s.file_path
-                , SIndex = (index + 1) + "", SNAME = "فایل " + (index + 1) ,Confirm=s.confirm+""});
+                , SIndex = (index + 1) + "", SNAME = s.file_desc ,Confirm=s.confirm+""});
 
             var result = from s in indexed_list
                          select new[] { s.SID, s.FILEPATH, s.SIndex, s.SNAME,s.Confirm };
@@ -308,6 +309,21 @@ namespace Knowledge_Management.Areas.User.Controllers
             return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, file_name);
         }
 
+        public ActionResult EditUpload(NewSolutionViewModel vm)
+        {
+            return PartialView("_PartialEditUpload",vm);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit_Upload_description(NewSolutionViewModel vm)
+        {
+            KnowledgeMSDAL DAL = new KnowledgeMSDAL();
+            DAL.Edit_upload_description(vm.upload_id, vm.file_description);
+
+            return Json(new { msg = "Upload description changed Successfully" });
+        }
+    
         #endregion UPLOAD FILES
 
         #region Your Solution

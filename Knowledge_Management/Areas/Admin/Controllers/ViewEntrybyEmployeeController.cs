@@ -480,7 +480,7 @@ namespace Knowledge_Management.Areas.Admin.Controllers
             //pagination
             filtered = filtered.Skip(request.iDisplayStart).Take(request.iDisplayLength).ToList();
 
-            var indexed_list = filtered.Select((s, index) => new { SID = s.pkey + "", FILEPATH = s.file_path, SIndex = (index + 1) + "", SNAME = "فایل " + (index + 1),Confirm=s.confirm.ToString() });
+            var indexed_list = filtered.Select((s, index) => new { SID = s.pkey + "", FILEPATH = s.file_path, SIndex = (index + 1) + "", SNAME =s.file_desc,Confirm=s.confirm.ToString() });
 
             var result = from s in indexed_list
                          select new[] { s.SID, s.FILEPATH, s.SIndex, s.SNAME ,s.Confirm};

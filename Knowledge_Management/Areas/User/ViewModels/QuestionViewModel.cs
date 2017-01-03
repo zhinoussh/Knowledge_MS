@@ -19,8 +19,8 @@ namespace Knowledge_Management.Areas.User.ViewModels
         //seprated with ,
         public String lst_keywords { get; set; }
 
-        [Display(Name = "Solution: ")]        
-        public string solution { get; set; }
+        //[Display(Name = "Solution: ")]        
+        //public string solution { get; set; }
         
         public int? dep_obj_id { get; set; }
 

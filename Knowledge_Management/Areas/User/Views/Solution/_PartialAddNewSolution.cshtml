@@ -1,0 +1,38 @@
+﻿@model Knowledge_Management.Areas.User.ViewModels.NewSolutionViewModel
+@{
+    Layout = null;
+}
+<div class="col-xs-12 top_buffer10">
+
+    <div class="alert alert-success" role="alert" style="display:none" id="div_alert">
+        <a href="#" class="close" id="close_alert">&times;</a>
+        <label id="alert_success"></label>
+    </div>
+</div>
+
+@using (Ajax.BeginForm("Add_New_Solution", "Solution"
+                    , new AjaxOptions
+                    {
+                        InsertionMode = InsertionMode.ReplaceWith,
+                        HttpMethod = "Post",
+                        OnSuccess = "SuccessMessage"
+                    }))
+{
+    @Html.AntiForgeryToken()
+
+
+    @Html.HiddenFor(model => model.question_id, new { id = "hd_id_question" })
+    @Html.HiddenFor(model => model.new_solution_id, new { id = "hd_id_new_solution" })
+
+    <div class="col-xs-12 nopadding">
+        @Html.ValidationMessageFor(model => model.new_solution, "", new { @class = "error" })
+    </div>
+    <div class="col-xs-12 nopadding">
+        @Html.TextAreaFor(model => model.new_solution, new { @class = "multiline_textbox", id = "txt_new_solution", @placeholder = "Solution Description" })
+    </div>
+
+    <div class="col-xs-3 col-xs-offset-4 top_buffer20">
+        <input type="submit" class="btn btn-primary" value="Submit" />
+    </div>
+
+}

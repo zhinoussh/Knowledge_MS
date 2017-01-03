@@ -1,9 +1,9 @@
-﻿/***USED IN Searchkey/Index*************/
+﻿/***USED IN SearchInfo/SearchbyKeyword*************/
 $(document).ready(function () {
 
     var oTable = $('#KeywordDT').dataTable({
         "bServerSide": true,
-        "sAjaxSource": "/User/SearchKey/KeywordAjaxHandler",
+        "sAjaxSource": "/User/SearchInfo/KeywordAjaxHandler",
         "fnServerParams": function (aoData) {
             aoData.push({ "name": "jobdesc_id", "value": $('#dropdown_jobDesc').val() });
             aoData.push({ "name": "depObj_id", "value": $('#dropdown_dep_Objective').val() });
@@ -90,7 +90,7 @@ var details = function (s) {
 
     $.ajax({
         type: 'Get',
-        url: '/User/SearchKey/KeywordDetails',
+        url: '/User/SearchInfo/KeywordDetails',
         data: KeywordDetailViewModel,
         success: function (result) {
             $("#ModalContainer").html(result);

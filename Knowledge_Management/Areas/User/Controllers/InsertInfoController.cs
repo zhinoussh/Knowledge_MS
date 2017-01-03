@@ -18,6 +18,11 @@ namespace Knowledge_Management.Areas.User.Controllers
         // GET: InsertInfo
         public ActionResult Index()
         {
+            return View();
+        }
+
+        public ActionResult NewQuestion(int? id)
+        {
             QuestionViewModel o = new QuestionViewModel();
             KnowledgeMSDAL DAL = new KnowledgeMSDAL();
 
@@ -30,26 +35,39 @@ namespace Knowledge_Management.Areas.User.Controllers
             int dep_id = Int32.Parse(emp_prop[0]);
             int job_id = Int32.Parse(emp_prop[1]);
 
-           
+
             List<tbl_department_objectives> dep_objs = DAL.get_Department_Objectives(dep_id);
             o.lst_dep_objective = new SelectList(dep_objs, "pkey", "objective");
-            o.dep_obj_id = 0;
 
             List<tbl_strategy> strategies = DAL.get_all_strategies();
             o.lst_strategy = new SelectList(strategies, "pkey", "strategy_name");
-            o.strategy_id = 0;
 
             List<tbl_job_description> jobDescs = DAL.get_JobDescriptions(job_id);
             o.lst_job_desc = new SelectList(jobDescs, "pkey", "job_desc");
-            o.job_desc_id = 0;
 
-            o.question = "";
-            o.solution = "";
-            o.lst_keywords = "";
-
+            //insert
+            if (!id.HasValue)
+            {
+                o.question_id=0;
+                o.question = "";
+                o.lst_keywords = "";
+                o.dep_obj_id = 0;
+                o.strategy_id = 0;
+                o.job_desc_id = 0;
+            }
+            //edit
+            else
+            {
+                QuestionViewModel question=DAL.get_question_byId(id.Value);
+                o.question_id = id.Value;
+                o.question = question.question;
+                o.lst_keywords = question.lst_keywords;
+                o.strategy_id = question.strategy_id.HasValue ? question.strategy_id.Value : 0;
+                o.dep_obj_id = question.dep_obj_id.HasValue ? question.dep_obj_id.Value : 0;
+                o.job_desc_id = question.job_desc_id.HasValue ? question.job_desc_id.Value : 0;
+            }
             return View(o);
         }
-
 
         //create a Question
         [HttpPost]
@@ -74,7 +92,7 @@ namespace Knowledge_Management.Areas.User.Controllers
                 }
 
                 
-                DAL.InsertQuestion(q.question_id, q.question, q.dep_obj_id, q.job_desc_id, q.strategy_id, q.solution, lst_keywords, UserName);
+                DAL.InsertQuestion(q.question_id, q.question, q.dep_obj_id, q.job_desc_id, q.strategy_id, lst_keywords, UserName);
                 return Json(new { msg = "Question added Successfully." });
             }
             else
@@ -148,9 +166,7 @@ namespace Knowledge_Management.Areas.User.Controllers
             {
                 QID = s.question_id + "",
                 QIndex = (index + 1) + "",
-                QSubject = s.question,
-                Soution = s.solution
-                ,
+                QSubject = s.question,               
                 DepObjId = s.dep_obj_id + "",
                 JobDescId = s.job_desc_id + "",
                 StId = s.strategy_id + "",
@@ -158,7 +174,7 @@ namespace Knowledge_Management.Areas.User.Controllers
             });
 
             var result = from s in indexed_list
-                         select new[] { s.QID,s.DepObjId,s.JobDescId,s.StId, s.QIndex, s.QSubject,s.Soution,s.KeyWords };
+                         select new[] { s.QID, s.DepObjId, s.JobDescId, s.StId, s.KeyWords, s.QIndex, s.QSubject };
 
 
 

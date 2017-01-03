@@ -59,6 +59,20 @@ $(document).ready(function () {
 
                             }
                         }
+                           , {
+                               "sName": "Edit",
+                               "sWidth": '3%',
+                               "bSearchable": false,
+                               "bSortable": false,
+                               "sDefaultContent": " "
+                            , "sClass": "dt-body-center"
+                            , "mRender": function (data, type, row) {
+                                var param_array = { upload_id: row[0], upload_desc: row[3] };
+                                var obj = [];
+                                obj.push(param_array);
+                                return "<a class='glyphicon glyphicon-edit a_clickable' onclick='edit_upload("+JSON.stringify(obj)+")'></a>"
+                            }
+                           }
                          , {
                              "sName": "DELETE",
                              "sWidth": '3%',
@@ -79,19 +93,26 @@ $(document).ready(function () {
     $('#file_upload').uploadify({
         'swf': "../../../Content/img/uploadify.swf",
         'uploader': "/User/Solution/Upload",
-        // 'formData': { solution_id: $("#hd_id_new_solution").val(), question_id: $("#hd_id_question").val() },
+        'formData': { '__RequestVerificationToken': $('input[name=__RequestVerificationToken]').val() },
         'onUploadStart': function (file) {
             $('#file_upload').uploadify('settings', 'formData', {
                 'solution_id': $('#hd_id_new_solution').val(),
-                'question_id': $('#hd_id_question').val()
+                'question_id': $('#hd_id_question').val(),
+                'upload_desc': $('#txt_upload_desc').val()
             });
-        }
-    , 'onUploadSuccess': function (file, data, response) {
-        $("#alert_success").html('File uploaded successfully.');
-        $("#div_alert").slideDown(500);
-        $("#hd_id_new_solution").val(data);
-        var $STTable = $("#UploadDT").dataTable({ bRetrieve: true });
-        $STTable.fnDraw();
+        },
+        'onSWFReady': function () {
+            $('#file_upload').uploadify('disable', true);
+        },
+        'onUploadSuccess': function (file, data, response) {
+            $("#alert_success_upload").html('File uploaded successfully.');
+            $("#div_alert_upload").slideDown(500);
+            $("#hd_id_new_solution").val(data);
+            var $STTable = $("#UploadDT").dataTable({ bRetrieve: true });
+            $STTable.fnDraw();
+
+            $('#txt_upload_desc').val('');
+            $('#file_upload').uploadify('disable', true);
         //data is whatever you return from the server
         //we're sending the URL from the server so we append this as an image to the #uploaded div
         //  $("#uploaded").append("<img src='" + data + "' alt='Uploaded Image' />");
@@ -110,7 +131,19 @@ $(document).ready(function () {
     
 });
 
+$(document).on("keyup", '#txt_upload_desc', function () {
 
+        if( $('#txt_upload_desc').val()!='')
+            $('#file_upload').uploadify('disable', false);
+        else
+            $('#file_upload').uploadify('disable', true);
+
+});
+
+$(document).on('click', '#close_alert_upload', function () {
+    $("#div_alert_upload").slideUp(500);
+    return false;
+});
 var SuccessMessage = function (result) {
     if (result.msg) {
         $("#alert_success").html(result.msg);
@@ -138,6 +171,8 @@ var download_file = function (upload_id) {
            });
 }
 
+
+
 var delete_dialog = function (upload_id) {
 
     var url = "/User/Solution/Delete_Upload"; // the url to the controller
@@ -147,13 +182,47 @@ var delete_dialog = function (upload_id) {
     });
 }
 
+var edit_upload = function (upload) {
+    var NewSolutionViewModel = {
+        upload_id: upload[0].upload_id,
+        file_description: upload[0].upload_desc
+    };
+
+    $.ajax({
+        type: 'Get',
+        data: NewSolutionViewModel,
+        url:'/User/Solution/EditUpload',
+        success: function (result) {
+            $('#ModalContainer').html(result);
+            $('#ModalContainer').find("#EditModal").modal('show');
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            alert(errorThrown);
+        }
+    });
+
+}
+
 var SuccessDelete = function (result) {
     if (result.msg) {
         $('#DeleteModal').modal('hide');
-        $("#alert_success").html(result.msg);
-        $("#div_alert").slideDown(500);
+        $("#alert_success_upload").html(result.msg);
+        $("#div_alert_upload").slideDown(500);
         var $STTable = $("#UploadDT").dataTable({ bRetrieve: true });
         $STTable.fnDraw();
+    }
+}
+
+var SuccessMessage_Editupload = function (result)
+{
+    if (result.msg) {
+        $('#EditModal').modal('hide');
+        $("#alert_success_upload").html(result.msg);
+        $("#div_alert_upload").slideDown(500);
+        var $STTable = $("#UploadDT").dataTable({ bRetrieve: true });
+        $STTable.fnDraw();
+
+
     }
 }
 
