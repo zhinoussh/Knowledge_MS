@@ -21,7 +21,7 @@ namespace Knowledge_Management.Areas.Admin.Controllers
         // GET: Show Employees
         public ActionResult Index()
         {
-            EmployeeViewModel o = serviceLayer.Get_Index_Employee();
+            EmployeeViewModel o = serviceLayer.Get_Employee_Index_Page();
             return View(o);
         }
 

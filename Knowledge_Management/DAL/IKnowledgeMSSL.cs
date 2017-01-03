@@ -29,7 +29,7 @@ namespace Knowledge_Management.DAL
 
         #region EmployeeController
 
-        EmployeeViewModel Get_Index_Employee();
+        EmployeeViewModel Get_Employee_Index_Page();
         Tuple<int,string> Post_Add_Edit_Employee(EmployeeViewModel e);
         EmployeeViewModel Get_Delete_Employee(int employeeId);
         void Post_Delete_Employee(EmployeeViewModel vm);
@@ -38,7 +38,15 @@ namespace Knowledge_Management.DAL
 
         #endregion EmployeeController
 
+        #region JobController
 
+        JobViewModel Get_Job_Index_Page();
+        void Post_Add_Edit_Job(JobViewModel j);
+        JobViewModel Get_Delete_Job(int jobId);
+        void Post_Delete_Job(JobViewModel vm);
+        Tuple<List<tbl_job>, int> Get_JobTableContent(int departmentId, string filter, string sortDirection, int displayStart, int displayLength);
+
+        #endregion JobController
 
     }
 }

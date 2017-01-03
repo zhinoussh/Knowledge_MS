@@ -124,7 +124,7 @@ namespace Knowledge_Management.DAL
 
         #region EmployeeController
 
-        public EmployeeViewModel Get_Index_Employee()
+        public EmployeeViewModel Get_Employee_Index_Page()
         {
             EmployeeViewModel o = new EmployeeViewModel();
 
@@ -236,6 +236,66 @@ namespace Knowledge_Management.DAL
         }
 
         #endregion EmployeeController
+
+        #region JobController
+
+        public JobViewModel Get_Job_Index_Page()
+        {
+            JobViewModel o = new JobViewModel();
+            List<tbl_department> deps = DataLayer.get_all_Departments();
+            o.lst_dep = new SelectList(deps, "pkey", "department_name");
+            o.job_id = 0;
+            o.job_name = "";
+            o.selected_dep = deps.First().pkey + "";
+
+            return o;
+        }
+
+        public void Post_Add_Edit_Job(JobViewModel j)
+        {
+            DataLayer.InsertJob(j.job_id, j.job_name, Int32.Parse(j.selected_dep));
+        }
+
+        public JobViewModel Get_Delete_Job(int jobId)
+        {
+            JobViewModel j = new JobViewModel();
+            j.job_id = jobId;
+
+            return j;
+        }
+
+        public void Post_Delete_Job(JobViewModel vm)
+        {
+            DataLayer.DeleteJob(vm.job_id);
+        }
+
+        public Tuple<List<tbl_job>, int> Get_JobTableContent(int departmentId,string filter, string sortDirection, int displayStart, int displayLength)
+        {
+            List<tbl_job> all_items = DataLayer.get_Jobs(departmentId);
+
+            //filtering 
+            List<tbl_job> filtered = new List<tbl_job>();
+
+            if (!string.IsNullOrEmpty(filter))
+            {
+                filtered = all_items.Where(i => i.job_name.Contains(filter)).ToList();
+            }
+            else
+                filtered = all_items;
+
+
+            if (sortDirection == "asc")
+                filtered = filtered.OrderBy(s => s.job_name).ToList();
+            else
+                filtered = filtered.OrderByDescending(s => s.job_name).ToList();
+
+            //pagination
+            filtered = filtered.Skip(displayStart).Take(displayLength).ToList();
+
+            return new Tuple<List<tbl_job>, int>(filtered, all_items.Count);
+        }
+
+        #endregion JobController
 
     }
 }
