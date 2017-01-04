@@ -79,7 +79,7 @@ var delete_dialog = function (s_id) {
  
 var confirm_solution = function (s_id) {
     
-    var url = "/Admin/ViewEntrybyEmployee/Confirm_Solution?s_id=" + s_id + "&q_id=" + $("#hd_id_question").val();
+    var url = "/Admin/ViewEntrybyEmployee/Confirm_Solution_Question?s_id=" + s_id + "&q_id=" + $("#hd_id_question").val();
     $.post(url, function (data) {
         var tbl = $("#SoutionListDT").dataTable({ bRetrieve: true });
         tbl.fnDraw();

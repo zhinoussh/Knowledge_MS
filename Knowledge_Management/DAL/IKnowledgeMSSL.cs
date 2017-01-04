@@ -95,8 +95,38 @@ namespace Knowledge_Management.DAL
         JobDepQuestionViewModel Get_Delete_QuestionbyJob(int questionId);
         void Post_Delete_QuestionbyJob(JobDepQuestionViewModel vm);
         Tuple<List<QuestionViewModel>, int> Get_QuestionbyJobTableContent(int departmentId, int jobId, string filter, string sortDirection, int displayStart, int displayLength);
-       
+
         #endregion EntrybyJobController
+
+
+        #region EntrybyEmployeeController
+
+        //Question
+        EmployeeQuestionViewModel Get_Question_Index_Page(int employeeId);
+        Tuple<List<QuestionViewModel>, int> Get_QuestionbyEmployeeTableContent(int employeeId, string filter, string sortDirection, int displayStart, int displayLength);
+        EmployeeQuestionViewModel Get_Delete_QuestionbyEmployee(int questionId);
+        void Post_Delete_QuestionbyEmployee(EmployeeQuestionViewModel vm);
+
+        //Solution
+        SolutionViewModel Get_QuestionSolutions_Index_Page(int questionId);
+        EmployeeQuestionViewModel Get_EmployeeSolutions_Index_Page(int employeeId);
+        Tuple<List<SolutionEmployeeViewModel>, int> Get_SolutionForQuestionTableContent(int questionId, string filter, string sortDirection, int displayStart, int displayLength);
+        Tuple<List<SolutionEmployeeViewModel>, int> Get_SolutionForEmployeeTableContent(int employeeId, string filter, string sortDirection, int displayStart, int displayLength);
+        SolutionEmployeeViewModel Get_Delete_Solution(int solutionId);
+        void Post_Delete_Solution(SolutionEmployeeViewModel vm, Controller ctrl);
+        FullSolutionViewModel Get_FullSolution(int solutionId);
+        EmployeeQuestionViewModel Post_Confirm_Solution_for_Employee(int solutionId, int employeeId);
+        SolutionViewModel Post_Confirm_Solution_for_Question(int solutionId, int questionId);
+
+        //Upload
+        UploadViewModel Get_Delete_Upload(int uploadId);
+        void Post_Delete_Upload(UploadViewModel vm,Controller ctrl);
+        Tuple<List<tbl_solution_uploads>, int> Get_UploadForSolutionTableContent(int solutionId, int displayStart, int displayLength);
+        Tuple<byte[], string> GetFilePropertie(int uploadId, Controller ctrl);
+        FullSolutionViewModel Post_Confirm_Upload(int uploadId,int solutionId);
+
+        #endregion EntrybyEmployeeController
+
 
 
     }

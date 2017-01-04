@@ -581,7 +581,6 @@ namespace Knowledge_Management.DAL
 
         #endregion EntrybyDetailController
 
-
         #region EntrybyJobController
 
         public JobDepQuestionViewModel Get_EntrybyJob_Index_Page()
@@ -649,6 +648,244 @@ namespace Knowledge_Management.DAL
         }
 
         #endregion EntrybyJobController
+
+        #region EntrybyEmployeeController
+
+        //Question
+        public EmployeeQuestionViewModel Get_Question_Index_Page(int employeeId)
+        {
+            EmployeeQuestionViewModel vm = new EmployeeQuestionViewModel();
+            if (employeeId != 0)
+            {
+                List<string> emp_props = DataLayer.get_Employee_byId(employeeId);
+                vm.emp_id = employeeId;
+                vm.Description = "Defined by  " + emp_props[1] + " Personel Code: " + emp_props[0];
+            }
+
+            return vm;
+        }
+
+        public Tuple<List<QuestionViewModel>, int> Get_QuestionbyEmployeeTableContent(int employeeId, string filter, string sortDirection, int displayStart, int displayLength)
+        {
+            List<QuestionViewModel> all_items = new List<QuestionViewModel>();
+
+            if (employeeId != 0)
+            {
+                List<string> emp_props = DataLayer.get_Employee_byId(employeeId);
+                all_items = DataLayer.get_all_Questions_by_employee(emp_props[0]);
+            }
+
+            //filtering 
+            List<QuestionViewModel> filtered = new List<QuestionViewModel>();
+
+            if (!string.IsNullOrEmpty(filter))
+            {
+                filtered = all_items.Where(i => i.question.Contains(filter)
+                                             || i.lst_keywords.Contains(filter)).ToList();
+
+            }
+            else
+                filtered = all_items;
+
+
+            if (sortDirection == "asc")
+                filtered = filtered.OrderBy(s => s.question).ToList();
+            else
+                filtered = filtered.OrderByDescending(s => s.question).ToList();
+
+            //pagination
+            filtered = filtered.Skip(displayStart).Take(displayLength).ToList();
+
+            return new Tuple<List<QuestionViewModel>, int>(filtered, all_items.Count);
+        }
+
+        public EmployeeQuestionViewModel Get_Delete_QuestionbyEmployee(int questionId)
+        {
+            EmployeeQuestionViewModel q = new EmployeeQuestionViewModel();
+            q.question_id = questionId;
+
+            return q;
+        }
+
+        public void Post_Delete_QuestionbyEmployee(EmployeeQuestionViewModel vm)
+        {
+            DataLayer.DeleteQuestion(vm.question_id);
+        }
+
+        //Solution
+        public SolutionViewModel Get_QuestionSolutions_Index_Page(int questionId)
+        {
+            SolutionViewModel vm = new SolutionViewModel();
+            if (questionId != 0)
+            {
+                vm.question = DataLayer.get_question_name(questionId);
+                vm.question_id = questionId;
+                vm.employee_prop = "Defined by: " + DataLayer.get_Question_Writer(questionId);
+            }
+
+            return vm;
+        }
+
+        public EmployeeQuestionViewModel Get_EmployeeSolutions_Index_Page(int employeeId)
+        {
+            EmployeeQuestionViewModel vm = new EmployeeQuestionViewModel();
+            if (employeeId != 0)
+            {
+                List<string> emp_props = DataLayer.get_Employee_byId(employeeId);
+                vm.emp_id = employeeId;
+                vm.Description = "Defined by  " + emp_props[1] + " Personel Code: " + emp_props[0];
+            }
+
+            return vm;
+        }
+
+        public Tuple<List<SolutionEmployeeViewModel>, int> Get_SolutionForQuestionTableContent(int questionId, string filter, string sortDirection, int displayStart, int displayLength)
+        {
+            List<SolutionEmployeeViewModel> all_items = DataLayer.get_Solutions_by_Question(questionId, 0);
+
+            //filtering 
+            List<SolutionEmployeeViewModel> filtered = new List<SolutionEmployeeViewModel>();
+
+            if (!string.IsNullOrEmpty(filter))
+            {
+                filtered = all_items.Where(i => i.solution.Contains(filter)).ToList();
+            }
+            else
+                filtered = all_items;
+
+
+            if (sortDirection == "asc")
+                filtered = filtered.OrderBy(s => s.solution).ToList();
+            else
+                filtered = filtered.OrderByDescending(s => s.solution).ToList();
+
+            //pagination
+            filtered = filtered.Skip(displayStart).Take(displayLength).ToList();
+
+            return new Tuple<List<SolutionEmployeeViewModel>, int>(filtered, all_items.Count);
+        }
+
+        public Tuple<List<SolutionEmployeeViewModel>, int> Get_SolutionForEmployeeTableContent(int employeeId, string filter, string sortDirection, int displayStart, int displayLength)
+        {
+            List<SolutionEmployeeViewModel> all_items = DataLayer.get_Solutions_by_employee(employeeId);
+
+            //filtering 
+            List<SolutionEmployeeViewModel> filtered = new List<SolutionEmployeeViewModel>();
+
+            if (!string.IsNullOrEmpty(filter))
+            {
+                filtered = all_items.Where(i => i.solution.Contains(filter)).ToList();
+
+            }
+            else
+                filtered = all_items;
+
+
+            if (sortDirection == "asc")
+                filtered = filtered.OrderBy(s => s.solution).ToList();
+            else
+                filtered = filtered.OrderByDescending(s => s.solution).ToList();
+
+            //pagination
+            filtered = filtered.Skip(displayStart).Take(displayLength).ToList();
+
+            return new Tuple<List<SolutionEmployeeViewModel>, int>(filtered, all_items.Count);
+        }
+
+        public SolutionEmployeeViewModel Get_Delete_Solution(int solutionId)
+        {
+            SolutionEmployeeViewModel q = new SolutionEmployeeViewModel();
+            q.solution_id = solutionId;
+
+            return q;
+        }
+
+        public void Post_Delete_Solution(SolutionEmployeeViewModel vm,Controller ctrl)
+        {
+            long id_solution = vm.solution_id;
+
+            List<tbl_solution_uploads> lst_uploads = DataLayer.get_uploads_by_solution(id_solution, 0);
+            //delete uploaded files
+            foreach (var item in lst_uploads)
+            {
+                System.IO.File.Delete(ctrl.Server.MapPath(@"~/Upload/" + item.file_path));
+            }
+
+            //delete solution and upload from db
+            DataLayer.Delete_Solution(id_solution);
+        }
+
+        public FullSolutionViewModel Get_FullSolution(int solutionId)
+        {
+            FullSolutionViewModel vm = new FullSolutionViewModel();
+            vm = DataLayer.get_Solution_by_id(solutionId);
+            vm.solution_writer = "Defined by: " + vm.solution_writer;
+            vm.question_writer = "Defined by: " + vm.question_writer;
+
+            return vm;
+        }
+
+        public EmployeeQuestionViewModel Post_Confirm_Solution_for_Employee(int solutionId, int employeeId)
+        {
+            DataLayer.change_confirm_status_solution(solutionId);
+            EmployeeQuestionViewModel vm = new EmployeeQuestionViewModel();
+            List<string> emp_props = DataLayer.get_Employee_byId(employeeId);
+            vm.emp_id = employeeId;
+            vm.Description = "Defined by  " + emp_props[1] + " Personel Code: " + emp_props[0];
+
+            return vm;
+        }
+
+        public SolutionViewModel Post_Confirm_Solution_for_Question(int solutionId, int questionId)
+        {
+            DataLayer.change_confirm_status_solution(solutionId);
+            SolutionViewModel vm = new SolutionViewModel();
+            vm.question = DataLayer.get_question_name(questionId);
+            vm.question_id = questionId;
+            return vm;
+        }
+
+        public UploadViewModel Get_Delete_Upload(int uploadId)
+        {
+            UploadViewModel q = new UploadViewModel();
+            q.upload_id = uploadId;
+            return q;
+        }
+
+        public void Post_Delete_Upload(UploadViewModel vm, Controller ctrl)
+        {
+            System.IO.File.Delete(ctrl.Server.MapPath(@"~\Upload\" + DataLayer.get_file_path(vm.upload_id)));
+            DataLayer.DeleteUpload(vm.upload_id);
+        }
+
+        public Tuple<List<tbl_solution_uploads>, int> Get_UploadForSolutionTableContent(int solutionId, int displayStart, int displayLength)
+        {
+            List<tbl_solution_uploads> filtered = DataLayer.get_uploads_by_solution(solutionId, 0);
+
+            //pagination
+            filtered = filtered.Skip(displayStart).Take(displayLength).ToList();
+
+            return new Tuple<List<tbl_solution_uploads>, int>(filtered, filtered.Count);
+        }
+
+        public Tuple<byte[], string> GetFilePropertie(int uploadId,Controller ctrl)
+        {
+            string file_name = DataLayer.get_file_path(uploadId);
+            string file_path = ctrl.Server.MapPath(@"~\Upload\" + file_name);
+            byte[] fileBytes = System.IO.File.ReadAllBytes(file_path);
+
+            return new Tuple<byte[], string>(fileBytes, file_name);
+        }
+
+        public FullSolutionViewModel Post_Confirm_Upload(int uploadId, int solutionId)
+        {
+            DataLayer.change_confirm_status_upload(uploadId);
+            FullSolutionViewModel vm = new FullSolutionViewModel();
+            vm = DataLayer.get_Solution_by_id(solutionId);
+            return vm;
+        }
+
+        #endregion EntrybyEmployeeController
 
     }
 }
