@@ -1,4 +1,5 @@
 ﻿using Knowledge_Management.Areas.Admin.ViewModels;
+using Knowledge_Management.Areas.User.ViewModels;
 using Knowledge_Management.Models;
 using System;
 using System.Collections.Generic;
@@ -34,7 +35,7 @@ namespace Knowledge_Management.DAL
         EmployeeViewModel Get_Delete_Employee(int employeeId);
         void Post_Delete_Employee(EmployeeViewModel vm);
         Tuple<List<Employee>, int> Get_EmployeeTableContent(string filter, int sortColumnIndex, string sortDirection, int displayStart, int displayLength);
-        List<tbl_job> GetJobist(int departmentId);
+        List<SelectListItem> GetJobList(int departmentId);
 
         #endregion EmployeeController
 
@@ -76,5 +77,16 @@ namespace Knowledge_Management.DAL
         Tuple<List<tbl_strategy>, int> Get_StrategyTableContent( string filter, string sortDirection, int displayStart, int displayLength);
 
         #endregion StrategyController
+
+         #region EntrybyDetailController
+
+        DetailQuestionViewModel Get_EntrybyDetail_Index_Page();
+        DetailQuestionViewModel Get_Delete_QuestionbyDetail(int questionId);
+        void Post_Delete_QuestionbyDetail(DetailQuestionViewModel vm);
+        Tuple<List<QuestionViewModel>, int> Get_QuestionbyDetailTableContent(int depOjectiveId,int jobDescriptionId,int strategyId, string filter, string sortDirection, int displayStart, int displayLength);
+        List<SelectListItem> GetJobDescriptionList(int jobId);
+        List<SelectListItem> GetDepartmentObjectioveList(int departmentId);
+
+        #endregion EntrybyDetailController
     }
 }

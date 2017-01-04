@@ -1,4 +1,5 @@
 ﻿using Knowledge_Management.Areas.Admin.ViewModels;
+using Knowledge_Management.Areas.User.ViewModels;
 using Knowledge_Management.Models;
 using System;
 using System.Collections.Generic;
@@ -222,7 +223,7 @@ namespace Knowledge_Management.DAL
 
         }
 
-        public List<tbl_job> GetJobist(int departmentId)
+        public List<SelectListItem> GetJobList(int departmentId)
         {
             List<tbl_job> jobs = DataLayer.get_Jobs(departmentId);
 
@@ -232,7 +233,7 @@ namespace Knowledge_Management.DAL
                 lst_obj.Add(new SelectListItem { Value = j.pkey + "", Text = j.job_name });
             }
 
-            return jobs;
+            return lst_obj;
         }
 
         #endregion EmployeeController
@@ -472,5 +473,113 @@ namespace Knowledge_Management.DAL
         }
         
         #endregion StrategyController
+
+        #region EntrybyDetailController
+
+        public DetailQuestionViewModel Get_EntrybyDetail_Index_Page()
+        {
+            DetailQuestionViewModel o = new DetailQuestionViewModel();
+
+            List<tbl_department> deps = DataLayer.get_all_Departments();
+            o.lst_dep = new SelectList(deps, "pkey", "department_name");
+            o.dep_id = deps.First().pkey;
+
+            List<tbl_job> jobs = DataLayer.get_Jobs(o.dep_id);
+            o.lst_job = new SelectList(jobs, "pkey", "job_name");
+            o.job_id = jobs.First().pkey;
+
+
+            List<tbl_department_objectives> dep_objs = DataLayer.get_Department_Objectives(o.dep_id);
+            o.lst_dep_objective = new SelectList(dep_objs, "pkey", "objective");
+            o.dep_obj_id = 0;
+
+            List<tbl_strategy> strategies = DataLayer.get_all_strategies();
+            o.lst_strategy = new SelectList(strategies, "pkey", "strategy_name");
+            o.strategy_id = 0;
+
+            List<tbl_job_description> jobDescs = DataLayer.get_JobDescriptions(o.job_id);
+            o.lst_job_desc = new SelectList(jobDescs, "pkey", "job_desc");
+            o.job_desc_id = 0;
+
+            return o;
+        }
+
+        public DetailQuestionViewModel Get_Delete_QuestionbyDetail(int questionId)
+        {
+            DetailQuestionViewModel q = new DetailQuestionViewModel();
+            q.question_id = questionId;
+
+            return q;
+        }
+
+        public void Post_Delete_QuestionbyDetail(DetailQuestionViewModel vm)
+        {
+            DataLayer.DeleteQuestion(vm.question_id);
+        }
+
+        public Tuple<List<QuestionViewModel>, int> Get_QuestionbyDetailTableContent(int depOjectiveId, int jobDescriptionId, int strategyId, string filter, string sortDirection, int displayStart, int displayLength)
+        {
+            List<QuestionViewModel> all_items = new List<QuestionViewModel>();
+
+            all_items = DataLayer.get_all_Questions_by_details(jobDescriptionId, depOjectiveId, strategyId);
+
+
+            //filtering 
+            List<QuestionViewModel> filtered = new List<QuestionViewModel>();
+
+            if (!string.IsNullOrEmpty(filter))
+            {
+                filtered = all_items.Where(i => i.question.Contains(filter)
+                                             || i.lst_keywords.Contains(filter)).ToList();
+
+            }
+            else
+                filtered = all_items;
+
+
+            if (sortDirection == "asc")
+                filtered = filtered.OrderBy(s => s.question).ToList();
+            else
+                filtered = filtered.OrderByDescending(s => s.question).ToList();
+
+            //pagination
+            filtered = filtered.Skip(displayStart).Take(displayLength).ToList();
+
+            return new Tuple<List<QuestionViewModel>, int>(filtered, all_items.Count);
+
+        }
+
+        public List<SelectListItem> GetJobDescriptionList(int jobId)
+        {
+            List<tbl_job_description> desc = DataLayer.get_JobDescriptions(jobId);
+
+            List<SelectListItem> lst_obj = new List<SelectListItem>();
+            lst_obj.Add(new SelectListItem { Value = "0", Text = "----" });
+
+            foreach (tbl_job_description jd in desc)
+            {
+                lst_obj.Add(new SelectListItem { Value = jd.pkey + "", Text = jd.job_desc });
+            }
+
+            return lst_obj;
+        }
+
+        public List<SelectListItem> GetDepartmentObjectioveList(int departmentId)
+        {
+            List<tbl_department_objectives> objectives = DataLayer.get_Department_Objectives(departmentId);
+
+            List<SelectListItem> lst_obj = new List<SelectListItem>();
+            lst_obj.Add(new SelectListItem { Value = "0", Text = "----" });
+
+            foreach (tbl_department_objectives o in objectives)
+            {
+                lst_obj.Add(new SelectListItem { Value = o.pkey + "", Text = o.objective });
+            }
+
+            return lst_obj;
+        }
+
+        #endregion EntrybyDetailController
+
     }
 }
