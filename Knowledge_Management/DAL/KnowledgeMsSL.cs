@@ -988,6 +988,101 @@ namespace Knowledge_Management.DAL
 
         #endregion InsertInfoController
 
+
+        #region SearchInfoController
+
+        public Tuple<List<QuestionViewModel>, int> Get_AllQuestionsTableContent(int keywordId, string filter, string sortDirection, int displayStart, int displayLength)
+        {
+            List<QuestionViewModel> all_items = new List<QuestionViewModel>();
+
+            if (keywordId == 0)
+                all_items = DataLayer.get_all_Questions();
+            else
+                all_items = DataLayer.get_all_Questionsby_key(keywordId);
+
+            //filtering 
+            List<QuestionViewModel> filtered = new List<QuestionViewModel>();
+
+            if (!string.IsNullOrEmpty(filter))
+            {
+                filtered = all_items.Where(i => i.question.Contains(filter)
+                                             || i.lst_keywords.Contains(filter)).ToList();
+
+            }
+            else
+                filtered = all_items;
+
+
+            if (sortDirection == "asc")
+                filtered = filtered.OrderBy(s => s.question).ToList();
+            else
+                filtered = filtered.OrderByDescending(s => s.question).ToList();
+
+            //pagination
+            filtered = filtered.Skip(displayStart).Take(displayLength).ToList();
+
+            return new Tuple<List<QuestionViewModel>, int>(filtered, all_items.Count);
+        }
+
+        public SearchKeywordViewModel Get_SearchKeyword_Page(Controller ctrl)
+        {
+            SearchKeywordViewModel o = new SearchKeywordViewModel();
+
+            List<string> emp_prop = DataLayer.get_Employee_prop(get_userName(ctrl));
+            int dep_id = Int32.Parse(emp_prop[0]);
+            int job_id = Int32.Parse(emp_prop[1]);
+
+            List<tbl_department_objectives> dep_objs = DataLayer.get_Department_Objectives(dep_id);
+            o.lst_dep_objective = new SelectList(dep_objs, "pkey", "objective");
+            o.dep_obj_id = 0;
+
+            List<tbl_strategy> strategies = DataLayer.get_all_strategies();
+            o.lst_strategy = new SelectList(strategies, "pkey", "strategy_name");
+            o.strategy_id = 0;
+
+            List<tbl_job_description> jobDescs = DataLayer.get_JobDescriptions(job_id);
+            o.lst_job_desc = new SelectList(jobDescs, "pkey", "job_desc");
+            o.job_desc_id = 0;
+            return o;
+        }
+
+        public Tuple<List<SearchKeywordViewModel>, int> Get_KeywordTableContent(int depOjectiveId, int jobDescriptionId, int strategyId, string filter, string sortDirection, int displayStart, int displayLength)
+        {
+            List<SearchKeywordViewModel> all_items = DataLayer.get_Keywords(jobDescriptionId, depOjectiveId, strategyId);
+
+            //filtering 
+            List<SearchKeywordViewModel> filtered = new List<SearchKeywordViewModel>();
+
+            if (!string.IsNullOrEmpty(filter))
+            {
+                filtered = all_items.Where(i => i.keyword.Contains(filter)).ToList();
+
+            }
+            else
+                filtered = all_items;
+
+
+            if (sortDirection == "asc")
+                filtered = filtered.OrderBy(s => s.keyword).ToList();
+            else
+                filtered = filtered.OrderByDescending(s => s.keyword).ToList();
+
+            //pagination
+            filtered = filtered.Skip(displayStart).Take(displayLength).ToList();
+
+            return new Tuple<List<SearchKeywordViewModel>, int>(filtered, all_items.Count);
+        }
+
+        public KeywordDetailViewModel Get_KeywordDetails(KeywordDetailViewModel vm)
+        {
+            vm.job_desc = DataLayer.get_job_description(vm.jobDescId);
+            vm.dep_obj = DataLayer.get_department_objective(vm.depObjId);
+            vm.strategy = DataLayer.get_strategy_description(vm.strategyId);
+            return vm;
+        }
+
+        #endregion SearchInfoController
+
         private string get_userName(Controller ctrl)
         {
             string cookieName = FormsAuthentication.FormsCookieName; //Find cookie name
@@ -999,6 +1094,7 @@ namespace Knowledge_Management.DAL
 
             return UserName;
         }
+
 
     }
 }

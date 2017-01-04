@@ -138,6 +138,14 @@ namespace Knowledge_Management.DAL
 
         #endregion InsertInfoController
 
+        #region SearchInfoController
+
+        Tuple<List<QuestionViewModel>, int> Get_AllQuestionsTableContent(int keywordId, string filter, string sortDirection, int displayStart, int displayLength);
+        SearchKeywordViewModel Get_SearchKeyword_Page(Controller ctrl);
+        Tuple<List<SearchKeywordViewModel>, int> Get_KeywordTableContent(int depOjectiveId, int jobDescriptionId, int strategyId, string filter, string sortDirection, int displayStart, int displayLength);
+        KeywordDetailViewModel Get_KeywordDetails(KeywordDetailViewModel vm);
+        
+        #endregion SearchInfoController
 
 
     }

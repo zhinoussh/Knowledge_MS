@@ -3,7 +3,7 @@ $(document).ready(function () {
 
     var oTable = $('#SearchQuestionDT').dataTable({
         "bServerSide": true,
-        "sAjaxSource": "/User/SearchInfo/SearchQuestionAjaxHandler",
+        "sAjaxSource": "/User/SearchInfo/SearchAllQuestionAjaxHandler",
         "fnServerParams": function (aoData) {
             aoData.push({ "name": "key_id", "value": $('#hd_id_keyword').val() });
         },

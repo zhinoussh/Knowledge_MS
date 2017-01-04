@@ -15,49 +15,28 @@ namespace Knowledge_Management.Areas.User.Controllers
     [CustomAuthorize(Roles = "DataView")]
     public class SearchInfoController : Controller
     {
+        IKnowledgeMSSL serviceLayer;
+        public SearchInfoController(IKnowledgeMSSL service)
+        {
+            serviceLayer = service;
+        }
         // GET: SearchInfo
         public ActionResult SearchAll(int?id)
         {
-            ViewBag.key_id = id == null ? 0 : id;
+            ViewBag.key_id =( id.HasValue ? id.Value : 0);
             
             return View();
         }
         
-        public ActionResult SearchQuestionAjaxHandler(jQueryDataTableParamModel request)
+        public ActionResult SearchAllQuestionAjaxHandler(jQueryDataTableParamModel request)
         {
-            KnowledgeMSDAL DAL = new KnowledgeMSDAL();
-            List<QuestionViewModel> all_items = new List<QuestionViewModel>();
+            int key_id = Request["key_id"].ToString() == "" ? 0 : Convert.ToInt32(Request["key_id"].ToString());
+
+         Tuple<List<QuestionViewModel>, int> tbl_content=serviceLayer.Get_AllQuestionsTableContent(key_id, request.sSearch, Request["sSortDir_0"]
+                , request.iDisplayStart, request.iDisplayLength);
             
-            long key_id = Request["key_id"].ToString() == "" ? 0 : Convert.ToInt32(Request["key_id"].ToString());
-            
-            if(key_id==0)
-                all_items = DAL.get_all_Questions();
-            else
-                all_items = DAL.get_all_Questionsby_key(key_id);
 
-            //filtering 
-            List<QuestionViewModel> filtered = new List<QuestionViewModel>();
-
-            if (!string.IsNullOrEmpty(request.sSearch))
-            {
-                filtered = all_items.Where(i => i.question.Contains(request.sSearch)
-                                             || i.lst_keywords.Contains(request.sSearch)).ToList();
-
-            }
-            else
-                filtered = all_items;
-
-
-            var sortDirection = Request["sSortDir_0"]; // asc or desc
-            if (sortDirection == "asc")
-                filtered = filtered.OrderBy(s => s.question).ToList();
-            else
-                filtered = filtered.OrderByDescending(s => s.question).ToList();
-
-            //pagination
-            filtered = filtered.Skip(request.iDisplayStart).Take(request.iDisplayLength).ToList();
-
-            var indexed_list = filtered.Select((s, index) => new
+         var indexed_list = tbl_content.Item1.Select((s, index) => new
             {
                 QID = s.question_id + "",                               
                 KeyWords = s.lst_keywords,
@@ -77,8 +56,8 @@ namespace Knowledge_Management.Areas.User.Controllers
             return Json(new
             {
                 sEcho = request.sEcho,
-                iTotalRecords = all_items.Count(),
-                iTotalDisplayRecords = all_items.Count(),
+                iTotalRecords = tbl_content.Item2,
+                iTotalDisplayRecords = tbl_content.Item2,
                 aaData = result
             },
             JsonRequestBehavior.AllowGet);
@@ -93,66 +72,21 @@ namespace Knowledge_Management.Areas.User.Controllers
         // GET: SearchKey
         public ActionResult SearchbyKeyword()
         {
-            SearchKeywordViewModel o = new SearchKeywordViewModel();
-            KnowledgeMSDAL DAL = new KnowledgeMSDAL();
-
-            string cookieName = FormsAuthentication.FormsCookieName; //Find cookie name
-            HttpCookie authCookie = HttpContext.Request.Cookies[cookieName]; //Get the cookie by it's name
-            FormsAuthenticationTicket ticket = FormsAuthentication.Decrypt(authCookie.Value); //Decrypt it
-            string UserName = ticket.Name; //You have the UserName!
-
-            List<string> emp_prop = DAL.get_Employee_prop(UserName);
-            int dep_id = Int32.Parse(emp_prop[0]);
-            int job_id = Int32.Parse(emp_prop[1]);
-
-            List<tbl_department_objectives> dep_objs = DAL.get_Department_Objectives(dep_id);
-            o.lst_dep_objective = new SelectList(dep_objs, "pkey", "objective");
-            o.dep_obj_id = 0;
-
-            List<tbl_strategy> strategies = DAL.get_all_strategies();
-            o.lst_strategy = new SelectList(strategies, "pkey", "strategy_name");
-            o.strategy_id = 0;
-
-            List<tbl_job_description> jobDescs = DAL.get_JobDescriptions(job_id);
-            o.lst_job_desc = new SelectList(jobDescs, "pkey", "job_desc");
-            o.job_desc_id = 0;
-
-
+            SearchKeywordViewModel o = serviceLayer.Get_SearchKeyword_Page(this);
             return View(o);
         }
 
         public ActionResult KeywordAjaxHandler(jQueryDataTableParamModel request)
         {
-            KnowledgeMSDAL DAL = new KnowledgeMSDAL();
 
             int jobDesc_id = Request["jobdesc_id"].ToString() == "" ? 0 : Convert.ToInt32(Request["jobdesc_id"].ToString());
             int depObj_id = Request["depObj_id"].ToString() == "" ? 0 : Convert.ToInt32(Request["depObj_id"].ToString());
             int st_id = Request["st_id"].ToString() == "" ? 0 : Convert.ToInt32(Request["st_id"].ToString());
 
-            List<SearchKeywordViewModel> all_items = DAL.get_Keywords(jobDesc_id, depObj_id, st_id);
+           Tuple<List<SearchKeywordViewModel>, int> tbl_content= serviceLayer.Get_KeywordTableContent(depObj_id, jobDesc_id, st_id, request.sSearch, Request["sSortDir_0"]
+                , request.iDisplayStart, request.iDisplayLength);
 
-            //filtering 
-            List<SearchKeywordViewModel> filtered = new List<SearchKeywordViewModel>();
-
-            if (!string.IsNullOrEmpty(request.sSearch))
-            {
-                filtered = all_items.Where(i => i.keyword.Contains(request.sSearch)).ToList();
-
-            }
-            else
-                filtered = all_items;
-
-
-            var sortDirection = Request["sSortDir_0"]; // asc or desc
-            if (sortDirection == "asc")
-                filtered = filtered.OrderBy(s => s.keyword).ToList();
-            else
-                filtered = filtered.OrderByDescending(s => s.keyword).ToList();
-
-            //pagination
-            filtered = filtered.Skip(request.iDisplayStart).Take(request.iDisplayLength).ToList();
-
-            var indexed_list = filtered.Select((s, index) => new
+           var indexed_list = tbl_content.Item1.Select((s, index) => new
             {
                 KID = s.key_id + "",
                 KIndex = (index + 1) + "",
@@ -165,13 +99,11 @@ namespace Knowledge_Management.Areas.User.Controllers
             var result = from s in indexed_list
                          select new[] { s.KID, s.DepObjId, s.JobDescId, s.StId, s.KIndex, s.Keyword };
 
-
-
             return Json(new
             {
                 sEcho = request.sEcho,
-                iTotalRecords = all_items.Count(),
-                iTotalDisplayRecords = all_items.Count(),
+                iTotalRecords = tbl_content.Item2,
+                iTotalDisplayRecords = tbl_content.Item2,
                 aaData = result
             },
             JsonRequestBehavior.AllowGet);
@@ -180,11 +112,7 @@ namespace Knowledge_Management.Areas.User.Controllers
         [HttpGet]
         public ActionResult KeywordDetails(KeywordDetailViewModel vm)
         {
-            KnowledgeMSDAL db = new KnowledgeMSDAL();
-            vm.job_desc = db.get_job_description(vm.jobDescId);
-            vm.dep_obj = db.get_department_objective(vm.depObjId);
-            vm.strategy = db.get_strategy_description(vm.strategyId);
-
+            vm = serviceLayer.Get_KeywordDetails(vm);
             return PartialView("_PartialDetailKeyWord", vm);
         }
     }
