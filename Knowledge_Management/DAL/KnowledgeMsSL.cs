@@ -581,5 +581,74 @@ namespace Knowledge_Management.DAL
 
         #endregion EntrybyDetailController
 
+
+        #region EntrybyJobController
+
+        public JobDepQuestionViewModel Get_EntrybyJob_Index_Page()
+        {
+            JobDepQuestionViewModel o = new JobDepQuestionViewModel();
+
+            List<tbl_department> deps = DataLayer.get_all_Departments();
+            o.lst_dep = new SelectList(deps, "pkey", "department_name");
+            o.dep_id = deps.First().pkey + "";
+
+            List<tbl_job> jobs = DataLayer.get_Jobs(Int32.Parse(o.dep_id));
+            o.lst_job = new SelectList(jobs, "pkey", "job_name");
+            o.job_id = "0";
+
+            return o;
+        }
+
+        JobDepQuestionViewModel Get_Delete_QuestionbyJob(int questionId)
+        {
+            JobDepQuestionViewModel q = new JobDepQuestionViewModel();
+            q.question_id = questionId;
+
+            return q;
+        }
+
+        public void Post_Delete_QuestionbyJob(JobDepQuestionViewModel vm)
+        {
+            DataLayer.DeleteQuestion(vm.question_id);
+        }
+
+        public Tuple<List<QuestionViewModel>, int> Get_QuestionbyJobTableContent(int departmentId, int jobId, string filter, string sortDirection, int displayStart, int displayLength)
+        {
+            List<QuestionViewModel> all_items = new List<QuestionViewModel>();
+
+            if (jobId != 0)
+            {
+                all_items = DataLayer.get_all_Questions_by_job(jobId);
+            }
+            else if (departmentId != 0)
+                all_items = DataLayer.get_all_Questions_by_alljobs_department(departmentId);
+
+
+            //filtering 
+            List<QuestionViewModel> filtered = new List<QuestionViewModel>();
+
+            if (!string.IsNullOrEmpty(filter))
+            {
+                filtered = all_items.Where(i => i.question.Contains(filter)
+                                             || i.lst_keywords.Contains(filter)).ToList();
+
+            }
+            else
+                filtered = all_items;
+
+
+            if (sortDirection == "asc")
+                filtered = filtered.OrderBy(s => s.question).ToList();
+            else
+                filtered = filtered.OrderByDescending(s => s.question).ToList();
+
+            //pagination
+            filtered = filtered.Skip(displayStart).Take(displayLength).ToList();
+
+            return new Tuple<List<QuestionViewModel>, int>(filtered, all_items.Count);
+        }
+
+        #endregion EntrybyJobController
+
     }
 }

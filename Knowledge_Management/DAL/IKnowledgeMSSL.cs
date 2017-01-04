@@ -88,5 +88,16 @@ namespace Knowledge_Management.DAL
         List<SelectListItem> GetDepartmentObjectioveList(int departmentId);
 
         #endregion EntrybyDetailController
+
+        #region EntrybyJobController
+
+        JobDepQuestionViewModel Get_EntrybyJob_Index_Page();
+        JobDepQuestionViewModel Get_Delete_QuestionbyJob(int questionId);
+        void Post_Delete_QuestionbyJob(JobDepQuestionViewModel vm);
+        Tuple<List<QuestionViewModel>, int> Get_QuestionbyJobTableContent(int departmentId, int jobId, string filter, string sortDirection, int displayStart, int displayLength);
+       
+        #endregion EntrybyJobController
+
+
     }
 }
