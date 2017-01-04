@@ -887,5 +887,118 @@ namespace Knowledge_Management.DAL
 
         #endregion EntrybyEmployeeController
 
+
+        #region InsertInfoController
+
+        public QuestionViewModel Get_NewQuestion_Page(int questionId, Controller ctrl)
+        {
+            QuestionViewModel o = new QuestionViewModel();
+
+            List<string> emp_prop = DataLayer.get_Employee_prop(get_userName(ctrl));
+            int dep_id = Int32.Parse(emp_prop[0]);
+            int job_id = Int32.Parse(emp_prop[1]);
+
+
+            List<tbl_department_objectives> dep_objs = DataLayer.get_Department_Objectives(dep_id);
+            o.lst_dep_objective = new SelectList(dep_objs, "pkey", "objective");
+
+            List<tbl_strategy> strategies = DataLayer.get_all_strategies();
+            o.lst_strategy = new SelectList(strategies, "pkey", "strategy_name");
+
+            List<tbl_job_description> jobDescs = DataLayer.get_JobDescriptions(job_id);
+            o.lst_job_desc = new SelectList(jobDescs, "pkey", "job_desc");
+
+            //insert
+            if (questionId==0)
+            {
+                o.question_id = 0;
+                o.question = "";
+                o.lst_keywords = "";
+                o.dep_obj_id = 0;
+                o.strategy_id = 0;
+                o.job_desc_id = 0;
+            }
+            //edit
+            else
+            {
+                QuestionViewModel question = DataLayer.get_question_byId(questionId);
+                o.question_id = questionId;
+                o.question = question.question;
+                o.lst_keywords = question.lst_keywords;
+                o.strategy_id = question.strategy_id.HasValue ? question.strategy_id.Value : 0;
+                o.dep_obj_id = question.dep_obj_id.HasValue ? question.dep_obj_id.Value : 0;
+                o.job_desc_id = question.job_desc_id.HasValue ? question.job_desc_id.Value : 0;
+            }
+
+            return o;
+        }
+
+        public void Post_Add_Edit_Question(QuestionViewModel vm, Controller ctrl)
+        {
+            List<string> lst_keywords = new List<string>();
+            int count_keywords = Int32.Parse(ctrl.Request["count"].ToString());
+            for (int i = 1; i <= count_keywords; i++)
+            {
+                if (ctrl.Request["field" + i] != null)
+                    lst_keywords.Add(ctrl.Request["field" + i].ToString());
+            }
+
+            DataLayer.InsertQuestion(vm.question_id, vm.question, vm.dep_obj_id, vm.job_desc_id, vm.strategy_id
+                , lst_keywords, get_userName(ctrl));
+        }
+
+        public QuestionViewModel Get_Delete_Question(int questionId)
+        {
+            QuestionViewModel q = new QuestionViewModel();
+            q.question_id = questionId;
+            return q;
+        }
+
+        public void Post_Delete_Question(QuestionViewModel vm)
+        {
+            DataLayer.DeleteQuestion(vm.question_id);
+        }
+
+        public Tuple<List<QuestionViewModel>, int> Get_UserQuestionsTableContent(Controller ctrl, string filter, string sortDirection, int displayStart, int displayLength)
+        {
+            List<QuestionViewModel> all_items = DataLayer.get_all_Questions_by_employee(get_userName(ctrl));
+
+            //filtering 
+            List<QuestionViewModel> filtered = new List<QuestionViewModel>();
+
+            if (!string.IsNullOrEmpty(filter))
+            {
+                filtered = all_items.Where(i => i.question.Contains(filter)).ToList();
+
+            }
+            else
+                filtered = all_items;
+
+
+            if (sortDirection == "asc")
+                filtered = filtered.OrderBy(s => s.question).ToList();
+            else
+                filtered = filtered.OrderByDescending(s => s.question).ToList();
+
+            //pagination
+            filtered = filtered.Skip(displayStart).Take(displayLength).ToList();
+
+            return new Tuple<List<QuestionViewModel>, int>(filtered, all_items.Count);
+        }
+
+        #endregion InsertInfoController
+
+        private string get_userName(Controller ctrl)
+        {
+            string cookieName = FormsAuthentication.FormsCookieName; //Find cookie name
+            HttpCookie authCookie = ctrl.HttpContext.Request.Cookies[cookieName]; //Get the cookie by it's name
+            FormsAuthenticationTicket ticket = FormsAuthentication.Decrypt(authCookie.Value); //Decrypt it
+            string UserName = ticket.Name; //You have the UserName!
+
+            //string UserName =ctrl.User.Identity.Name;
+
+            return UserName;
+        }
+
     }
 }

@@ -2,7 +2,7 @@
 
     var oTable = $('#QuestionDT').dataTable({
         "bServerSide": true,
-        "sAjaxSource": "/User/InsertInfo/QuestionAjaxHandler",
+        "sAjaxSource": "/User/InsertInfo/YourQuestionAjaxHandler",
         "bProcessing": true,
         "pagingType": "numbers"
         , "aoColumns": [

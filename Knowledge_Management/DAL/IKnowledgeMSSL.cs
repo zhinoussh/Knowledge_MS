@@ -98,7 +98,6 @@ namespace Knowledge_Management.DAL
 
         #endregion EntrybyJobController
 
-
         #region EntrybyEmployeeController
 
         //Question
@@ -126,6 +125,18 @@ namespace Knowledge_Management.DAL
         FullSolutionViewModel Post_Confirm_Upload(int uploadId,int solutionId);
 
         #endregion EntrybyEmployeeController
+
+        #region InsertInfoController
+
+        QuestionViewModel Get_NewQuestion_Page(int questionId,Controller ctrl);
+
+        void Post_Add_Edit_Question(QuestionViewModel vm,Controller ctrl);
+
+        QuestionViewModel Get_Delete_Question(int questionId);
+        void Post_Delete_Question(QuestionViewModel vm);
+        Tuple<List<QuestionViewModel>, int> Get_UserQuestionsTableContent(Controller ctrl,string filter, string sortDirection, int displayStart, int displayLength);
+
+        #endregion InsertInfoController
 
 
 
