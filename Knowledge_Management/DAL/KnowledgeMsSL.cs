@@ -23,10 +23,6 @@ namespace Knowledge_Management.DAL
 
                 return _dataLayer;
             }
-            set
-            {
-                _dataLayer = value;
-            }
         }
 
         #region Home
@@ -598,7 +594,7 @@ namespace Knowledge_Management.DAL
             return o;
         }
 
-        JobDepQuestionViewModel Get_Delete_QuestionbyJob(int questionId)
+        public JobDepQuestionViewModel Get_Delete_QuestionbyJob(int questionId)
         {
             JobDepQuestionViewModel q = new JobDepQuestionViewModel();
             q.question_id = questionId;
@@ -739,9 +735,9 @@ namespace Knowledge_Management.DAL
             return vm;
         }
 
-        public Tuple<List<SolutionEmployeeViewModel>, int> Get_SolutionForQuestionTableContent(int questionId, string filter, string sortDirection, int displayStart, int displayLength)
+        public Tuple<List<SolutionEmployeeViewModel>, int> Get_SolutionForQuestionTableContent(int questionId,int confirm_status, string filter, string sortDirection, int displayStart, int displayLength)
         {
-            List<SolutionEmployeeViewModel> all_items = DataLayer.get_Solutions_by_Question(questionId, 0);
+            List<SolutionEmployeeViewModel> all_items = DataLayer.get_Solutions_by_Question(questionId, confirm_status);
 
             //filtering 
             List<SolutionEmployeeViewModel> filtered = new List<SolutionEmployeeViewModel>();
@@ -858,9 +854,9 @@ namespace Knowledge_Management.DAL
             DataLayer.DeleteUpload(vm.upload_id);
         }
 
-        public Tuple<List<tbl_solution_uploads>, int> Get_UploadForSolutionTableContent(int solutionId, int displayStart, int displayLength)
+        public Tuple<List<tbl_solution_uploads>, int> Get_UploadForSolutionTableContent(long solutionId, int confirm_status, int displayStart, int displayLength)
         {
-            List<tbl_solution_uploads> filtered = DataLayer.get_uploads_by_solution(solutionId, 0);
+            List<tbl_solution_uploads> filtered = DataLayer.get_uploads_by_solution(solutionId, confirm_status);
 
             //pagination
             filtered = filtered.Skip(displayStart).Take(displayLength).ToList();
@@ -886,7 +882,6 @@ namespace Knowledge_Management.DAL
         }
 
         #endregion EntrybyEmployeeController
-
 
         #region InsertInfoController
 
@@ -988,7 +983,6 @@ namespace Knowledge_Management.DAL
 
         #endregion InsertInfoController
 
-
         #region SearchInfoController
 
         public Tuple<List<QuestionViewModel>, int> Get_AllQuestionsTableContent(int keywordId, string filter, string sortDirection, int displayStart, int displayLength)
@@ -1083,6 +1077,110 @@ namespace Knowledge_Management.DAL
 
         #endregion SearchInfoController
 
+        #region SolutionController
+
+        public SolutionViewModel Get_Solution_Index_Page(int questionId)
+        {
+            SolutionViewModel o = new SolutionViewModel();
+            o.question_id = questionId;
+            o.question = DataLayer.get_question_name(questionId);
+            o.employee_prop = "Defined by: " + DataLayer.get_Question_Writer(questionId);
+
+            return o;
+        }
+
+        public NewSolutionViewModel Get_NewSolution_Page(int questionId, long solutionId)
+        {
+            NewSolutionViewModel o = new NewSolutionViewModel();
+            o.question_id = questionId;
+
+            if (solutionId != 0)
+            {
+                FullSolutionViewModel full_solution = DataLayer.get_Solution_by_id(solutionId);
+                o.question = full_solution.question;
+                o.new_solution = full_solution.full_solution;
+            }
+            else
+            {
+                o.question = DataLayer.get_question_name(questionId);
+                o.new_solution = "";
+            }
+
+            o.new_solution_id = solutionId;
+
+            return o;
+
+        }
+
+        public long Post_Add_New_Solution(NewSolutionViewModel q,Controller ctrl)
+        {
+            long new_id = DataLayer.InsertNewSolution(q.new_solution_id, q.question_id, q.new_solution, get_userName(ctrl));
+            return new_id;
+        }
+
+        public long Upload_File(long questionId, long solutionId, string uploadDescription, Controller ctrl)
+        {
+            if (questionId != 0)
+            {
+                if (solutionId == 0)
+                {
+                    solutionId = DataLayer.InsertNewSolution(solutionId, questionId, "No Solution Description", get_userName(ctrl));
+                }
+
+                //upload file
+                var file = ctrl.Request.Files["Filedata"];
+                var fileNameExt = file.FileName.Substring(file.FileName.LastIndexOf('.'));
+
+                string file_name = solutionId + "_" + (DataLayer.get_count_solution_uploads(solutionId) + 1) + fileNameExt;
+                string savePath = ctrl.Server.MapPath(@"~\Upload\" + file_name);
+                file.SaveAs(savePath);
+
+                //save upload in DB
+                DataLayer.InsertNewUpload(solutionId, file_name, uploadDescription);
+            }
+
+            return solutionId;
+        }
+
+        public void Get_Edit_Upload_description(NewSolutionViewModel vm)
+        {
+            DataLayer.Edit_upload_description(vm.upload_id, vm.file_description);
+        }
+
+        public Tuple<List<SolutionEmployeeViewModel>, int> Get_UserSolutionsTableContent(Controller ctrl,string filter, string sortDirection, int displayStart, int displayLength)
+        {
+            int emp_id = 0;
+            List<string> emp_prop = DataLayer.get_Employee_prop(get_userName(ctrl));
+            if (emp_prop != null)
+                emp_id = Int32.Parse(emp_prop[5]);
+
+            List<SolutionEmployeeViewModel> all_items = DataLayer.get_Solutions_by_employee(emp_id);
+
+            //filtering 
+            List<SolutionEmployeeViewModel> filtered = new List<SolutionEmployeeViewModel>();
+
+            if (!string.IsNullOrEmpty(filter))
+            {
+                filtered = all_items.Where(i => i.solution.Contains(filter)).ToList();
+
+            }
+            else
+                filtered = all_items;
+
+
+            if (sortDirection == "asc")
+                filtered = filtered.OrderBy(s => s.solution).ToList();
+            else
+                filtered = filtered.OrderByDescending(s => s.solution).ToList();
+
+            //pagination
+            filtered = filtered.Skip(displayStart).Take(displayLength).ToList();
+
+            return new Tuple<List<SolutionEmployeeViewModel>, int>(filtered, all_items.Count);
+        }
+
+        #endregion SolutionController
+
         private string get_userName(Controller ctrl)
         {
             string cookieName = FormsAuthentication.FormsCookieName; //Find cookie name
@@ -1094,7 +1192,6 @@ namespace Knowledge_Management.DAL
 
             return UserName;
         }
-
 
     }
 }

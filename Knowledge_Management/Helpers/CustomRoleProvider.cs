@@ -9,6 +9,19 @@ namespace Knowledge_Management
 {
     public class CustomRoleProvider:RoleProvider
     {
+        private IAuthSL Authservice;
+
+
+        public IAuthSL serviceLayer
+        {
+            get {
+                if (Authservice == null)
+                    Authservice = new AuthSL();
+                return Authservice;
+            }
+            set { Authservice = value; }
+        }
+        
         public override void AddUsersToRoles(string[] usernames, string[] roleNames)
         {
             throw new NotImplementedException();
@@ -48,9 +61,7 @@ namespace Knowledge_Management
 
         public override string[] GetRolesForUser(string username)
         {
-            KnowledgeMSDAL DAL = new KnowledgeMSDAL();
-            return DAL.get_user_roles(username);
-            //throw new NotImplementedException();
+            return serviceLayer.Get_User_Roles(username);
         }
 
         public override string[] GetUsersInRole(string roleName)
@@ -60,9 +71,7 @@ namespace Knowledge_Management
 
         public override bool IsUserInRole(string username, string roleName)
         {
-            KnowledgeMSDAL DAL = new KnowledgeMSDAL();
-            return DAL.check_userinRole(username, roleName);
-           // throw new NotImplementedException();
+           return serviceLayer.IsUserInRole(username, roleName);
         }
 
         public override void RemoveUsersFromRoles(string[] usernames, string[] roleNames)

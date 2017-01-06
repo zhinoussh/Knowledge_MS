@@ -125,6 +125,8 @@
     <Compile Include="Areas\Admin\Controllers\ViewEntrybyDetailController.cs" />
     <Compile Include="Areas\Admin\Controllers\ViewEntrybyJobController.cs" />
     <Compile Include="Areas\Admin\Controllers\ViewEntrybyEmployeeController.cs" />
+    <Compile Include="DAL\AuthSL.cs" />
+    <Compile Include="DAL\IAuthSL.cs" />
     <Compile Include="DAL\IKnowledgeMSSL.cs" />
     <Compile Include="DAL\IKnowledgeMSDAL.cs" />
     <Compile Include="DAL\KnowledgeMsSL.cs" />

@@ -154,7 +154,7 @@ namespace Knowledge_Management.Areas.Admin.Controllers
         {
             int question_id = Request.QueryString["q_id"].ToString() == "" ? 0 : Int32.Parse(Request.QueryString["q_id"].ToString());
 
-            Tuple<List<SolutionEmployeeViewModel>, int> tbl_content = serviceLayer.Get_SolutionForQuestionTableContent(question_id, request.sSearch, Request["sSortDir_0"]
+            Tuple<List<SolutionEmployeeViewModel>, int> tbl_content = serviceLayer.Get_SolutionForQuestionTableContent(question_id,0, request.sSearch, Request["sSortDir_0"]
                   , request.iDisplayStart, request.iDisplayLength);
            
             var indexed_list = tbl_content.Item1.Select((s, index) => new
@@ -273,8 +273,9 @@ namespace Knowledge_Management.Areas.Admin.Controllers
 
         public ActionResult UploadAjaxHandler(jQueryDataTableParamModel request)
         {
-            int solution_id = Convert.ToInt32(Request["solution_id"].ToString());
-            Tuple<List<tbl_solution_uploads>, int> tbl_content = serviceLayer.Get_UploadForSolutionTableContent(solution_id, request.iDisplayStart, request.iDisplayLength);
+            long solution_id = Convert.ToInt64(Request["solution_id"].ToString());
+            Tuple<List<tbl_solution_uploads>, int> tbl_content = serviceLayer.Get_UploadForSolutionTableContent(
+                solution_id,0, request.iDisplayStart, request.iDisplayLength);
 
             var indexed_list = tbl_content.Item1.Select((s, index) => new { SID = s.pkey + "", FILEPATH = s.file_path, SIndex = (index + 1) + "", SNAME = s.file_desc, Confirm = s.confirm.ToString() });
 

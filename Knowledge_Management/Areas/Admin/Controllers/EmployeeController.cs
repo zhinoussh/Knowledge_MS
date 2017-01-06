@@ -69,7 +69,7 @@ namespace Knowledge_Management.Areas.Admin.Controllers
 
         public JsonResult FillJobs(int DepId)
         {
-            List<tbl_job> lst_obj = serviceLayer.GetJobist(DepId);
+            List<SelectListItem> lst_obj = serviceLayer.GetJobList(DepId);
             return Json(lst_obj, JsonRequestBehavior.AllowGet);
         }
 

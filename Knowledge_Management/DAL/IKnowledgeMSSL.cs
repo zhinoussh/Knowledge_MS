@@ -11,7 +11,7 @@ namespace Knowledge_Management.DAL
 {
     public interface IKnowledgeMSSL
     {
-        IKnowledgeMSDAL DataLayer { get;set; }
+        IKnowledgeMSDAL DataLayer { get;}
 
         #region HomeController
 
@@ -109,7 +109,7 @@ namespace Knowledge_Management.DAL
         //Solution
         SolutionViewModel Get_QuestionSolutions_Index_Page(int questionId);
         EmployeeQuestionViewModel Get_EmployeeSolutions_Index_Page(int employeeId);
-        Tuple<List<SolutionEmployeeViewModel>, int> Get_SolutionForQuestionTableContent(int questionId, string filter, string sortDirection, int displayStart, int displayLength);
+        Tuple<List<SolutionEmployeeViewModel>, int> Get_SolutionForQuestionTableContent(int questionId,int confirm_status, string filter, string sortDirection, int displayStart, int displayLength);
         Tuple<List<SolutionEmployeeViewModel>, int> Get_SolutionForEmployeeTableContent(int employeeId, string filter, string sortDirection, int displayStart, int displayLength);
         SolutionEmployeeViewModel Get_Delete_Solution(int solutionId);
         void Post_Delete_Solution(SolutionEmployeeViewModel vm, Controller ctrl);
@@ -120,7 +120,7 @@ namespace Knowledge_Management.DAL
         //Upload
         UploadViewModel Get_Delete_Upload(int uploadId);
         void Post_Delete_Upload(UploadViewModel vm,Controller ctrl);
-        Tuple<List<tbl_solution_uploads>, int> Get_UploadForSolutionTableContent(int solutionId, int displayStart, int displayLength);
+        Tuple<List<tbl_solution_uploads>, int> Get_UploadForSolutionTableContent(long solutionId,int confirm_status, int displayStart, int displayLength);
         Tuple<byte[], string> GetFilePropertie(int uploadId, Controller ctrl);
         FullSolutionViewModel Post_Confirm_Upload(int uploadId,int solutionId);
 
@@ -146,6 +146,18 @@ namespace Knowledge_Management.DAL
         KeywordDetailViewModel Get_KeywordDetails(KeywordDetailViewModel vm);
         
         #endregion SearchInfoController
+
+        #region SolutionController
+
+        SolutionViewModel Get_Solution_Index_Page(int questionId);
+        NewSolutionViewModel Get_NewSolution_Page(int questionId, long solutionId);
+        long Post_Add_New_Solution(NewSolutionViewModel q, Controller ctrl);
+        long Upload_File(long questionId, long soutionId, string uploadDescription, Controller ctrl);
+        void Get_Edit_Upload_description(NewSolutionViewModel vm);
+        Tuple<List<SolutionEmployeeViewModel>, int> Get_UserSolutionsTableContent(Controller ctrl, string filter, string sortDirection, int displayStart, int displayLength);
+        #endregion SolutionController
+
+        
 
 
     }
