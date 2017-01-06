@@ -12,80 +12,37 @@ namespace Knowledge_Management.Areas.Admin.Controllers
     [CustomAuthorize(Roles = "Admin")]
     public class ViewEntrybyJobController : Controller
     {
+        IKnowledgeMSSL serviceLayer;
+
+        public ViewEntrybyJobController(IKnowledgeMSSL service)
+        {
+            serviceLayer = service;
+        }
+
         // GET: ViewEntrybyJob
         public ActionResult Index()
         {
-            JobDepQuestionViewModel o = new JobDepQuestionViewModel();
-            KnowledgeMSDAL DAL = new KnowledgeMSDAL();
-
-            List<tbl_department> deps = DAL.get_all_Departments();
-            o.lst_dep = new SelectList(deps, "pkey", "department_name");
-            o.dep_id = deps.First().pkey + "";
-
-            List<tbl_job> jobs = DAL.get_Jobs(Int32.Parse(o.dep_id));
-            o.lst_job = new SelectList(jobs, "pkey", "job_name");
-            o.job_id = "0";
-
+            JobDepQuestionViewModel o = serviceLayer.Get_EntrybyJob_Index_Page();
             return View(o);
         }
 
-        #region Question
 
         public JsonResult FillJobs(int DepId)
         {
-            KnowledgeMSDAL DAL = new KnowledgeMSDAL();
-            List<tbl_job> jobs = DAL.get_Jobs(DepId);
-
-            List<SelectListItem> lst_obj = new List<SelectListItem>();
-            lst_obj.Add(new SelectListItem { Value =  "0", Text ="All Jobs" });
-
-            foreach (tbl_job j in jobs)
-            {
-                lst_obj.Add(new SelectListItem { Value = j.pkey + "", Text = j.job_name });
-            }
-
+            List<SelectListItem> lst_obj = serviceLayer.GetJobList(DepId);
             return Json(lst_obj, JsonRequestBehavior.AllowGet);
         }
        
         public ActionResult SearchQuestionAjaxHandler(jQueryDataTableParamModel request)
         {
-            KnowledgeMSDAL DAL = new KnowledgeMSDAL();
-            List<QuestionViewModel> all_items = new List<QuestionViewModel>();
 
             int job_id = Request["job_id"].ToString() == "" ? 0 : Convert.ToInt32(Request["job_id"].ToString());
             int dep_id = Request["dep_id"].ToString() == "" ? 0 : Convert.ToInt32(Request["dep_id"].ToString());
 
-            if (job_id != 0)
-            {
-                all_items = DAL.get_all_Questions_by_job(job_id);
-            }
-            else if(dep_id!=0)
-                all_items = DAL.get_all_Questions_by_alljobs_department(dep_id);
+            Tuple<List<QuestionViewModel>, int> tbl_content =serviceLayer.Get_QuestionbyJobTableContent(dep_id, job_id, request.sSearch
+                , Request["sSortDir_0"], request.iDisplayStart, request.iDisplayLength);
 
-
-            //filtering 
-            List<QuestionViewModel> filtered = new List<QuestionViewModel>();
-
-            if (!string.IsNullOrEmpty(request.sSearch))
-            {
-                filtered = all_items.Where(i => i.question.Contains(request.sSearch)
-                                             || i.lst_keywords.Contains(request.sSearch)).ToList();
-
-            }
-            else
-                filtered = all_items;
-
-
-            var sortDirection = Request["sSortDir_0"]; // asc or desc
-            if (sortDirection == "asc")
-                filtered = filtered.OrderBy(s => s.question).ToList();
-            else
-                filtered = filtered.OrderByDescending(s => s.question).ToList();
-
-            //pagination
-            filtered = filtered.Skip(request.iDisplayStart).Take(request.iDisplayLength).ToList();
-
-            var indexed_list = filtered.Select((s, index) => new
+            var indexed_list = tbl_content.Item1.Select((s, index) => new
             {
                 QID = s.question_id + "",
                 KeyWords = s.lst_keywords,
@@ -97,18 +54,15 @@ namespace Knowledge_Management.Areas.Admin.Controllers
                 QWriter=s.emp_prop
             });
 
-
             var result = from s in indexed_list
                          select new[] { s.QID, s.KeyWords, s.Job_Desc, s.Dep_Obj, s.Strategy, s.QSubject,s.QWriter, s.QIndex
                              , s.QSubject.Length <= 200 ? s.QSubject : (s.QSubject.Substring(0, 200) + "...") };
 
-
-
             return Json(new
             {
                 sEcho = request.sEcho,
-                iTotalRecords = all_items.Count(),
-                iTotalDisplayRecords = all_items.Count(),
+                iTotalRecords = tbl_content.Item2,
+                iTotalDisplayRecords = tbl_content.Item2,
                 aaData = result
             },
             JsonRequestBehavior.AllowGet);
@@ -123,8 +77,7 @@ namespace Knowledge_Management.Areas.Admin.Controllers
         [HttpGet] // this action result returns the partial containing the modal
         public ActionResult Delete_Question(int id)
         {
-            JobDepQuestionViewModel q = new JobDepQuestionViewModel();
-            q.question_id = id;
+            JobDepQuestionViewModel q = serviceLayer.Get_Delete_QuestionbyJob(id);
             return PartialView("_PartialDeleteQuestion", q);
         }
 
@@ -134,9 +87,7 @@ namespace Knowledge_Management.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                KnowledgeMSDAL DAL = new KnowledgeMSDAL();
-
-                DAL.DeleteQuestion(q.question_id);
+                serviceLayer.Post_Delete_QuestionbyJob(q);
                 return Json(new { msg = "Question deleted successfully" });
             }
             else
@@ -147,6 +98,5 @@ namespace Knowledge_Management.Areas.Admin.Controllers
 
         }
 
-        #endregion Question
     }
 }

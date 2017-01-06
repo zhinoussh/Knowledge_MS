@@ -13,68 +13,38 @@ namespace Knowledge_Management.Areas.Admin.Controllers
     [CustomAuthorize(Roles = "Admin")]
     public class JobDescriptionController : Controller
     {
+        private IKnowledgeMSSL serviceLayer;
+
+        public JobDescriptionController(IKnowledgeMSSL service)
+        {
+            serviceLayer = service;
+        }
         // GET: JobDescription
         public ActionResult Index()
         {
-            JobDescriptionViewModel o = new JobDescriptionViewModel();
-            KnowledgeMSDAL DAL = new KnowledgeMSDAL();
-            
-            List<tbl_department> deps = DAL.get_all_Departments();
-            o.lst_dep = new SelectList(deps, "pkey", "department_name");
-            o.dep_id = deps.First().pkey+"";
-
-            List<tbl_job> jobs = DAL.get_Jobs(Int32.Parse(o.dep_id));
-            o.lst_job = new SelectList(jobs, "pkey", "job_name");
-            o.job_id = jobs.First().pkey + "";
-
-            o.jobDesc_id = 0;
-            o.jobDesc = "";
+            JobDescriptionViewModel o = serviceLayer.Get_JobDescription_Index_Page();
             return View(o);
         }
 
-
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [ModelValidator]
         public ActionResult Add_Edit_JobDesc(JobDescriptionViewModel s)
         {
-
-            if (ModelState.IsValid)
-            {
-                KnowledgeMSDAL DAL = new KnowledgeMSDAL();
-
-                DAL.InsertJobDescription(s.jobDesc_id, s.jobDesc,Int32.Parse(s.job_id));
-                return Json(new { msg = "Job Description inserted successfully." });
-            }
-            else
-            {
-                ModelState.AddModelError("ADD_JobDescriptionErr", "JobDescription length is exeeding");
-            }
-            return View(s);
+            serviceLayer.Post_Add_Edit_JobDescription(s);
+            return Json(new { msg = "Job Description inserted successfully." });
         }
 
-
-        [HttpGet] // this action result returns the partial containing the modal
-    public ActionResult Delete_JobDesc(int id)
+        [HttpGet]
+        public ActionResult Delete_JobDesc(int id)
         {
-            JobDescriptionViewModel s = new JobDescriptionViewModel();
-            s.jobDesc_id = id;
+            JobDescriptionViewModel s = serviceLayer.Get_Delete_JobDescription(id);
             return PartialView("_PartialDeleteJobDesc", s);
         }
 
-
-    
         public JsonResult FillJobs(int DepId)
         {
-            KnowledgeMSDAL DAL = new KnowledgeMSDAL();
-            List<tbl_job> jobs = DAL.get_Jobs(DepId);
-
-            List<SelectListItem> lst_obj = new List<SelectListItem>();
-            foreach (tbl_job j in jobs)
-            {
-
-                lst_obj.Add(new SelectListItem { Value=j.pkey+"",Text=j.job_name});
-            }
-
+            List<SelectListItem> lst_obj = serviceLayer.GetJobList(DepId);
             return Json(lst_obj, JsonRequestBehavior.AllowGet);
         }
 
@@ -86,9 +56,7 @@ namespace Knowledge_Management.Areas.Admin.Controllers
 
             if (ModelState.IsValid)
             {
-                KnowledgeMSDAL DAL = new KnowledgeMSDAL();
-
-                DAL.DeleteJobDescription(s.jobDesc_id);
+                serviceLayer.Post_Delete_JobDescription(s);
                 return Json(new { msg = "Job Description deleted successfully." });
             }
             else
@@ -101,34 +69,12 @@ namespace Knowledge_Management.Areas.Admin.Controllers
 
         public ActionResult JobDescAjaxHandler(jQueryDataTableParamModel request)
         {
-            KnowledgeMSDAL DAL = new KnowledgeMSDAL();
-
             int job_id = Convert.ToInt32(Request["job_id"].ToString());
-            List<tbl_job_description> all_items = DAL.get_JobDescriptions(job_id);
 
-            //filtering 
-            List<tbl_job_description> filtered = new List<tbl_job_description>();
+            Tuple<List<tbl_job_description>, int> tbl_content = serviceLayer.Get_JobDescriptionTableContent(job_id, request.sSearch
+                , Request["sSortDir_0"], request.iDisplayStart, request.iDisplayLength);
 
-            if (!string.IsNullOrEmpty(request.sSearch))
-            {
-                filtered = all_items.Where(i => i.job_desc.Contains(request.sSearch)).ToList();
-            }
-            else
-                filtered = all_items;
-
-
-            //sorting
-           
-            var sortDirection = Request["sSortDir_0"]; // asc or desc
-            if (sortDirection == "asc")
-                filtered = filtered.OrderBy(s=>s.job_desc).ToList();
-            else
-                filtered = filtered.OrderByDescending(s => s.job_desc).ToList();
-
-            //pagination
-            filtered = filtered.Skip(request.iDisplayStart).Take(request.iDisplayLength).ToList();
-
-            var indexed_list = filtered.Select((s, index) => new { SID = s.pkey + "", SIndex = (index + 1) + ""
+            var indexed_list = tbl_content.Item1.Select((s, index) => new { SID = s.pkey + "", SIndex = (index + 1) + ""
                 , JobDesc = s.job_desc });
 
             var result = from s in indexed_list
@@ -139,8 +85,8 @@ namespace Knowledge_Management.Areas.Admin.Controllers
             return Json(new
             {
                 sEcho = request.sEcho,
-                iTotalRecords = all_items.Count(),
-                iTotalDisplayRecords = all_items.Count(),
+                iTotalRecords = tbl_content.Item2,
+                iTotalDisplayRecords = tbl_content.Item2,
                 aaData = result
             },
             JsonRequestBehavior.AllowGet);

@@ -15,6 +15,12 @@ namespace Knowledge_Management
 {
     public class MvcApplication : System.Web.HttpApplication
     {
+        private IAuthSL Authservice;
+
+        public MvcApplication()
+        {
+            Authservice = new AuthSL();
+        }
         protected void Application_Start()
         {
             AreaRegistration.RegisterAllAreas();
@@ -28,12 +34,7 @@ namespace Knowledge_Management
 
         private void RegisterAdminUser()
         {
-            KnowledgeMSDAL db = new KnowledgeMSDAL();
-            if (!db.check_userinRole("admin", "Admin"))
-            {
-                string encrypt_pass = (new Encryption()).Encrypt("1");
-                db.initialise_admin_user(encrypt_pass);
-            }
+            Authservice.InitialiseAdmin();
         }
 
         void Application_PostAuthenticateRequest(object sender, EventArgs e)
