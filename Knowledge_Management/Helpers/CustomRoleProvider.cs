@@ -4,22 +4,19 @@ using System.Linq;
 using System.Web;
 using System.Web.Security;
 using Knowledge_Management.DAL;
+using Microsoft.Practices.Unity;
+using Knowledge_Management.Helpers;
 
 namespace Knowledge_Management
 {
     public class CustomRoleProvider:RoleProvider
     {
-        private IAuthSL Authservice;
+        private IUnityContainer unityResolver;
 
-
-        public IAuthSL serviceLayer
+        public CustomRoleProvider()
         {
-            get {
-                if (Authservice == null)
-                    Authservice = new AuthSL();
-                return Authservice;
-            }
-            set { Authservice = value; }
+            unityResolver = Bootstrapper.Initialise();
+
         }
         
         public override void AddUsersToRoles(string[] usernames, string[] roleNames)
@@ -61,7 +58,8 @@ namespace Knowledge_Management
 
         public override string[] GetRolesForUser(string username)
         {
-            return serviceLayer.Get_User_Roles(username);
+            var myAuthService = unityResolver.Resolve<IAuthSL>();
+            return myAuthService.Get_User_Roles(username);
         }
 
         public override string[] GetUsersInRole(string roleName)
@@ -71,7 +69,8 @@ namespace Knowledge_Management
 
         public override bool IsUserInRole(string username, string roleName)
         {
-           return serviceLayer.IsUserInRole(username, roleName);
+            var myAuthService = unityResolver.Resolve<IAuthSL>();
+            return myAuthService.IsUserInRole(username, roleName);
         }
 
         public override void RemoveUsersFromRoles(string[] usernames, string[] roleNames)

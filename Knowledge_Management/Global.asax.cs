@@ -10,17 +10,15 @@ using System.Security.Principal;
 using System.Security.Claims;
 using Knowledge_Management.DAL;
 using System.Security.Cryptography;
+using Microsoft.Practices.Unity;
+using Knowledge_Management.Helpers;
 
 namespace Knowledge_Management
 {
     public class MvcApplication : System.Web.HttpApplication
     {
-        private IAuthSL Authservice;
+        private IUnityContainer unityResolver;
 
-        public MvcApplication()
-        {
-            Authservice = new AuthSL();
-        }
         protected void Application_Start()
         {
             AreaRegistration.RegisterAllAreas();
@@ -28,13 +26,16 @@ namespace Knowledge_Management
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
+            unityResolver=Bootstrapper.Initialise();
+
             //initialise admin user
             RegisterAdminUser();
         }
 
         private void RegisterAdminUser()
         {
-            Authservice.InitialiseAdmin();
+            var myAuthService= unityResolver.Resolve<IAuthSL>();
+            myAuthService.InitialiseAdmin();
         }
 
         void Application_PostAuthenticateRequest(object sender, EventArgs e)
