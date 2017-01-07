@@ -32,11 +32,10 @@ namespace Knowledge_Management.DAL
 
             if (DataLayer.login(userName, passWord))
             {
-
                 List<string> emp_prop = DataLayer.get_Employee_prop(userName);
                 string fullname = "";
                 if (emp_prop != null)
-                    fullname = emp_prop[4];
+                    fullname = emp_prop[4] + " " + emp_prop[5];
 
                 var authTicket = new FormsAuthenticationTicket(1, //version
                            userName, // user name
@@ -141,30 +140,39 @@ namespace Knowledge_Management.DAL
             return o;
         }
 
-        public Tuple<int,string> Post_Add_Edit_Employee(EmployeeViewModel e)
+        public Tuple<int, string> Post_Add_Edit_Employee(EmployeeViewModel e)
         {
-            int insert_result = DataLayer.InsertEmployee(e.emp_id,e.first_name, e.last_name, e.personel_code
-                  , Int32.Parse(e.dep_id), Int32.Parse(e.job_id), e.pass, e.data_entry, e.data_view);
+            string emp_role = "5";
+            if (e.data_entry && e.data_view)
+                emp_role = "2";
+            else if (e.data_entry && !e.data_view)
+                emp_role = "3";
+            else if (!e.data_entry && e.data_view)
+                emp_role = "4";
+
+            int insert_result = DataLayer.InsertEmployee(e.emp_id, e.first_name, e.last_name, e.personel_code
+                  , Int32.Parse(e.dep_id), Int32.Parse(e.job_id), e.pass, e.data_entry, e.data_view, emp_role);
 
             string msg = "";
             int result = 0;
 
-            if(insert_result>0)
-                { msg = "Employee inserted successfully.";
+            if (insert_result > 0)
+            {
+                msg = "Employee inserted successfully.";
                 result = 1;
             }
-            else if (insert_result==-1)
-             { 
+            else if (insert_result == -1)
+            {
                 msg = "This personel code is already existed.";
                 result = -1;
-             }
+            }
             else if (insert_result == -2)
             {
-                msg = "This password is not valid."; 
+                msg = "This password is not valid.";
                 result = -2;
             }
 
-            return new Tuple<int, string>(result, msg) ;
+            return new Tuple<int, string>(result, msg);
         }
 
         public EmployeeViewModel Get_Delete_Employee(int employeeId)
@@ -266,7 +274,7 @@ namespace Knowledge_Management.DAL
             DataLayer.DeleteJob(vm.job_id);
         }
 
-        public Tuple<List<tbl_job>, int> Get_JobTableContent(int departmentId,string filter, string sortDirection, int displayStart, int displayLength)
+        public Tuple<List<tbl_job>, int> Get_JobTableContent(int departmentId, string filter, string sortDirection, int displayStart, int displayLength)
         {
             List<tbl_job> all_items = DataLayer.get_Jobs(departmentId);
 
@@ -421,7 +429,7 @@ namespace Knowledge_Management.DAL
         #endregion DepartmentObjectiveController
 
         #region StrategyController
-      
+
         public void Post_Add_Edit_Strategy(StrategyViewModel s)
         {
             DataLayer.InsertStrategy(s.strategy_id, s.strategy_name);
@@ -467,7 +475,7 @@ namespace Knowledge_Management.DAL
             return new Tuple<List<tbl_strategy>, int>(filtered, all_items.Count);
 
         }
-        
+
         #endregion StrategyController
 
         #region EntrybyDetailController
@@ -735,7 +743,7 @@ namespace Knowledge_Management.DAL
             return vm;
         }
 
-        public Tuple<List<SolutionEmployeeViewModel>, int> Get_SolutionForQuestionTableContent(int questionId,int confirm_status, string filter, string sortDirection, int displayStart, int displayLength)
+        public Tuple<List<SolutionEmployeeViewModel>, int> Get_SolutionForQuestionTableContent(int questionId, int confirm_status, string filter, string sortDirection, int displayStart, int displayLength)
         {
             List<SolutionEmployeeViewModel> all_items = DataLayer.get_Solutions_by_Question(questionId, confirm_status);
 
@@ -796,7 +804,7 @@ namespace Knowledge_Management.DAL
             return q;
         }
 
-        public void Post_Delete_Solution(SolutionEmployeeViewModel vm,Controller ctrl)
+        public void Post_Delete_Solution(SolutionEmployeeViewModel vm, Controller ctrl)
         {
             long id_solution = vm.solution_id;
 
@@ -864,7 +872,7 @@ namespace Knowledge_Management.DAL
             return new Tuple<List<tbl_solution_uploads>, int>(filtered, filtered.Count);
         }
 
-        public Tuple<byte[], string> GetFilePropertie(int uploadId,Controller ctrl)
+        public Tuple<byte[], string> GetFilePropertie(int uploadId, Controller ctrl)
         {
             string file_name = DataLayer.get_file_path(uploadId);
             string file_path = ctrl.Server.MapPath(@"~\Upload\" + file_name);
@@ -904,7 +912,7 @@ namespace Knowledge_Management.DAL
             o.lst_job_desc = new SelectList(jobDescs, "pkey", "job_desc");
 
             //insert
-            if (questionId==0)
+            if (questionId == 0)
             {
                 o.question_id = 0;
                 o.question = "";
@@ -1112,7 +1120,7 @@ namespace Knowledge_Management.DAL
 
         }
 
-        public long Post_Add_New_Solution(NewSolutionViewModel q,Controller ctrl)
+        public long Post_Add_New_Solution(NewSolutionViewModel q, Controller ctrl)
         {
             long new_id = DataLayer.InsertNewSolution(q.new_solution_id, q.question_id, q.new_solution, get_userName(ctrl));
             return new_id;
@@ -1147,12 +1155,12 @@ namespace Knowledge_Management.DAL
             DataLayer.Edit_upload_description(vm.upload_id, vm.file_description);
         }
 
-        public Tuple<List<SolutionEmployeeViewModel>, int> Get_UserSolutionsTableContent(Controller ctrl,string filter, string sortDirection, int displayStart, int displayLength)
+        public Tuple<List<SolutionEmployeeViewModel>, int> Get_UserSolutionsTableContent(Controller ctrl, string filter, string sortDirection, int displayStart, int displayLength)
         {
             int emp_id = 0;
             List<string> emp_prop = DataLayer.get_Employee_prop(get_userName(ctrl));
             if (emp_prop != null)
-                emp_id = Int32.Parse(emp_prop[5]);
+                emp_id = Int32.Parse(emp_prop[6]);
 
             List<SolutionEmployeeViewModel> all_items = DataLayer.get_Solutions_by_employee(emp_id);
 
@@ -1181,14 +1189,56 @@ namespace Knowledge_Management.DAL
 
         #endregion SolutionController
 
+
+
+
+        #region ProfileController
+        public ProfileViewModel Get_Profile(Controller ctrl)
+        {
+            ProfileViewModel vm = new ProfileViewModel();
+            List<string> emp_prop = DataLayer.get_Employee_prop(get_userName(ctrl));
+            vm.firstName = emp_prop[4];
+            vm.lastName = emp_prop[5];
+            vm.pk_emp = Int32.Parse(emp_prop[6]);
+            return vm;
+        }
+
+        public void Post_Change_Profile(ProfileViewModel vm, Controller ctrl)
+        {
+            if (String.IsNullOrEmpty(vm.passWord))
+                vm.passWord = "000000";
+
+            DataLayer.EditProfile(vm);
+
+            string fullname = vm.firstName + " " + vm.lastName;
+
+            Change_Auth_Ticket(ctrl, fullname);
+
+        }
+
+        private void Change_Auth_Ticket(Controller ctrl,string new_user_data)
+        {
+            HttpCookie cookie = FormsAuthentication.GetAuthCookie(get_userName(ctrl), true);
+            var ticket = FormsAuthentication.Decrypt(cookie.Value);
+
+            var newticket = new FormsAuthenticationTicket(ticket.Version,
+                                                          ticket.Name,
+                                                          ticket.IssueDate,
+                                                          ticket.Expiration,
+                                                          false,
+                                                         new_user_data,
+                                                          ticket.CookiePath);
+
+            cookie.Value = FormsAuthentication.Encrypt(newticket);
+            cookie.Expires = newticket.Expiration.AddMinutes(30);
+            HttpContext.Current.Response.Cookies.Set(cookie);
+        }
+        #endregion ProfileController
+
         private string get_userName(Controller ctrl)
         {
-            string cookieName = FormsAuthentication.FormsCookieName; //Find cookie name
-            HttpCookie authCookie = ctrl.HttpContext.Request.Cookies[cookieName]; //Get the cookie by it's name
-            FormsAuthenticationTicket ticket = FormsAuthentication.Decrypt(authCookie.Value); //Decrypt it
-            string UserName = ticket.Name; //You have the UserName!
-
-            //string UserName =ctrl.User.Identity.Name;
+            
+            string UserName =ctrl.User.Identity.Name;
 
             return UserName;
         }

@@ -160,6 +160,7 @@ namespace Knowledge_Management.DAL
         #region ProfileController
 
         ProfileViewModel Get_Profile(Controller ctrl);
+        void Post_Change_Profile(ProfileViewModel vm, Controller ctrl);
 
         #endregion ProfileController
 
