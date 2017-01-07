@@ -46,6 +46,11 @@ $(document).ready(function () {
                                 "bSearchable": false,
                                 "bSortable": false,
                                 "bVisible": false
+                            }, {
+                                "sName": "writer",
+                                "bSearchable": false,
+                                "bSortable": false,
+                                "bVisible": false
                             },
                             {
                                 "sName": "radif", "sWidth": '2%', "sClass": "dt-body-center"
@@ -62,7 +67,7 @@ $(document).ready(function () {
                             "mRender": function (data, type, row) {
                                 var param_array = {
                                     keywords: row[1], jobdesc: row[2], dep_objective: row[3]
-                                    , strategy: row[4], fullQuestion: row[5]
+                                    , strategy: row[4], fullQuestion: row[5], writer: row[6]
                                 };
                                 var param_obj = [];
                                 param_obj.push(param_array);
@@ -108,7 +113,8 @@ var details = function (s) {
         lst_keywords:s[0].keywords,
         dep_objective: (s[0].dep_objective == null ? '' : s[0].dep_objective),
         job_desc: (s[0].jobdesc == null ? '' : s[0].jobdesc),
-        strategy_name: (s[0].strategy == null ? '' : s[0].strategy)
+        strategy_name: (s[0].strategy == null ? '' : s[0].strategy),
+        emp_prop: s[0].writer
     };
 
     $.ajax({

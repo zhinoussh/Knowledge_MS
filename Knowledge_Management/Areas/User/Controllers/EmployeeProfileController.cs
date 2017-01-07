@@ -5,17 +5,30 @@ using System.Web;
 using System.Web.Mvc;
 using Knowledge_Management.DAL;
 using System.Web.Security;
+using Knowledge_Management.Areas.User.ViewModels;
 
 
 namespace Knowledge_Management.Areas.User.Controllers
 {
-    [CustomAuthorize(Roles = "Public")]
+    [CustomAuthorize(Roles = "Public,DataView,DataEntry")]
     public class EmployeeProfileController : Controller
     {
-        // GET: EmployeeProfile
+        IKnowledgeMSSL serviceLayer;
+
+        public EmployeeProfileController(IKnowledgeMSSL service)
+        {
+            serviceLayer = service;
+        }
         public ActionResult Index()
         {
-           return View();
+            ProfileViewModel vm=serviceLayer.Get_Profile(this);
+           return View(vm);
+        }
+
+        public ActionResult ChangeProfile(ProfileViewModel vm)
+        {
+          //  serviceLayer.Post_Change_Profile(vm);
+            return Json(new { msg = "your profile changed successfully" });
         }
     }
 }
