@@ -322,16 +322,8 @@ namespace Knowledge_Management.DAL
 
        
         public int InsertEmployee(int emp_id, string first_name, string last_name,string personel_code
-            , int dep_id, int job_id, string password, bool data_entry, bool data_view)
+            , int dep_id, int job_id, string password, bool data_entry, bool data_view,string emp_role)
         {
-            string emp_role = "5";
-            if (data_entry && data_view)
-                emp_role = "2";
-            else if (data_entry && !data_view)
-                emp_role = "3";
-            else if (!data_entry && data_view)
-                emp_role = "4";
-
             tbl_employee s;
             if (emp_id == 0)
             {
@@ -368,7 +360,7 @@ namespace Knowledge_Management.DAL
                         return -2;
                 }
                 else
-                    return -1;
+                    return -1;//this personel code already exits 
             }
             else
             {
@@ -399,6 +391,26 @@ namespace Knowledge_Management.DAL
 
         }
 
+        public void EditProfile(ProfileViewModel vm)
+        {
+            tbl_employee e = db.tbl_employee.Find(vm.pk_emp);
+            if (e != null)
+            { 
+                e.fname=vm.firstName;
+                e.lname=vm.lastName;
+                db.SaveChanges();
+
+                if (vm.passWord != "000000")
+                {
+                    tbl_login l = db.tbl_login.Where(x => x.fk_emp == vm.pk_emp).FirstOrDefault();
+                    if (l != null)
+                    {
+                        l.pass = (new Encryption()).Encrypt(vm.passWord);
+                        db.SaveChanges();
+                    }
+                }
+            }
+        }
         public void DeleteEmployee(int id)
         {
             tbl_employee s = db.tbl_employee.Find(id);

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Knowledge_Management.Areas.User.ViewModels;
+using System;
 namespace Knowledge_Management.DAL
 {
     public interface IKnowledgeMSDAL
@@ -48,7 +49,8 @@ namespace Knowledge_Management.DAL
         string[] get_user_roles(string pcode);
         void initialise_admin_user(string encrypt_pass);
         void InsertDepartment(int dep_id, string dep_name);
-        int InsertEmployee(int emp_id, string first_name, string last_name, string personel_code, int dep_id, int job_id, string password, bool data_entry, bool data_view);
+        int InsertEmployee(int emp_id, string first_name, string last_name, string personel_code, int dep_id, int job_id, string password, bool data_entry, bool data_view, string emp_role);
+        void EditProfile(ProfileViewModel vm);
         void InsertJob(int job_id, string job_name, int dep_id);
         void InsertJobDescription(int job_desc_id, string job_desc, int job_id);
         long InsertNewSolution(long soution_id, long q_id, string new_solution, string pcode);

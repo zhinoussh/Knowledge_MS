@@ -520,3 +520,13 @@ padding:0;
 .subTitle {
     color:#8076a2;
 }
+
+.profile-form {
+  width:100%;
+  float:right;
+  padding:40px 30px;
+  background-color: #dee8f2;
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
+  border-radius: 4px;
+}

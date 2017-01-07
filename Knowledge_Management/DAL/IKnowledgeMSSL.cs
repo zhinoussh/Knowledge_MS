@@ -157,7 +157,11 @@ namespace Knowledge_Management.DAL
         Tuple<List<SolutionEmployeeViewModel>, int> Get_UserSolutionsTableContent(Controller ctrl, string filter, string sortDirection, int displayStart, int displayLength);
         #endregion SolutionController
 
-        
+        #region ProfileController
+
+        ProfileViewModel Get_Profile(Controller ctrl);
+
+        #endregion ProfileController
 
 
     }

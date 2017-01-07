@@ -11,6 +11,11 @@
     $('#accordion').on('hidden.bs.collapse', toggleChevron);
     $('#accordion').on('shown.bs.collapse', toggleChevron);
 
+    if (localStorage.getItem("msg")) {
+        $('.alert').slideDown(500);
+        $('#alert_success').html(localStorage.getItem("msg"));
+        localStorage.clear();
+    }
 });
 
 $(document).on('click', '.showlogin', function() {
@@ -56,6 +61,14 @@ var onLoginSuccess = function (result) {
     }
 }
 
+var Success_ProfileChange = function (result) {
+    if (result.msg) {
+        //$('.alert').slideDown(500);
+        //$('#alert_success').html(result.msg);
+        localStorage.setItem("msg", result.msg);
+        location.reload();
+    }
+}
   
     
 

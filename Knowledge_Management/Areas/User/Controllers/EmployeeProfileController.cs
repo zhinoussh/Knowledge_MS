@@ -27,7 +27,7 @@ namespace Knowledge_Management.Areas.User.Controllers
 
         public ActionResult ChangeProfile(ProfileViewModel vm)
         {
-          //  serviceLayer.Post_Change_Profile(vm);
+            serviceLayer.Post_Change_Profile(vm,this);
             return Json(new { msg = "your profile changed successfully" });
         }
     }
