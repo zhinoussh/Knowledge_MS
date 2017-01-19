@@ -25,6 +25,9 @@ namespace Knowledge_Management.Areas.User.Controllers
            return View(vm);
         }
 
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult ChangeProfile(ProfileViewModel vm)
         {
             serviceLayer.Post_Change_Profile(vm,this);
